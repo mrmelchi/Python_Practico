@@ -99,5 +99,5 @@ para los ejercicios seleccionados. No dude en consultarlo si necesita
 una pista. Sin embargo, para aprovechar al máximo el curso, debe
 intentar crear sus propias soluciones primero.
 
-[Contenido](Contents.Rmd) \| [Próximo (1 Introducción a
-Python)](01_Introduction/00_Overview.Rmd)
+[Contenido](Contents.md) \| [Próximo (1 Introducción a
+Python)](01_Introduction/00_Overview.md)
