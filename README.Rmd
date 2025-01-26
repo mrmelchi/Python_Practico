@@ -79,7 +79,7 @@ vez!
 
 ## ¡Llévame al curso ya!
 
-Ok, ok. ¡Apunta tu navegador [AQUÍ](Notes/Contents.md)!
+Ok, ok. ¡Apunta tu navegador [AQUÍ](Contents.Rmd)!
 
 ## Discusión de la comunidad
 
