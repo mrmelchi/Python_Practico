@@ -66,15 +66,47 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#13-numeros" class="nav-link">1.3 Números</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#tipos-de-numeros" class="nav-link">Tipos de números</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#booleanos-bool" class="nav-link">Booleanos (bool)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#numeros-enteros-int" class="nav-link">Números enteros (int)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#punto-flotante-float" class="nav-link">Punto flotante (float)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comparaciones" class="nav-link">Comparaciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#conversion-de-numeros" class="nav-link">Conversión de números</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Hello_world.Rmd">Anterior (1.2 Un primer programa)</a> | <a href="04_Strings.Rmd">Próximo (1.4 Strings)</a></p>
-<h3 id="13-numeros">1.3 Números</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Hello_world/">Anterior (1.2 Un primer programa)</a> | <a href="../04_Strings/">Próximo (1.4 Strings)</a></p>
+<h1 id="13-numeros">1.3 Números</h1>
 <p>En esta sección se tratan los cálculos matemáticos.</p>
-<h4 id="tipos-de-numeros">Tipos de números</h4>
+<h2 id="tipos-de-numeros">Tipos de números</h2>
 <p>Python tiene 4 tipos de números:</p>
 <ul>
 <li>Booleanos</li>
@@ -82,7 +114,7 @@
 <li>Punto flotante</li>
 <li>Complejos (números imaginarios)</li>
 </ul>
-<h5 id="booleanos-bool">Booleanos (bool)</h5>
+<h2 id="booleanos-bool">Booleanos (bool)</h2>
 <p>Los valores booleanos tienen dos valores: "Verdadero" y "Falso".</p>
 <pre><code>a = True
 b = False
@@ -94,7 +126,7 @@ if d == 0:
     print('d es falso')
 </code></pre>
 <p><em>Pero no escribas código así. Sería extraño.</em></p>
-<h5 id="numeros-enteros-int">Números enteros (int)</h5>
+<h2 id="numeros-enteros-int">Números enteros (int)</h2>
 <p>Valores con signo, de tamaño y base arbitrarios:</p>
 <pre><code>a = 37
 b = -299392993727716627377128481812241231
@@ -118,7 +150,7 @@ x ^ y XOR bit a bit
 ~x Bit a bit NO
 abs(x) Valor absoluto
 </code></pre>
-<h5 id="punto-flotante-float">Punto flotante (float)</h5>
+<h2 id="punto-flotante-float">Punto flotante (float)</h2>
 <p>Utilice una notación decimal o exponencial para especificar un valor de punto flotante:</p>
 <pre><code>a = 37,45
 b = 4e5 # 4 x 10**5 o 400.000
@@ -157,7 +189,7 @@ c = math.cos(x)
 d = math.tan(x)
 e = math.log(x)
 </code></pre>
-<h4 id="comparaciones">Comparaciones</h4>
+<h2 id="comparaciones">Comparaciones</h2>
 <p>Los siguientes operadores de comparación/relacionales funcionan con números:</p>
 <pre><code>x &lt; y Menor que
 x &lt;= y Menor o igual que
@@ -174,7 +206,7 @@ x != y No es igual a
 if not (b &lt; a or b &gt; c):
     print('b todavía está entre a y c')
 </code></pre>
-<h4 id="conversion-de-numeros">Conversión de números</h4>
+<h2 id="conversion-de-numeros">Conversión de números</h2>
 <p>El nombre del tipo se puede utilizar para convertir valores:</p>
 <pre><code>a = int(x) # Convertir x a entero
 b = float(x) # Convertir x a float
@@ -188,9 +220,9 @@ b = float(x) # Convertir x a float
 3.14159
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Recordatorio: Estos ejercicios suponen que estás trabajando en el directorio <code>practical-python/Work</code>. Mira el archivo <code>mortgage.py</code>.</p>
-<h5 id="ejercicio-17-la-hipoteca-de-dave">Ejercicio 1.7: La hipoteca de Dave</h5>
+<h3 id="ejercicio-17-la-hipoteca-de-dave">Ejercicio 1.7: La hipoteca de Dave</h3>
 <blockquote>
 <p>Dave ha decidido contratar una hipoteca a tipo fijo a 30 años por 500.000 dólares. con Guido’s Mortgage, Stock Investment, and Bitcoin trading corporation. La tasa de interés es del 5% y el pago mensual es \$2684.11.</p>
 </blockquote>
@@ -208,11 +240,11 @@ while capital &gt; 0:
 print('Total pagado', round(total_pagado, 2))  
 </code></pre>
 <p>Ingrese a este programa y ejecútelo. Debería obtener una respuesta de <code>Total pagado 966279.6</code>.</p>
-<h5 id="ejercicio-18-pagos-extra">Ejercicio 1.8: Pagos extra</h5>
+<h3 id="ejercicio-18-pagos-extra">Ejercicio 1.8: Pagos extra</h3>
 <p>Supongamos que Dave paga \$1000 extra al mes durante los primeros 12 meses de la hipoteca.</p>
 <p>Modifique el programa para incorporar este pago adicional y haga que imprima el monto total pagado junto con el número de meses requeridos.</p>
 <p>Al ejecutar el nuevo programa, debería informar <code>Total pagado 929965.62 # de cuotas 342</code></p>
-<h5 id="ejercicio-19-calculadora-para-realizar-un-pago-adicional">Ejercicio 1.9: Calculadora para realizar un pago adicional</h5>
+<h3 id="ejercicio-19-calculadora-para-realizar-un-pago-adicional">Ejercicio 1.9: Calculadora para realizar un pago adicional</h3>
 <p>Modificar el programa para que la información de pago adicional pueda manejarse de forma más general. Haga que el usuario pueda configurar estas variables:</p>
 <pre><code>pago_extra = 1000
 pago_extra_mes_inicial = 61
@@ -220,7 +252,7 @@ pago_extra_mes_final = 108
 </code></pre>
 <p>Haga que el programa tome estas variables y calcule el total a pagar.</p>
 <p>¿Cuánto pagará Dave si paga \$1000 adicionales al mes durante 4 años a partir de que ya se hayan pagado los primeros cinco años?</p>
-<h5 id="ejercicio-110-hacer-una-tabla">Ejercicio 1.10: Hacer una tabla</h5>
+<h3 id="ejercicio-110-hacer-una-tabla">Ejercicio 1.10: Hacer una tabla</h3>
 <p>Modifique el programa para imprimir una tabla que muestre el mes, el total pagado hasta el momento y el capital restante. El resultado debería verse así:</p>
 <pre><code>1 2684.11 499399.22
 2 5368,22 498795,94
@@ -234,9 +266,9 @@ pago_extra_mes_final = 108
 Total pagado 880074.1
 Meses 310
 </code></pre>
-<h5 id="ejercicio-111-bonificacion">Ejercicio 1.11: Bonificación</h5>
+<h3 id="ejercicio-111-bonificacion">Ejercicio 1.11: Bonificación</h3>
 <p>Mientras esté en ello, arregle el programa para corregir el pago en exceso que ocurrió en el último mes.</p>
-<h5 id="ejercicio-112-un-misterio">Ejercicio 1.12: Un misterio</h5>
+<h3 id="ejercicio-112-un-misterio">Ejercicio 1.12: Un misterio</h3>
 <p><code>int()</code> y <code>float()</code> se pueden usar para convertir números. Por ejemplo,</p>
 <pre><code>&gt;&gt;&gt; int(&quot;123&quot;)
 123
@@ -249,7 +281,7 @@ Meses 310
 True
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Hello_world.Rmd">Anterior (1.2 Un primer programa)</a> | <a href="04_Strings.Rmd">Próximo (1.4 Strings)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Hello_world/">Anterior (1.2 Un primer programa)</a> | <a href="../04_Strings/">Próximo (1.4 Strings)</a></p></div>
             </div>
         </div>
 
