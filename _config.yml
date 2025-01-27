@@ -1,8 +1,4 @@
 site_name: Python_Practico
 site_author: Mario R. Melchiori
 site_url: https://mrmelchi.github.io/Python_Practico/
-theme:
-   name: modernist@v0.2.0
-markdown_extensions:
-   - toc:
-      permalink: []
+theme: modernist
