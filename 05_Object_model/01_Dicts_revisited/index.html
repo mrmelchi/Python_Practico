@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/05_Object_model/01_Dicts_revisited/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>01_Dicts_revisited - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../04_Classes_objects/04_Defining_exceptions.Rmd">Anterior (4.4 Definición de excepciones)</a> | <a href="02_Classes_encapsulation.Rmd">Próximo (5.2 Técnicas de encapsulación)</a></p>
+<h3 id="51-revision-de-diccionarios">5.1 Revisión de diccionarios</h3>
+<p>El sistema de objetos de Python se basa en gran medida en una implementación que involucra diccionarios. Esta sección trata sobre eso.</p>
+<h4 id="diccionarios-revisitados">Diccionarios revisitados</h4>
+<p>Recuerde que un diccionario es una colección de valores nombrados.</p>
+<pre><code class="language-python">stock = {
+    'name' : 'GOOG',
+    'shares' : 100,
+    'price' : 490.1
+}
+</code></pre>
+<p>Los diccionarios se usan comúnmente para estructuras de datos simples. Sin embargo, se usan para partes críticas del intérprete y pueden ser el <em>tipo de datos más importante en Python</em>.</p>
+<h4 id="diccionarios-y-modulos">Diccionarios y módulos</h4>
+<p>Dentro de un módulo, un diccionario contiene todas las variables y funciones globales.</p>
+<pre><code class="language-python"># foo.py
+
+x = 42
+def bar():
+    ...
+
+def spam():
+    ...
+</code></pre>
+<p>Si inspecciona <code>foo.__dict__</code> o <code>globals()</code>, verá el diccionario.</p>
+<pre><code class="language-python">{
+    'x' : 42,
+    'bar' : &lt;function bar&gt;,
+    'spam' : &lt;function spam&gt;
+}
+</code></pre>
+<h4 id="diccionarios-y-objetos">Diccionarios y objetos</h4>
+<p>Los objetos definidos por el usuario también usan diccionarios tanto para los datos de instancia como para las clases. De hecho, todo el sistema de objetos es principalmente una capa adicional que se coloca sobre los diccionarios.</p>
+<p>Un diccionario contiene los datos de instancia, <code>__dict__</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.__dict__
+{'name' : 'GOOG', 'shares' : 100, 'price': 490.1 }
+</code></pre>
+<p>Este diccionario (y la instancia) se rellenan al asignar a <code>self</code>.</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+</code></pre>
+<p>Los datos de la instancia, <code>self.__dict__</code>, tienen este aspecto:</p>
+<pre><code class="language-python">{
+    'name': 'GOOG',
+    'shares': 100,
+    'price': 490.1
+}
+</code></pre>
+<p><strong>Cada instancia obtiene su propio diccionario privado.</strong></p>
+<pre><code class="language-python">s = Stock('GOOG', 100, 490.1) # {'name' : 'GOOG','shares' : 100, 'price': 490.1 }
+t = Stock('AAPL', 50, 123.45) # {'name' : 'AAPL','shares' : 50, 'price': 123.45 }
+</code></pre>
+<p>Si creaste 100 instancias de alguna clase, hay 100 diccionarios que contienen datos.</p>
+<h4 id="miembros-de-clase">Miembros de clase</h4>
+<p>Un diccionario separado también contiene los métodos.</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares):
+        self.shares -= nshares
+</code></pre>
+<p>El diccionario está en <code>Stock.__dict__</code>.</p>
+<pre><code class="language-python">{
+    'cost': &lt;function&gt;,
+    'sell': &lt;function&gt;,
+    '__init__': &lt;function&gt;
+}
+</code></pre>
+<h4 id="instancias-y-clases">Instancias y clases</h4>
+<p>Las instancias y las clases están vinculadas entre sí. El atributo <code>__class__</code> hace referencia a la clase.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.__dict__
+{ 'name': 'GOOG', 'shares': 100, 'price': 490.1 }
+&gt;&gt;&gt; s.__class__
+&lt;class '__main__.Stock'&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>El diccionario de instancias contiene datos exclusivos de cada instancia, mientras que el diccionario de clases contiene datos compartidos colectivamente por <em>todas</em> las instancias.</p>
+<h4 id="acceso-a-atributos">Acceso a atributos</h4>
+<p>Cuando trabaja con objetos, accede a los datos y métodos utilizando el operador <code>.</code>.</p>
+<pre><code class="language-python">x = obj.name # Obtención
+obj.name = value # Configuración
+del obj.name # Eliminación
+</code></pre>
+<p>Estas operaciones están directamente vinculadas a los diccionarios que se encuentran debajo de las sábanas.</p>
+<h4 id="modificacion-de-instancias">Modificación de instancias</h4>
+<p>Las operaciones que modifican un objeto actualizan el diccionario subyacente.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.__dict__
+{ 'nombre': 'GOOG', 'acciones': 100, 'precio': 490.1 }
+&gt;&gt;&gt; s.shares = 50 # Configuración
+&gt;&gt;&gt; s.date = '6/7/2007' # Configuración
+&gt;&gt;&gt; s.__dict__
+{ 'nombre': 'GOOG', 'acciones': 50, 'precio': 490.1, 'fecha': '6/7/2007' }
+&gt;&gt;&gt; del s.shares # Eliminando
+&gt;&gt;&gt; s.__dict__
+{ 'nombre': 'GOOG', 'precio': 490.1, 'fecha': '6/7/2007' }
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="lectura-de-atributos">Lectura de atributos</h4>
+<p>Supongamos que lee un atributo en una instancia.</p>
+<pre><code class="language-python">x = obj.name
+</code></pre>
+<p>El atributo puede existir en dos lugares:</p>
+<ul>
+<li>Diccionario de instancia local.</li>
+<li>Diccionario de clase.</li>
+</ul>
+<p>Se deben verificar ambos diccionarios. Primero, verifique en <code>__dict__</code> local. Si no se encuentra, busque en <code>__dict__</code> de la clase hasta <code>__class__</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock(...)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.cost()
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<p>Este esquema de búsqueda es la forma en que los miembros de una <em>clase</em> se comparten entre todas las instancias.</p>
+<h4 id="como-funciona-la-herencia">Cómo funciona la herencia</h4>
+<p>Las clases pueden heredar de otras clases.</p>
+<pre><code class="language-python">class A(B, C):
+    ...
+</code></pre>
+<p>Las clases base se almacenan en una tupla en cada clase.</p>
+<pre><code class="language-python">&gt;&gt;&gt; A.__bases__
+(&lt;class '__main__.B'&gt;, &lt;class '__main__.C'&gt;)
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto proporciona un enlace a las clases padre.</p>
+<h4 id="lectura-de-atributos-con-herencia">Lectura de atributos con herencia</h4>
+<p>Lógicamente, el proceso para encontrar un atributo es el siguiente. Primero, verifique en <code>__dict__</code> local. Si no lo encuentra, busque en <code>__dict__</code> de la clase. Si no lo encuentra en la clase, busque en las clases base a través de <code>__bases__</code>. Sin embargo, hay algunos aspectos sutiles de esto que se analizan a continuación.</p>
+<h4 id="lectura-de-atributos-con-herencia-unica">Lectura de atributos con herencia única</h4>
+<p>En las jerarquías de herencia, los atributos se encuentran recorriendo el árbol de herencia en orden.</p>
+<pre><code class="language-python">class A: pass
+class B(A): pass
+class C(A): pass
+class D(B): pass
+class E(D): pass
+</code></pre>
+<p>Con herencia simple, hay una única ruta hacia la cima. Se detiene en la primera coincidencia.</p>
+<h4 id="orden-de-resolucion-de-metodos-o-mro">Orden de resolución de métodos o MRO</h4>
+<p>Python precalcula una cadena de herencia y la almacena en el atributo <em>MRO</em> de la clase. Puede verla.</p>
+<pre><code class="language-python">&gt;&gt;&gt; E.__mro__
+(&lt;class '__main__.E'&gt;, &lt;class '__main__.D'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.A'&gt;, &lt;class 'object'&gt;)
+&gt;&gt;&gt;
+</code></pre>
+<p>Esta cadena se denomina <strong>Orden de resolución de métodos</strong>. Para encontrar un atributo, Python recorre el MRO en orden. La primera coincidencia gana.</p>
+<h4 id="mro-en-herencia-multiple">MRO en herencia múltiple</h4>
+<p>Con la herencia múltiple, no hay una única ruta hacia la cima. Veamos un ejemplo.</p>
+<pre><code class="language-python">class A: pass
+class B: pass
+class C(A, B): pass
+class D(B): pass
+class E(C, D): pass
+</code></pre>
+<p>¿Qué sucede cuando se accede a un atributo?</p>
+<pre><code class="language-python">e = E()
+e.attr
+</code></pre>
+<p>Se lleva a cabo un proceso de búsqueda de atributos, pero ¿cuál es el orden? Eso es un problema.</p>
+<p>Python utiliza <em>herencia múltiple cooperativa</em> que obedece algunas reglas sobre el orden de las clases.</p>
+<ul>
+<li>Los hijos siempre se comprueban antes que los padres</li>
+<li>Los padres (si son múltiples) siempre se comprueban en el orden indicado.</li>
+</ul>
+<p>El MRO se calcula ordenando todas las clases en una jerarquía de acuerdo con esas reglas.</p>
+<pre><code class="language-python">&gt;&gt;&gt; E.__mro__
+(
+&lt;class 'E'&gt;,
+&lt;class 'C'&gt;,
+&lt;class 'A'&gt;,
+&lt;class 'D'&gt;,
+&lt;class 'B'&gt;,
+&lt;class 'object'&gt;)
+&gt;&gt;&gt;
+</code></pre>
+<p>El algoritmo subyacente se llama "Algoritmo de linealización C3". Los detalles precisos no son importantes siempre que recuerde que una jerarquía de clases obedece las mismas reglas de ordenamiento que podría seguir si su casa se incendiara y tuviera que evacuar: primero los niños, luego los padres.</p>
+<h4 id="una-reutilizacion-de-codigo-extrana-que-implica-herencia-multiple">Una reutilización de código extraña (que implica herencia múltiple)</h4>
+<p>Considere dos objetos completamente no relacionados:</p>
+<pre><code class="language-python">class Dog:    # Perro
+    def noise(self): # ruido
+        return 'Bark'   # Ladrar
+
+    def chase(self):
+        return 'Chasing!'   # Persiguiendo
+
+class LoudDog(Dog): # Perro ruidoso
+    def noise(self):
+        # Código común con LoudBike (abajo)
+        return super().noise().upper()
+</code></pre>
+<p>Y</p>
+<pre><code class="language-python">class Bike:
+    def noise(self):
+        return 'On Your Left'
+
+    def pedal(self):
+        return 'Pedaling!'
+
+class LoudBike(Bike):
+    def noise(self):
+        # Código común con LoudDog (arriba)
+        return super().noise().upper()
+</code></pre>
+<p>Hay un código común en la implementación de <code>LoudDog.noise()</code> y <code>LoudBike.noise()</code>. De hecho, el código es exactamente el mismo. Naturalmente, código como ese está destinado a atraer a los ingenieros de software.</p>
+<h4 id="el-patron-mixin">El patrón "Mixin"</h4>
+<p>El patrón <em>Mixin</em> es una clase con un fragmento de código.</p>
+<pre><code class="language-python">class Loud:
+    def noise(self):
+        return super().noise().upper()
+</code></pre>
+<p>Esta clase no se puede usar de forma aislada. Se mezcla con otras clases a través de la herencia.</p>
+<pre><code class="language-python">class LoudDog(Loud, Dog):
+    pass
+
+class LoudBike(Loud, Bike):
+    pass
+</code></pre>
+<p>Milagrosamente, la sonoridad ahora se implementó solo una vez y se reutilizó en dos clases completamente no relacionadas. Este tipo de truco es uno de los usos principales de la herencia múltiple en Python.</p>
+<h4 id="por-que-super">Por qué <code>super()</code></h4>
+<p>Siempre use <code>super()</code> al anular métodos.</p>
+<pre><code class="language-python">class Loud:
+    def noise(self):
+        return super().noise().upper()
+</code></pre>
+<p><code>super()</code> delega a la <em>próxima clase</em> en el MRO.</p>
+<p>La parte complicada es que no sabe qué es. En particular, no sabe qué es si se utiliza la herencia múltiple.</p>
+<h4 id="algunas-precauciones">Algunas precauciones</h4>
+<p>La herencia múltiple es una herramienta poderosa. Recuerde que el poder conlleva responsabilidad. Los marcos de trabajo y las bibliotecas a veces la utilizan para funciones avanzadas que implican la composición de componentes. Ahora, olvídese de que vio eso.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En la Sección 4, definió una clase <code>Stock</code> que representaba una tenencia de acciones. En este ejercicio, utilizaremos esa clase. Reinicie el intérprete y cree algunas instancias:</p>
+<pre><code class="language-python">&gt;&gt;&gt; ================================= RESTART ==================================
+&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; goog = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; ibm = Stock('IBM',50, 91.23)
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-51-representacion-de-instancias">Ejercicio 5.1: Representación de instancias</h5>
+<p>En el modo interactivo, inspeccione los diccionarios subyacentes de las dos instancias que creó:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__dict__
+... observe la salida ...
+&gt;&gt;&gt; ibm.__dict__
+... observe la salida ...
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-52-modificacion-de-datos-de-instancia">Ejercicio 5.2: Modificación de datos de instancia</h5>
+<p>Intente configurar un nuevo atributo en una de las instancias anteriores:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.date = '6/11/2007'
+&gt;&gt;&gt; goog.__dict__
+... observe el resultado ...
+&gt;&gt;&gt; ibm.__dict__
+... observe el resultado ...
+&gt;&gt;&gt;
+</code></pre>
+<p>En el resultado anterior, notará que la instancia <code>goog</code> tiene un atributo <code>date</code> mientras que la instancia <code>ibm</code> no lo tiene. Es importante notar que Python realmente no impone ninguna restricción sobre los atributos. Por ejemplo, los atributos de una instancia no están limitados a los configurados en el método <code>__init__()</code>.</p>
+<p>En lugar de establecer un atributo, intente colocar un nuevo valor directamente en el objeto <code>__dict__</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__dict__['time'] = '9:45am'
+&gt;&gt;&gt; goog.time
+'9:45am'
+&gt;&gt;&gt;
+</code></pre>
+<p>Aquí, realmente se nota el hecho de que una instancia es solo la parte superior de un diccionario. Nota: se debe enfatizar que la manipulación directa del diccionario es poco común; siempre debe escribir su código para usar la sintaxis (.).</p>
+<h5 id="ejercicio-53-el-rol-de-las-clases">Ejercicio 5.3: El rol de las clases</h5>
+<p>Las definiciones que componen una definición de clase son compartidas por todas las instancias de esa clase. Tenga en cuenta que todas las instancias tienen un enlace a su clase asociada:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__class__
+... observe la salida ...
+&gt;&gt;&gt; ibm.__class__
+... observe la salida ...
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente llamar a un método en las instancias:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.cost()
+49010.0
+&gt;&gt;&gt; ibm.cost()
+4561.5
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe que el nombre 'cost' no está definido ni en <code>goog.__dict__</code> ni en <code>ibm.__dict__</code>. En cambio, lo proporciona el diccionario de clases. Pruebe esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; Stock.__dict__['cost']
+... observe la salida...
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente llamar al método <code>cost()</code> directamente a través del diccionario:</p>
+<pre><code class="language-python">&gt;&gt;&gt; Stock.__dict__['cost'](goog)
+49010.0
+&gt;&gt;&gt; Stock.__dict__['cost'](ibm)
+4561.5
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe cómo está llamando a la función definida en la definición de clase y cómo el argumento <code>self</code> obtiene la instancia.</p>
+<p>Intenta agregar un nuevo atributo a la clase <code>Stock</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; Stock.foo = 42
+&gt;&gt;&gt;
+</code></pre>
+<p>Observa cómo este nuevo atributo ahora aparece en todas las instancias:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.foo
+42
+&gt;&gt;&gt; ibm.foo
+42
+&gt;&gt;&gt;
+</code></pre>
+<p>Sin embargo, observa que no es parte del diccionario de la instancia:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__dict__
+... observa la salida y observa que no hay ningún atributo 'foo' ...
+&gt;&gt;&gt;
+</code></pre>
+<p>La razón por la que puedes acceder al atributo <code>foo</code> en las instancias es que Python siempre verifica el diccionario de clase si no puede encontrar algo en la instancia misma.</p>
+<p>Nota: Esta parte del ejercicio ilustra algo conocido como variable de clase. Supongamos, por ejemplo, que tiene una clase como esta:</p>
+<pre><code class="language-python">class Foo:
+    a = 13 # Variable de clase
+    def __init__(self,b):
+        self.b = b # Variable de instancia
+</code></pre>
+<p>En esta clase, la variable <code>a</code>, asignada en el cuerpo de la clase misma, es una "variable de clase". Es compartida por todas las instancias que se crean. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = Foo(10)
+&gt;&gt;&gt; g = Foo(20)
+&gt;&gt;&gt; f.a # Inspeccionar la variable de clase (igual para ambas instancias)
+13
+&gt;&gt;&gt; g.a
+13
+&gt;&gt;&gt; f.b # Inspeccionar la variable de instancia (difiere)
+10
+&gt;&gt;&gt; g.b
+20
+&gt;&gt;&gt; Foo.a = 42 # Cambiar el valor de la variable de clase
+&gt;&gt;&gt; f.a
+42
+&gt;&gt;&gt; g.a
+42
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-54-metodos-enlazados">Ejercicio 5.4: Métodos enlazados</h5>
+<p>Una característica sutil de Python es que invocar un método en realidad implica dos pasos y algo conocido como método enlazado. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = goog.sell
+&gt;&gt;&gt; s
+&lt;bound method Stock.sell of Stock('GOOG', 100, 490.1)&gt;
+&gt;&gt;&gt; s(25)
+&gt;&gt;&gt; goog.shares
+75
+&gt;&gt;&gt;
+</code></pre>
+<p>Los métodos enlazados en realidad contienen todas las piezas necesarias para llamar a un método. Por ejemplo, mantienen un registro de la función que implementa el método:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s.__func__
+&lt;function sell at 0x10049af50&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Este es el mismo valor que se encuentra en el diccionario <code>Stock</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; Stock.__dict__['sell']
+&lt;function sell at 0x10049af50&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Los métodos enlazados también registran la instancia, que es el argumento <code>self</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s.__self__
+Stock('GOOG',75,490.1)
+&gt;&gt;&gt;
+</code></pre>
+<p>Cuando invocas la función usando <code>()</code> todas las piezas se unen. Por ejemplo, llamar a <code>s(25)</code> en realidad hace esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s.__func__(s.__self__, 25) # Igual que s(25)
+&gt;&gt;&gt; goog.shares
+50
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-55-herencia">Ejercicio 5.5: Herencia</h5>
+<p>Crea una nueva clase que herede de <code>Stock</code>.</p>
+<pre><code>&gt;&gt;&gt; class NewStock(Stock):
+    def yow(self):
+        print('Yow!')
+
+&gt;&gt;&gt; n = NewStock('ACME', 50, 123.45)
+&gt;&gt;&gt; n.cost()
+6172.50
+&gt;&gt;&gt; n.yow()
+Yow!
+&gt;&gt;&gt;
+</code></pre>
+<p>La herencia se implementa extendiendo el proceso de búsqueda de atributos. El atributo <code>__bases__</code> tiene una tupla de los padres inmediatos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; NewStock.__bases__
+(&lt;class 'stock.Stock'&gt;,)
+&gt;&gt;&gt;
+</code></pre>
+<p>El atributo <code>__mro__</code> tiene una tupla de todos los padres, en el orden en que se buscarán los atributos.</p>
+<pre><code class="language-python">&gt;&gt;&gt; NewStock.__mro__
+(&lt;class '__main__.NewStock'&gt;, &lt;class 'stock.Stock'&gt;, &lt;class 'object'&gt;)
+&gt;&gt;&gt;
+</code></pre>
+<p>Así es como se encontraría el método <code>cost()</code> de la instancia <code>n</code> anterior:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for cls in n.__class__.__mro__:
+        if 'cost' in cls.__dict__:
+            break
+
+&gt;&gt;&gt; cls
+&lt;class '__main__.Stock'&gt;
+&gt;&gt;&gt; cls.__dict__['cost']
+&lt;function cost at 0x101aed598&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../04_Classes_objects/04_Defining_exceptions.Rmd">Anterior (4.4 Definición de excepciones)</a> | <a href="02_Classes_encapsulation.Rmd">Próximo (5.2 Técnicas de encapsulación)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

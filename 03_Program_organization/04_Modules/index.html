@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/03_Program_organization/04_Modules/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04_Modules - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Error_checking.Rmd">Anterior (3.3 Comprobación de errores)</a> | <a href="05_Main_module.Rmd">Próximo (3.5 Módulo principal)</a></p>
+<h3 id="34-modulos">3.4 Módulos</h3>
+<p>Esta sección presenta el concepto de módulos y el trabajo con funciones que abarcan varios archivos.</p>
+<h4 id="modulos-e-importacion">Módulos e importación</h4>
+<p>Cualquier archivo fuente de Python es un módulo.</p>
+<pre><code class="language-python"># foo.py
+def grok(a):
+    ...
+def spam(b):
+    ...
+</code></pre>
+<p>La declaración <code>import</code> carga y <em>ejecuta</em> un módulo.</p>
+<pre><code class="language-python"># program.py
+import foo
+
+a = foo.grok(2)
+b = foo.spam('Hola')
+...
+</code></pre>
+<h4 id="espacio-de-nombres">Espacio de nombres</h4>
+<p>Un módulo es una colección de valores nombrados y a veces se dice que es un <em>espacio de nombres o namespace</em>. Los nombres son todas las variables y funciones globales definidas en el archivo fuente. Después de la importación, el nombre del módulo se utiliza como prefijo. De ahí el <em>espacio de nombres</em>.</p>
+<pre><code class="language-python">import foo
+
+a = foo.grok(2)
+b = foo.spam('Hola')
+...
+</code></pre>
+<p>El nombre del módulo está directamente vinculado al nombre del archivo (foo -&gt; foo.py).</p>
+<h4 id="definiciones-globales">Definiciones globales</h4>
+<p>Todo lo definido en el ámbito <em>global</em> es lo que llena el espacio de nombres del módulo. Considere dos módulos que definen la misma variable <code>x</code>.</p>
+<pre><code class="language-python"># foo.py
+x = 42
+def grok(a):
+    ...
+</code></pre>
+<pre><code class="language-python"># bar.py
+x = 37
+def spam(a):
+    ...
+</code></pre>
+<p>En este caso, las definiciones de <code>x</code> se refieren a diferentes variables. Una es <code>foo.x</code> y la otra es <code>bar.x</code>. Diferentes módulos pueden usar los mismos nombres y esos nombres no entrarán en conflicto entre sí.</p>
+<p><strong>Los módulos están aislados.</strong></p>
+<h4 id="modulos-como-entornos">Módulos como entornos</h4>
+<p>Los módulos forman un entorno envolvente para todo el código definido en su interior.</p>
+<pre><code class="language-python"># foo.py
+x = 42
+
+def grok(a):
+    print(x)
+</code></pre>
+<p>Las variables <em>globales</em> siempre están vinculadas al módulo envolvente (mismo archivo). Cada archivo fuente es su propio pequeño universo.</p>
+<h4 id="ejecucion-de-modulo">Ejecución de módulo</h4>
+<p>Cuando se importa un módulo, <em>todas las instrucciones del módulo se ejecutan</em> una tras otra hasta llegar al final del archivo. El contenido del espacio de nombres del módulo son todos los nombres <em>globales</em> que todavía están definidos al final del proceso de ejecución. Si hay instrucciones de script que realizan tareas en el ámbito global (imprimir, crear archivos, etc.), verá que se ejecutan durante la importación.</p>
+<h4 id="instruccion-import-as">Instrucción <code>import as</code></h4>
+<p>Puede cambiar el nombre de un módulo mientras lo importa:</p>
+<pre><code class="language-python">import math as m
+def rectangular(r, theta):
+    x = r * m.cos(theta)
+    y = r * m.sin(theta)
+    return x, y
+</code></pre>
+<p>Funciona igual que una importación normal. Simplemente cambia el nombre del módulo en ese archivo.</p>
+<h4 id="importacion-de-modulo-from">Importación de módulo <code>from</code></h4>
+<p>Esto selecciona símbolos seleccionados de un módulo y los pone a disposición localmente.</p>
+<pre><code class="language-python">from math import sin, cos
+
+def rectangular(r, theta):
+    x = r * cos(theta)
+    y = r * sin(theta)
+    return x, y
+</code></pre>
+<p>Esto permite que se utilicen partes de un módulo sin tener que escribir el prefijo del módulo. Es útil para nombres de uso frecuente.</p>
+<h4 id="comentarios-sobre-la-importacion">Comentarios sobre la importación</h4>
+<p>Las variaciones en la importación <em>no</em> cambian la forma en que funcionan los módulos.</p>
+<pre><code class="language-python">import math
+# versus
+import math as m
+# versus
+from math import cos, sin
+...
+</code></pre>
+<p>Específicamente, <code>import</code> siempre ejecuta el archivo <em>completo</em> y los módulos siguen siendo entornos aislados.</p>
+<p>La declaración <code>import module as</code> solo cambia el nombre localmente. La declaración <code>from math import cos, sin</code> todavía carga el módulo matemático completo detrás de escena. Simplemente copia los nombres <code>cos</code> y <code>sin</code> del módulo al espacio local después de que finaliza.</p>
+<h4 id="carga-de-modulos">Carga de módulos</h4>
+<p>Cada módulo se carga y se ejecuta solo <em>una vez</em>. <em>Nota: Las importaciones repetidas solo devuelven una referencia al módulo cargado previamente.</em></p>
+<p><code>sys.modules</code> es un diccionario de todos los módulos cargados.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.modules.keys()
+['copy_reg', '__main__', 'site', '__builtin__', 'encodings', 'encodings.encodings', 'posixpath', ...]
+&gt;&gt;&gt;
+</code></pre>
+<p><strong>Precaución:</strong> Surge una confusión común si repite una declaración <code>import</code> después de cambiar el código fuente de un módulo. Debido a la caché de módulos <code>sys.modules</code>, las importaciones repetidas siempre devuelven el módulo cargado previamente, incluso si se realizó un cambio. La forma más segura de cargar código modificado en Python es salir y reiniciar el intérprete.</p>
+<h4 id="localizacion-de-modulos">Localización de módulos</h4>
+<p>Python consulta una lista de rutas (sys.path) cuando busca módulos.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+[
+'',
+'/usr/local/lib/python36/python36.zip',
+'/usr/local/lib/python36',
+...
+]
+</code></pre>
+<p>El directorio de trabajo actual suele ser el primero.</p>
+<h4 id="ruta-de-busqueda-de-modulos">Ruta de búsqueda de módulos</h4>
+<p>Como se indicó, <code>sys.path</code> contiene las rutas de búsqueda. Puede ajustarlas manualmente si es necesario.</p>
+<pre><code class="language-python">import sys
+sys.path.append('/project/foo/pyfiles')
+</code></pre>
+<p>Las rutas también se pueden agregar a través de variables de entorno.</p>
+<pre><code class="language-shell">bash % env PYTHONPATH=/project/foo/pyfiles python
+Python 3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)] on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+['', 'C:\\Program Files\\Git\\project\\foo\\pyfiles', ...]
+</code></pre>
+<p>Como regla general, no debería ser necesario ajustar manualmente la ruta de búsqueda del módulo. Sin embargo, a veces surge si intenta importar código Python que se encuentra en una ubicación inusual o que no es fácilmente accesible desde el directorio de trabajo actual.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>Para este ejercicio que involucra módulos, es de vital importancia asegurarse de que está ejecutando Python en un entorno adecuado. Los módulos a menudo presentan a los nuevos programadores problemas relacionados con el directorio de trabajo actual o con la configuración de la ruta de Python. Para este curso, se supone que está escribiendo todo su código en el directorio <code>Work/</code>. Para obtener mejores resultados, debe asegurarse de que también está en ese directorio cuando inicia el intérprete. Si no es así, debe asegurarse de que <code>practical-python/Work</code> se agregue a <code>sys.path</code>.</p>
+<h5 id="ejercicio-311-importaciones-de-modulos">Ejercicio 3.11: Importaciones de módulos</h5>
+<p>En la sección 3, creamos una función de propósito general <code>parse_csv()</code> para analizar el contenido de los archivos de datos CSV.</p>
+<p>Ahora, vamos a ver cómo usar esa función en otros programas. Primero, comienza en una nueva ventana de shell. Navega hasta la carpeta donde tienes todos tus archivos. Vamos a importarlos.</p>
+<p>Inicia el modo interactivo de Python.</p>
+<pre><code class="language-shell">bash % $ python
+Python 3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)] on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</code></pre>
+<p>Una vez que hayas hecho eso, intenta importar algunos de los programas que escribiste anteriormente. Deberías ver su salida exactamente como antes. Solo para enfatizar, importar un módulo ejecuta su código.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import bounce
+... mira el resultado ...
+&gt;&gt;&gt; import mortgage
+... mira el resultado ...
+&gt;&gt;&gt; import report
+... mira el resultado ...
+&gt;&gt;&gt;
+</code></pre>
+<p>Si nada de esto funciona, probablemente estés ejecutando Python en el directorio incorrecto. Ahora, intenta importar tu módulo <code>fileparse</code> y obtener ayuda al respecto.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import fileparse
+&gt;&gt;&gt; help(fileparse)
+... mira el resultado...
+&gt;&gt;&gt; dir(fileparse)
+... mira el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>Intenta usar el módulo para leer algunos datos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = fileparse.parse_csv('Data/portfolio.csv',select=['name','shares','price'], types=[str,int,float])
+&gt;&gt;&gt; portfolio
+... mira el resultado...
+&gt;&gt;&gt; pricelist = fileparse.parse_csv('Data/prices.csv',types=[str,float], has_headers=False)
+&gt;&gt;&gt; pricelist
+... mira el resultado...
+&gt;&gt;&gt; prices = dict(pricelist)
+&gt;&gt;&gt; prices
+... mira el resultado...
+&gt;&gt;&gt; prices['IBM']
+106.11
+&gt;&gt;&gt;
+</code></pre>
+<p>Intenta importar una función de modo que no necesites incluir el nombre del módulo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from fileparse import parse_csv
+&gt;&gt;&gt; portfolio = parse_csv('Data/portfolio.csv', select=['name','shares','price'], types=[str,int,float])
+&gt;&gt;&gt; portfolio
+... mira el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-312-uso-del-modulo-de-la-biblioteca">Ejercicio 3.12: Uso del módulo de la biblioteca</h5>
+<p>En la sección 2, escribiste un programa <code>report.py</code> que produjo un informe de acciones como este:</p>
+<pre><code>Nombre Acciones Precio Cambio
+---------- ---------- ---------- ----------
+AA 100 9.22 -22.98
+IBM 50 106.28 15.18
+CAT 150 35,46 -47,98
+MSFT 200 20,89 -30,34
+GE 95 13,48 -26,89
+MSFT 50 20,89 -44,21
+IBM 100 106,28 35,84
+</code></pre>
+<p>Tome ese programa y modifíquelo de modo que todo el procesamiento del archivo de entrada se realice utilizando funciones en su módulo <code>fileparse</code>. Para ello, importe <code>fileparse</code> como módulo y cambie las funciones <code>read_portfolio()</code> y <code>read_prices()</code> para utilizar la función <code>parse_csv()</code>.</p>
+<p>Use el modo interactivo al comienzo de este ejercicio como guía. Después, debería obtener exactamente el mismo resultado que antes.</p>
+<h5 id="ejercicio-313-se-dejo-en-blanco-intencionalmente-omitir">Ejercicio 3.13: Se dejó en blanco intencionalmente (omitir)</h5>
+<h5 id="ejercicio-314-uso-de-mas-importaciones-de-bibliotecas">Ejercicio 3.14: Uso de más importaciones de bibliotecas</h5>
+<p>En la sección 1, escribió un programa <code>pcost.py</code> que lee una cartera y calcula su costo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import pcost
+&gt;&gt;&gt; pcost.portfolio_cost('Data/portfolio.csv')
+44671.15
+&gt;&gt;&gt;
+</code></pre>
+<p>Modifique el archivo <code>pcost.py</code> para que use la función <code>report.read_portfolio()</code>.</p>
+<h4 id="comentario">Comentario</h4>
+<p>Cuando haya terminado con este ejercicio, debería tener tres programas. <code>fileparse.py</code> que contiene una función <code>parse_csv()</code> de propósito general. <code>report.py</code> que produce un informe atractivo, pero también contiene las funciones read_portfolio()<code>y</code>read_prices()<code>. Y finalmente,</code>pcost.py<code>que calcula el costo de la cartera, pero hace uso de la función</code>read_portfolio()<code>escrita para el programa</code>report.py`.</p>
+<p><a href="../../Contents.Rmd">Contenido</a> | <a href="3.3%20Error%20Checking.Rmd">Anterior (3.3 Comprobación de errores)</a> | <a href="05_Main_module.Rmd">Próximo (3.5 Módulo principal)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

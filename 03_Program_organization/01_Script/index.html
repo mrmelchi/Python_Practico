@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/03_Program_organization/01_Script/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>01_Script - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../02_Working_with_data/07_Objects.Rmd">Anterior (2.7 Model de Objetos)</a> | <a href="02_More_functions.Rmd">Próximo (Más detalles sobre las funciones)</a></p>
+<h3 id="31-creacion-de-scripts">3.1 Creación de scripts</h3>
+<p>En esta parte, analizamos más de cerca la práctica de escribir scripts de Python.</p>
+<h4 id="que-es-un-script">¿Qué es un script?</h4>
+<p>Un <em>script</em> es un programa que ejecuta una serie de instrucciones y se detiene.</p>
+<pre><code class="language-python"># program.py
+
+declaración1
+declaración2
+declaración3
+...
+</code></pre>
+<p>Hasta este punto, hemos estado escribiendo principalmente scripts.</p>
+<h4 id="un-problema">Un problema</h4>
+<p>Si escribe un script útil, crecerá en características y funcionalidades. Es posible que desee aplicarlo a otros problemas relacionados. Con el tiempo, podría convertirse en una aplicación crítica. Y si no tienes cuidado, puede convertirse en un gran lío. Así que, organicémonos.</p>
+<h4 id="definicion-de-cosas">Definición de cosas</h4>
+<p>Los nombres siempre deben definirse antes de que se utilicen más adelante.</p>
+<pre><code class="language-python">def square(x):
+    return x*x
+
+a = 42
+b = a + 2 # Requiere que `a` esté definido
+
+z = square(b) # Requiere que `square` y `b` estén definidos
+</code></pre>
+<p><strong>El orden es importante.</strong> Casi siempre colocas las definiciones de variables y funciones cerca de la parte superior.</p>
+<h4 id="definicion-de-funciones">Definición de funciones</h4>
+<p>Es una buena idea poner todo el código relacionado con una sola <em>tarea</em> en un solo lugar. Usa una función.</p>
+<pre><code class="language-python">def read_prices(filename):
+    prices = {}
+    with open(filename) as f:
+        f_csv = csv.reader(f)
+        for row in f_csv:
+            prices[row[0]] = float(row[1])
+    return prices
+</code></pre>
+<p>Una función también simplifica las operaciones repetidas.</p>
+<pre><code class="language-python">oldprices = read_prices('oldprices.csv')
+newprices = read_prices('newprices.csv')
+</code></pre>
+<h4 id="que-es-una-funcion">¿Qué es una función?</h4>
+<p>Una función es una secuencia de instrucciones con nombre.</p>
+<pre><code class="language-python">def funcname(args):
+    statement
+    statement
+    ...
+    return result
+</code></pre>
+<p><em>Cualquier</em> instrucción de Python se puede utilizar dentro de ella.</p>
+<pre><code class="language-python">def foo():
+    import math
+    print(math.sqrt(2))
+    help(math)
+</code></pre>
+<p>No hay instrucciones <em>especiales</em> en Python (lo que hace que sea fácil de recordar).</p>
+<h4 id="definicion-de-funcion">Definición de función</h4>
+<p>Las funciones se pueden <em>definir</em> en cualquier orden.</p>
+<pre><code class="language-python">def foo(x):
+    bar(x)
+
+def bar(x):
+    statements
+
+# O
+def bar(x):
+    statements
+
+def foo(x):
+    bar(x)
+</code></pre>
+<p>Las funciones solo se deben definir antes de <em>utilizarse</em> (o llamarse) durante la ejecución del programa.</p>
+<pre><code class="language-python">foo(3) # foo ya debe estar definido
+</code></pre>
+<p>Estilísticamente, es probablemente más común ver funciones definidas de manera <em>de abajo hacia arriba</em>.</p>
+<h4 id="estilo-de-abajo-hacia-arriba">Estilo de abajo hacia arriba</h4>
+<p>Las funciones se tratan como bloques de construcción. Los bloques más pequeños/simples van primero.</p>
+<pre><code class="language-python"># myprogram.py
+def foo(x):
+    ...
+
+def bar(x):
+    ...
+    foo(x) # Definido arriba
+    ...
+
+def spam(x):
+    ...
+    bar(x) # Definido arriba
+    ...
+
+spam(42) # El código que usa las funciones aparece al final
+</code></pre>
+<p>Las funciones posteriores se basan en funciones anteriores. Nuevamente, esto es solo una cuestión de estilo. Lo único que importa en el programa anterior es que la llamada a <code>spam(42)</code> va al final.</p>
+<h4 id="diseno-de-funciones">Diseño de funciones</h4>
+<p>Idealmente, las funciones deberían ser una <em>caja negra</em>. Solo deberían operar en entradas pasadas y evitar variables globales y efectos secundarios misteriosos. Sus principales objetivos: <em>Modularidad</em> y <em>Predictibilidad</em>.</p>
+<h4 id="cadenas-de-documentacion">Cadenas de documentación</h4>
+<p>Es una buena práctica incluir la documentación en forma de cadena de documentación. Las cadenas de documentación son cadenas que se escriben inmediatamente después del nombre de la función. Alimentan <code>help()</code>, IDEs y otras herramientas.</p>
+<pre><code class="language-python">def read_prices(filename):
+    '''
+    Leer precios de un archivo CSV de nombre y datos de precios
+    '''
+    prices = {}
+    with open(filename) as f:
+      f_csv = csv.reader(f)
+      for row in f_csv:
+          prices[row[0]] = float(row[1])
+    return prices
+</code></pre>
+<p>Una buena práctica para las cadenas de documentación es escribir un resumen breve de una oración de lo que hace la función. Si se necesita más información, incluya un breve ejemplo de uso junto con una descripción más detallada de los argumentos.</p>
+<h4 id="anotaciones-de-tipo">Anotaciones de tipo</h4>
+<p>También puede agregar sugerencias de tipo opcionales a las definiciones de funciones.</p>
+<pre><code class="language-python">def read_prices(filename: str) -&gt; dict:
+    '''
+    Leer precios de un archivo CSV de nombre y datos de precios
+    '''
+    prices = {}
+    with open(filename) as f:
+      f_csv = csv.reader(f)
+      for row in f_csv:
+          prices[row[0]] = float(row[1])
+    return prices
+</code></pre>
+<p>Las sugerencias no hacen nada operativamente. Son puramente informativas. Sin embargo, pueden ser utilizadas por IDE, verificadores de código y otras herramientas para hacer más.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En la sección 2, escribió un programa llamado <code>report.py</code> que imprimía un informe que mostraba el rendimiento de una cartera de acciones. Este programa constaba de algunas funciones. Por ejemplo:</p>
+<pre><code class="language-python"># report.py
+import csv
+
+def read_portfolio(filename):
+    '''
+    Leer un archivo de cartera de acciones en una lista de diccionarios con claves
+    nombre, acciones y precio.
+    '''
+    portfolio = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+
+        for row in rows:
+            record = dict(zip(headers, row))
+            stock = {
+                'name' : record['name'],
+                'shares' : int(record['shares']),
+                'price' : float(record['price'])
+            }
+            portfolio.append(stock)
+    return portfolio
+...
+</code></pre>
+<p>Sin embargo, también había partes del programa que solo realizaban una serie de cálculos programados. Este código apareció cerca del final del programa. Por ejemplo:</p>
+<pre><code class="language-python">...
+
+# Generar el informe
+
+headers = ('Name', 'Shares', 'Price', 'Change')
+print('%10s %10s %10s %10s'  % headers)
+print(('-' * 10 + ' ') * len(headers))
+for row in report:
+    print('%10s %10d %10.2f %10.2f' % row)
+...
+</code></pre>
+<p>En este ejercicio, tomaremos este programa y lo organizaremos un poco más en torno al uso de funciones.</p>
+<h5 id="ejercicio-31-estructurar-un-programa-como-una-coleccion-de-funciones">Ejercicio 3.1: Estructurar un programa como una colección de funciones</h5>
+<p>Modifique su programa <code>report.py</code> para que todas las operaciones principales, incluidos los cálculos y la salida, se realicen mediante una colección de funciones. Específicamente:</p>
+<ul>
+<li>Cree una función <code>print_report(report)</code> que imprima el informe. * Cambie la última parte del programa para que no sea más que una serie de llamadas de función y ningún otro cálculo.</li>
+</ul>
+<h5 id="ejercicio-32-creacion-de-una-funcion-de-nivel-superior-para-la-ejecucion-del-programa">Ejercicio 3.2: Creación de una función de nivel superior para la ejecución del programa</h5>
+<p>Tome la última parte de su programa y empaquetela en una sola función <code>portfolio_report(portfolio_filename, prices_filename)</code>. Haga que la función funcione de modo que la siguiente llamada de función cree el informe como antes:</p>
+<pre><code class="language-python">portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+</code></pre>
+<p>En esta versión final, su programa no será más que una serie de definiciones de funciones seguidas de una única llamada de función a <code>portfolio_report()</code> al final (que ejecuta todos los pasos involucrados en el programa).</p>
+<p>Al convertir su programa en una única función, se vuelve fácil ejecutarlo en diferentes entradas. Por ejemplo, prueba estas declaraciones de forma interactiva después de ejecutar tu programa:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio_report('Data/portfolio2.csv', 'Data/prices.csv')
+... Observa la salida ...
+&gt;&gt;&gt; files = ['Data/portfolio.csv', 'Data/portfolio2.csv']
+&gt;&gt;&gt; for name in files:
+        print(f'{name:-^43s}')
+        portfolio_report(name, 'Data/prices.csv')
+        print()
+
+... Observa la salida ...
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="comentario">Comentario</h5>
+<p>Python hace que sea muy fácil escribir código de script relativamente desestructurado, en el que solo tienes un archivo con una secuencia de declaraciones. En el panorama general, casi siempre es mejor utilizar funciones siempre que puedas. En algún momento, ese script crecerá y desearás tener un poco más de organización. Además, un hecho poco conocido es que Python se ejecuta un poco más rápido si se utilizan funciones.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../02_Working_with_data/07_Objects.Rmd">Anterior (2.7 Model de Objetos)</a> | <a href="02_More_functions.Rmd">Próximo (Más detalles sobre las funciones)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

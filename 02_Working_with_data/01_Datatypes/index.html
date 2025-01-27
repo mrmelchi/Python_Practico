@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/02_Working_with_data/01_Datatypes/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>01_Datatypes - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../01_Introduction/06_Files.Rmd">Anterior (1.6
+Archivos)</a> | <a href="02_Containers.Rmd">Próximo (2.2
+Contenedores)</a></p>
+<h3 id="21-tipos-y-estructuras-de-datos">2.1 Tipos y estructuras de datos</h3>
+<p>Esta sección presenta estructuras de datos en forma de tuplas y
+diccionarios.</p>
+<h4 id="tipos-de-datos-primitivos">Tipos de datos primitivos</h4>
+<p>Python tiene algunos tipos de datos primitivos:</p>
+<ul>
+<li>Números enteros</li>
+<li>Números de punto flotante</li>
+<li>Strings (texto)</li>
+</ul>
+<p>Aprendimos sobre esto en la introducción.</p>
+<h4 id="none-tipo">None tipo</h4>
+<pre><code class="language-python">email_address = None
+</code></pre>
+<p><code>None</code> se utiliza a menudo como marcador de posición para valores
+opcionales o faltantes. Se evalúa como "False" en condicionales.</p>
+<pre><code class="language-python">if email_address:
+    send_email(email_address, msg)
+</code></pre>
+<h4 id="estructuras-de-datos">Estructuras de datos</h4>
+<p>Los programas reales tienen datos más complejos. Por ejemplo,
+información sobre una tenencia de acciones:</p>
+<pre><code class="language-code">100 shares of GOOG at $490.10
+</code></pre>
+<p>Este es un "objeto" con tres partes:</p>
+<ul>
+<li>Nombre o símbolo de la acción ("GOOG", una cadena)</li>
+<li>Número de acciones (100, un intero)</li>
+<li>Precio (490.10 por acción, un flotante)</li>
+</ul>
+<h4 id="tuplas">Tuplas</h4>
+<p>Una tupla es una colección de valores agrupados.</p>
+<p>Ejemplo:</p>
+<pre><code class="language-python">s = ('GOOG', 100, 490.1)
+</code></pre>
+<p>A veces se omite el <code>()</code> en la sintaxis.</p>
+<pre><code class="language-python">s = 'GOOG', 100, 490.1
+</code></pre>
+<p>Casos especiales (tupla-0, tupla-1).</p>
+<pre><code class="language-python">t = ()         # Una tupla vacía
+w = ('GOOG', ) # Una tupla de 1 elemento
+</code></pre>
+<p>Las tuplas se utilizan a menudo para representar registros o estructuras
+<em>simples</em>. Por lo general, se trata de un único <em>objeto</em> formado por
+múltiples partes. Una buena analogía: <em>Una tupla es como una sola fila
+en una tabla de base de datos.</em></p>
+<p>Los contenidos de las tuplas están ordenados (como una matriz).</p>
+<pre><code class="language-python">s = ('GOOG', 100, 490.1)
+name = s[0]                 # 'GOOG'
+shares = s[1]               # 100
+price = s[2]                # 490.1
+</code></pre>
+<p>Sin embargo, el contenido no se puede modificar.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s[1] = 75
+TypeError: object does not support item assignment
+</code></pre>
+<p>Sin embargo, puedes crear una nueva tupla basada en una tupla actual.</p>
+<pre><code>
+``` python
+s = (s[0], 75, s[2])
+</code></pre>
+<h4 id="empaquetado-de-tuplas">Empaquetado de tuplas</h4>
+<p>Las tuplas tratan más bien de agrupar elementos relacionados en una sola
+<em>entidad</em>.</p>
+<pre><code class="language-python">s = ('GOOG', 100, 490.1)
+</code></pre>
+<p>La tupla son luego fácil de pasar a otras partes de un programa como un
+único objeto.</p>
+<h4 id="desempaquetado-de-tuplas">Desempaquetado de tuplas</h4>
+<p>Para utilizar la tupla en otro lugar, puedes deswmpaquetar sus partes en
+variables.</p>
+<pre><code class="language-python">name, shares, price = s
+print('Cost', shares * price)
+</code></pre>
+<p>El número de variables de la izquierda en principio debería coincidir
+con la estructura de la tupla.</p>
+<pre><code class="language-python">name, shares = s     # ERROR
+
+Traceback (most recent call last):
+  File &quot;&lt;python-input-1&gt;&quot;, line 1, in &lt;module&gt;
+    name, shares = s     # ERROR
+    ^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+</code></pre>
+<p>Pero podría hacer algo como esto también:</p>
+<pre><code class="language-python">name, *_ = s    
+print(name) # 'GOOG'
+</code></pre>
+<p>o incluso esto:</p>
+<pre><code class="language-python">*_ , price = s    
+print(price) # 490.1
+</code></pre>
+<p>En ambos casos
+`<code>*_ completa las variables faltantes. Incluir más asterisco en el lado izquierdo de la asignación provocará un SyntaxError: multiple starred expressions in assignment</code>`</p>
+<h4 id="tuplas-vs-listas">Tuplas vs. Listas</h4>
+<p>Las tuplas parecen listas de solo lectura. Sin embargo, las tuplas se
+utilizan con mayor frecuencia para un <em>único elemento</em> que consta de
+varias partes. Las listas suelen ser una colección de elementos
+distintos, normalmente todos del mismo tipo.</p>
+<pre><code class="language-python">record = ('GOOG', 100, 490.1)       # Una tupla que representa un registro en un portafolio de inversión
+symbols = [ 'GOOG', 'AAPL', 'IBM' ]  # Una lista que representa tres símbolos bursátiles
+</code></pre>
+<h4 id="diccionarios">Diccionarios</h4>
+<p>Un diccionario es una asignación de claves a valores. A veces también se
+le llama tabla hash o matriz asociativa. Las claves sirven como índices
+para acceder a los valores.</p>
+<pre><code class="language-python">s = {
+    'name': 'GOOG',
+    'shares': 100,
+    'price': 490.1
+}
+</code></pre>
+<h4 id="operaciones-comunes">Operaciones comunes</h4>
+<p>Para obtener valores de un diccionario utilice los nombres de clave.</p>
+<pre><code class="language-python">&gt;&gt;&gt; print(s['name'], s['shares'])
+GOOG 100
+&gt;&gt;&gt; s['price']
+490.10
+&gt;&gt;&gt;
+</code></pre>
+<p>Para agregar o modificar valores se asignan utilizando los nombres de
+las teclas.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s['shares'] = 75
+&gt;&gt;&gt; s['date'] = '6/6/2007'
+&gt;&gt;&gt;
+</code></pre>
+<p>Para eliminar un valor utilice la instrucción <code>del</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; del s['date']
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="por-que-diccionarios">¿Por qué diccionarios?</h4>
+<p>Los diccionarios son útiles cuando hay <em>muchos</em> valores diferentes y
+esos valores pueden modificarse o manipularse. Los diccionarios hacen
+que su código sea más legible.</p>
+<pre><code>s['precio']
+# en lugar de
+es[2]
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En los últimos ejercicios, escribió un programa que lee un archivo de
+datos <code>Data/portfolio.csv</code>. Usando el módulo <code>csv</code>, es fácil leer el
+archivo fila por fila.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/portfolio.csv')
+&gt;&gt;&gt; rows = csv.reader(f)
+&gt;&gt;&gt; next(rows)
+['name', 'shares', 'price']
+&gt;&gt;&gt; row = next(rows)
+&gt;&gt;&gt; row
+['AA', '100', '32.20']
+f.close()
+&gt;&gt;&gt;
+</code></pre>
+<p>Aunque leer el archivo es fácil, a menudo deseamos hacer más con los
+datos que leerlos. Por ejemplo, quizás desee almacenarlo y comenzar a
+realizar algunos cálculos en él. Desafortunadamente, una "fila" de datos
+sin procesar no le brinda suficiente información con la que trabajar.
+Por ejemplo, ni siquiera un cálculo matemático simple funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; row = ['AA', '100', '32.20']
+&gt;&gt;&gt; cost = row[1] * row[2]
+Traceback (most recent call last):
+    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: can't multiply sequence by non-int of type 'str'
+&gt;&gt;&gt;
+</code></pre>
+<p>Para hacer más, normalmente desearás interpretar los datos sin procesar
+de alguna manera y convertirlos en un tipo de objeto más útil para poder
+trabajar con ellos más adelante. Dos opciones simples son tuplas o
+diccionarios.</p>
+<h5 id="ejercicio-21-tuplas">Ejercicio 2.1: Tuplas</h5>
+<p>En el modo interactivo, cree la siguiente tupla que representa la fila
+anterior, pero con las columnas numéricas convertidas en números
+adecuados:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = (row[0], int(row[1]), float(row[2]))
+&gt;&gt;&gt; t
+('AA', 100, 32.2)
+&gt;&gt;&gt;
+</code></pre>
+<p>Con esto, ahora puedes calcular el costo total multiplicando las
+acciones y el precio:</p>
+<pre><code class="language-python">&gt;&gt;&gt; cost = t[1] * t[2]
+&gt;&gt;&gt; cost
+3220.0000000000005
+&gt;&gt;&gt;
+</code></pre>
+<p>¿Las matemáticas están rotas en Python? ¿Cuál es el problema con la
+respuesta 3220.0000000000005?</p>
+<p>Esto es un dispositivo del hardware de punto flotante de su computadora
+que solo puede representar con precisión decimales en base 2, no en base
+10. Incluso en cálculos sencillos que involucran decimales de base 10 se
+introducen pequeños errores. Esto es normal, aunque quizá resulte un
+poco sorprendente si no lo has visto antes.</p>
+<p>Esto sucede en todos los lenguajes de programación que utilizan
+decimales de punto flotante, pero a menudo queda oculto al imprimir. Por
+ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; print(f'{cost:0.2f}')
+3220.00
+&gt;&gt;&gt;
+</code></pre>
+<p>Las tuplas son de solo lectura. Verifique esto intentando cambiar el
+número de acciones a 75.</p>
+<pre><code class="language-python">&gt;&gt;&gt; t[1] = 75
+Traceback (most recent call last):
+    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: 'tuple' object does not support item assignment
+&gt;&gt;&gt;
+</code></pre>
+<p>Aunque no puedes cambiar el contenido de una tupla, siempre puedes crear
+una tupla completamente nueva que reemplace a la anterior.</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = (t[0], 75, t[2])
+&gt;&gt;&gt; t
+('AA', 75, 32.2)
+&gt;&gt;&gt;
+</code></pre>
+<p>Cada vez que se reasigna un nombre de variable existente como éste, se
+descarta el valor anterior. Aunque la tarea anterior puede parecer que
+estás modificando la tupla, en realidad estás creando una nueva tupla y
+descartando la anterior.</p>
+<p>Las tuplas se utilizan a menudo para empaquetar y desempaquetar valores
+en variables. Pruebe lo siguiente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; name, shares, price = t
+&gt;&gt;&gt; name
+'AA'
+&gt;&gt;&gt; shares
+75
+&gt;&gt;&gt; price
+32.2
+&gt;&gt;&gt;
+</code></pre>
+<p>Tome las variables anteriores y vuelva a empaquetarlas en una tupla</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = (name, 2*shares, price)
+&gt;&gt;&gt; t
+('AA', 150, 32.2)
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-22-diccionarios-como-estructura-de-datos">Ejercicio 2.2: Diccionarios como estructura de datos</h5>
+<p>Una alternativa a una tupla es crear un diccionario.</p>
+<pre><code class="language-python">&gt;&gt;&gt; d = {
+        'name' : row[0],
+        'shares' : int(row[1]),
+        'price'  : float(row[2])
+    }
+&gt;&gt;&gt; d
+{'name': 'AA', 'shares': 100, 'price': 32.2 }
+&gt;&gt;&gt;
+</code></pre>
+<p>Calcular el costo total de esta tenencia:</p>
+<pre><code class="language-python">&gt;&gt;&gt; cost = d['shares'] * d['price']
+&gt;&gt;&gt; cost
+3220.0000000000005
+&gt;&gt;&gt;
+</code></pre>
+<p>Compare este ejemplo con el mismo cálculo que involucra tuplas
+mencionado anteriormente. Cambie el número de acciones a 75.</p>
+<pre><code class="language-python">&gt;&gt;&gt; d['shares'] = 75
+&gt;&gt;&gt; d
+{'name': 'AA', 'shares': 75, 'price': 32.2 }
+&gt;&gt;&gt;
+</code></pre>
+<p>A diferencia de las tuplas, los diccionarios se pueden modificar
+libremente. Añade algunos atributos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; d['date'] = (6, 11, 2007)
+&gt;&gt;&gt; d['account'] = 12345
+&gt;&gt;&gt; d
+{'name': 'AA', 'shares': 75, 'price':32.2, 'date': (6, 11, 2007), 'account': 12345}
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-23-algunas-operaciones-adicionales-del-diccionario">Ejercicio 2.3: Algunas operaciones adicionales del diccionario</h5>
+<p>Si conviertes un diccionario en una lista, obtendrás todas sus claves:</p>
+<pre><code class="language-python">&gt;&gt;&gt; list(d)
+['name', 'shares', 'price', 'date', 'account']
+&gt;&gt;&gt;
+</code></pre>
+<p>De manera similar, si utiliza la declaración <code>for</code> para iterar sobre un
+diccionario, obtendrá las claves:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for k in d:
+        print('k =', k)
+
+k = name
+k = shares
+k = price
+k = date
+k = account
+&gt;&gt;&gt;
+</code></pre>
+<p>Pruebe esta variante que realiza una búsqueda al mismo tiempo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for k in d:
+        print(k, '=', d[k])
+
+name = AA
+shares = 75
+price = 32.2
+date = (6, 11, 2007)
+account = 12345
+&gt;&gt;&gt;
+</code></pre>
+<p>También puedes obtener todas las claves utilizando el método <code>keys()</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; keys = d.keys()
+&gt;&gt;&gt; keys
+dict_keys(['name', 'shares', 'price', 'date', 'account'])
+&gt;&gt;&gt;
+</code></pre>
+<p><code>keys()</code> es un poco inusual ya que devuelve un objeto <code>dict_keys</code>
+especial.</p>
+<p>Esta es una superposición sobre el diccionario original que siempre le
+brinda las claves actuales, incluso si el diccionario cambia. Por
+ejemplo, prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; del d['account']
+&gt;&gt;&gt; keys
+dict_keys(['name', 'shares', 'price', 'date'])
+&gt;&gt;&gt;
+</code></pre>
+<p>Tenga en cuenta cuidadosamente que la <code>'account'</code> desapareció de <code>keys</code>
+aunque no volvió a llamar a <code>d.keys()</code>.</p>
+<p>Una forma más elegante de trabajar con claves y valores juntos es
+utilizar el método <code>items()</code>. Esto le proporciona tuplas
+<code>(clave, valor)</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; items = d.items()
+&gt;&gt;&gt; items
+dict_items([('name', 'AA'), ('shares', 75), ('price', 32.2), ('date', (6, 11, 2007))])
+&gt;&gt;&gt; for k, v in d.items():
+        print(k, '=', v)
+
+name = AA
+shares = 75
+price = 32.2
+date = (6, 11, 2007)
+&gt;&gt;&gt;
+</code></pre>
+<p>Si tiene tuplas como <code>items</code>, puede crear un diccionario usando la
+función <code>dict()</code>. Pruébalo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; items
+dict_items([('name', 'AA'), ('shares', 75), ('price', 32.2), ('date', (6, 11, 2007))])
+&gt;&gt;&gt; d = dict(items)
+&gt;&gt;&gt; d
+{'name': 'AA', 'shares': 75, 'price':32.2, 'date': (6, 11, 2007)}
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../01_Introduction/06_Files.Rmd">Anterior (1.6
+Archivos)</a> | <a href="02_Containers.Rmd">Próximo (2.2
+Contenedores)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

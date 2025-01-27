@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/07_Advanced_Topics/04_Function_decorators/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04_Function_decorators - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Returning_functions.Rmd">Anterior (7.3 Retornando Funciones y clousures)</a> | <a href="05_Decorated_methods.Rmd">Próximo (7.5 Métodos estáticos y de clase)</a></p>
+<h3 id="74-decoradores-de-funciones">7.4 Decoradores de funciones</h3>
+<p>Esta sección presenta el concepto de decorador. Este es un tema avanzado del que apenas hemos tocado la superficie.</p>
+<h4 id="ejemplo-de-registro">Ejemplo de registro</h4>
+<p>Considere una función.</p>
+<pre><code class="language-python">def add(x, y):
+    return x + y
+</code></pre>
+<p>Ahora, considere la función con algún registro agregado.</p>
+<pre><code class="language-python">def add(x, y):
+    print('Llamando a add')
+    return x + y
+</code></pre>
+<p>Ahora una segunda función también con algún registro.</p>
+<pre><code class="language-python">def sub(x, y):
+    print('Llamando a sub')
+    return x - y
+</code></pre>
+<h4 id="observacion">Observación</h4>
+<p><em>Observación: Es algo repetitivo.</em></p>
+<p>Escribir programas en los que hay mucha replicación de código suele ser muy molesto. Son tediosos de escribir y difíciles de mantener. Especialmente si decides que quieres cambiar su funcionamiento (es decir, un tipo diferente de registro, tal vez).</p>
+<h4 id="codigo-que-crea-el-registro">Código que crea el registro</h4>
+<p>Quizás puedas crear una función que cree funciones con el registro agregado a ellas. Un contenedor.</p>
+<pre><code class="language-python">def logged(func):
+    def wrapper(*args, **kwargs):
+        print('Llamando a', func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+</code></pre>
+<p>Ahora úsalo.</p>
+<pre><code class="language-python">def add(x, y):
+    return x + y
+
+logged_add = logged(add)
+</code></pre>
+<p>¿Qué sucede cuando llamas a la función devuelta por <code>logged</code>?</p>
+<pre><code class="language-python">logged_add(3, 4) # Ves que aparece el mensaje de registro
+</code></pre>
+<p>Este ejemplo ilustra el proceso de creación de una llamada <em>función contenedora</em>.</p>
+<p>Una función contenedora es una función que envuelve otra función con algunos bits adicionales de procesamiento, pero que por lo demás funciona exactamente de la misma manera que la función original.</p>
+<pre><code class="language-python">&gt;&gt;&gt; logged_add(3, 4)
+Llamando a add # Salida adicional. Añadida por la función contenedora
+7
+&gt;&gt;&gt;
+</code></pre>
+<p><em>Nota: La función <code>logged()</code> crea la función contenedora y la devuelve como resultado.</em></p>
+<h4 id="decoradores">Decoradores</h4>
+<p>Poner envoltorios a las funciones es extremadamente común en Python. Es tan común que existe una sintaxis especial para ello.</p>
+<pre><code class="language-python">def add(x, y):
+    return x + y
+
+add = logged(add)
+
+# Sintaxis especial
+@logged
+def add(x, y):
+    return x + y
+</code></pre>
+<p>La sintaxis especial realiza exactamente los mismos pasos que se muestran arriba. Un decorador es simplemente una sintaxis nueva. Se dice que <em>decora</em> la función.</p>
+<h4 id="comentario">Comentario</h4>
+<p>Hay muchos más detalles sutiles sobre los decoradores que los que se han presentado aquí. Por ejemplo, su uso en clases o el uso de múltiples decoradores con una función. Sin embargo, el ejemplo anterior es una buena ilustración de cómo tiende a surgir su uso. Por lo general, es en respuesta a un código repetitivo que aparece en una amplia gama de definiciones de funciones. Un decorador puede mover ese código a una definición central.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-710-un-decorador-para-cronometrar">Ejercicio 7.10: Un decorador para cronometrar</h5>
+<p>Si define una función, su nombre y módulo se almacenan en los atributos <code>__name__</code> y <code>__module__</code>. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def add(x,y):
+        return x+y
+
+&gt;&gt;&gt; add.__name__
+'add'
+&gt;&gt;&gt; add.__module__
+'__main__'
+&gt;&gt;&gt;
+</code></pre>
+<p>En un archivo <code>timethis.py</code>, escriba una función decoradora <code>timethis(func)</code> que envuelva una función con una capa adicional de lógica que muestre cuánto tiempo tarda una función en ejecutarse. Para ello, rodearás la función con llamadas de temporización como esta:</p>
+<pre><code class="language-python">start = time.time()
+r = func(*args,**kwargs)
+end = time.time()
+print('%s.%s: %f' % (func.__module__, func.__name__, end-start))
+</code></pre>
+<p>A continuación, se incluye un ejemplo de cómo debería funcionar tu decorador:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from timethis import timethis
+&gt;&gt;&gt; @timethis
+    def countdown(n):
+        while n &gt; 0:
+            n -= 1
+
+&gt;&gt;&gt; countdown(10000000)
+__main__.countdown : 0.076562
+&gt;&gt;&gt;
+</code></pre>
+<p>Discusión: Este decorador <code>@timethis</code> se puede colocar delante de cualquier definición de función. Por lo tanto, puedes usarlo como una herramienta de diagnóstico para ajustar el rendimiento.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Returning_functions.Rmd">Anterior (7.3 Retornando Funciones y clousures)</a> | <a href="05_Decorated_methods.Rmd">Próximo (7.5 Métodos estáticos y de clase)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

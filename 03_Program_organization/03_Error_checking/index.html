@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/03_Program_organization/03_Error_checking/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>03_Error_checking - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_More_functions.Rmd">Anterior (3.2 Más detalles sobre las
+funciones)</a> | <a href="04_Modules.Rmd">Próximo (3.4
+Módulos)</a></p>
+<h3 id="33-comprobacion-de-errores">3.3 Comprobación de errores</h3>
+<p>Aunque las excepciones se introdujeron anteriormente, esta sección
+completa algunos detalles adicionales sobre la comprobación de errores y
+el manejo de excepciones.</p>
+<h4 id="como-fallan-los-programas">Cómo fallan los programas</h4>
+<p>Python no realiza ninguna comprobación o validación de los tipos o
+valores de los argumentos de la función. Una función funcionará con
+cualquier dato que sea compatible con las declaraciones de la función.</p>
+<pre><code class="language-python">def add(x, y):
+    return x + y
+
+add(3, 4) # 7
+add('Hello', 'World') # 'HelloWorld'
+add('3', '4') # '34'
+</code></pre>
+<p>Si hay errores en una función, aparecen en tiempo de ejecución (como una
+excepción).</p>
+<pre><code class="language-python">def add(x, y):
+  return x + y
+
+&gt;&gt;&gt; add(3, '4')
+Traceback (most recent call last):
+...
+TypeError: unsupported operand type(s) for +:
+'int' and 'str'
+&gt;&gt;&gt;
+</code></pre>
+<p>Para verificar el código, se hace mucho hincapié en las pruebas (que se
+tratan más adelante).</p>
+<h4 id="excepciones">Excepciones</h4>
+<p>Las excepciones se utilizan para señalar errores. Para generar una
+excepción usted mismo, utilice la declaración <code>raise</code>.</p>
+<pre><code class="language-python">if name not in authorized:
+    raise RuntimeError(f'{name} not authorized')
+</code></pre>
+<p>Para capturar una excepción, utilice <code>try-except</code>.</p>
+<pre><code class="language-python">try:
+    authenticate(username)
+except RuntimeError as e:
+    print(e)
+</code></pre>
+<h4 id="manejo-de-excepciones">Manejo de excepciones</h4>
+<p>Las excepciones se propagan al primer <code>except</code> coincidente.</p>
+<pre><code class="language-python">def grok():
+    ...
+    raise RuntimeError('¡Vaya!') # Excepción generada aquí
+
+def spam():
+    grok() # Llamada que generará la excepción
+
+def bar():
+    try:
+        spam()
+    except RuntimeError as e: # Excepción detectada aquí
+        ...
+
+def foo():
+    try:
+        bar()
+    except RuntimeError as e: # La excepción NO llega aquí
+        ...
+
+foo()
+</code></pre>
+<p>Para manejar la excepción, coloque declaraciones en el bloque <code>except</code>.
+Puede agregar cualquier declaración que desee para manejar el error.</p>
+<pre><code class="language-python">def grok():...
+    raise RuntimeError('¡Vaya!')
+
+def bar():
+    try:
+        grok()
+    except RuntimeError as e: # Excepción detectada aquí
+        declaraciones # Use esta declaración
+        declaraciones
+        ...
+
+bar()
+</code></pre>
+<p>Después de la manipulación, la ejecución se reanuda con la primera
+declaración después de <code>try-except</code>.</p>
+<pre><code class="language-python">def grok(): ...
+    raise RuntimeError('¡Vaya!')
+
+def bar():
+    try:
+      grok()
+    except RuntimeError as e: # Excepción detectada aquí
+        declaraciones
+        declaraciones
+        ...
+    declaraciones # Reanuda la ejecución aquí
+    declaraciones # Y continúa aquí
+    ...
+
+bar()
+</code></pre>
+<h4 id="excepciones-integradas">Excepciones integradas</h4>
+<p>Hay alrededor de dos docenas de excepciones integradas. Generalmente el
+nombre de la excepción es indicativo de lo que está mal (por ejemplo, se
+genera un <code>ValueError</code> porque usted proporcionó un valor incorrecto).
+Esta no es una lista exhaustiva. Consulte la
+<a href="https://docs.python.org/3/library/exceptions.html">documentación</a> para
+obtener más información.</p>
+<pre><code class="language-python">ArithmeticError
+AssertionError
+EnvironmentError
+EOFError
+ImportError
+IndexError
+KeyboardInterrupt
+KeyError
+MemoryError
+NameError
+ReferenceError
+RuntimeError
+SyntaxError
+SystemError
+TypeError
+ValueError
+</code></pre>
+<h4 id="valores-de-excepcion">Valores de excepción</h4>
+<p>Las excepciones tienen un valor asociado. Contiene información más
+específica sobre lo que está mal.</p>
+<pre><code class="language-python">raise RuntimeError('Nombre de usuario no válido')
+</code></pre>
+<p>Este valor es parte de la instancia de excepción que se coloca en la
+variable suministrada a <code>except</code>.</p>
+<pre><code class="language-python">try:
+...
+except RuntimeError as e: # `e` contiene la excepción generada
+...
+</code></pre>
+<p><code>e</code> es una instancia del tipo de excepción. Sin embargo, a menudo parece
+una cadena cuando se imprime.</p>
+<pre><code class="language-python">except RuntimeError as e:
+    print('Falló : Razón', e)
+</code></pre>
+<h4 id="captura-de-multiples-errores">Captura de múltiples errores</h4>
+<p>Puedes capturar diferentes tipos de excepciones usando múltiples bloques
+<code>except</code>.</p>
+<pre><code class="language-python">try:
+...
+except LookupError as e:
+...
+except RuntimeError as e:
+...
+except IOError as e:
+...
+except KeyboardInterrupt as e:
+...
+</code></pre>
+<p>Alternativamente, si las instrucciones para manejarlas son las mismas,
+puede agruparlas:</p>
+<pre><code class="language-python">try:
+...
+except (IOError,LookupError,RuntimeError) as e:
+...
+</code></pre>
+<h4 id="capturar-todos-los-errores">Capturar todos los errores</h4>
+<p>Para capturar cualquier excepción, use <code>Exception</code> de esta manera:</p>
+<pre><code class="language-python">try:
+...
+except Exception: # DANGER. Vea a continuación
+    print('Un error ha ocurrido')
+</code></pre>
+<p>En general, escribir código como ese es una mala idea porque no tendrá
+idea de por qué falló.</p>
+<h4 id="forma-incorrecta-de-capturar-errores">Forma incorrecta de capturar errores</h4>
+<p>Esta es la forma incorrecta de usar excepciones.</p>
+<pre><code class="language-python">try:
+    go_do_something()
+except Exception:
+    print('La computadora dice no')
+</code></pre>
+<p>Esto captura todos los errores posibles y puede hacer que sea imposible
+depurar cuando el código falla por alguna razón que no esperabas en
+absoluto (por ejemplo, módulo Python desinstalado, etc.).</p>
+<h4 id="enfoque-un-poco-mejor">Enfoque un poco mejor</h4>
+<p>Si vas a capturar todos los errores, este es un enfoque más sensato.</p>
+<pre><code class="language-python">try:
+    go_do_something()
+except Exception as e:
+    print('La computadora dice no. Razón :', e)
+</code></pre>
+<p>Informa de una razón específica de la falla. Casi siempre es una buena
+idea tener algún mecanismo para ver o informar errores cuando escribe
+código que captura todas las excepciones posibles.</p>
+<p>En general, sin embargo, es mejor capturar el error de la forma más
+específica posible. Solo capture los errores que realmente puede
+manejar. Deje pasar otros errores, tal vez algún otro código pueda
+manejarlos.</p>
+<h4 id="volver-a-generar-una-excepcion">Volver a generar una excepción</h4>
+<p>Use <code>raise</code> para propagar un error capturado.</p>
+<pre><code class="language-python">try:
+    go_do_something()
+except Exception as e:
+    print('La computadora dice no. Razón :', e)
+    raise
+</code></pre>
+<p>Esto le permite tomar medidas (por ejemplo, registrar) y pasar el error
+al autor de la llamada.</p>
+<h4 id="mejores-practicas-para-excepciones">Mejores prácticas para excepciones</h4>
+<p>No capture excepciones. Falle rápido y en voz alta. Si es importante,
+alguien más se ocupará del problema. Solo capture una excepción si usted
+es <em>esa</em> persona. Es decir, solo captura errores de los que puedas
+recuperarte y seguir adelante de forma sensata.</p>
+<h4 id="instruccion-finally">Instrucción <code>finally</code></h4>
+<p>Especifica el código que debe ejecutarse independientemente de si se
+produce o no una excepción.</p>
+<pre><code class="language-python">lock = Lock()
+...
+lock.acquire()
+try:
+  ...
+finally:
+    lock.release() # esto SIEMPRE se ejecutará. Con y sin excepción.
+</code></pre>
+<p>Se utiliza habitualmente para gestionar recursos de forma segura
+(especialmente bloqueos, archivos, etc.).</p>
+<h4 id="instruccion-with">Instrucción <code>with</code></h4>
+<p>En el código moderno, <code>try-finally</code> suele sustituirse por la instrucción
+<code>with</code>.</p>
+<pre><code class="language-python">lock = Lock()
+with lock:
+    # bloqueo adquirido
+    ...
+# bloqueo liberado
+</code></pre>
+<p>Un ejemplo más familiar:</p>
+<pre><code class="language-python">with open(filename) as f:
+    # Use el archivo
+    ...
+# Cierre el archivo
+</code></pre>
+<p><code>with</code> define un <em>contexto</em> de uso para un recurso. Cuando la ejecución
+abandona ese contexto, se liberan los recursos. <code>with</code> sólo funciona con
+ciertos objetos que han sido programados específicamente para
+soportarlo.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-38-generar-excepciones">Ejercicio 3.8: Generar excepciones</h5>
+<p>La función <code>parse_csv()</code> que escribió en la última sección permite
+seleccionar columnas especificadas por el usuario, pero eso sólo
+funciona si el archivo de datos de entrada tiene encabezados de columna.</p>
+<p>Modifique el código para que se genere una excepción si se pasan los
+argumentos <code>select</code> y <code>has_headers=False</code>. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; parse_csv('Data/prices.csv', select=['name','price'], has_headers=False)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;fileparse.py&quot;, line 9, in parse_csv
+raise RuntimeError(&quot;select argument require column headers&quot;)
+RuntimeError: select argument require column headers
+&gt;&gt;&gt;
+</code></pre>
+<p>Después de agregar esta verificación, puede preguntarse si debería
+realizar otros tipos de verificaciones de integridad en la función. Por
+ejemplo, ¿debería verificar que el nombre del archivo sea una cadena,
+que los tipos sean una lista o algo de esa naturaleza?</p>
+<p>Como regla general, generalmente es mejor omitir dichas pruebas y
+simplemente dejar que el programa falle en las entradas incorrectas. El
+mensaje de traceback señalará la fuente del problema y puede ayudar en
+la depuración.</p>
+<p>La razón principal para agregar la comprobación anterior es evitar
+ejecutar el código en un modo sin sentido (por ejemplo, usar una función
+que requiere encabezados de columna, pero especificar simultáneamente
+que no hay encabezados).</p>
+<p>Esto indica un error de programación por parte del código que realiza la
+llamada. Comprobar los casos que "no deberían ocurrir" suele ser una
+buena idea.</p>
+<h5 id="ejercicio-39-captura-de-excepciones">Ejercicio 3.9: Captura de excepciones</h5>
+<p>La función <code>parse_csv()</code> que escribiste se usa para procesar todo el
+contenido de un archivo. Sin embargo, en el mundo real, es posible que
+los archivos de entrada tengan datos corruptos, faltantes o sucios.
+Pruebe este experimento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = parse_csv('Data/missing.csv', types=[str, int, float])
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+File &quot;fileparse.py&quot;, line 36, in parse_csv
+row = [func(val) for func, val in zip(types, row)]
+ValueError: invalid literal for int() with base 10: ''
+&gt;&gt;&gt;
+</code></pre>
+<p>Modifique la función <code>parse_csv()</code> para capturar todas las excepciones
+<code>ValueError</code> generadas durante la creación de registros e imprimir un
+mensaje de advertencia para las filas que no se pueden convertir.</p>
+<p>El mensaje debe incluir el número de fila e información sobre el motivo
+por el que falló. Para probar su función, intente leer el archivo
+<code>Data/missing.csv</code> anterior. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = parse_csv('Data/missing.csv', types=[str, int, float])
+Fila 4: No se pudo convertir ['MSFT', '', '51.23']
+Fila 4: Motivo por el que el literal no es válido para int() con base 10: ''
+Fila 7: No se pudo convertir ['IBM', '', '70.44']
+Fila 7: Motivo por el que el literal no es válido para int() con base 10: ''
+&gt;&gt;&gt;
+&gt;&gt;&gt; portfolio
+[{'price': 32.2, 'name': 'AA', 'shares': 100}, {'price': 91.1, 'name': 'IBM', 'shares': 50}, {'price': 83.44, 'name': 'CAT', 'shares': 150}, {'price': 40,37, 'name': 'GE', 'shares': 95}, {'price': 65,1, 'name': 'MSFT', 'shares': 50}]
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-310-silenciamiento-de-errores">Ejercicio 3.10: Silenciamiento de errores</h5>
+<p>Modifique la función <code>parse_csv()</code> para que los mensajes de error de
+análisis puedan silenciarse si el usuario lo desea explícitamente. Por
+ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = parse_csv('Data/missing.csv', types=[str,int,float], silence_errors=True)
+&gt;&gt;&gt; portfolio
+[{'price': 32.2, 'name': 'AA', 'shares': 100}, {'pricename': 'MSFT', 'shares': 50}]
+&gt;&gt;&gt;
+</code></pre>
+<p>El manejo de errores es una de las cosas más difíciles de hacer bien en
+la mayoría de los programas. Como regla general, no debería ignorar los
+errores en silencio. En cambio, es mejor informar los problemas y darle
+al usuario una opción para silenciar el mensaje de error si así lo
+desea.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_More_functions.Rmd">Anterior (3.2 Más detalles sobre las
+funciones)</a> | <a href="04_Modules.Rmd">Próximo (3.4
+Módulos)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

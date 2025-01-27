@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/02_Working_with_data/03_Formatting/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>03_Formatting - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Containers.Rmd">Anterior (2.2
+Contenedores)</a> | <a href="04_Sequences.Rmd">Próximo (2.4
+Secuencias)</a></p>
+<h3 id="23-formato">2.3 Formato</h3>
+<p>Esta sección es una ligera digresión, pero cuando se trabaja con datos,
+a menudo se desea producir resultados estructurados (tablas, etc.). Por
+ejemplo:</p>
+<pre><code class="language-code">      Name      Shares        Price
+----------  ----------  -----------
+        AA         100        32.20
+       IBM          50        91.10
+       CAT         150        83.44
+      MSFT         200        51.23
+        GE          95        40.37
+      MSFT          50        65.10
+       IBM         100        70.44
+</code></pre>
+<h4 id="formato-de-cadena">Formato de cadena</h4>
+<p>Una forma de formatear cadenas en Python 3.6+ es con <code>f-strings</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; name = 'IBM'
+&gt;&gt;&gt; shares = 100
+&gt;&gt;&gt; price = 91.1
+&gt;&gt;&gt; f'{name:&gt;10s} {shares:&gt;10d} {price:&gt;10.2f}'
+'       IBM        100      91.10'
+&gt;&gt;&gt;
+</code></pre>
+<p>Se reemplaza la parte <code>{expression:format}</code>.</p>
+<p>Se utiliza comúnmente con <code>print</code>.</p>
+<pre><code class="language-python">print(f'{name:&gt;10s} {shares:&gt;10d} {price:&gt;10.2f}')
+</code></pre>
+<h3 id="codigos-de-formato">Códigos de formato</h3>
+<p>Los códigos de formato (después del <code>:</code> dentro de <code>{}</code>) son similares a
+<code>printf()</code> de C. Los códigos comunes incluyen:</p>
+<pre><code class="language-code">d       Decimal entero
+b       Binary entero
+x       Hexadecimal entero
+f       Float como [-]m.dddddd
+e       Float como [-]m.dddddde+-xx
+g       Float, pero selectivo uso de la notación E
+s       String
+c       Character (desde entero)
+</code></pre>
+<p>Los modificadores comunes ajustan el ancho del campo y la precisión
+decimal. Esta es una lista parcial:</p>
+<pre><code class="language-code">:&gt;10d Entero alineado a la derecha en un campo de 10 caracteres
+:&lt;10d Entero alineado a la izquierda en un campo de 10 caracteres
+:^10d Entero centrado en un campo de 10 caracteres
+:0.2f Flotante con precisión de 2 dígitos
+</code></pre>
+<h3 id="formato-del-diccionario">Formato del diccionario</h3>
+<p>Puede utilizar el método <code>format_map()</code> para aplicar formato de cadena a
+un diccionario de valores:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = {
+    'name': 'IBM',
+    'shares': 100,
+    'price': 91.1
+}
+&gt;&gt;&gt; '{name:&gt;10s} {shares:10d} {price:10.2f}'.format_map(s)
+'       IBM        100      91.10'
+&gt;&gt;&gt;
+</code></pre>
+<p>Utiliza los mismos códigos que <code>f-strings</code> pero toma los valores del
+diccionario suministrado.</p>
+<h4 id="metodo-format">Método format()</h4>
+<p>Hay un método <code>format()</code> que puede aplicar formato a argumentos o
+argumentos de palabras clave.</p>
+<pre><code class="language-python">&gt;&gt;&gt; '{name:&gt;10s} {shares:10d} {price:10.2f}'.format(name='IBM', shares=100, price=91.1)
+'       IBM        100      91.10'
+&gt;&gt;&gt; '{:&gt;10s} {:10d} {:10.2f}'.format('IBM', 100, 91.1)
+'       IBM        100      91.10'
+&gt;&gt;&gt;
+</code></pre>
+<p>Francamente, <code>format()</code> es un poco verborrágico. Prefiero las
+<code>f-strngs</code>.</p>
+<h4 id="formato-estilo-c">Formato estilo C</h4>
+<p>También puede utilizar el operador de formato <code>%</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; 'The value is %d' % 3
+'The value is 3'
+&gt;&gt;&gt; '%5d %-5d %10d' % (3,4,5)
+'    3 4              5'
+&gt;&gt;&gt; '%0.2f' % (3.1415926,)
+'3.14'
+</code></pre>
+<p>Esto requiere un solo elemento o una tupla a la derecha. Los códigos de
+formato también se modelan según <code>printf()</code> de C.</p>
+<p><em>Nota: Este es el único formato disponible en cadenas de bytes.</em></p>
+<pre><code class="language-python">&gt;&gt;&gt; b'%s tiene %d mensajes' % (b'Dave', 37)
+b'Dave tiene 37 mensajes
+&gt;&gt;&gt; b'%b tiene %d mensajes' % (b'Dave', 37) # %b se puede usar en lugar de %s
+b'Dave tiene 37 mensajes
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-28-como-formatear-numeros">Ejercicio 2.8: Cómo formatear números</h5>
+<p>Un problema común con la impresión de números es especificar el número
+de decimales. Una forma de solucionar esto es utilizar <code>f-strings</code>.
+Pruebe estos ejemplos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; value = 42863.1
+&gt;&gt;&gt; print(value)
+42863.1
+&gt;&gt;&gt; print(f'{value:0.4f}')
+42863.1000
+&gt;&gt;&gt; print(f'{value:&gt;16.2f}')
+        42863.10
+&gt;&gt;&gt; print(f'{value:&lt;16.2f}')
+42863.10
+&gt;&gt;&gt; print(f'{value:*&gt;16,.2f}')
+*******42,863.10
+&gt;&gt;&gt;
+</code></pre>
+<p>La documentación completa sobre los códigos de formato utilizados en
+<code>f-strings</code> se puede encontrar
+<a href="https://docs.python.org/3/library/string.html#format-specification-mini-language">aquí</a>.
+El formateo también se realiza a veces utilizando el operador <code>%</code> de
+cadenas.</p>
+<pre><code class="language-python">&gt;&gt;&gt; print('%0.4f' % value)
+42863.1000
+&gt;&gt;&gt; print('%16.2f' % value)
+        42863.10
+&gt;&gt;&gt;
+</code></pre>
+<p>La documentación sobre varios códigos utilizados con <code>%</code> se puede
+encontrar [aquí]
+(<a href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting</a>).</p>
+<p>Aunque se usa comúnmente con <code>print</code>, el formato de cadena no está
+vinculado a la impresión. Si desea guardar una cadena formateada.
+Simplemente asígnelo a una variable.</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = '%0.4f' % value
+&gt;&gt;&gt; f
+'42863.1000'
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-29-recopilacion-de-datos">Ejercicio 2.9: Recopilación de datos</h5>
+<p>En el ejercicio 2.7, escribió un programa llamado <code>report.py</code> que
+calculó la ganancia/pérdida de una cartera de acciones. En este
+ejercicio, comenzarás a modificarlo para producir una tabla como esta:</p>
+<pre><code>      Name     Shares      Price     Change
+---------- ---------- ---------- ----------
+        AA        100       9.22     -22.98
+       IBM         50     106.28      15.18
+       CAT        150      35.46     -47.98
+      MSFT        200      20.89     -30.34
+        GE         95      13.48     -26.89
+      MSFT         50      20.89     -44.21
+       IBM        100     106.28      35.84
+</code></pre>
+<p>En este informe, <code>Price</code> es el precio actual de la acción y <code>Change</code> es
+el cambio en el precio de la acción respecto del precio de compra
+inicial.</p>
+<p>Para generar el informe anterior, primero deberá recopilar todos los
+datos que se muestran en la tabla. Escriba una función <code>make_report()</code>
+que tome una lista de acciones y un diccionario de precios como entrada
+y devuelva una lista de tuplas que contengan las filas de la tabla
+anterior.</p>
+<p>Agregue esta función a su archivo <code>report.py</code>. Así es como debería
+funcionar si lo intentas de forma interactiva:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; prices = read_prices('Data/prices.csv')
+&gt;&gt;&gt; report = make_report(portfolio, prices)
+&gt;&gt;&gt; for r in report:
+        print(r)
+
+('AA', 100, 9.22, -22.980000000000004)
+('IBM', 50, 106.28, 15.180000000000007)
+('CAT', 150, 35.46, -47.98)
+('MSFT', 200, 20.89, -30.339999999999996)
+('GE', 95, 13.48, -26.889999999999997)
+...
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-210-impresion-de-una-tabla-formateada">Ejercicio 2.10: Impresión de una tabla formateada</h5>
+<p>Rehaga el bucle for del Ejercicio 2.9, pero cambie la declaración de
+impresión para formatear las tuplas.</p>
+<pre><code class="language-python">&gt;&gt;&gt; for r in report:
+        print('%10s %10d %10.2f %10.2f' % r)
+
+          AA        100       9.22     -22.98
+         IBM         50     106.28      15.18
+         CAT        150      35.46     -47.98
+        MSFT        200      20.89     -30.34
+...
+&gt;&gt;&gt;
+</code></pre>
+<p>También puedes expandir los valores y utilizar <code>cadenas f</code>f-strngs`.
+Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for name, shares, price, change in report:
+        print(f'{name:&gt;10s} {shares:&gt;10d} {price:&gt;10.2f} {change:&gt;10.2f}')
+
+          AA        100       9.22     -22.98
+         IBM         50     106.28      15.18
+         CAT        150      35.46     -47.98
+        MSFT        200      20.89     -30.34
+...
+&gt;&gt;&gt;
+</code></pre>
+<p>Tome las declaraciones anteriores y agréguelas a su programa
+<code>report.py</code>. Haga que su programa tome la salida de la función
+<code>make_report()</code> e imprima una tabla bien formateada como se muestra.</p>
+<h5 id="ejercicio-211-agregar-algunos-encabezados">Ejercicio 2.11: Agregar algunos encabezados</h5>
+<p>Supongamos que tienes una tupla de nombres de encabezado como éste:</p>
+<pre><code class="language-python">headers = ('Name', 'Shares', 'Price', 'Change')
+</code></pre>
+<p>Agregue código a su programa que tome la tupla de encabezados anterior y
+cree una cadena donde cada nombre de encabezado esté alineado a la
+derecha en un campo de 10 caracteres de ancho y cada campo esté separado
+por un solo espacio.</p>
+<pre><code class="language-python">'      Name     Shares      Price      Change'
+</code></pre>
+<p>Escriba el código que tome los encabezados y cree la cadena separadora
+entre los encabezados y los datos a seguir. Esta cadena es solo un
+conjunto de caracteres "-" debajo de cada nombre de campo. Por ejemplo:</p>
+<p>``pitón '---------- ---------- ---------- -----------'</p>
+<pre><code>
+Cuando haya terminado, su programa debería producir la tabla que se
+muestra en la parte superior de este ejercicio.
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Name</th>
+<th style="text-align: right;">Shares</th>
+<th style="text-align: right;">Price</th>
+<th style="text-align: right;">Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">AA</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">9.22</td>
+<td style="text-align: right;">-22.98</td>
+</tr>
+<tr>
+<td style="text-align: right;">IBM</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">106.28</td>
+<td style="text-align: right;">15.18</td>
+</tr>
+<tr>
+<td style="text-align: right;">CAT</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">35.46</td>
+<td style="text-align: right;">-47.98</td>
+</tr>
+<tr>
+<td style="text-align: right;">MSFT</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">20.89</td>
+<td style="text-align: right;">-30.34</td>
+</tr>
+<tr>
+<td style="text-align: right;">GE</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">13.48</td>
+<td style="text-align: right;">-26.89</td>
+</tr>
+<tr>
+<td style="text-align: right;">MSFT</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">20.89</td>
+<td style="text-align: right;">-44.21</td>
+</tr>
+<tr>
+<td style="text-align: right;">IBM</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">106.28</td>
+<td style="text-align: right;">35.84</td>
+</tr>
+<tr>
+<td style="text-align: right;">```</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td style="text-align: right;">### Ejercic</td>
+<td style="text-align: right;">io 2.12: De</td>
+<td style="text-align: right;">safío de fo</td>
+<td style="text-align: right;">rmato</td>
+</tr>
+</tbody>
+</table>
+<p>¿Cómo modificarías tu código para que el precio incluya el símbolo de
+moneda (\$) y el resultado se vea así:</p>
+<pre><code>      Name     Shares      Price     Change
+---------- ---------- ---------- ----------
+        AA        100      $9.22     -22.98
+       IBM         50    $106.28      15.18
+       CAT        150     $35.46     -47.98
+      MSFT        200     $20.89     -30.34
+        GE         95     $13.48     -26.89
+      MSFT         50     $20.89     -44.21
+       IBM        100    $106.28      35.84
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Containers.Rmd">Anterior (2.2
+Contenedores)</a> | <a href="04_Sequences.Rmd">Próximo (2.4
+Secuencias)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

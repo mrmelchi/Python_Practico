@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/01_Introduction/07_Functions/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>07_Functions - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="06_Files.Rmd">Anterior (1.6 Archivos)</a> | <a href="../02_Working_with_data/00_Overview.Rmd">Próximo (2. Trabajar con datos)</a></p>
+<h3 id="17-funciones">1.7 Funciones</h3>
+<p>A medida que sus programas comiencen a crecer, querrá organizarse. Esta sección presenta brevemente las funciones y los módulos de la biblioteca. También se introduce el manejo de errores con excepciones.</p>
+<h4 id="funciones-personalizadas">Funciones personalizadas</h4>
+<p>Utilice funciones para el código que desea reutilizar. Aquí hay una definición de función:</p>
+<pre><code class="language-python">def sumcount(n):
+    '''
+    Returns the sum of the first n integers
+    '''
+    total = 0
+    while n &gt; 0:
+        total += n
+        n -= 1
+    return total
+</code></pre>
+<p>Para llamar a una función.</p>
+<pre><code class="language-python">a = sumcount(100)
+</code></pre>
+<p>Una función es una serie de instrucciones que realizan una tarea y devuelven un resultado. La palabra clave <code>return</code> es necesaria para especificar explícitamente el valor de retorno de la función.</p>
+<h4 id="funciones-de-la-biblioteca">Funciones de la biblioteca</h4>
+<p>Python viene con una gran biblioteca estándar. Se accede a los módulos de la biblioteca mediante 'import'. Por ejemplo:</p>
+<pre><code class="language-python">import math
+x = math.sqrt(10)
+
+import urllib.request
+u = urllib.request.urlopen('http://www.python.org/')
+data = u.read()
+</code></pre>
+<p>Cubriremos bibliotecas y módulos con más detalle más adelante.</p>
+<h4 id="errores-y-excepciones">Errores y excepciones</h4>
+<p>Las funciones informan los errores como excepciones. Una excepción provoca la interrupción de una función y puede provocar que todo el programa se detenga si no se controla.</p>
+<p>Pruebe esto en su REPL de Python.</p>
+<pre><code class="language-python">&gt;&gt;&gt; int('N/A')
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+ValueError: invalid literal for int() with base 10: 'N/A'
+&gt;&gt;&gt;
+</code></pre>
+<p>Para fines de depuración, el mensaje describe qué sucedió, dónde ocurrió el error y un seguimiento que muestra las otras llamadas de función que llevaron a la falla.</p>
+<h4 id="captura-y-manejo-de-excepciones">Captura y manejo de excepciones</h4>
+<p>Se pueden detectar y gestionar excepciones.</p>
+<p>Para capturarlo, utilice la instrucción <code>try - except</code>.</p>
+<pre><code class="language-python">for line in file:
+    fields = line.split(',')
+    try:
+        shares = int(fields[1])
+    except ValueError:
+        print(&quot;Couldn't parse&quot;, line)
+    ...
+</code></pre>
+<p>El nombre <code>ValueError</code> debe coincidir con el tipo de error que estás intentando detectar.</p>
+<p>A menudo es difícil saber con antelación qué tipos de errores podrían producirse en función de la operación que se esté realizando. Para bien o para mal, el manejo de excepciones a menudo se agrega <em>después</em> de que un programa falla inesperadamente (es decir, "oh, olvidamos detectar ese error. ¡Deberíamos manejarlo!").</p>
+<h4 id="generar-excepciones">Generar excepciones</h4>
+<p>Para generar una excepción, utilice la declaración <code>raise</code>.</p>
+<pre><code class="language-python">raise RuntimeError('What a kerfuffle')
+</code></pre>
+<p>Esto provocará que el programa se cancele con un seguimiento de excepción. A menos que sea detectado por un bloque <code>try-except</code>.</p>
+<pre><code class="language-bash">% python3 foo.py
+Traceback (most recent call last):
+  File &quot;foo.py&quot;, line 21, in &lt;module&gt;
+    raise RuntimeError(&quot;What a kerfuffle&quot;)
+RuntimeError: What a kerfuffle
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-129-definicion-de-una-funcion">Ejercicio 1.29: Definición de una función</h5>
+<p>Intente definir una función simple:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def greeting(name):
+        'Emite un saludo'
+        print('Hola', name)
+
+&gt;&gt;&gt; greeting('Guido')
+Hola Guido
+&gt;&gt;&gt; greeting('Paula')
+Hola Paula
+&gt;&gt;&gt;
+</code></pre>
+<p>Si la primera declaración de una función es una cadena, sirve como documentación. Intente escribir un comando como <code>help(greeting)</code> para verlo mostrado.</p>
+<h5 id="ejercicio-130-convertir-un-script-en-una-funcion">Ejercicio 1.30: Convertir un script en una función</h5>
+<p>Tome el código que escribió para el programa <code>pcost.py</code> en el [Ejercicio 1.27] y conviértalo en una función <code>portfolio_cost(filename)</code>. Esta función toma un nombre de archivo como entrada, lee los datos de la cartera en ese archivo y devuelve el costo total de la cartera como un número tipo <code>float</code>.</p>
+<p>Para utilizar su función, cambie su programa para que se parezca a esto:</p>
+<pre><code class="language-python">def portfolio_cost(filename):
+    ...
+    # Su código aquí
+    ...
+
+cost = portfolio_cost('Data/portfolio.csv')
+print('Costo Total:', cost)
+</code></pre>
+<p>Cuando ejecute su programa, debería ver el mismo resultado que antes. Después de ejecutar su programa, también puede llamar a su función de forma interactiva escribiendo lo siguiente:</p>
+<pre><code class="language-bash">bash % python3 -i pcost.py
+</code></pre>
+<p>Esto le permitirá llamar a su función desde el modo interactivo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Datos/portfolio.csv')
+44671.15
+&gt;&gt;&gt;
+</code></pre>
+<p>Poder experimentar con su código de forma interactiva es útil para realizar pruebas y depuraciones.</p>
+<h5 id="ejercicio-131-manejo-de-errores">Ejercicio 1.31: Manejo de errores</h5>
+<p>¿Qué sucede si prueba su función en un archivo con algunos campos faltantes?</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/missing.csv')
+Traceback (most recent call last):
+    File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    File &quot;pcost.py&quot;, line 11, in portfolio_cost
+    nshares    = int(fields[1])
+ValueError: invalid literal for int() with base 10: ''
+&gt;&gt;&gt;
+</code></pre>
+<p>En este punto, usted se enfrenta a una decisión. Para que el programa funcione, puede desinfectar el archivo de entrada original eliminando las líneas defectuosas o puede modificar su código para manejar las líneas defectuosas de alguna manera.</p>
+<p>Modifique el programa <code>pcost.py</code> para capturar la excepción, imprimir un mensaje de advertencia y continuar procesando el resto del archivo.</p>
+<h5 id="ejercicio-132-uso-de-una-funcion-de-biblioteca">Ejercicio 1.32: Uso de una función de biblioteca</h5>
+<p>Python viene con una gran biblioteca estándar de funciones útiles. Una biblioteca que podría ser útil aquí es el módulo <code>csv</code>. Debes usarlo siempre que tengas que trabajar con archivos de datos CSV. He aquí un ejemplo de cómo funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/portfolio.csv')
+&gt;&gt;&gt; rows = csv.reader(f)
+&gt;&gt;&gt; headers = next(rows)
+&gt;&gt;&gt; headers
+['name', 'shares', 'price']
+&gt;&gt;&gt; for row in rows:
+        print(row)
+
+['AA', '100', '32.20']
+['IBM', '50', '91.10']
+['CAT', '150', '83.44']
+['MSFT', '200', '51.23']
+['GE', '95', '40.37']
+['MSFT', '50', '65.10']
+['IBM', '100', '70.44']
+&gt;&gt;&gt; f.close()
+&gt;&gt;&gt;
+</code></pre>
+<p>Una de las ventajas del módulo <code>csv</code> es que se ocupa de una variedad de detalles de bajo nivel, como citas y división adecuada de comas. En el resultado anterior, notarás que se han eliminado las comillas dobles de los nombres en la primera columna.</p>
+<p>Modifique su programa <code>pcost.py</code> para que utilice el módulo <code>csv</code> para analizar e intente ejecutar ejemplos anteriores.</p>
+<h5 id="ejercicio-133-lectura-desde-la-linea-de-comandos">Ejercicio 1.33: Lectura desde la línea de comandos</h5>
+<p>En el programa <code>pcost.py</code>, el nombre del archivo de entrada se ha incorporado al código:</p>
+<pre><code class="language-python"># pcost.py
+
+def portfolio_cost(filename):
+    ...
+    # Tu código aquí
+    ...
+
+cost = portfolio_cost('Data/portfolio.csv')
+print('Costo Total:', cost)
+</code></pre>
+<p>Eso está bien para aprender y probar, pero en un programa real probablemente no lo harías.</p>
+<p>En lugar de ello, puedes pasar el nombre del archivo como argumento a un script. Intente cambiar la parte inferior del programa de la siguiente manera:</p>
+<pre><code class="language-python"># pcost.py
+import sys
+
+def portfolio_cost(filename):
+    ...
+    # Tu código aquí
+    ...
+
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Data/portfolio.csv'
+
+cost = portfolio_cost(filename)
+print('Costo Total:', cost)
+</code></pre>
+<p><code>sys.argv</code> es una lista que contiene los argumentos pasados en la línea de comando (si los hay).</p>
+<p>Para ejecutar su programa, necesitará ejecutar Python desde la terminal.</p>
+<p>Por ejemplo, desde bash en Unix:</p>
+<pre><code class="language-bash">bash % python3 pcost.py Data/portfolio.csv
+Costo Total: 44671.15
+bash %
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="06_Files.Rmd">Anterior (1.6 Archivos)</a> | <a href="../02_Working_with_data/00_Overview.Rmd">Próximo (2. Trabajar con datos)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

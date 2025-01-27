@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/07_Advanced_Topics/05_Decorated_methods/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>05_Decorated_methods - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Function_decorators.Rmd">Anterior (7.4 Decoradores de funciones)</a> | <a href="../08_Testing_debugging/00_Overview.Rmd">Próximo (8 Pruebas y depuración)</a></p>
+<h3 id="75-metodos-estaticos-y-de-clase">7.5 Métodos estáticos y de clase</h3>
+<p>Esta sección analiza algunos decoradores integrados que se utilizan en combinación con definiciones de métodos.</p>
+<h4 id="decoradores-predefinidos">Decoradores predefinidos</h4>
+<p>Existen decoradores predefinidos que se utilizan para especificar tipos especiales de métodos en las definiciones de clase.</p>
+<pre><code class="language-python">class Foo:
+    def bar(self,a):
+    ...
+
+    @staticmethod
+        def spam(a):
+        ...
+
+    @classmethod
+    def grok(cls,a):
+        ...
+
+    @property
+    def name(self):
+        ...
+</code></pre>
+<p>Veamos uno por uno.</p>
+<h4 id="metodos-estaticos">Métodos estáticos</h4>
+<p><code>@staticmethod</code> se utiliza para definir los llamados métodos de clase <em>estáticos</em> (de C++/Java). Un método estático es una función que forma parte de la clase, pero que <em>no</em> opera en instancias.</p>
+<pre><code class="language-python">class Foo(object):
+    @staticmethod
+    def bar(x):
+        print('x =', x)
+
+&gt;&gt;&gt; Foo.bar(2) x=2
+&gt;&gt;&gt;
+</code></pre>
+<p>Los métodos estáticos se utilizan a veces para implementar código de soporte interno para una clase. Por ejemplo, código para ayudar a administrar instancias creadas (administración de memoria, recursos del sistema, persistencia, bloqueo, etc.). También se utilizan en ciertos patrones de diseño (no se analizan aquí).</p>
+<h4 id="metodos-de-clase">Métodos de clase</h4>
+<p><code>@classmethod</code> se utiliza para definir métodos de clase. Un método de clase es un método que recibe el objeto de <em>clase</em> como primer parámetro en lugar de la instancia.</p>
+<pre><code class="language-python">class Foo:
+    def bar(self):
+        print(self)
+
+    @classmethod
+    def spam(cls):
+        print(cls)
+
+&gt;&gt;&gt; f = Foo()
+&gt;&gt;&gt; f.bar()
+&lt;__main__.Foo object at 0x971690&gt; # La instancia `f`
+&gt;&gt;&gt; Foo.spam()
+&lt;class '__main__.Foo'&gt; # La clase `Foo`
+&gt;&gt;&gt;
+</code></pre>
+<p>Los métodos de clase se utilizan con mayor frecuencia como una herramienta para definir constructores alternativos.</p>
+<pre><code class="language-python">class Date:
+    def __init__(self,year,month,day):
+        self.year = year
+        self.month = month
+        self.day = day
+
+    @classmethod
+    def today(cls):
+        # Observa cómo se pasa la clase como argumento
+        tm = time.localtime()
+        # Y se usa para crear una nueva instancia
+        return cls(tm.tm_year, tm.tm_mon, tm.tm_mday)
+
+d = Date.today()
+print(d.__dict__)
+</code></pre>
+<p>Los métodos de clase resuelven algunos problemas complicados con características como la herencia.</p>
+<pre><code class="language-python">class Date:
+    ...
+    @classmethod
+    def today(cls):
+        # Obtiene la clase correcta (p. ej., `NewDate`)
+        tm = time.localtime()
+        return cls(tm.tm_year, tm.tm_mon, tm.tm_mday)
+
+class NewDate(Date):
+    ...
+
+d = NewDate.today()
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-711-metodos-de-clase-en-la-practica">Ejercicio 7.11: Métodos de clase en la práctica</h5>
+<p>En los archivos <code>report.py</code> y <code>portfolio.py</code>, la creación de un objeto <code>Portfolio</code> es un poco confusa. Por ejemplo, el programa <code>report.py</code> tiene un código como este:</p>
+<pre><code class="language-python">def read_portfolio(filename, **opts):
+    '''
+    Lee un archivo de cartera de acciones en una lista de diccionarios con claves
+    name, shares, and price.
+    '''
+    with open(filename) as lines:
+        portdicts = fileparse.parse_csv(lines,
+                                        select=['name','shares','price'],
+                                        types=[str,int,float],
+                                        **opts)
+
+    portfolio = [ Stock(**d) for d in portdicts ]
+    return Portfolio(portfolio)
+</code></pre>
+<p>y el archivo <code>portfolio.py</code> define <code>Portfolio()</code> con un inicializador extraño como este:</p>
+<pre><code class="language-python">class Portfolio:
+    def __init__(self, holdings):
+        self.holdings = holdings
+    ...
+</code></pre>
+<p>Francamente, la cadena de responsabilidad es un poco confusa porque el código está disperso. Si se supone que una clase <code>Portfolio</code> contiene una lista de instancias de <code>Stock</code>, tal vez debería cambiar la clase para que sea un poco más clara. Así:</p>
+<pre><code class="language-python"># portfolio.py
+
+import stock
+
+class Portfolio:
+    def __init__(self):
+        self.holdings = []
+
+    def append(self, holding):
+        if not isinstance(holding, stock.Stock):
+            raise TypeError('Se esperaba una instancia de Stock')
+        self.holdings.append(holding)
+    ...
+</code></pre>
+<p>Si quieres leer un portfolio desde un archivo CSV, tal vez deberías crear un método de clase para ello:</p>
+<pre><code class="language-python"># portfolio.py
+
+import fileparse
+import stock
+
+class Portfolio:
+    def __init__(self):
+        self.holdings = []
+
+    def append(self, holding):
+        if not isinstance(holding, stock.Stock):
+            raise TypeError('Se esperaba una instancia de Stock')
+        self.holdings.append(holding)
+
+    @classmethod
+    def from_csv(cls, lines, **opts):
+        self = cls()
+        portdicts = fileparse.parse_csv(lines,
+                                        select=['name','shares','price'],
+                                        types=[str,int,float],
+                                        **opts)
+
+        for d in portdicts:
+            self.append(stock.Stock(**d))
+
+        return self
+</code></pre>
+<p>Para usar esta nueva clase Portfolio, ahora puede escribir código como este:</p>
+<pre><code>&gt;&gt;&gt; from portfolio import Portfolio
+&gt;&gt;&gt; with open('Data/portfolio.csv') as lines:
+...     port = Portfolio.from_csv(lines)
+...
+&gt;&gt;&gt;
+</code></pre>
+<p>Realice estos cambios en la clase <code>Portfolio</code> y modifique el código <code>report.py</code> para utilizar el método de clase.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Function_decorators.Rmd">Anterior (7.4 Decoradores de funciones)</a> | <a href="../08_Testing_debugging/00_Overview.Rmd">Próximo (8 Pruebas y depuración)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

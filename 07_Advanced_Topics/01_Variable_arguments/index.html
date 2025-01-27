@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/07_Advanced_Topics/01_Variable_arguments/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>01_Variable_arguments - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../06_Generadores/04_Más_generadores.Rmd">Anterior (6.4 Expresiones generadoras)</a> | <a href="02_Anonymous_function.Rmd">Próximo (7.2 Funciones anónimas y lambda)</a></p>
+<h3 id="71-argumentos-variables">7.1 Argumentos variables</h3>
+<p>Esta sección cubre argumentos de funciones variables, a veces descritos como "*args" y "**kwargs".</p>
+<h4 id="argumentos-de-variables-posicionales-args">Argumentos de variables posicionales (<code>*args</code>)</h4>
+<p>Se dice que una función que acepta <em>cualquier número</em> de argumentos usa argumentos variables. Por ejemplo:</p>
+<pre><code class="language-python">def f(x, *args):
+    ...
+</code></pre>
+<p>Llamada de función.</p>
+<pre><code class="language-python">f(1,2,3,4,5)
+</code></pre>
+<p>Los argumentos adicionales se pasan como una tupla.</p>
+<pre><code class="language-python">def f(x, *args):
+    # x -&gt; 1
+    # args -&gt; (2,3,4,5)
+</code></pre>
+<h4 id="argumentos-variables-de-palabra-clave-kwargs">Argumentos variables de palabra clave (<code>*kwargs</code>)</h4>
+<p>Una función también puede aceptar cualquier número de argumentos de palabra clave. Por ejemplo:</p>
+<pre><code class="language-python">def f(x, y, **kwargs):
+    ...
+</code></pre>
+<p>Llamada de función.</p>
+<pre><code class="language-python">f(2, 3, flag=True, mode='fast', header='debug')
+</code></pre>
+<p>Las palabras clave adicionales se pasan en un diccionario.</p>
+<pre><code class="language-python">def f(x, y, **kwargs):
+    # x -&gt; 2
+    # y -&gt; 3
+    # kwargs -&gt; { 'flag': True, 'mode': 'fast', 'header': 'debug' }
+</code></pre>
+<h4 id="combinacion-de-ambos">Combinación de ambos</h4>
+<p>Una función también puede aceptar cualquier número de argumentos variables, tanto de palabras clave como de palabras no clave.</p>
+<pre><code class="language-python">def f(*args, **kwargs):
+    ...
+</code></pre>
+<p>Llamada a la función.</p>
+<pre><code class="language-python">f(2, 3, flag=True, mode='fast', header='debug')
+</code></pre>
+<p>Los argumentos se separan en componentes posicionales y de palabras clave</p>
+<pre><code class="language-python">def f(*args, **kwargs):
+    # args = (2, 3)
+    # kwargs -&gt; { 'flag': True, 'mode': 'fast', 'header': 'debug' }
+    ...
+</code></pre>
+<p>Esta función acepta cualquier combinación de argumentos posicionales o de palabras clave. A veces se utiliza al escribir contenedores o cuando se quieren pasar argumentos a otra función.</p>
+<h4 id="pasar-tuplas-y-diccionarios">Pasar tuplas y diccionarios</h4>
+<p>Las tuplas se pueden expandir en argumentos variables.</p>
+<pre><code class="language-python">numbers = (2,3,4)
+f(1, *numbers) # Igual que f(1,2,3,4)
+</code></pre>
+<p>Los diccionarios también se pueden expandir a argumentos de palabras clave.</p>
+<pre><code class="language-python">options = {
+    'color' : 'red',
+    'delimiter' : ',',
+    'width' : 400
+}
+f(data, **options)
+# Igual que f(data, color='red', delimiter=',', width=400)
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-71-un-ejemplo-simple-de-argumentos-variables">Ejercicio 7.1: Un ejemplo simple de argumentos variables</h5>
+<p>Intenta definir la siguiente función:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def avg(x,*more):
+        return float(x+sum(more))/(1+len(more))
+
+&gt;&gt;&gt; avg(10,11)
+10.5
+&gt;&gt;&gt; avg(3,4,5)
+4.0
+&gt;&gt;&gt; avg(1,2,3,4,5,6)
+3.5
+&gt;&gt;&gt;
+</code></pre>
+<p>Observa cómo el parámetro <code>*more</code> recopila todos los argumentos adicionales.</p>
+<h5 id="ejercicio-72-pasar-tuplas-y-diccionarios-como-argumentos">Ejercicio 7.2: Pasar tuplas y diccionarios como argumentos</h5>
+<p>Supongamos que lees algunos datos de un archivo y obtienes una tupla como esta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; data = ('GOOG', 100, 490.1)
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, supongamos que quieres crear un objeto <code>Stock</code> a partir de estos datos. Si intentas pasar <code>data</code> directamente, no funciona:</p>
+<pre><code>&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock(data)
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: __init__() takes exactly 4 arguments (2 given)
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto se soluciona fácilmente utilizando <code>*data</code> en su lugar. Pruebe esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock(*data)
+&gt;&gt;&gt; s
+Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt;
+</code></pre>
+<p>Si tiene un diccionario, puede usar <code>**</code> en su lugar. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; data = { 'name': 'GOOG', 'shares': 100, 'price': 490.1 }
+&gt;&gt;&gt; s = Stock(**data)
+Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-73-creacion-de-una-lista-de-instancias">Ejercicio 7.3: Creación de una lista de instancias</h5>
+<p>En su programa <code>report.py</code>, creó una lista de instancias utilizando un código como este:</p>
+<pre><code class="language-python">def read_portfolio(filename):
+    '''
+    Lea un archivo de cartera de acciones en una lista de diccionarios con claves
+    name, shares, and price.
+    '''
+
+    with open(filename) as lines:
+        portdicts = fileparse.parse_csv(lines,
+                               select=['name','shares','price'],
+                               types=[str,int,float])
+
+    portfolio = [ Stock(d['name'], d['shares'], d['price'])
+                  for d in portdicts ]
+    return Portfolio(portfolio)
+</code></pre>
+<p>Puede simplificar ese código usando <code>Stock(**d)</code> en su lugar. Realice ese cambio.</p>
+<h5 id="ejercicio-74-paso-de-argumentos">Ejercicio 7.4: Paso de argumentos</h5>
+<p>La función <code>fileparse.parse_csv()</code> tiene algunas opciones para cambiar el delimitador de archivo y para informar errores. Tal vez le gustaría exponer esas opciones a la función <code>read_portfolio()</code> anterior. Realice este cambio:</p>
+<pre><code>def read_portfolio(filename, **opts):
+    '''
+    Lea un archivo de cartera de acciones en una lista de diccionarios con las claves name, shares, and price.
+    '''
+    with open(filename) as lines:
+        portdicts = fileparse.parse_csv(lines,
+                                        select=['name','shares','price'],
+                                        types=[str,int,float],
+                                        **opts)
+
+    portfolio = [ Stock(**d) for d in portdicts ]
+    return Portfolio(portfolio)
+</code></pre>
+<p>Una vez que haya realizado el cambio, intente leer un archivo con algunos errores:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import report
+&gt;&gt;&gt; port = report.read_portfolio('Data/missing.csv')
+Row 4: Couldn't convert ['MSFT', '', '51.23']
+Row 4: Reason invalid literal for int() with base 10: ''
+Row 7: Couldn't convert ['IBM', '', '70.44']
+Row 7: Reason invalid literal for int() with base 10: ''
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, intenta silenciar los errores:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import report
+&gt;&gt;&gt; port = report.read_portfolio('Data/missing.csv', silence_errors=True)
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../06_Generadores/04_Más_generadores.Rmd">Anterior (6.4 Expresiones generadoras)</a> | <a href="02_Anonymous_function.Rmd">Próximo (7.2 Funciones anónimas y lambda)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

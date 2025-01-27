@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/02_Working_with_data/04_Sequences/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04_Sequences - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Formatting.Rmd">Anterior (2.3 Salida con
+formato)</a> | <a href="05_Collections.Rmd">Próximo (2.5 Módulo
+Collections)</a></p>
+<h3 id="24-secuencias">2.4 Secuencias</h3>
+<h4 id="tipos-de-datos-de-secuencia">Tipos de datos de secuencia</h4>
+<p>Python tiene tres tipos de datos de <em>secuencia</em>.</p>
+<ul>
+<li>Cadena: <code>'Hola'</code>. Una cadena es una secuencia de caracteres.</li>
+<li>Lista: <code>[1, 4, 5]</code>.</li>
+<li>Tupla: <code>('GOOG', 100, 490.1)</code>.</li>
+</ul>
+<p>Todas las secuencias están ordenadas, indexadas por números enteros y
+tienen una longitud.</p>
+<pre><code class="language-python">a = 'Hello'               # String
+b = [1, 4, 5]             # Lista
+c = ('GOOG', 100, 490.1)  # Tupla
+
+# Orden Indexado
+a[0]                      # 'H'
+b[-1]                     # 5
+c[1]                      # 100
+
+# Longitud de la secuencia
+len(a)                    # 5
+len(b)                    # 3
+len(c)                    # 3
+</code></pre>
+<p>Las secuencias se pueden replicar: <code>s * n</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = 'Hello'
+&gt;&gt;&gt; a * 3
+'HelloHelloHello'
+&gt;&gt;&gt; b = [1, 2, 3]
+&gt;&gt;&gt; b * 2
+[1, 2, 3, 1, 2, 3]
+&gt;&gt;&gt;
+</code></pre>
+<p>Las secuencias del mismo tipo se pueden concatenar: <code>s + t</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = (1, 2, 3)
+&gt;&gt;&gt; b = (4, 5)
+&gt;&gt;&gt; a + b
+(1, 2, 3, 4, 5)
+&gt;&gt;&gt;
+&gt;&gt;&gt; c = [1, 5]
+&gt;&gt;&gt; a + c
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: can only concatenate tuple (not &quot;list&quot;) to tuple
+</code></pre>
+<h4 id="rebanar">Rebanar</h4>
+<p>Rebanar significa tomar una subsecuencia de una secuencia. La sintaxis
+es <code>s[inicio:fin]</code>. Donde <code>inicio</code> y <code>fin</code> son los índices de la
+subsecuencia que desea.</p>
+<pre><code class="language-python">a = [0,1,2,3,4,5,6,7,8]
+
+a[2:5]    # [2,3,4]
+a[-5:]    # [4,5,6,7,8]
+a[:3]     # [0,1,2]
+</code></pre>
+<ul>
+<li>Los índices <code>inicio</code> y <code>fin</code> deben ser números enteros.</li>
+<li>Las porciones <em>no</em> incluyen el valor final. Es como un intervalo
+    medio abierto de matemáticas.</li>
+<li>Si se omiten los índices, el valor predeterminado es el principio o
+    el final de la lista.</li>
+</ul>
+<h4 id="reasignacion-de-sectores">Reasignación de sectores</h4>
+<p>En las listas, las porciones se pueden reasignar y eliminar.</p>
+<pre><code class="language-python"># Reasignación
+a = [0,1,2,3,4,5,6,7,8]
+a[2:4] = [10,11,12]       # [0,1,10,11,12,4,5,6,7,8]
+</code></pre>
+<p><em>Nota: La porción reasignada no necesita tener la misma longitud.</em></p>
+<pre><code class="language-python"># Eliminación
+a = [0,1,2,3,4,5,6,7,8]
+del a[2:4]                # [0,1,4,5,6,7,8]
+</code></pre>
+<h4 id="reducciones-de-secuencia">Reducciones de secuencia</h4>
+<p>Hay algunas funciones comunes para reducir una secuencia a un solo
+valor.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = [1, 2, 3, 4]
+&gt;&gt;&gt; sum(s)
+10
+&gt;&gt;&gt; min(s)
+1
+&gt;&gt;&gt; max(s)
+4
+&gt;&gt;&gt; t = ['Hola', 'Mundo']
+&gt;&gt;&gt; max(t)
+'Mundo'
+&gt;&gt;&gt;
+</code></pre>
+<pre><code>
+#### Iteración sobre una secuencia
+
+El bucle for itera sobre los elementos de una secuencia.
+
+```python
+&gt;&gt;&gt; s = [1, 4, 9, 16]
+&gt;&gt;&gt; for i in s:
+...     print(i)
+...
+1
+4
+9
+16
+&gt;&gt;&gt;
+</code></pre>
+<p>En cada iteración del bucle, obtienes un nuevo elemento con el que
+trabajar. Este nuevo valor se coloca en la variable de iteración. En
+este ejemplo, la variable de iteración es <code>x</code>:</p>
+<pre><code class="language-python">for x in s: # `x` es una variable de iteración
+  ...declaraciones
+</code></pre>
+<p>En cada iteración, se sobrescribe el valor anterior de la variable de
+iteración (si lo hay). Una vez finalizado el bucle, la variable conserva
+el último valor.</p>
+<h4 id="declaracion-break">Declaración <code>break</code></h4>
+<p>Puede utilizar la declaración <code>break</code> para salir de un bucle antes de
+tiempo.</p>
+<pre><code class="language-python">for name in namelist:
+    if name == 'Jake':
+        break
+    ...
+    ...
+declaraciones
+</code></pre>
+<p>Cuando se ejecuta la declaración <code>break</code>, sale del bucle y pasa a las
+siguientes <code>declaraciones</code>. La declaración <code>break</code> sólo se aplica al
+bucle más interno. Si este bucle está dentro de otro bucle, no romperá
+el bucle externo.</p>
+<h4 id="declaracion-continue">Declaración <code>continue</code></h4>
+<p>Para omitir un elemento y pasar al siguiente, utilice la instrucción
+<code>continue</code>.</p>
+<pre><code class="language-python">for line in lines:
+    if line == '\n':    # Omite líneas en blanco
+        continue
+    # Más declaraciones
+    ...
+</code></pre>
+<p>Esto es útil cuando el elemento actual no es de interés o no necesita
+ser revisado, ignoradolo en el procesamiento.</p>
+<h4 id="recorriendo-numeros-enteros">Recorriendo números enteros</h4>
+<p>Si necesita contar, utilice <code>range()</code>.</p>
+<pre><code class="language-python">for i in range(100):
+    # i = 0,1,...,99
+</code></pre>
+<p>La sintaxis es <code>range([inicio,] fin [,paso])</code></p>
+<pre><code class="language-python">for i in range(100):
+    # i = 0,1,...,99
+for j in range(10,20):
+    # j = 10,11,..., 19
+for k in range(10,50,2):
+    # k = 10,12,...,48
+    # Observe que se cuenta en pasos de 2, no de 1.
+</code></pre>
+<p>*El valor final nunca se incluye. Refleja el comportamiento de las
+rebanadas.</p>
+<ul>
+<li><code>start</code> es opcional. Valor predeterminado <code>0</code>.</li>
+<li><code>step</code> es opcional. Valor predeterminado <code>1</code>.</li>
+<li><code>range()</code> calcula valores según sea necesario. En realidad no
+    almacena un rango amplio de números.</li>
+</ul>
+<h4 id="funcion-enumerate">Función enumerate()</h4>
+<p>La función <code>enumerate</code> agrega un valor de contador adicional a la
+iteración.</p>
+<pre><code class="language-python">names = ['Elwood', 'Jake', 'Curtis']
+for i, name in enumerate(names):
+    # Bucle con i = 0, name = 'Elwood'
+    # i = 1, name = 'Jake'
+    # i = 2, name = 'Curtis'
+</code></pre>
+<p>La forma general es <code>enumerate(secuencia [, inicio = 0])</code>. <code>start</code> es
+opcional. Un buen ejemplo del uso de <code>enumerate()</code> es el seguimiento de
+los números de línea mientras se lee un archivo:</p>
+<pre><code class="language-python">with open(filename) as f:
+    for lineno, line in enumerate(f, start=1):
+        ...
+</code></pre>
+<p>Al final, <code>enumerate</code> es simplemente un buen atajo para:</p>
+<pre><code class="language-python">i = 0
+for x in s:
+    statements
+    i += 1
+</code></pre>
+<p>El uso de <code>enumerate</code> implica escribir menos y se ejecuta un poco más
+rápido.</p>
+<h4 id="fory-tuplas"><code>for</code>y tuplas</h4>
+<p>Puedes iterar con múltiples variables de iteración.</p>
+<pre><code class="language-python">points = [
+  (1, 4),(10, 40),(23, 14),(5, 6),(7, 8)
+]
+for x, y in points:
+    # Bucle con x = 1, y = 4
+    #            x = 10, y = 40
+    #            x = 23, y = 14
+    #            ...
+</code></pre>
+<p>Cuando se utilizan múltiples variables, cada tupla se <em>desempaqueta</em> en
+un conjunto de variables de iteración. El número de variables debe
+coincidir con el número de elementos en cada tupla.</p>
+<h4 id="funcion-zip">Función <code>zip()</code></h4>
+<p>La función <code>zip</code> toma múltiples secuencias y crea un iterador que las
+combina.</p>
+<pre><code class="language-python">columns = ['name', 'shares', 'price']
+values = ['GOOG', 100, 490.1 ]
+pairs = zip(columns, values)
+# ('name','GOOG'), ('shares',100), ('price',490.1)
+</code></pre>
+<p>Para obtener el resultado debes iterar. Puedes usar múltiples variables
+para desempaquetar las tuplas como se mostró anteriormente.</p>
+<pre><code class="language-python">for column, value in pairs:
+    ...
+</code></pre>
+<p>Un uso común de <code>zip</code> es crear pares clave/valor para construir
+diccionarios.</p>
+<pre><code class="language-python">d = dict(zip(columns, values))
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-213-contar">Ejercicio 2.13: Contar</h5>
+<p>Pruebe algunos ejemplos básicos de conteo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for n in range(10):            # Count 0 ... 9
+        print(n, end=' ')
+
+0 1 2 3 4 5 6 7 8 9
+&gt;&gt;&gt; for n in range(10,0,-1):       # Count 10 ... 1
+        print(n, end=' ')
+
+10 9 8 7 6 5 4 3 2 1
+&gt;&gt;&gt; for n in range(0,10,2):        # Count 0, 2, ... 8
+        print(n, end=' ')
+
+0 2 4 6 8
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-214-mas-operaciones-de-secuencia">Ejercicio 2.14: Más operaciones de secuencia</h5>
+<p>Experimente interactivamente con algunas de las operaciones de reducción
+de secuencia.</p>
+<pre><code class="language-python">&gt;&gt;&gt; data = [4, 9, 1, 25, 16, 100, 49]
+&gt;&gt;&gt; min(data)
+1
+&gt;&gt;&gt; max(data)
+100
+&gt;&gt;&gt; sum(data)
+204
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente recorrer los datos en un bucle.</p>
+<pre><code class="language-python">&gt;&gt;&gt; data = [4, 9, 1, 25, 16, 100, 49]
+&gt;&gt;&gt; min(data)
+1
+&gt;&gt;&gt; max(data)
+100
+&gt;&gt;&gt; sum(data)
+204
+&gt;&gt;&gt;
+</code></pre>
+<p>...</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>for n, x in enumerate(data): print(n, x)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>0 4 1 9 2 1 ... &gt;&gt;&gt;</p>
+<pre><code>
+A veces, los novatos utilizan la declaración `for`, `len()` y `range()`
+en algún tipo de fragmento de código horrible que parece surgido de las
+profundidades de un programa C oxidado.
+
+```python
+&gt;&gt;&gt; for n in range(len(data)):
+        print(data[n])
+
+4
+9
+1
+...
+&gt;&gt;&gt;
+</code></pre>
+<p>¡No hagas eso! No sólo leerlo hace sangrar los ojos a todos, sino que
+además es ineficiente con la memoria y funciona mucho más lento.
+Simplemente use un bucle <code>for</code> normal si desea iterar sobre los datos.
+Utilice <code>enumerate()</code> si necesita el índice por algún motivo.</p>
+<h5 id="ejercicio-215-un-ejemplo-practico-de-enumerate">Ejercicio 2.15: Un ejemplo práctico de enumerate()</h5>
+<p>Recuerde que el archivo <code>Data/missing.csv</code> contiene datos de una cartera
+de acciones, pero tiene algunas filas con datos faltantes. Usando
+<code>enumerate()</code>, modifique su programa <code>pcost.py</code> para que imprima un
+número de línea con el mensaje de advertencia cuando encuentre una
+entrada incorrecta.</p>
+<pre><code class="language-python">&gt;&gt;&gt; cost = portfolio_cost('Data/missing.csv')
+Row 4: Couldn't convert: ['MSFT', '', '51.23'] # Fila 4: No se puede convertir
+ Row 7: Couldn't convert: ['IBM', '', '70.44'] # Fila 7: No se puede convertir
+&gt;&gt;&gt;
+</code></pre>
+<p>Para hacer esto, necesitarás cambiar algunas partes de tu código.</p>
+<pre><code class="language-python">...
+for rowno, row in enumerate(rows, start=1):
+    try:
+        ...
+    except ValueError:
+        print(f'Row {rowno}: Bad row: {row}')
+</code></pre>
+<h5 id="ejercicio-216-uso-de-la-funcion-zip">Ejercicio 2.16: Uso de la función <code>zip()</code></h5>
+<p>En el archivo <code>Data/portfolio.csv</code>, la primera línea contiene
+encabezados de columna. En todo el código anterior, los hemos estado
+descartando.</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = open('Data/portfolio.csv')
+&gt;&gt;&gt; rows = csv.reader(f)
+&gt;&gt;&gt; headers = next(rows)
+&gt;&gt;&gt; headers
+['name', 'shares', 'price']
+&gt;&gt;&gt;
+</code></pre>
+<p>Pero ¿qué pasaría si pudieses usar los encabezados para algo útil? Aquí
+es donde entra en escena la función <code>zip()</code>. Primero intente esto para
+emparejar los encabezados de archivo con una fila de datos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; row = next(rows)
+&gt;&gt;&gt; row
+['AA', '100', '32.20']
+&gt;&gt;&gt; list(zip(headers, row))
+[ ('name', 'AA'), ('shares', '100'), ('price', '32.20') ]
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe cómo <code>zip()</code> emparejó los encabezados de columna con los valores
+de columna. Aquí usamos <code>list()</code> para convertir el resultado en una
+lista para que puedas verlo. Normalmente, <code>zip()</code> crea un iterador que
+debe ser consumido por un bucle for.</p>
+<p>Este emparejamiento es un paso intermedio para construir un diccionario.
+Ahora prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; record = dict(zip(headers, row))
+&gt;&gt;&gt; record
+{'price': '32.20', 'name': 'AA', 'shares': '100'}
+&gt;&gt;&gt;
+</code></pre>
+<p>Esta transformación es uno de los trucos más útiles que debemos conocer
+al procesar muchos archivos de datos. Por ejemplo, supongamos que desea
+hacer que el programa <code>pcost.py</code> funcione con varios archivos de
+entrada, pero sin tener en cuenta el número de columna real donde
+aparecen el nombre, las acciones y el precio.</p>
+<p>Modifique la función <code>portfolio_cost()</code> en <code>pcost.py</code> para que se vea
+así:</p>
+<pre><code class="language-python"># pcost.py
+
+def portfolio_cost(filename):
+    ...
+        for rowno, row in enumerate(rows, start=1):
+            record = dict(zip(headers, row))
+            try:
+                nshares = int(record['shares'])
+                price = float(record['price'])
+                total_cost += nshares * price
+            # Esto detecta errores en las conversiones int() y float() anteriores
+            except ValueError:
+                print(f'Row {rowno}: Bad row: {row}')
+        ...
+</code></pre>
+<p>Ahora, prueba tu función en un archivo de datos completamente diferente
+<code>Data/portfoliodate.csv</code> que se ve así:</p>
+<pre><code class="language-csv">name,date,time,shares,price
+&quot;AA&quot;,&quot;6/11/2007&quot;,&quot;9:50am&quot;,100,32.20
+&quot;IBM&quot;,&quot;5/13/2007&quot;,&quot;4:20pm&quot;,50,91.10
+&quot;CAT&quot;,&quot;9/23/2006&quot;,&quot;1:30pm&quot;,150,83.44
+&quot;MSFT&quot;,&quot;5/17/2007&quot;,&quot;10:30am&quot;,200,51.23
+&quot;GE&quot;,&quot;2/1/2006&quot;,&quot;10:45am&quot;,95,40.37
+&quot;MSFT&quot;,&quot;10/31/2006&quot;,&quot;12:05pm&quot;,50,65.10
+&quot;IBM&quot;,&quot;7/9/2006&quot;,&quot;3:15pm&quot;,100,70.44
+</code></pre>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/portfoliodate.csv')
+44671.15
+&gt;&gt;&gt;
+</code></pre>
+<p>Si lo hiciste bien, descubrirás que tu programa aún funciona. aunque el
+archivo de datos tiene un formato de columna completamente diferente al
+anterior. ¡Eso es genial!</p>
+<p>El cambio realizado aquí es sutil, pero significativo. En lugar de que
+<code>portfolio_cost()</code> esté codificado para leer un único formato de archivo
+fijo, la nueva versión lee cualquier archivo CSV y selecciona los
+valores de interés. Siempre que el archivo tenga las columnas
+requeridas, el código funcionará.</p>
+<p>Modifique el programa <code>report.py</code> que escribió en la Sección 2.3 para
+que utilice la misma técnica para seleccionar los encabezados de
+columna.</p>
+<p>Intente ejecutar el programa <code>report.py</code> en el archivo
+<code>Data/portfoliodate.csv</code> y verá que produce la misma respuesta que
+antes.</p>
+<h5 id="ejercicio-217-invertir-un-diccionario">Ejercicio 2.17: Invertir un diccionario</h5>
+<p>Un diccionario asigna claves a valores. Por ejemplo, un diccionario de
+precios de acciones.</p>
+<pre><code class="language-python">&gt;&gt;&gt; prices = {
+        'GOOG' : 490.1,
+        'AA' : 23.45,
+        'IBM' : 91.1,
+        'MSFT' : 34.23
+    }
+&gt;&gt;&gt;
+</code></pre>
+<p>Si utiliza el método <code>items()</code>, puede obtener pares <code>(clave, valor)</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; prices.items()
+dict_items([('GOOG', 490.1), ('AA', 23.45), ('IBM', 91.1), ('MSFT', 34.23)])
+&gt;&gt;&gt;
+</code></pre>
+<p>Sin embargo, ¿qué sucede si desea obtener una lista de pares '(valor,
+clave)'? <em>Sugerencia: use <code>zip()</code></em>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; pricelist = list(zip(prices.values(),prices.keys()))
+&gt;&gt;&gt; pricelist
+[(490.1, 'GOOG'), (23.45, 'AA'), (91.1, 'IBM'), (34.23, 'MSFT')]
+&gt;&gt;&gt;
+</code></pre>
+<p>¿Por qué harías esto? En primer lugar, permite realizar ciertos tipos de
+procesamiento de datos en los datos del diccionario.</p>
+<pre><code class="language-python">&gt;&gt;&gt; min(pricelist)
+(23.45, 'AA')
+&gt;&gt;&gt; max(pricelist)
+(490.1, 'GOOG')
+&gt;&gt;&gt; sorted(pricelist)
+[(23.45, 'AA'), (34.23, 'MSFT'), (91.1, 'IBM'), (490.1, 'GOOG')]
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto también ilustra una característica importante de las tuplas. Cuando
+se utilizan en comparaciones, las tuplas se comparan elemento por
+elemento comenzando con el primer elemento. Similar a cómo se comparan
+cadenas carácter por carácter.</p>
+<p><code>zip()</code> se usa a menudo en situaciones como ésta, donde es necesario
+emparejar datos de diferentes lugares. Por ejemplo, emparejar los
+nombres de las columnas con los valores de las columnas para crear un
+diccionario de valores con nombre.</p>
+<p>Tenga en cuenta que <code>zip()</code> no está limitado a pares. Por ejemplo,
+puedes usarlo con cualquier número de listas de entrada:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = [1, 2, 3, 4]
+&gt;&gt;&gt; b = ['w', 'x', 'y', 'z']
+&gt;&gt;&gt; c = [0.2, 0.4, 0.6, 0.8]
+&gt;&gt;&gt; list(zip(a, b, c))
+[(1, 'w', 0.2), (2, 'x', 0.4), (3, 'y', 0.6), (4, 'z', 0.8))]
+&gt;&gt;&gt;
+</code></pre>
+<p>Además, tenga en cuenta que <code>zip()</code> se detiene una vez que se agota la
+secuencia de entrada más corta.</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
+&gt;&gt;&gt; b = ['x', 'y', 'z']
+&gt;&gt;&gt; list(zip(a,b))
+[(1, 'x'), (2, 'y'), (3, 'z')]
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Formatting.Rmd">Anterior (2.3 Salida con
+formato)</a> | <a href="05_Collections.Rmd">Próximo (2.5 Módulo
+Collections)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

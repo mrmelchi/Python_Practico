@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/01_Introduction/02_Hello_world/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>02_Hello_world - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Python.Rmd">Anterior (1.1 Introducción a
+Python)</a> | <a href="03_Numbers.Rmd">Próximo (1.3 Números)</a></p>
+<h3 id="12-un-primer-programa">1.2 Un primer programa</h3>
+<p>En esta sección se analiza la creación de su primer programa y su
+ejecución, intérprete y algo de depuración básica.</p>
+<h4 id="ejecucion-de-python">Ejecución de Python</h4>
+<p>Los programas de Python siempre se ejecutan dentro de un intérprete.</p>
+<p>El intérprete es una aplicación "basada en consola" que normalmente se
+ejecuta desde un shell de comandos.</p>
+<pre><code>bash % python
+Python 3.11.7 | packaged by Anaconda, Inc. | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)] on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt;
+</code></pre>
+<p>Los programadores expertos generalmente no tienen problemas para
+utilizar el intérprete de esta manera, pero no es tan fácil de usar para
+principiantes. Es posible que estés usando un entorno que proporciona
+una interfaz diferente a Python. Está bien, pero aprender a ejecutar la
+terminal Python sigue siendo una habilidad útil.</p>
+<h4 id="modo-interactivo">Modo interactivo</h4>
+<p>Cuando inicias Python, obtienes un modo <em>interactivo</em> donde puedes
+experimentar.</p>
+<p>Si comienza a escribir declaraciones, se ejecutarán inmediatamente. No
+hay ciclo de edición/compilación/ejecución/depuración.</p>
+<pre><code>&gt;&gt;&gt; print('hola mundo')
+Hola Mundo
+&gt;&gt;&gt; 37*42
+1554
+&gt;&gt;&gt; for i in range(5):
+...print(i)
+...
+0
+1
+2
+3
+4
+&gt;&gt;&gt;
+</code></pre>
+<p>Este llamado <em>bucle de lectura-evaluación-impresión</em> (o REPL) es muy
+útil para la depuración y la exploración.</p>
+<p><strong>DETENTE</strong>: Si no puede entender cómo interactuar con Python, detenga
+lo que esté haciendo y descubra cómo hacerlo. Si está utilizando un
+Entorno de Desarrollo Integrado (o IDE), es posible que esté oculto
+detrás de una Opción de menú u otra ventana. Muchas partes de este curso
+asumen que puedes Interactuar con el intérprete.</p>
+<p>Echemos un vistazo más de cerca a los elementos del REPL:</p>
+<ul>
+<li><code>&gt;&gt;&gt;</code> es el indicador del intérprete para iniciar una nueva
+    declaración.</li>
+<li><code>...</code> es el mensaje del intérprete para continuar una declaración.
+    Ingrese una línea en blanco para terminar de escribir y ejecutar lo
+    que ha ingresado.</li>
+</ul>
+<p>El mensaje <code>...</code> puede aparecer o no según su entorno. Para este curso,
+Se muestra en blanco para facilitar cortar y pegar ejemplos de código.</p>
+<p>El guión bajo <code>_</code> contiene el último resultado.</p>
+<pre><code class="language-python">&gt;&gt;&gt; 37 * 42
+1554
+&gt;&gt;&gt; _ * 2
+3108
+&gt;&gt;&gt; _ + 50
+3158
+&gt;&gt;&gt;
+</code></pre>
+<p><em>Esto sólo es cierto en el modo interactivo.</em> Nunca uses <code>_</code> en un
+programa.</p>
+<h4 id="creando-programas">Creando programas</h4>
+<p>Los programas se colocan en archivos <code>.py</code>.</p>
+<pre><code class="language-python"># hola.py
+print('hola mundo')
+</code></pre>
+<p>Puedes crear estos archivos con tu editor de texto favorito.</p>
+<h4 id="programas-en-ejecucion">Programas en ejecución</h4>
+<p>Para ejecutar un programa, ejecútelo en la terminal con el comando
+<code>python</code>. Por ejemplo, en la línea de comandos de Unix:</p>
+<pre><code class="language-bash">bash % python hola.py
+Hola Mundo
+bash %
+</code></pre>
+<p>O desde el shell de Windows:</p>
+<pre><code>C:\AlgunaCarpeta&gt;hola.py
+Hola Mundo
+
+C:\AlgunaCarpeta&gt;c:\python36\python hello.py
+Hola Mundo
+</code></pre>
+<p>Nota: En Windows, es posible que deba especificar una ruta completa al
+intérprete de Python, como <code>c:\python36\python</code>. Sin embargo, si Python
+está instalado de su forma habitual, es posible que puedas simplemente
+escribir el nombre del programa. como por ejemplo <code>hello.py</code>.</p>
+<h4 id="un-programa-de-muestra">Un programa de muestra</h4>
+<p>Resolvamos el siguiente problema:</p>
+<blockquote>
+<p>Una mañana, sales y colocas un billete de un dólar en la acera junto a
+la Torre Sears en Chicago. Cada día siguiente, colocas el doble de
+billetes. ¿Cuánto tiempo tarda la pila de billetes en superar la
+altura de la torre?</p>
+</blockquote>
+<p>Aquí hay una solución:</p>
+<pre><code class="language-python">#sears.py
+espesor_de_billete = 0.11 * 0.001 # Metros (0,11 mm)
+altura_torre = 442 # Altura (metros)
+num_billetes = 1
+dia= 1
+
+while num_billetes * espesor_de_billete &lt; altura_torre:
+    print(dia, num_billetes, num_billetes * espesor_de_billete)
+    dia = dia + 1
+    num_billetes = num_billetes * 2
+
+print('Número de días', dia)
+print('Número de billetes', num_billetes)
+print('Altura final', num_billetes * espesor_de_billete)
+</code></pre>
+<p>Cuando lo ejecutas, obtienes el siguiente resultado:</p>
+<pre><code>bash % python sears.py
+1 1 0,00011
+2 2 0,00022
+3 4 0,00044
+4 8 0,00088
+5 16 0,00176
+6 32 0,00352
+...
+21 1048576 115.34336
+22 2097152 230.68672
+Número de días 23
+Número de billetes 4194304
+Altura final 461.37344
+</code></pre>
+<p>Usando este programa como guía, podrás aprender una serie de conceptos
+básicos importantes sobre Python.</p>
+<h4 id="declaraciones">Declaraciones</h4>
+<p>Un programa Python es una secuencia de declaraciones:</p>
+<pre><code>a = 3 + 4
+b = a * 2
+print(b)
+</code></pre>
+<p>Cada declaración termina con una nueva línea. Las declaraciones se
+ejecutan una tras otra hasta que el control llega al final del archivo.</p>
+<h4 id="comentarios">Comentarios</h4>
+<p>Los comentarios son texto que no se ejecutará.</p>
+<pre><code>a = 3 + 4
+#Esto es un comentario
+b = a * 2
+print(b)
+</code></pre>
+<p>Los comentarios se indican con <code>#</code> y se extienden hasta el final de la
+línea.</p>
+<h4 id="variables">Variables</h4>
+<p>Una variable es un nombre para un valor. Puedes utilizar letras
+(minúsculas y, minúsculas y mayúsculas) de la a a la z. Además del
+carácter de subrayado <code>_</code>, los números también pueden ser parte del
+nombre de una variable, excepto que se trate del primer caracter.</p>
+<pre><code>altura = 442 # válido
+_height = 442 # válido
+altura2 = 442 # válido
+2height = 442 # no válido
+</code></pre>
+<h4 id="tipos">Tipos</h4>
+<p>No es necesario declarar las variables con el tipo del valor. El tipo
+está asociado con el valor del lado derecho, no con el nombre de la
+variable.</p>
+<pre><code>altura = 442 # Un entero
+altura = 442.0 # Punto flotante
+altura = 'Muy alto' # Una cadena
+</code></pre>
+<p>Python está tipado dinámicamente. El "tipo" percibido de una variable
+podría cambiar a medida que se ejecuta un programa dependiendo del valor
+actual asignado a ella.</p>
+<h4 id="sensibilidad-a-mayusculas-y-minusculas">Sensibilidad a mayúsculas y minúsculas</h4>
+<p>Python distingue entre mayúsculas y minúsculas. Las letras mayúsculas y
+minúsculas se consideran letras diferentes. Todas estas son variables
+diferentes:</p>
+<pre><code>nombre = 'Jake'
+Nombre = 'Elwood'
+NOMBRE = 'Guido'
+</code></pre>
+<p>Las declaraciones del lenguaje siempre están en minúsculas.</p>
+<pre><code>while x &lt; 0: # OK
+WHILE x &lt; 0: # ERROR
+</code></pre>
+<h4 id="bucle">Bucle</h4>
+<p>La instrucción <code>while</code> ejecuta un bucle.</p>
+<pre><code>while num_billetes * espesor_de_billete &lt; altura_torre:
+    print(dia, num_billetes, num_billetes * espesor_de_billete)
+    dia = dia + 1
+    num_billetes = num_billetes * 2
+
+print('Numero de días', día)
+</code></pre>
+<p>Las declaraciones sangradas debajo del <code>while</code> se ejecutarán siempre que
+la expresión después del <code>while</code> sea <code>true</code>.</p>
+<h4 id="sangria">Sangría</h4>
+<p>La sangría se utiliza para indicar grupos de declaraciones que van
+juntas. Consideremos el ejemplo anterior:</p>
+<pre><code>
+while num_billetes * espesor_de_billete &lt; altura_torre:
+    print(dia, num_billetes, num_billetes * espesor_de_billete)
+    dia = dia + 1
+    num_billetes = num_billetes * 2
+
+print('Numero de días', día)
+</code></pre>
+<p>La sangría agrupa las siguientes declaraciones como operaciones que se
+repiten:</p>
+<pre><code>    print(dia, num_billetes, num_billetes * espesor_de_billete)
+    dia = dia + 1
+    num_billetes = num_billetes * 2
+</code></pre>
+<p>Debido a que la declaración <code>print()</code> al final no está sangrada, no
+pertenece al bucle. La línea vacía es solo para legibilidad. No afecta
+la ejecución.</p>
+<h4 id="practicas-recomendadas-de-sangria">Prácticas recomendadas de sangría</h4>
+<ul>
+<li>Utilice espacios en lugar de tabulaciones.</li>
+<li>Utilice 4 espacios por nivel.</li>
+<li>Utilice un editor compatible con Python.</li>
+</ul>
+<p>El único requisito de Python es que la sangría esté dentro del mismo
+bloque. Se consistente. Por ejemplo, esto es un error:</p>
+<pre><code>while num_billetes * espesor_de_billete &lt; altura_torre:
+    print(dia, num_billetes, num_billetes * espesor_de_billete)
+        dia = dia + 1 # ERROR
+    num_billetes = num_billetes * 2
+</code></pre>
+<h4 id="condicionales">Condicionales</h4>
+<p>La declaración <code>if</code> se utiliza para ejecutar una condición:</p>
+<pre><code>if a &gt; b:
+    print('La computadora dice que no')
+else:
+    print('La computadora dice que si')
+</code></pre>
+<p>Puede comprobar múltiples condiciones agregando comprobaciones
+adicionales mediante <code>elif</code>.</p>
+<pre><code>if a &gt; b:
+    print('La computadora dice que no')
+elif a == b:
+    print('La computadora dice que sí')
+else:
+    print('La computadora dice tal vez')
+</code></pre>
+<h4 id="impresion">Impresión</h4>
+<p>La función <code>print</code> produce una sola línea de texto con los valores
+pasados.</p>
+<pre><code>print('¡Hola mundo!') # Imprime el texto '¡Hola mundo!'
+</code></pre>
+<p>Puedes utilizar variables. El texto impreso será el valor de la
+variable, no el nombre.</p>
+<pre><code>x = 100
+print(x) # Imprime el texto '100'
+</code></pre>
+<p>Si pasa más de un valor a <code>print</code> se separan con espacios.</p>
+<pre><code>nombre = 'Jake'
+print('Mi nombre es', nombre) # Imprime el texto 'Mi nombre es Jake'
+</code></pre>
+<p><code>print()</code> siempre pone una nueva línea al final.</p>
+<pre><code>print('Hola')
+print('Mi nombre es', 'Jake')
+</code></pre>
+<p>Esto imprime:</p>
+<pre><code>Hola
+Mi nombre es Jake.
+</code></pre>
+<p>El carácter de nueva línea adicional se puede suprimir:</p>
+<pre><code>print('Hola', fin=' ')
+print('Mi nombre es', 'Jake')
+</code></pre>
+<p>Este código ahora imprimirá:</p>
+<pre><code>Hola, mi nombre es Jake.
+</code></pre>
+<h4 id="entrada-del-usuario">Entrada del usuario</h4>
+<p>Para leer una línea de entrada escrita por el usuario, utilice la
+función <code>input()</code>:</p>
+<pre><code>nombre = input('Ingrese su nombre:')
+print('Tu nombre es', nombre)
+</code></pre>
+<p><code>input</code> imprime un mensaje para el usuario y devuelve su respuesta. Esto
+es útil para programas pequeños, ejercicios de aprendizaje o depuración
+simple. No se utiliza mucho para programas reales.</p>
+<h4 id="declaracion-pass">declaración <code>pass</code></h4>
+<p>A veces es necesario especificar un bloque de código vacío. Para ello se
+utiliza la palabra clave <code>pass</code>.</p>
+<pre><code>if a &gt; b:
+    pass
+else:
+    print('La computadora dice falso')
+</code></pre>
+<p>Esto también se llama declaración de "no operación". No hace nada, sirve
+como marcador de posición para declaraciones que posiblemente se
+agregarán más adelante.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>Este es el primer conjunto de ejercicios en los que debes crear archivos
+Python y ejecutarlos. A partir de este momento, se asume que usted están
+editando archivos en el directorio <code>practical-python/Work/</code>. Para ayudar
+a ubicar el lugar adecuado, hay varios archivos de inicio vacíos, que se
+han creado con los nombres de archivo apropiados. Busque el archivo
+<code>Work/bounce.py</code> que se utiliza en el primer ejercicio.</p>
+<h5 id="ejercicio-15-la-pelota-que-rebota">Ejercicio 1.5: La pelota que rebota</h5>
+<blockquote>
+<p>Se deja caer una pelota de goma desde una altura de 100 metros y cada
+vez que golpea el suelo, rebota hasta 3/5 de la altura desde la que
+cayó. Escribir un programa <code>bounce.py</code> que imprime una tabla que
+muestra la altura de la primeros 10 rebotes.</p>
+</blockquote>
+<p>Su programa debería crear una tabla que se parezca a esto:</p>
+<pre><code>1 60,0
+2 36,0
+3 21.5999999999999998
+4 12.9599999999999999
+5 7.7759999999999999
+6 4.66559999999999995
+7 2.799359999999996
+8 1.6796159999999998
+9 1.0077695999999998
+10 0,6046617599999998
+</code></pre>
+<p><em>Nota: Puedes limpiar un poco la salida si usas la función round().
+Intente usarlo para redondear la salida a 4 dígitos.</em></p>
+<pre><code>1 60,0
+2 36,0
+3 21.6
+4 12,96
+5 7.776
+6 4.6656
+7 2.7994
+8 1.6796
+9 1.0078
+10 0,6047
+</code></pre>
+<h5 id="ejercicio-16-depuracion">Ejercicio 1.6: Depuración</h5>
+<p>El siguiente fragmento de código contiene código del problema de la
+Torre Sears. También tiene un error.</p>
+<pre><code class="language-python">#sears.py
+espesor_de_billete = 0.11 * 0.001 # Metros (0,11 mm)
+altura_torre = 442 # Altura (metros)
+num_billetes = 1
+dia= 1
+
+while num_billetes * espesor_de_billete &lt; altura_torre:
+    print(dia, num_billetes, num_billetes * espesor_de_billete)
+    dia = dias + 1
+    num_billetes = num_billetes * 2
+
+print('Número de días', dia)
+print('Número de billetes', num_billetes)
+print('Altura final', num_billetes * espesor_de_billete)
+</code></pre>
+<p>Copie y pegue el código que aparece arriba en un nuevo programa llamado
+<code>sears.py</code>. Cuando ejecute el código, recibirá un mensaje de error que
+se provoca. El programa se bloquea así:</p>
+<pre><code>Traceback (most recent call last):
+  File &quot;c:\Users\Mario\practical-python\Exercises\Ex1_6.py&quot;, line 11, in &lt;module&gt;
+    día = días + 1
+          ^^^^
+NameError: name 'días' is not defined. Did you mean: 'día'?
+</code></pre>
+<p>La lectura de mensajes de error es una parte importante del código
+Python. Si su programa se bloquea, la última línea del mensaje de
+seguimiento es la verdadera razón por la que el programa falló. Encima
+de eso, deberías ver un fragmento del código fuente y luego un nombre de
+archivo identificativo y un número de línea.</p>
+<ul>
+<li>¿En qué línea está el error?</li>
+<li>¿Cuál es el error?</li>
+<li>Arreglar el error</li>
+<li>Ejecutar el programa exitosamente</li>
+</ul>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Python.Rmd">Anterior (1.1 Introducción a
+Python)</a> | <a href="03_Numbers.Rmd">Próximo (1.3 Números)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

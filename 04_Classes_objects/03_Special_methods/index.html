@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/04_Classes_objects/03_Special_methods/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>03_Special_methods - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Inheritance.Rmd">Anterior (4.2 Herencia)</a> | <a href="04_Defining_exceptions.Rmd">Próximo (4.4 Definición de excepciones)</a></p>
+<h3 id="43-metodos-especiales">4.3 Métodos especiales</h3>
+<p>Varias partes del comportamiento de Python se pueden personalizar mediante métodos especiales o los llamados "mágicos". Esta sección presenta esa idea. Además, se analizan el acceso dinámico a los atributos y los métodos enlazados.</p>
+<h4 id="introduccion">Introducción</h4>
+<p>Las clases pueden definir métodos especiales. Estos tienen un significado especial para el intérprete de Python. Siempre están precedidos y seguidos por <code>__</code>. Por ejemplo, <code>__init__</code>.</p>
+<pre><code class="language-python">class Stock(object):
+    def __init__(self):
+    ...
+
+    def __repr__(self):
+...
+</code></pre>
+<p>Existen docenas de métodos especiales, pero solo veremos algunos ejemplos específicos.</p>
+<h4 id="metodos-especiales-para-conversiones-de-strins">Métodos especiales para conversiones de strins</h4>
+<p>Los objetos tienen dos representaciones de cadena.</p>
+<pre><code class="language-python">&gt;&gt;&gt; from datetime import date
+&gt;&gt;&gt; d = date(2012, 12, 21)
+&gt;&gt;&gt; print(d)
+2012-12-21
+&gt;&gt;&gt; d
+datetime.date(2012, 12, 21)
+&gt;&gt;&gt;
+</code></pre>
+<p>La función <code>str()</code> se utiliza para crear una salida imprimible agradable:</p>
+<pre><code class="language-python">&gt;&gt;&gt; str(d)
+'2012-12-21'
+&gt;&gt;&gt;
+</code></pre>
+<p>La función <code>repr()</code> se utiliza para crear una representación más detallada para los programadores.</p>
+<pre><code class="language-python">&gt;&gt;&gt; repr(d)
+'datetime.date(2012, 12, 21)'
+&gt;&gt;&gt;
+</code></pre>
+<p>Estas funciones, <code>str()</code> y <code>repr()</code>, utilizan un par de métodos especiales en la clase para producir la cadena que se mostrará.</p>
+<pre><code class="language-python">class Date(object):
+    def __init__(self, year, month, day):
+    self.year = year
+    self.month = month
+    self.day = day
+
+    # Se utiliza con `str()`
+    def __str__(self):
+        return f'{self.year}-{self.month}-{self.day}'
+
+    # Se utiliza con `repr()`
+    def __repr__(self):
+        return f'Date({self.year},{self.month},{self.day})'
+</code></pre>
+<p><em>Nota: La convención para <code>__repr__()</code> es devolver una cadena que, cuando se ingresa en <code>eval()</code>, recreará el objeto subyacente. Si esto no es posible, se utiliza algún tipo de representación de fácil lectura en su lugar.</em></p>
+<h4 id="metodos-especiales-para-matematicas">Métodos especiales para matemáticas</h4>
+<p>Los operadores matemáticos implican llamadas a los siguientes métodos.</p>
+<pre><code class="language-python">a + b       a.__add__(b)
+a - b       a.__sub__(b)
+a * b       a.__mul__(b)
+a / b       a.__truediv__(b)
+a // b      a.__floordiv__(b)
+a % b       a.__mod__(b)
+a &lt;&lt; b      a.__lshift__(b)
+a &gt;&gt; b      a.__rshift__(b)
+a &amp; b       a.__and__(b)
+a | b       a.__or__(b)
+a ^ b       a.__xor__(b)
+a ** b      a.__pow__(b)
+-a          a.__neg__()
+~a          a.__invert__()
+abs(a)      a.__abs__()
+</code></pre>
+<h4 id="metodos-especiales-para-el-acceso-a-elementos">Métodos especiales para el acceso a elementos</h4>
+<p>Estos son los métodos para implementar contenedores.</p>
+<pre><code class="language-python">len(x)      x.__len__()
+x[a]        x.__getitem__(a)
+x[a] = v    x.__setitem__(a,v)
+del x[a]    x.__delitem__(a)
+</code></pre>
+<p>Puedes usarlos en tus clases.</p>
+<pre><code class="language-python">class Sequence:
+    def __len__(self):
+        ...
+    def __getitem__(self,a):
+        ...
+    def __setitem__(self,a,v):
+        ...
+    def __delitem__(self,a):
+        ...
+</code></pre>
+<h4 id="invocacion-al-metodo">Invocación al método</h4>
+<p>Invocar un método es un proceso de dos pasos.</p>
+<ol>
+<li>Búsqueda: el operador <code>.</code></li>
+<li>Invocación al método: el operador <code>()</code></li>
+</ol>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; c = s.cost  # Busqueda
+&gt;&gt;&gt; c
+&lt;bound method Stock.cost of &lt;Stock object at 0x590d0&gt;&gt;
+&gt;&gt;&gt; c()         # Invocando al método
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="metodos-enlazados">Métodos enlazados</h4>
+<p>Un método que aún no ha sido invocado por el operador de llamada de función ()` se conoce como <em>método enlazado</em>. Opera en la instancia en la que se originó.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; s
+&lt;Stock object at 0x590d0&gt;
+&gt;&gt;&gt; c = s.cost
+&gt;&gt;&gt; c
+&lt;bound method Stock.cost of &lt;Stock object at 0x590d0&gt;&gt;
+&gt;&gt;&gt; c()
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<p>Los métodos enlazados suelen ser una fuente de errores no obvios causados ​​por descuido. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; print('Cost : %0.2f' % s.cost)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: float argument required
+&gt;&gt;&gt;
+</code></pre>
+<p>O un comportamiento tortuoso que es difícil de depurar.</p>
+<pre><code class="language-python">f = open(filename, 'w')
+...
+f.close # Ups, no hice nada en absoluto. `f` sigue abierto.
+</code></pre>
+<p>En ambos casos, el error se debe a que se olvidó incluir los paréntesis finales. Por ejemplo, <code>s.cost()</code> o <code>f.close()</code>.</p>
+<h4 id="acceso-a-atributos">Acceso a atributos</h4>
+<p>Existe una forma alternativa de acceder, manipular y administrar atributos.</p>
+<pre><code class="language-python">getattr(obj, 'name') # Igual que obj.name
+setattr(obj, 'name', value) # Igual que obj.name = value
+delattr(obj, 'name') # Igual que del obj.name
+hasattr(obj, 'name') # Comprueba si el atributo existe
+</code></pre>
+<p>Ejemplo:</p>
+<pre><code class="language-python">if hasattr(obj, 'x'):
+    x = getattr(obj, 'x'):
+else:
+    x = None
+</code></pre>
+<p><em>Nota: <code>getattr()</code> también tiene un valor predeterminado útil</em> arg*.</p>
+<pre><code class="language-python">x = getattr(obj, 'x', None)
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-49-mejor-salida-para-imprimir-objetos">Ejercicio 4.9: Mejor salida para imprimir objetos</h5>
+<p>Modifique el objeto <code>Stock</code> que definió en <code>stock.py</code> para que el método <code>__repr__()</code> produzca una salida más útil. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; goog
+Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt;
+</code></pre>
+<p>Observa lo que sucede cuando lees una cartera de acciones y visualizas la lista resultante después de haber realizado estos cambios. Por ejemplo:</p>
+<pre><code>&gt;&gt;&gt; import report
+&gt;&gt;&gt; portfolio = report.read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; portfolio
+... observa cuál es el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-410-un-ejemplo-de-uso-de-getattr">Ejercicio 4.10: Un ejemplo de uso de getattr()</h5>
+<p><code>getattr()</code> es un mecanismo alternativo para leer atributos. Se puede utilizar para escribir código extremadamente flexible. Para comenzar, pruebe este ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import stock
+&gt;&gt;&gt; s = stock.Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; columns = ['name', 'shares']
+&gt;&gt;&gt; for colname in columns:
+        print(colname, '=', getattr(s, colname))
+
+name = GOOG
+shares = 100
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe con atención que los datos de salida están determinados completamente por los nombres de los atributos que se enumeran en la variable <code>columnas</code>.</p>
+<p>En el archivo <code>tableformat.py</code>, tome esta idea y amplíela a una función generalizada <code>print_table()</code> que imprima una tabla que muestre los atributos especificados por el usuario de una lista de objetos arbitrarios. Al igual que con la función <code>print_report()</code> anterior, <code>print_table()</code> también debe aceptar una instancia de <code>TableFormatter</code> para controlar el formato de salida. Así es como debería funcionar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import report
+&gt;&gt;&gt; portfolio = report.read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; from tableformat import create_formatter, print_table
+&gt;&gt;&gt; formatter = create_formatter('txt')
+&gt;&gt;&gt; print_table(portfolio, ['name','shares'], formatter)
+      name     shares
+---------- ----------
+        AA        100
+       IBM         50
+       CAT        150
+      MSFT        200
+        GE         95
+      MSFT         50
+       IBM        100
+
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+      name     shares      price
+---------- ---------- ----------
+        AA        100       32.2
+       IBM         50       91.1
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50       65.1
+       IBM        100      70.44
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Inheritance.Rmd">Anterior (4.2 Herencia)</a> | <a href="04_Defining_exceptions.Rmd">Próximo (4.4 Definición de una nueva excepción)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

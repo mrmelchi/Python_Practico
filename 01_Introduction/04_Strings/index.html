@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/01_Introduction/04_Strings/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04_Strings - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Numbers.Rmd">Anterior (1.3 Números)</a>
+| <a href="05_Lists.Rmd">Next (1.5 Listas)</a></p>
+<h3 id="14-strings">1.4 Strings</h3>
+<p>Esta sección presenta formas de trabajar con texto.</p>
+<ul>
+<li>IMPORTANTE: Las palabras <code>strings</code> y <code>cadena</code> son utilizadas con el
+    mismo significado*</li>
+</ul>
+<h4 id="representacion-de-texto-literal">Representación de texto literal</h4>
+<p>Los literales de cadena se escriben en programas con comillas.</p>
+<pre><code># Comillas simples
+a = 'Sí, pero no, pero sí, pero...'
+
+# Comillas dobles
+b = &quot;la computadora dice que no&quot;
+
+# Comillas triples
+c = ''' 
+Mírame a los ojos, mírame a los ojos, a los ojos, a los ojos, a los ojos,
+No alrededor de los ojos, no mires alrededor de los ojos, mírame a los ojos, estás debajo.
+'''
+</code></pre>
+<p>Normalmente, los strings solo pueden abarcar una única línea. Las
+comillas triples capturan todo el texto encerrado en varias líneas,
+incluido todo el formato.</p>
+<p>No hay diferencia entre usar comillas simples <code>'</code> o dobles <code>"</code>.</p>
+<p><em>Sin embargo, se debe usar el mismo tipo de comillas utilizadas para
+iniciar una cadena para terminarla</em>.</p>
+<h4 id="codigos-de-escape-de-cadenas">Códigos de escape de cadenas</h4>
+<p>Los códigos de escape se utilizan para representar caracteres de control
+y caracteres que no se pueden escribir fácilmente directamente en el
+teclado. A continuación se muestran algunos códigos de escape comunes:</p>
+<pre><code>'\n' Salto de línea
+'\r' Retorno de carro
+'\t' Tabulador
+'\'' Comilla simple literal
+'\&quot;' Comillas dobles literales
+'\\' Barra invertida literal
+</code></pre>
+<h4 id="representacion-de-cadena">Representación de cadena</h4>
+<p>Cada carácter de una cadena se almacena internamente como un denominado
+<em>punto de código</em> Unicode, que es un número entero. Puede especificar un
+valor de punto de código exacto utilizando las siguientes secuencias de
+escape:</p>
+<pre><code>a = '\xf1' # a = 'ñ'
+b = '\u2200' # b = '∀'
+c = '\U0001D122' # c = '𝄢'
+d = '\N{PARA TODOS}' # d = '∀'
+</code></pre>
+<p>La <a href="https://unicode.org/charts">base de datos de caracteres Unicode</a> es
+una referencia para todos los códigos de caracteres disponibles.</p>
+<h4 id="indexacion-de-strings">Indexación de strings</h4>
+<p>Los strings funcionan como una matriz para acceder a caracteres
+individuales. Se utiliza un índice entero, que comienza en 0. Los
+índices negativos especifican una posición relativa al final del string.</p>
+<pre><code>a = 'Hola mundo'
+b = a[0] # 'H'
+c = a[4] # ''
+d = a[-1] # 'o' (fin de la cadena)
+</code></pre>
+<p>También puedes cortar o seleccionar substrings especificando un rango de
+índices con <code>:</code>.</p>
+<pre><code>d = a[:5] # 'Hola'
+e = a[6:] # 'mundo'
+f = a[3:8] # 'a mun'
+g = a[-5:] # 'mundo'
+</code></pre>
+<p>El carácter del índice final no está incluido. Los índices faltantes
+suponen el principio o el final de la cadena.</p>
+<h4 id="operaciones-con-cadenas">Operaciones con cadenas</h4>
+<p>Concatenación, longitud, membresía y replicación.</p>
+<pre><code># Concatenación (+)
+a = 'Hola' + 'Mundo' # 'HolaMundo'
+b = 'Decir ' + a # 'Decir HolaMundo'
+
+# Longitud (len)
+s = 'Hola'
+número(s) # 4
+
+# Prueba de membresía (`in`, `not in`)
+t = 'o' in s # True
+f = 'x' en s # False
+g = 'hola' no está en s # True
+
+# Replicación (s * n)
+rep = s * 5 # 'HolaHolaHolaHolaHola'
+</code></pre>
+<h4 id="metodos-de-cadena">Métodos de cadena</h4>
+<p>Los strings tienen métodos que realizan varias operaciones con los datos
+de los mismos.</p>
+<p>Ejemplo: eliminar cualquier espacio en blanco inicial o final.</p>
+<pre><code>s = ' Hola '
+t = s.strip() # 'Hola'
+</code></pre>
+<p>Ejemplo: Conversión de mayúsculas y minúsculas.</p>
+<pre><code>s = 'Hola'
+l = s.lower() # 'hola'
+u = s.upper() # 'HOLA'
+</code></pre>
+<p>Ejemplo: Reemplazar texto.</p>
+<pre><code>s = 'Hola mundo'
+t = s.replace('Hola' , 'Hello') # 'Hello mundo'
+</code></pre>
+<p><strong>Más métodos de String:</strong></p>
+<p>Las cadenas tienen una amplia variedad de otros métodos para probar y
+manipular los datos de texto. Esta es una pequeña muestra de métodos:</p>
+<pre><code>s.endswith(suffix) # Verifica si la cadena termina con sufijo
+s.find(t) # Primera aparición de t en s
+s.index(t) # Primera aparición de t en s
+s.isalpha() # Comprueba si los caracteres son alfabéticos
+s.isdigit() # Comprueba si los caracteres son numéricos
+s.islower() # Verifica si los caracteres están en minúsculas
+s.isupper() # Verifica si los caracteres están en mayúsculas
+s.join(slist) # Unir una lista de cadenas usando s como delimitador
+s.lower() # Convertir a minúsculas
+s.replace(old,new) # Reemplazar texto
+s.rfind(t) # Busca t desde el final de la cadena
+s.rindex(t) # Busca t desde el final de la cadena
+s.split([delim]) # Divide la cadena en una lista de subcadenas
+s.startswith(prefix) # Verifica si la cadena comienza con prefijo
+s.strip() # Elimina los espacios iniciales y finales
+s.upper() # Convertir a mayúsculas
+</code></pre>
+<h4 id="mutabilidad-de-los-strings">Mutabilidad de los strings</h4>
+<p>Los strings son "inmutables" o de sólo lectura. Una vez creado, el valor
+no se puede cambiar.</p>
+<pre><code>&gt;&gt;&gt; s = 'Hola mundo'
+&gt;&gt;&gt; s[1] = 'a'
+Traceback (most recent call last):
+  File &quot;&lt;python-input-5&gt;&quot;, line 1, in &lt;module&gt;
+    s[1] = 'a'
+    ~^^^
+TypeError: 'str' object does not support item assignment
+&gt;&gt;&gt;
+</code></pre>
+<p><strong>Todas las operaciones y métodos que manipulan datos de strings,
+siempre crean nuevos strings.</strong></p>
+<h4 id="conversiones-de-strings">Conversiones de strings</h4>
+<p>Utilice <code>str()</code> para convertir cualquier valor en un string. El
+resultado es un string que contiene el mismo texto que habría sido
+producido por la declaración <code>print()</code>.</p>
+<pre><code>&gt;&gt;&gt; x = 42
+&gt;&gt;&gt; str(x)
+'42'
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="cadenas-de-bytes">Cadenas de bytes</h4>
+<p>Una cadena de bytes de 8 bits, que se encuentra comúnmente en E/S de
+bajo nivel, se escribe de la siguiente manera:</p>
+<pre><code>datos = b'Hola mundo\r\n'
+</code></pre>
+<p>Al colocar una b minúscula antes de la primera comilla, especifica que
+se trata de una cadena de bytes y no de una cadena de texto.</p>
+<p>La mayoría de las operaciones de cadena habituales funcionan.</p>
+<pre><code>len(datos) # 12
+datos[0:4] # b'Hola'
+datos.replace(b'Hola', b'Cruel') # b'Mundo Cruel\r\n'
+</code></pre>
+<p>La indexación es un poco diferente porque devuelve valores de bytes como
+números enteros.</p>
+<pre><code>data[0] # 72 (código ASCII para 'H')
+</code></pre>
+<p>Conversión a/desde cadenas de texto.</p>
+<pre><code>texto = datos.decode('utf-8') # bytes -&gt; texto
+datos = texto.encode('utf-8') # texto -&gt; bytes
+</code></pre>
+<p>El argumento "utf-8" especifica una codificación de caracteres. Otros
+valores comunes incluyen "ascii" y "latin1".</p>
+<h4 id="stings-sin-procesar">Stings sin procesar</h4>
+<p>Los strings sin formato son literales de strings con una barra invertida
+no interpretada. Ellos se especifican anteponiendo la comilla inicial
+con una "r" minúscula.</p>
+<pre><code>&gt;&gt;&gt; rs = r'c:\newdata\test' # Sin formato (barra invertida no interpretada)
+&gt;&gt;&gt; rs
+'c:\\newdata\\prueba'
+</code></pre>
+<p>Los strings son el texto literal incluido en el interior, exactamente
+como se escribe. Esto es útil en situaciones donde la barra invertida
+tiene un significado especial. Ejemplo: nombre de archivo, expresiones
+regulares, etc.</p>
+<h4 id="f-strings">f-strings</h4>
+<p>Una cadena con sustitución de expresión formateada.</p>
+<pre><code>&gt;&gt;&gt; nombre = 'IBM'
+&gt;&gt;&gt; acciones = 100
+&gt;&gt;&gt; precio = 91.1
+&gt;&gt;&gt; a = f'{nombre:&gt;10s} {acciones:10d} {precio:10.2f}'
+&gt;&gt;&gt; a
+'IBM 100 91.10'
+&gt;&gt;&gt; b = f'Costo = ${acciones*precio:0.2f}'
+&gt;&gt;&gt;b
+'Costo = $9110.00'
+&gt;&gt;&gt;
+</code></pre>
+<p><strong>Nota: Esto requiere Python 3.6 o más reciente.</strong> El significado de los
+códigos de formato se trata más adelante.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En estos ejercicios, experimentará con operaciones en el tipo de cadena
+de Python. Debes hacer esto en el indicador interactivo de Python, donde
+podrás ver fácilmente los resultados.</p>
+<blockquote>
+<p>Nota importante:</p>
+<p>En ejercicios en los que se supone que debes interactuar con el
+intérprete, <code>&gt;&gt;&gt;</code> es el mensaje de solicitud del intérprete que
+aparece cuando Python desea que escriba una nueva declaración. Algunas
+afirmaciones en el ejercicio abarcan varias líneas: para que se
+ejecuten estas instrucciones, es posible que tenga que presionar
+'Enter' unas cuantas veces. Solo un recordatorio de que NO debes
+escribir el <code>&gt;&gt;&gt;</code> al trabajar estos ejemplos.</p>
+</blockquote>
+<p>Comience por definir una cadena que contenga una serie de símbolos
+bursátiles como este:</p>
+<pre><code>&gt;&gt;&gt;
+&gt;&gt;&gt; symbols = 'AAPL,IBM,MSFT,YHOO,SCO'
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-113-extraccion-de-caracteres-individuales-y-subcadenas">Ejercicio 1.13: Extracción de caracteres individuales y subcadenas</h5>
+<p>Las cadenas son matrices de caracteres. Intente extraer algunos
+caracteres:</p>
+<pre><code>&gt;&gt;&gt; symbols[0]
+?
+&gt;&gt;&gt; symbols[1]
+?
+&gt;&gt;&gt; symbols[2]
+?
+&gt;&gt;&gt; symbols[-1] # Último carácter
+?
+&gt;&gt;&gt; symbols[-2] # Los índices negativos son desde el final de la cadena
+?
+&gt;&gt;&gt;
+</code></pre>
+<p>En Python, las cadenas son de solo lectura.</p>
+<p>Verifique esto intentando cambiar el primer carácter de 'symbols' a una
+'a' minúscula.</p>
+<pre><code>&gt;&gt;&gt; symbols[0] = 'a'
+Traceback (most recent call last):
+  File &quot;&lt;python-input-10&gt;&quot;, line 1, in &lt;module&gt;
+    symbols[0] = 'a'
+    ^^^^^^^
+NameError: name 'symbols' is not defined
+&gt;&gt;&gt; 
+</code></pre>
+<h5 id="ejercicio-114-concatenacion-de-cadenas">Ejercicio 1.14: Concatenación de cadenas</h5>
+<p>Aunque los datos de cadena son de solo lectura, siempre puedes reasignar
+una variable a una cadena recién creada.</p>
+<p>Pruebe la siguiente declaración que concatena un nuevo símbolo "GOOG" a
+El final de los `symbols':</p>
+<pre><code>&gt;&gt;&gt; symbols = symbols + 'GOOG'
+&gt;&gt;&gt; symbols
+'AAPL,IBM,MSFT,YHOO,SCOGOOG'
+&gt;&gt;&gt;
+</code></pre>
+<p>¡Ups! Eso no es lo que querías. Arréglelo para que la variable <code>symbols</code>
+contenga el valor <code>'AAPL,IBM,MSFT,YHOO,SCO,GOOG'</code>.</p>
+<pre><code>&gt;&gt;&gt; symbols = ?
+&gt;&gt;&gt; symbols
+'AAPL,IBM,MSFT,YHOO,SCO,GOOG'
+&gt;&gt;&gt;
+</code></pre>
+<p>Añade 'HPQ' al principio de la cadena:</p>
+<pre><code>&gt;&gt;&gt; symbols = ?
+&gt;&gt;&gt; symbols
+'HPQ,AAPL,IBM,MSFT,YHOO,SCO,GOOG'
+&gt;&gt;&gt;
+</code></pre>
+<p>En estos ejemplos, podría parecer que se está modificando la cadena
+original, en una aparente violación del principio de que las cadenas son
+de solo lectura. No es así. Las operaciones sobre cadenas crean una
+cadena completamente nueva cada vez. Cuando se reasigna el nombre de la
+variable <code>symbols</code>, apunta a la cadena recién creada. Posteriormente la
+cadena vieja se destruye porque ya no se utiliza.</p>
+<h5 id="ejercicio-115-prueba-de-pertenencia-prueba-de-subcadenas">Ejercicio 1.15: Prueba de pertenencia (prueba de subcadenas)</h5>
+<p>Experimente con el operador <code>in</code> para comprobar si hay subcadenas. En
+modo interactivo: pruebe estas operaciones:</p>
+<pre><code>&gt;&gt;&gt; 'IBM' in symbols
+?
+&gt;&gt;&gt; 'AA' in symbols
+True
+&gt;&gt;&gt; 'CAT' in symbols
+?
+&gt;&gt;&gt;
+</code></pre>
+<p><em>¿Por qué la verificación de <code>'AA'</code> devolvió <code>True</code>?</em></p>
+<h5 id="ejercicio-116-metodos-de-cadena">Ejercicio 1.16: Métodos de cadena</h5>
+<p>En el modo interactivo de Python, intente experimentar con algunos de
+los métodos de cadena.</p>
+<pre><code>&gt;&gt;&gt; symbols.lower()
+?
+&gt;&gt;&gt; symbols
+?
+&gt;&gt;&gt;
+</code></pre>
+<p>Recuerde, las cadenas siempre son de solo lectura. Si desea guardar el
+resultado de una operación, debe colocarlo en una variable:</p>
+<pre><code>&gt;&gt;&gt; lowersyms = símbolos.lower()
+&gt;&gt;&gt;
+</code></pre>
+<p>Pruebe algunas operaciones más:</p>
+<pre><code>&gt;&gt;&gt; symbols.find('MSFT')
+?
+&gt;&gt;&gt; symbols[13:17]
+?
+&gt;&gt;&gt; symbols = symbols.replace('SCO','DOA')
+&gt;&gt;&gt; symbols
+?
+&gt;&gt;&gt; name = '   IBM   \n'
+&gt;&gt;&gt; name = name.strip() # Eliminar los espacios en blanco circundantes
+&gt;&gt;&gt; name
+?
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-117-f-string">Ejercicio 1.17: f-string</h5>
+<p>A veces quieres crear una cadena e incrustar los valores de variables en
+ella.</p>
+<p>Para hacer esto, utiliza una f-string. Por ejemplo:</p>
+<pre><code>&gt;&gt;&gt; name = 'IBM'
+&gt;&gt;&gt; shares = 100
+&gt;&gt;&gt; price = 91.1
+&gt;&gt;&gt; f'{shares} acciones de {name} a ${price:0.2f}'
+'100 acciones de IBM a $91.10'
+&gt;&gt;&gt;
+</code></pre>
+<p>Modifique el programa <code>mortgage.py</code> del [Ejercicio 1.1] usando
+f-strings. Intente hacer que la salida esté bien alineada.</p>
+<h5 id="ejercicio-118-expresiones-regulares">Ejercicio 1.18: Expresiones regulares</h5>
+<p>Una limitación de las operaciones de cadenas básicas es que no admiten
+ningún tipo de coincidencia de patrones avanzada. Para ello, es
+necesario recurrir al módulo <code>re</code> de Python y a las expresiones
+regulares.</p>
+<p>El manejo de expresiones regulares es un tema amplio, pero aquí hay un
+breve ejemplo:</p>
+<pre><code>&gt;&gt;&gt; texto = 'Hoy es 27/3/2018. Mañana es 28/03/2018.'
+&gt;&gt;&gt; # Encuentra todas las ocurrencias de una fecha
+&gt;&gt;&gt; import re
+&gt;&gt;&gt; re.findall(r'\d+/\d+/\d+', texto)
+['27/3/2018', '28/3/2018']
+&gt;&gt;&gt; # Reemplazar todas las apariciones de una fecha con texto de reemplazo
+&gt;&gt;&gt; re.sub(r'(\d+)/(\d+)/(\d+)', r'\3-\1-\2', texto)
+'Hoy es 2018-27-3. Mañana es 2018-28-03.'
+&gt;&gt;&gt;
+</code></pre>
+<p>Para obtener más información sobre el módulo <code>re</code>, consulte la
+documentación oficial en
+<a href="https://docs.python.org/3/library/re.html">https://docs.python.org/library/re.html</a>.</p>
+<h4 id="comentario">Comentario</h4>
+<p>A medida que comienza a experimentar con el intérprete, a menudo desea
+saber más sobre las operaciones admitidas por los diferentes objetos.
+Por ejemplo, ¿cómo saber qué operaciones están disponibles en una
+cadena?</p>
+<p>Dependiendo de su entorno de Python, es posible que pueda ver una lista
+de métodos disponibles mediante la función de completar tabulaciones.
+Por ejemplo, intenta escribir esto:</p>
+<pre><code>&gt;&gt;&gt; s = 'hola mundo'
+&gt;&gt;&gt; s.&lt;tecla de tabulación&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Si presionar la tecla <code>tab</code> no hace nada, puedes recurrir a la función
+incorporada <code>dir()</code>. Por ejemplo:</p>
+<pre><code>&gt;&gt;&gt; s = 'hola'
+&gt;&gt;&gt; dir(s)
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'removeprefix', 'removesuffix', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+&gt;&gt;&gt; 
+</code></pre>
+<p><code>dir()</code> produce una lista de todas las operaciones que pueden aparecer
+después de <code>(.)</code>. Utilice el comando <code>help()</code> para obtener más
+información sobre una operación específica:</p>
+<pre><code>help(s.upper)
+Help on built-in function upper:
+
+upper() method of builtins.str instance
+    Return a copy of the string converted to uppercase.
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Devuelve una copia de la cadena <code>s</code> convertida a mayúsculas.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Numbers.Rmd">Anterior (1.3 Números)</a>
+| <a href="05_Lists.Rmd">Next (1.5 Listas)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

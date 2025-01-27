@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/03_Program_organization/05_Main_module/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>05_Main_module - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Conteido</a> | <a href="04_Modules.Rmd">Anterior (3.4 Módulos)</a> | <a href="06_Design_discussion.Rmd">Próximo (3.6 Discusión sobre el diseño)</a></p>
+<h3 id="35-modulo-principal">3.5 Módulo principal</h3>
+<p>Esta sección presenta el concepto de un programa principal o módulo principal.</p>
+<h4 id="funciones-principales">Funciones principales</h4>
+<p>En muchos lenguajes de programación, existe el concepto de una función o método <em>principal</em>.</p>
+<pre><code class="language-c">// c / c++
+int main(int argc, char *argv[]) {
+...
+}
+</code></pre>
+<pre><code class="language-java">// java
+class myprog {
+public static void main(String args[]) {
+...
+}
+}
+</code></pre>
+<p>Esta es la primera función que se ejecuta cuando se inicia una aplicación.</p>
+<h4 id="modulo-principal-de-python">Módulo principal de Python</h4>
+<p>Python no tiene una función o método <em>principal</em>. En cambio, hay un módulo <em>principal</em>. El <em>módulo principal</em> es el archivo fuente que se ejecuta primero.</p>
+<pre><code class="language-bash">bash % python3 prog.py
+...
+</code></pre>
+<p>Cualquier archivo que le dé al intérprete al inicio se convierte en <em>principal</em>. No importa el nombre.</p>
+<h4 id="__main__-verificacion"><code>__main__</code> verificación</h4>
+<p>Es una práctica estándar para los módulos que se ejecutan como un script principal usar esta convención:</p>
+<pre><code class="language-python"># prog.py
+...
+if __name__ == '__main__':
+    # Ejecutando como el programa principal ...
+    declaraciones
+    ...
+</code></pre>
+<p>Las declaraciones incluidas dentro de la declaración <code>if</code> se convierten en el programa <em>principal</em>.</p>
+<h4 id="programas-principales-vs-importaciones-de-bibliotecas">Programas principales vs. importaciones de bibliotecas</h4>
+<p>Cualquier archivo Python puede ejecutarse como principal o como una importación de biblioteca:</p>
+<pre><code class="language-bash">bash % python prog.py # Ejecutando como principal
+</code></pre>
+<pre><code class="language-python">import prog # Ejecutando como importación de biblioteca
+</code></pre>
+<p>En ambos casos, <code>__name__</code> es el nombre del módulo. Sin embargo, solo se establecerá en <code>__main__</code> si se ejecuta como principal.</p>
+<p>Por lo general, no desea que las declaraciones que son parte del programa principal se ejecuten en una importación de biblioteca. Por lo tanto, es común tener un <code>if-</code>check en el código que se puede usar de cualquier manera.</p>
+<pre><code class="language-python">if __name__ == '__main__':
+    # No se ejecuta si se carga con importación ...
+</code></pre>
+<h4 id="plantilla-de-programa">Plantilla de programa</h4>
+<p>A continuación, se incluye una plantilla de programa común para escribir un programa Python:</p>
+<pre><code class="language-python"># prog.py
+# Declaraciones de importación (bibliotecas)
+import modules
+
+# Funciones
+def spam():
+    ...
+
+def blah():
+    ...
+
+# Función principal
+def main():
+    ...
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<h4 id="herramientas-de-linea-de-comandos">Herramientas de línea de comandos</h4>
+<p>Python se utiliza a menudo para herramientas de línea de comandos</p>
+<pre><code class="language-bash">bash % python report.py portfolio.csv prices.csv
+</code></pre>
+<p>Significa que los scripts se ejecutan desde el shell/terminal. Los casos de uso más comunes son la automatización, las tareas en segundo plano, etc.</p>
+<h4 id="argumentos-de-la-linea-de-comandos">Argumentos de la línea de comandos</h4>
+<p>La línea de comandos es una lista de cadenas de texto.</p>
+<pre><code class="language-bash">bash % python report.py portfolio.csv prices.csv
+</code></pre>
+<p>Esta lista de cadenas de texto se encuentra en <code>sys.argv</code>.</p>
+<pre><code class="language-python"># En el comando bash anterior
+sys.argv # ['report.py, 'portfolio.csv', 'prices.csv']
+</code></pre>
+<p>A continuación, se incluye un ejemplo simple de procesamiento de los argumentos:</p>
+<pre><code class="language-python">import sys
+
+if len(sys.argv) != 3:
+    raise SystemExit(f'Usage: {sys.argv[0]} ' 'portfile pricefile')
+portfile = sys.argv[1]
+pricefile = sys.argv[2]
+...
+</code></pre>
+<h4 id="es-estandar">E/S estándar</h4>
+<p>La entrada/salida estándar (o stdio) son archivos que funcionan de la misma manera que los archivos normales.</p>
+<pre><code class="language-python">sys.stdout
+sys.stderr
+sys.stdin
+</code></pre>
+<p>De manera predeterminada, la impresión se dirige a <code>sys.stdout</code>. La entrada se lee desde <code>sys.stdin</code>. Los seguimientos y errores se dirigen a <code>sys.stderr</code>.</p>
+<p>Tenga en cuenta que <em>stdio</em> podría estar conectado a terminales, archivos, tuberías, etc.</p>
+<pre><code class="language-bash">bash % python prog.py &gt; results.txt
+# o
+bash % cmd1 | python prog.py | cmd2
+</code></pre>
+<h4 id="variables-de-entorno">Variables de entorno</h4>
+<p>Las variables de entorno se configuran en el shell.</p>
+<pre><code class="language-bash">bash % setenv NAME dave
+bash % setenv RSH ssh
+bash % python3 prog.py
+</code></pre>
+<p><code>os.environ</code> es un diccionario que contiene estos valores.</p>
+<pre><code class="language-python">import os
+
+name = os.environ['NAME'] # 'dave'
+</code></pre>
+<p>Los cambios se reflejan en cualquier subproceso que el programa inicie posteriormente.</p>
+<h4 id="salida-del-programa">Salida del programa</h4>
+<p>La salida del programa se maneja mediante excepciones.</p>
+<pre><code class="language-python">raise SystemExit
+raise SystemExit(exitcode)
+raise SystemExit('Mensaje Informativo')
+</code></pre>
+<p>Una alternativa.</p>
+<pre><code class="language-python">import sys
+sys.exit(exitcode)
+</code></pre>
+<p>Un código de salida distinto de cero indica un error.</p>
+<h4 id="la-linea">La línea <code>#!</code></h4>
+<p>En Unix, la línea <code>#!</code> puede iniciar un script como Python. Agregue lo siguiente a la primera línea de su archivo de script.</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+# prog.py
+...
+</code></pre>
+<p>Requiere el permiso de ejecución.</p>
+<pre><code class="language-bash">bash % chmod +x prog.py
+# Luego puedes ejecutar
+bash % prog.py
+... output ...
+</code></pre>
+<p><em>Nota: El lanzador de Python en Windows también busca la línea <code>#!</code> para indicar la versión del idioma.</em></p>
+<h4 id="plantilla-de-script">Plantilla de script</h4>
+<p>Finalmente, aquí hay una plantilla de código común para programas Python que se ejecutan como scripts de línea de comandos:</p>
+<pre><code class="language-python">#!/usr/bin/env python
+# prog.py
+
+# Declaraciones de importación (bibliotecas)
+import modules
+
+# Funciones
+def spam():
+    ...
+
+def blah():
+    ...
+
+# Función principal
+def main(argv):
+    # Analizar argumentos de línea de comandos, entorno, etc.
+    ...
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-315-funciones-main">Ejercicio 3.15: funciones <code>main()</code></h5>
+<p>En el archivo <code>report.py</code>, agregue una función <code>main()</code> que acepte una lista de opciones de línea de comandos y produzca el mismo resultado que antes. Debería poder ejecutarla en modo interactivo de esta manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import report
+&gt;&gt;&gt; report.main(['report.py', 'Data/portfolio.csv', 'Data/prices.csv'])
+      Name     Shares      Price     Change
+---------- ---------- ---------- ----------
+        AA        100       9.22     -22.98
+       IBM         50     106.28      15.18
+       CAT        150      35.46     -47.98
+      MSFT        200      20.89     -30.34
+        GE         95      13.48     -26.89
+      MSFT         50      20.89     -44.21
+       IBM        100     106.28      35.84
+&gt;&gt;&gt;
+</code></pre>
+<pre><code>
+Modifique el archivo `pcost.py` para que tenga una función `main()` similar:
+
+```python
+&gt;&gt;&gt; import pcost
+&gt;&gt;&gt; pcost.main(['pcost.py', 'Data/portfolio.csv'])
+Total cost: 44671.15
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-316-creacion-de-scripts">Ejercicio 3.16: Creación de scripts</h5>
+<p>Modifique los programas <code>report.py</code> y <code>pcost.py</code> para que puedan ejecutarse como un script en la línea de comandos:</p>
+<pre><code class="language-bash">bash $ python report.py Data/portfolio.csv Data/prices.csv
+      Name     Shares      Price     Change
+---------- ---------- ---------- ----------
+        AA        100       9.22     -22.98
+       IBM         50     106.28      15.18
+       CAT        150      35.46     -47.98
+      MSFT        200      20.89     -30.34
+        GE         95      13.48     -26.89
+      MSFT         50      20.89     -44.21
+       IBM        100     106.28      35.84
+
+bash $ python3 pcost.py Data/portfolio.csv
+Total cost: 44671.15
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Modules.Rmd">Anterior (3.4 Módulos)</a> | <a href="06_Design_discussion.Rmd">Próximo (3.6 Discusión sobre el diseño)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

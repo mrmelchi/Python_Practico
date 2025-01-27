@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/01_Introduction/05_Lists/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>05_Lists - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Strings.Rmd">Anterior (1.4 Strings)</a> | <a href="06_Files.Rmd">Next (1.6 Archivos)</a></p>
+<h3 id="15-listas">1.5 Listas</h3>
+<p>Esta sección presenta las listas, el tipo principal de Python para almacenar una colección ordenada de valores.</p>
+<h4 id="creando-una-lista">Creando una lista</h4>
+<p>Utilice corchetes para definir una lista literal:</p>
+<pre><code>names = [ 'Elwood', 'Jake', 'Curtis' ]
+nums = [ 39, 38, 42, 65, 111]
+</code></pre>
+<p>A veces las listas se crean mediante otros métodos. Por ejemplo, una cadena se puede dividir en una lista usando el método <code>split()</code>:</p>
+<pre><code>&gt;&gt;&gt; linea = 'GOOG,100,490.10' # sin tilde
+&gt;&gt;&gt; fila = linea.split(',')
+&gt;&gt;&gt; fila
+['GOOG', '100', '490.10']
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="operaciones-de-lista">Operaciones de lista</h4>
+<p>Las listas pueden contener elementos de cualquier tipo. Agregue un nuevo elemento usando <code>append()</code>:</p>
+<pre><code>&gt;&gt;&gt; names.append('Murphy') # Agrega al final
+&gt;&gt;&gt; names.insert(2, 'Aretha') # Inserta en el medio
+&gt;&gt;&gt; names
+['Elwood', 'Jake', 'Aretha', 'Curtis', 'Murphy']
+</code></pre>
+<p>Utilice <code>+</code> para concatenar listas:</p>
+<pre><code>s = [1, 2, 3]
+t = ['a', 'b']
+s + t    # [1, 2, 3, 'a', 'b']
+</code></pre>
+<p>Las listas se indexan mediante números enteros. Empezando desde 0.</p>
+<pre><code>names = [ 'Elwood', 'Jake', 'Curtis' ]
+
+names[0]  # 'Elwood'
+names[1]  # 'Jake'
+names[2]  # 'Curtis'
+</code></pre>
+<p>Los índices negativos cuentan desde el final.</p>
+<pre><code>names[-1] # 'Curtis'
+</code></pre>
+<p>Puede cambiar cualquier elemento de una lista.</p>
+<pre><code class="language-python">names[1] = 'Joliet Jake'
+names                     # [ 'Elwood', 'Joliet Jake', 'Curtis' ]
+</code></pre>
+<p>Longitud de la lista.</p>
+<pre><code class="language-python">names = ['Elwood','Jake','Curtis']
+len(names)  # 3
+</code></pre>
+<p>Prueba de membresía (<code>in</code>, <code>not in</code>).</p>
+<pre><code class="language-python">'Elwood' in names       # True
+'Britney' not in names  # True
+</code></pre>
+<p>Replicación (<code>s * n</code>).</p>
+<pre><code class="language-python">s = [1, 2, 3]
+s * 3   # [1, 2, 3, 1, 2, 3, 1, 2, 3]
+</code></pre>
+<h4 id="iteracion-y-busqueda-de-listas">Iteración y búsqueda de listas</h4>
+<p>Utilice <code>for</code> para iterar sobre el contenido de la lista.</p>
+<pre><code class="language-python">for name in names:
+    # use name
+    # e.g. print(name)
+    ...
+</code></pre>
+<p>Esto es similar a una declaración 'foreach' de otros lenguajes de programación.</p>
+<p>Para encontrar la posición de algo rápidamente, utilice <code>index()</code>.</p>
+<pre><code class="language-python">names = ['Elwood','Jake','Curtis']
+names.index('Curtis')   # 2
+</code></pre>
+<p>Si el elemento está presente más de una vez, <code>index()</code> devolverá el índice de la primera aparición.</p>
+<p>Si no se encuentra el elemento, se generará una excepción 'ValueError'.</p>
+<h4 id="eliminacion-de-lista">Eliminación de lista</h4>
+<p>Puede eliminar elementos por valor de elemento o por índice:</p>
+<pre><code class="language-python"># Usando el valor
+names.remove('Curtis')
+
+# Usando el índice
+del names[1]
+</code></pre>
+<p>Quitar un elemento no crea un agujero. Otros elementos se moverán hacia abajo para llenar el espacio dejado vacante. Si hay más de una ocurrencia del elemento, <code>remove()</code> eliminará solo la primera ocurrencia.</p>
+<h4 id="ordenacion-de-listas">Ordenación de listas</h4>
+<p>Las listas se pueden ordenar "en el lugar" ("in-place").</p>
+<pre><code class="language-python">s = [10, 1, 7, 3]
+s.sort() # [1, 3, 7, 10]
+
+# Orden inverso
+s = [10, 1, 7, 3]
+s.sort(reverse=True) # [10, 7, 3, 1]
+
+# Funciona con cualquier dato ordenado
+s = ['foo', 'bar', 'spam']
+s.sort() # ['bar', 'foo', 'spam']
+</code></pre>
+<p>Utilice <code>sorted()</code> si desea crear una nueva lista:</p>
+<pre><code class="language-python">t = sorted(s)            # s sin cambios, t contiene valores ordenados
+</code></pre>
+<h4 id="listas-y-matematicas">Listas y matemáticas</h4>
+<p><em>Precaución: Las listas no fueron diseñadas para operaciones matemáticas.</em></p>
+<pre><code class="language-python">&gt;&gt;&gt; nums = [1, 2, 3, 4, 5]
+&gt;&gt;&gt; nums * 2
+[1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+&gt;&gt;&gt; nums + [10, 11, 12, 13, 14]
+[1, 2, 3, 4, 5, 10, 11, 12, 13, 14]
+</code></pre>
+<p>Específicamente, las listas no representan vectores/matrices como en MATLAB, Octave, R, etc. Sin embargo, existen algunos paquetes que pueden ayudarte con eso (por ejemplo, <a href="https://numpy.org">numpy</a>).</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En este ejercicio, experimentamos con el tipo de datos de lista de Python. En la última sección, trabajaste con cadenas que contenían símbolos bursátiles.</p>
+<pre><code class="language-python">&gt;&gt;&gt; symbols = 'HPQ,AAPL,IBM,MSFT,YHOO,DOA,GOOG'
+</code></pre>
+<p>Divídalo en una lista de nombres utilizando la operación <code>split()</code> de cadenas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist = symbols.split(',')
+</code></pre>
+<h5 id="ejercicio-119-extraccion-y-reasignacion-de-elementos-de-lista">Ejercicio 1.19: Extracción y reasignación de elementos de lista</h5>
+<p>Pruebe algunas búsquedas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist[0]
+'HPQ'
+&gt;&gt;&gt; symlist[1]
+'AAPL'
+&gt;&gt;&gt; symlist[-1]
+'GOOG'
+&gt;&gt;&gt; symlist[-2]
+'DOA'
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente reasignar un valor:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist[2] = 'AIG'
+&gt;&gt;&gt; symlist
+['HPQ', 'AAPL', 'AIG', 'MSFT', 'YHOO', 'DOA', 'GOOG']
+&gt;&gt;&gt;
+</code></pre>
+<p>Tome algunas rebanadas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist[0:3]
+['HPQ', 'AAPL', 'AIG']
+&gt;&gt;&gt; symlist[-2:]
+['DOA', 'GOOG']
+&gt;&gt;&gt;
+</code></pre>
+<p>Crea una lista vacía y agrégale un elemento.</p>
+<pre><code class="language-python">&gt;&gt;&gt; mysyms = []
+&gt;&gt;&gt; mysyms.append('GOOG')
+&gt;&gt;&gt; mysyms
+['GOOG']
+</code></pre>
+<p>Puede reasignar una parte de una lista a otra lista. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist[-2:] = mysyms
+&gt;&gt;&gt; symlist
+['HPQ', 'AAPL', 'AIG', 'MSFT', 'YHOO', 'GOOG']
+&gt;&gt;&gt;
+</code></pre>
+<p>Al hacer esto, la lista del lado izquierdo (<code>symlist</code>) se redimensionará según corresponda para que encaje en el lado derecho (<code>mysyms</code>). Por ejemplo, en el ejemplo anterior, los dos últimos elementos de <code>symlist</code> fueron reemplazados por el único elemento de la lista <code>mysyms</code>.</p>
+<h5 id="ejercicio-120-recorrer-los-elementos-de-la-lista">Ejercicio 1.20: Recorrer los elementos de la lista</h5>
+<p>El bucle <code>for</code> funciona recorriendo los datos de una secuencia, como por ejemplo una lista. Compruébelo escribiendo el siguiente bucle y observando lo que sucede:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for s in symlist:
+        print('s =', s)
+# Mire la salida
+</code></pre>
+<h5 id="ejercicio-121-pruebas-de-pertenencia">Ejercicio 1.21: Pruebas de pertenencia</h5>
+<p>Utilice el operador <code>in</code> o <code>not in</code> para comprobar si <code>'AIG'</code>, <code>'AA'</code> y <code>'CAT'</code> están en la lista de símbolos.</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Está 'AIG' en `symlist`?
+True
+&gt;&gt;&gt; # Está 'AA' en `symlist`?
+False
+&gt;&gt;&gt; # NO Está 'CAT' en `symlist`?
+True
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-122-anadir-insertar-y-eliminar-elementos">Ejercicio 1.22: Añadir, insertar y eliminar elementos</h5>
+<p>Utilice el método <code>append()</code> para agregar el símbolo <code>'RHT'</code> al final de <code>symlist</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; # append 'RHT'
+&gt;&gt;&gt; symlist
+['HPQ', 'AAPL', 'AIG', 'MSFT', 'YHOO', 'GOOG', 'RHT']
+&gt;&gt;&gt;
+</code></pre>
+<p>Utilice el método <code>insert()</code> para insertar el símbolo <code>'AA'</code> como el segundo elemento de la lista.</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Insertar 'AA' como el segundo elemento de la lista
+&gt;&gt;&gt; symlist
+['HPQ', 'AA', 'AAPL', 'AIG', 'MSFT', 'YHOO', 'GOOG', 'RHT']
+&gt;&gt;&gt;
+</code></pre>
+<p>Utilice el método <code>remove()</code> para eliminar <code>'MSFT'</code> de la lista.</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Eliminar 'MSFT'
+&gt;&gt;&gt; symlist
+['HPQ', 'AA', 'AAPL', 'AIG', 'YHOO', 'GOOG', 'RHT']
+&gt;&gt;&gt;
+</code></pre>
+<p>Añade una entrada duplicada para <code>'YHOO'</code> al final de la lista.</p>
+<p><em>Nota: está perfectamente bien que una lista tenga valores duplicados.</em></p>
+<pre><code class="language-python">&gt;&gt;&gt; # Añadir 'YHOO'
+&gt;&gt;&gt; symlist
+['HPQ', 'AA', 'AAPL', 'AIG', 'YHOO', 'GOOG', 'RHT', 'YHOO']
+&gt;&gt;&gt;
+</code></pre>
+<p>Utilice el método <code>index()</code> para encontrar la primera posición de <code>'YHOO'</code> en la lista.</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Encuentra el primer índice de 'YHOO'
+4
+&gt;&gt;&gt; symlist[4]
+'YHOO'
+&gt;&gt;&gt;
+</code></pre>
+<p>Cuente cuántas veces aparece <code>'YHOO'</code> en la lista:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist.count('YHOO')
+2
+&gt;&gt;&gt;
+</code></pre>
+<p>Eliminar la primera aparición de "YHOO".</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Eliminar la primera aparición de 'YHOO'
+&gt;&gt;&gt; symlist
+['HPQ', 'AA', 'AAPL', 'AIG', 'GOOG', 'RHT', 'YHOO']
+&gt;&gt;&gt;
+</code></pre>
+<p>Para que lo sepas, no existe ningún método para encontrar o eliminar todas las apariciones de un elemento. Sin embargo, veremos una forma elegante de hacerlo en la sección 2.</p>
+<h5 id="ejercicio-123-ordenamiento">Ejercicio 1.23: Ordenamiento</h5>
+<p>¿Quieres ordenar una lista? Utilice el método <code>sort()</code>. Pruébelo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist.sort()
+&gt;&gt;&gt; symlist
+['AA', 'AAPL', 'AIG', 'GOOG', 'HPQ', 'RHT', 'YHOO']
+&gt;&gt;&gt;
+</code></pre>
+<p>¿Quieres ordenar en sentido inverso? Prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; symlist.sort(reverse=True)
+&gt;&gt;&gt; symlist
+['YHOO', 'RHT', 'HPQ', 'GOOG', 'AIG', 'AAPL', 'AA']
+&gt;&gt;&gt;
+</code></pre>
+<p>Nota: Ordenar una lista modifica su contenido "en el lugar". Es decir, los elementos de la lista se ordenan, pero no se crea ninguna lista nueva como resultado.</p>
+<h5 id="ejercicio-124-poniendolo-todo-junto-de-nuevo">Ejercicio 1.24: Poniéndolo todo junto de nuevo</h5>
+<p>¿Quieres tomar una lista de cadenas y unirlas en una sola cadena? Utilice el método <code>join()</code> de cadenas como esta (nota: esto parece extraño al principio).</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = ','.join(symlist)
+&gt;&gt;&gt; a
+'YHOO,RHT,HPQ,GOOG,AIG,AAPL,AA'
+&gt;&gt;&gt; b = ':'.join(symlist)
+&gt;&gt;&gt; b
+'YHOO:RHT:HPQ:GOOG:AIG:AAPL:AA'
+&gt;&gt;&gt; c = ''.join(symlist)
+&gt;&gt;&gt; c
+'YHOORHTHPQGOOGAIGAAPLAA'
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-125-listas-de-cualquier-cosa">Ejercicio 1.25: Listas de cualquier cosa</h5>
+<p>Las listas pueden contener cualquier tipo de objeto, incluidas otras listas (por ejemplo, listas anidadas). Prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; nums = [101, 102, 103]
+&gt;&gt;&gt; items = ['spam', symlist, nums]
+&gt;&gt;&gt; items
+['spam', ['YHOO', 'RHT', 'HPQ', 'GOOG', 'AIG', 'AAPL', 'AA'], [101, 102, 103]]
+</code></pre>
+<p>Preste mucha atención al resultado anterior. <code>items</code> es una lista con tres elementos. El primer elemento es una cadena, pero los otros dos elementos son listas.</p>
+<p>Puede acceder a los elementos de las listas anidadas mediante múltiples operaciones de indexación.</p>
+<pre><code class="language-python">&gt;&gt;&gt; items[0]
+'spam'
+&gt;&gt;&gt; items[0][0]
+'s'
+&gt;&gt;&gt; items[1]
+['YHOO', 'RHT', 'HPQ', 'GOOG', 'AIG', 'AAPL', 'AA']
+&gt;&gt;&gt; items[1][1]
+'RHT'
+&gt;&gt;&gt; items[1][1][2]
+'T'
+&gt;&gt;&gt; items[2]
+[101, 102, 103]
+&gt;&gt;&gt; items[2][1]
+102
+&gt;&gt;&gt;
+</code></pre>
+<p>Si bien es técnicamente posible crear estructuras de listas muy complicadas, como regla general, conviene mantener las cosas simples. Generalmente las listas contienen elementos que tienen todos el mismo tipo de valor. Por ejemplo, una lista que consta enteramente de números o una lista de cadenas de texto. Mezclar distintos tipos de datos en la misma lista suele ser una buena forma de hacer que te explote la cabeza, por lo que es mejor evitarlo.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Strings.Rmd">Anterior (1.4 Strings)</a> | <a href="06_Files.Rmd">Next (1.6 Archivos)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

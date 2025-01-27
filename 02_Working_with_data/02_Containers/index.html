@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/02_Working_with_data/02_Containers/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>02_Containers - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contenido.md">Contenido</a> | <a href="../01_Datatypes/">Anterior (2.1 Tipos de
+datos)</a> | <a href="03_Formato.md">Siguiente (2.3 Formato)</a></p>
+<h3 id="22-contenedores">2.2 Contenedores</h3>
+<p>En esta sección se tratan listas, diccionarios y sets (conjuntos).</p>
+<h4 id="descripcion-general">Descripción general</h4>
+<p>Los programas a menudo tienen que trabajar con muchos objetos.</p>
+<ul>
+<li>Una cartera de acciones</li>
+<li>Una tabla de precios de acciones</li>
+</ul>
+<p>Hay tres opciones principales para utilizar.</p>
+<ul>
+<li>Listas. Datos ordenados.</li>
+<li>Diccionarios. Datos desordenados.</li>
+<li>Sets. Colección desordenada de elementos únicos.</li>
+</ul>
+<h4 id="listas-como-contenedor">Listas como contenedor</h4>
+<p>Utilice una lista cuando el orden de los datos sea importante. Recuerde
+que las listas pueden contener cualquier tipo de objeto. Por ejemplo,
+una lista de tuplas.</p>
+<pre><code class="language-python">portfolio = [
+    ('GOOG', 100, 490.1),
+    ('IBM', 50, 91.3),
+    ('CAT', 150, 83.44)
+]
+
+portfolio[0]            # ('GOOG', 100, 490.1)
+portfolio[2]            # ('CAT', 150, 83.44)
+</code></pre>
+<h3 id="construccion-de-listas">Construcción de listas</h3>
+<p>Construyendo una lista desde cero.</p>
+<pre><code class="language-python">records = []  # Lista vacía inicial
+
+# Use .append() para adicionar màs elementos
+records.append(('GOOG', 100, 490.10))
+records.append(('IBM', 50, 91.3))
+...
+</code></pre>
+<p>Un ejemplo al leer registros de un archivo.</p>
+<pre><code class="language-python">records = []  # Initial empty list
+
+with open('Data/portfolio.csv', 'rt') as f:
+    next(f) # salt los encabezados
+    for line in f:
+        row = line.split(',')
+        records.append((row[0], int(row[1]), float(row[2])))
+</code></pre>
+<h4 id="dicts-como-contenedor">Dicts como contenedor</h4>
+<p>Los diccionarios son útiles si desea realizar búsquedas aleatorias
+rápidas (por nombre de clave). Por ejemplo, un diccionario de precios de
+acciones:</p>
+<pre><code class="language-python">prices = {
+   'GOOG': 513.25,
+   'CAT': 87.22,
+   'IBM': 93.37,
+   'MSFT': 44.12
+}
+</code></pre>
+<p>A continuación se muestran algunas búsquedas sencillas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; prices['IBM']
+93.37
+&gt;&gt;&gt; prices['GOOG']
+513.25
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="construccion-de-diccionarios">Construcción de diccionarios</h4>
+<p>Ejemplo de construcción de un diccionario desde cero.</p>
+<pre><code class="language-python">prices = {} # Diccionario vacío inicial
+
+# Insertar nuevos elementos
+prices['GOOG'] = 513.25
+prices['CAT'] = 87.22
+prices['IBM'] = 93.37
+</code></pre>
+<p>Un ejemplo que completa el dict a partir del contenido de un archivo.</p>
+<pre><code class="language-python">prices = {} # Diccionario vacío inicial
+
+with open('Data/prices.csv', 'rt') as f:
+    for line in f:
+        row = line.split(',')
+        prices[row[0]] = float(row[1])
+</code></pre>
+<p>Nota: si prueba esto en el archivo <code>Data/prices.csv</code>, descubrirá que
+casi funciona (hay una línea en blanco al final que hace que se
+bloquee). Necesitarás encontrar alguna forma de modificar el código para
+tenerlo en cuenta (ver Ejercicio 2.6).</p>
+<h4 id="busquedas-en-el-diccionario">Búsquedas en el diccionario</h4>
+<p>Puedes probar la existencia de una clave.</p>
+<pre><code class="language-python">if key in d:
+    # YES
+else:
+    # NO
+</code></pre>
+<p>Puede buscar un valor que podría no existir y proporcionar un valor
+predeterminado en caso de que no exista.</p>
+<pre><code class="language-python">name = d.get(key, default)
+</code></pre>
+<p>Un ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; prices.get('IBM', 0.0)
+93.37
+&gt;&gt;&gt; prices.get('SCOX', 0.0)
+0.0
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="teclas-compuestas">Teclas compuestas</h4>
+<p>Casi cualquier tipo de valor se puede utilizar como clave de diccionario
+en Python. Una clave de diccionario debe ser de un tipo que sea
+inmutable. Por ejemplo, tuplas:</p>
+<pre><code class="language-python">holidays = {
+  (1, 1) : 'New Years',
+  (3, 14) : 'Pi day',
+  (9, 13) : &quot;Programmer's day&quot;,
+}
+</code></pre>
+<p>Luego para acceder:</p>
+<pre><code class="language-python">&gt;&gt;&gt; holidays[3, 14]
+'Pi day'
+&gt;&gt;&gt;
+</code></pre>
+<p><em>Ni una lista, ni un set, ni otro diccionario pueden servir como clave
+de diccionario, porque las listas y los diccionarios son mutables.</em></p>
+<h4 id="set-conjunto">Set (Conjunto)</h4>
+<p>Los conjuntos son colecciones de elementos únicos no ordenados.</p>
+<pre><code class="language-python">tech_stocks = { 'IBM','AAPL','MSFT' }
+# Sintaxis alternativa
+tech_stocks = set(['IBM', 'AAPL', 'MSFT'])
+</code></pre>
+<p>Los conjuntos son útiles para las pruebas de pertenencia.</p>
+<pre><code class="language-python">&gt;&gt;&gt; tech_stocks
+set(['AAPL', 'IBM', 'MSFT'])
+&gt;&gt;&gt; 'IBM' in tech_stocks
+True
+&gt;&gt;&gt; 'FB' in tech_stocks
+False
+&gt;&gt;&gt;
+</code></pre>
+<p>Los conjuntos también son útiles para la eliminación de duplicados.</p>
+<pre><code class="language-python">names = ['IBM', 'AAPL', 'GOOG', 'IBM', 'GOOG', 'YHOO']
+
+unique = set(names)
+# unique = set(['IBM', 'AAPL','GOOG','YHOO'])
+</code></pre>
+<p>Operaciones de conjunto adicionales:</p>
+<pre><code class="language-python">unique.add('CAT')        # Agregar elemento
+unique.remove('YHOO')    # Remover un elemento
+
+s1 = { 'a', 'b', 'c'}
+s2 = { 'c', 'd' }
+s1 | s2                 # Set union { 'a', 'b', 'c', 'd' }
+s1 &amp; s2                 # Set intersección { 'c' }
+s1 - s2                 # Set diferencia { 'a', 'b' }
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En estos ejercicios, comenzará a construir uno de los programas
+principales utilizados en el resto de este curso. Realice su trabajo en
+el archivo <code>Work/report.py</code>.</p>
+<h5 id="ejercicio-24-una-lista-de-tuplas">Ejercicio 2.4: Una lista de tuplas</h5>
+<p>El archivo <code>Data/portfolio.csv</code> contiene una lista de acciones en una
+cartera. En el <a href="../01_Introduction/07_Functions.Rmd">Ejercicio 1.30</a>,
+escribió una función <code>portfolio_cost(filename)</code> que leyó este archivo y
+realizó un cálculo simple.</p>
+<p>Tu código debería verse así:</p>
+<pre><code class="language-python"># pcost.py
+
+import csv
+
+def portfolio_cost(filename):
+    '''Calcula el costo total (shares*price) de un archivo de cartera de acciones'''
+    total_cost = 0.0
+
+    with open(filename, 'rt') as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+        for row in rows:
+            nshares = int(row[1])
+            price = float(row[2])
+            total_cost += nshares * price
+    return total_cost
+</code></pre>
+<p>Usando este código como guía aproximada, cree un nuevo archivo
+<code>report.py</code>. En ese archivo, defina una función
+<code>read_portfolio(filename)</code> que abra un archivo de cartera determinado y
+lo lea en una lista de tuplas. Para hacer esto, vas a realizar algunas
+modificaciones menores al código anterior.</p>
+<p>Primero, en lugar de definir <code>total_cost = 0</code>, crearás una variable que
+inicialmente estará configurada en una lista vacía. Por ejemplo:</p>
+<pre><code class="language-python">portfolio = []
+</code></pre>
+<p>A continuación, en lugar de sumar el costo, convertirá cada fila en una
+tupla exactamente como lo hizo en el último ejercicio y la agregará a
+esta lista. Por ejemplo:</p>
+<pre><code class="language-python">for row in rows:
+    holding = (row[0], int(row[1]), float(row[2]))
+    portfolio.append(holding)
+</code></pre>
+<p>Finalmente, devolverá la lista <code>portfolio</code> resultante.</p>
+<p>Experimente con su función de forma interactiva (solo un recordatorio de
+que para hacer esto, primero debe ejecutar el programa <code>report.py</code> en el
+intérprete):</p>
+<p><em>Sugerencia: use <code>-i</code> al ejecutar el archivo en la terminal</em></p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; portfolio
+[('AA', 100, 32.2), ('IBM', 50, 91.1), ('CAT', 150, 83.44), ('MSFT', 200, 51.23),
+    ('GE', 95, 40.37), ('MSFT', 50, 65.1), ('IBM', 100, 70.44)]
+&gt;&gt;&gt;
+&gt;&gt;&gt; portfolio[0]
+('AA', 100, 32.2)
+&gt;&gt;&gt; portfolio[1]
+('IBM', 50, 91.1)
+&gt;&gt;&gt; portfolio[1][1]
+50
+&gt;&gt;&gt; total = 0.0
+&gt;&gt;&gt; for s in portfolio:
+        total += s[1] * s[2]
+
+&gt;&gt;&gt; print(total)
+44671.15
+&gt;&gt;&gt;
+</code></pre>
+<p>Esta lista de tuplas que ha creado es muy similar a una matriz 2D. Por
+ejemplo, puede acceder a una columna y fila específicas mediante una
+búsqueda como <code>portfolio[fila][columna]</code>, donde <code>fila</code> y <code>columna</code> son
+números enteros.</p>
+<p>Dicho esto, también puedes reescribir el último bucle <code>for</code> usando una
+declaración como esta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; total = 0.0
+&gt;&gt;&gt; for name, shares, price in portfolio:
+            total += shares*price
+
+&gt;&gt;&gt; print(total)
+44671.15
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-25-lista-de-diccionarios">Ejercicio 2.5: Lista de diccionarios</h5>
+<p>Tome la función que escribió en el Ejercicio 2.4 y modifíquela para
+representar cada acción en la cartera con un diccionario en lugar de una
+tupla. En este diccionario, utilice los nombres de campo <code>name</code>,
+<code>shares</code> y <code>prices</code>para representar las diferentes columnas en el
+archivo de entrada.</p>
+<p>Experimente con esta nueva función de la misma manera que lo hizo en el
+Ejercicio 2.4.</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; portfolio
+[{'name': 'AA', 'shares': 100, 'price': 32.2}, {'name': 'IBM', 'shares': 50, 'price': 91.1},
+    {'name': 'CAT', 'shares': 150, 'price': 83.44}, {'name': 'MSFT', 'shares': 200, 'price': 51.23},
+    {'name': 'GE', 'shares': 95, 'price': 40.37}, {'name': 'MSFT', 'shares': 50, 'price': 65.1},
+    {'name': 'IBM', 'shares': 100, 'price': 70.44}]
+&gt;&gt;&gt; portfolio[0]
+{'name': 'AA', 'shares': 100, 'price': 32.2}
+&gt;&gt;&gt; portfolio[1]
+{'name': 'IBM', 'shares': 50, 'price': 91.1}
+&gt;&gt;&gt; portfolio[1]['shares']
+50
+&gt;&gt;&gt; total = 0.0
+&gt;&gt;&gt; for s in portfolio:
+        total += s['shares']*s['price']
+
+&gt;&gt;&gt; print(total)
+44671.15
+&gt;&gt;&gt;
+</code></pre>
+<p>Aquí, notarás que se accede a los diferentes campos de cada entrada
+mediante nombres de clave en lugar de números de columna numéricos. A
+menudo se prefiere esto porque el código resultante es más fácil de leer
+más adelante.</p>
+<p>Visualizar diccionarios y listas grandes puede resultar complicado. Para
+limpiar la salida para la depuración, considere usar la función
+<code>pprint</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; pprint(portfolio)
+[{'name': 'AA', 'price': 32.2, 'shares': 100},
+    {'name': 'IBM', 'price': 91.1, 'shares': 50},
+    {'name': 'CAT', 'price': 83.44, 'shares': 150},
+    {'name': 'MSFT', 'price': 51.23, 'shares': 200},
+    {'name': 'GE', 'price': 40.37, 'shares': 95},
+    {'name': 'MSFT', 'price': 65.1, 'shares': 50},
+    {'name': 'IBM', 'price': 70.44, 'shares': 100}]
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-26-los-diccionarios-como-contenedor">Ejercicio 2.6: Los diccionarios como contenedor</h5>
+<p>Un diccionario es una forma útil de realizar un seguimiento de los
+elementos, en los que desea buscar elementos utilizando un índice que no
+sea un número entero. En el shell de Python, intenta jugar con un
+diccionario:</p>
+<pre><code class="language-python">&gt;&gt;&gt; prices = { }
+&gt;&gt;&gt; prices['IBM'] = 92.45
+&gt;&gt;&gt; prices['MSFT'] = 45.12
+&gt;&gt;&gt; prices
+... vea el resultado ...
+&gt;&gt;&gt; prices['IBM']
+92.45
+&gt;&gt;&gt; prices['AAPL']
+... vea el resultado ...
+&gt;&gt;&gt; 'AAPL' in prices
+False
+&gt;&gt;&gt;
+</code></pre>
+<p>El archivo <code>Data/prices.csv</code> contiene una serie de líneas con precios de
+acciones. El archivo se parece a esto:</p>
+<pre><code class="language-csv">&quot;AA&quot;,9.22
+&quot;AXP&quot;,24.85
+&quot;BA&quot;,44.85
+&quot;BAC&quot;,11.27
+&quot;C&quot;,3.72
+...
+</code></pre>
+<p>Escriba una función <code>read_prices(filename)</code> que lea un conjunto de
+precios como este en un diccionario donde las claves del diccionario son
+los nombres de las acciones y los valores en el diccionario son los
+precios de las acciones.</p>
+<p>Para hacer esto, comience con un diccionario vacío y comience a insertar
+valores en él tal como lo hizo anteriormente. Sin embargo, ahora estás
+leyendo los valores de un archivo.</p>
+<p>Utilizaremos esta estructura de datos para buscar rápidamente el precio
+de una acción determinada.</p>
+<p>Algunos pequeños consejos que necesitarás para esta parte. Primero,
+asegúrate de utilizar el módulo <code>csv</code> tal como lo hiciste antes; no es
+necesario reinventar la rueda aquí.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/prices.csv', 'r')
+&gt;&gt;&gt; rows = csv.reader(f)
+&gt;&gt;&gt; for row in rows:
+        print(row)
+
+
+['AA', '9.22']
+['AXP', '24.85']
+...
+[]
+&gt;&gt;&gt;
+</code></pre>
+<p>La otra pequeña complicación es que el archivo <code>Data/prices.csv</code> puede
+tener algunas líneas en blanco. Observe cómo la última fila de datos
+anterior es una lista vacía, lo que significa que no había datos
+presentes en esa línea.</p>
+<p>Existe la posibilidad de que esto provoque que su programa muera con una
+excepción. Utilice las instrucciones <code>try</code> y <code>except</code> para detectar esto
+según corresponda. Pensamiento: ¿sería mejor protegerse contra datos
+erróneos con una declaración <code>if</code>?</p>
+<p>Una vez que haya escrito su función <code>read_prices()</code>, pruébela de forma
+interactiva para asegurarse de que funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; prices = read_prices('Data/prices.csv')
+&gt;&gt;&gt; prices['IBM']
+106.28
+&gt;&gt;&gt; prices['MSFT']
+20.89
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-27-como-saber-si-puedes-jubilarte">Ejercicio 2.7: Cómo saber si puedes jubilarte</h5>
+<p>Conecte todo este trabajo agregando algunas declaraciones adicionales a
+su programa <code>report.py</code> que calcula la ganancia/pérdida. Estas
+afirmaciones deben tomar la lista de acciones del Ejercicio 2.5 y el
+diccionario de precios del Ejercicio 2.6 y calcular el valor actual de
+la cartera junto con la ganancia/pérdida.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Datatypes.Rmd">Anterior (2.1 Tipos de
+datos)</a> | <a href="03_Formatting.Rmd">Siguiente (2.3 Salida con
+formato)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

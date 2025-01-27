@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/08_Testing_debugging/01_Testing/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>01_Testing - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../07_Advanced_Topics/05_Decorated_methods.Rmd">Anterior (7.5 Métodos estáticos y de clase)</a> | <a href="02_Logging.Rmd">Próximo (8.2 Logging)</a></p>
+<h3 id="81-pruebas">8.1 Pruebas</h3>
+<h4 id="las-pruebas-son-geniales-la-depuracion-es-un-asco">Las pruebas son geniales, la depuración es un asco</h4>
+<p>La naturaleza dinámica de Python hace que las pruebas sean de vital importancia para la mayoría de las aplicaciones. No hay ningún compilador que encuentre errores. La única forma de encontrarlos es ejecutar el código y asegurarse de probar todas sus funciones.</p>
+<h4 id="afirmaciones">Afirmaciones</h4>
+<p>La declaración <code>assert</code> es una verificación interna del programa. Si una expresión no es verdadera, genera una excepción <code>AssertionError</code>.</p>
+<p>Sintaxis de la declaración <code>assert</code>.</p>
+<pre><code class="language-python">assert &lt;expresiónn&gt; [, 'Mensaje de diagnóstico']
+</code></pre>
+<p>Por ejemplo.</p>
+<pre><code class="language-python">assert isinstance(10, int), 'Int esperado'
+</code></pre>
+<p>No debería usarse para verificar la entrada del usuario (es decir, los datos ingresados en un formulario web o algo así). Su propósito es más para verificaciones internas e invariantes (condiciones que siempre deben ser verdaderas).</p>
+<h4 id="programacion-por-contrato">Programación por contrato</h4>
+<p>También conocida como Diseño por contrato, el uso liberal de aserciones es un enfoque para diseñar software. Prescribe que los diseñadores de software deben definir especificaciones de interfaces precisas para los componentes del software.</p>
+<p>Por ejemplo, puede colocar aserciones en todas las entradas de una función.</p>
+<pre><code class="language-python">def add(x, y):
+    assert isinstance(x, int), 'Espera un int'
+    assert isinstance(y, int), 'Espera un int'
+    return x + y
+</code></pre>
+<p>Al verificar las entradas, se detectarán inmediatamente los invocadores que no estén usando los argumentos adecuados.</p>
+<pre><code class="language-python">&gt;&gt;&gt; add(2, 3)
+5
+&gt;&gt;&gt; add('2', '3')
+Traceback (most recent call last):
+...
+AssertionError: Esperado un int
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="pruebas-en-linea">Pruebas en línea</h4>
+<p>Las afirmaciones también se pueden usar para pruebas simples.</p>
+<pre><code class="language-python">def add(x, y):
+    return x + y
+
+assert add(2,2) == 4
+</code></pre>
+<p>De esta manera, está incluyendo la prueba en el mismo módulo que su código.</p>
+<p><em>Beneficio: si el código está claramente dañado, los intentos de importar el módulo fallarán.</em></p>
+<p>Esto no se recomienda para pruebas exhaustivas. Es más bien una "prueba de humo" básica. ¿Funciona la función en algún ejemplo? Si no, entonces algo está definitivamente dañado.</p>
+<h4 id="modulo-unittest">Módulo <code>unittest</code></h4>
+<p>Supongamos que tiene un código.</p>
+<pre><code class="language-python"># simple.py
+
+def add(x, y):
+    return x + y
+</code></pre>
+<p>Ahora, supongamos que desea probarlo. Cree un archivo de prueba independiente como este.</p>
+<pre><code class="language-python"># test_simple.py
+
+import simple
+import unittest
+</code></pre>
+<p>Luego defina una clase de prueba.</p>
+<pre><code class="language-python"># test_simple.py
+
+import simple
+import unittest
+
+# Observe que hereda de unittest.TestCase
+class TestAdd(unittest.TestCase):
+    ...
+</code></pre>
+<p>La clase de prueba debe heredar de <code>unittest.TestCase</code>.</p>
+<p>En la clase de prueba, se definen los métodos de prueba.</p>
+<pre><code class="language-python"># test_simple.py
+
+import simple
+import unittest
+
+# Observe que hereda de unittest.TestCase
+class TestAdd(unittest.TestCase):
+    def test_simple(self):
+        # Prueba con argumentos enteros simples
+        r = simple.add(2, 2)
+        self.assertEqual(r, 5)
+
+    def test_str(self):
+        # Prueba con cadenas
+        r = simple.add('hello', 'world')
+        self.assertEqual(r, 'helloworld')
+</code></pre>
+<p>*Importante: Cada método debe comenzar con <code>test</code>.</p>
+<h4 id="uso-de-unittest">Uso de <code>unittest</code></h4>
+<p>Hay varias afirmaciones integradas que vienen con <code>unittest</code>. Cada una de ellas afirma algo diferente.</p>
+<pre><code class="language-python"># Afirmar que expr es True
+self.assertTrue(expr)
+
+# Afirmar que x == y
+self.assertEqual(x,y)
+
+# Afirmar que x != y
+self.assertNotEqual(x,y)
+
+# Afirmar que x está cerca de y
+self.assertAlmostEqual(x,y,places)
+
+# Afirmar que callable(arg1,arg2,...) genera exc
+self.assertRaises(exc, callable, arg1, arg2, ...)
+</code></pre>
+<p>Esta no es una lista exhaustiva. Hay otras afirmaciones en el módulo.</p>
+<h4 id="ejecutar-unittest">Ejecutar <code>unittest</code></h4>
+<p>Para ejecutar las pruebas, convierta el código en un script.</p>
+<pre><code class="language-python"># test_simple.py
+
+...
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+<p>Luego, ejecute Python en el archivo de prueba.</p>
+<pre><code class="language-bash">bash % python test_simple.py
+F.
+=========================================================
+FAIL: test_simple (__main__.TestAdd)
+--------------------------------------------------------
+Traceback (most recent call last):
+File &quot;testsimple.py&quot;, line 8, in test_simple
+self.assertEqual(r, 5)
+AssertionError: 4 != 5
+--------------------------------------------------------
+Ran 2 tests in 0.000s
+FAILED (failures=1)
+</code></pre>
+<h4 id="comentario">Comentario</h4>
+<p>La realización de pruebas unitarias efectivas es un arte y puede volverse bastante complicada para aplicaciones grandes.</p>
+<p>El módulo <code>unittest</code> tiene una gran cantidad de opciones relacionadas con los ejecutores de pruebas, la recopilación de resultados y otros aspectos de las pruebas. Consulta la documentación para obtener más detalles.</p>
+<h4 id="herramientas-de-prueba-de-terceros">Herramientas de prueba de terceros</h4>
+<p>El módulo <code>unittest</code> integrado tiene la ventaja de estar disponible en todas partes: es parte de Python. Sin embargo, muchos programadores también lo consideran bastante detallado. Una alternativa popular es <a href="https://docs.pytest.org/en/latest/">pytest</a>. Con pytest, tu archivo de prueba se simplifica a algo como lo siguiente:</p>
+<pre><code class="language-python"># test_simple.py
+import simple
+
+def test_simple():
+    assert simple.add(2,2) == 4
+
+def test_str():
+    assert simple.add('hello','world') == 'helloworld'
+</code></pre>
+<p>Para ejecutar las pruebas, simplemente escriba un comando como <code>python -m pytest</code>. Descubrirá todas las pruebas y las ejecutará.</p>
+<p><code>pytest</code> es mucho más que este ejemplo, pero suele ser bastante fácil comenzar si decide probarlo.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>En este ejercicio, explorará la mecánica básica del uso del módulo <code>unittest</code> de Python.</p>
+<p>En ejercicios anteriores, escribió un archivo <code>stock.py</code> que contenía una clase <code>Stock</code>. Para este ejercicio, se asumió que está usando el código escrito para <a href="../07_Advanced_Topics/03_Returning_functions">Ejercicio 7.9</a> que involucra propiedades tipificadas. Si, por alguna razón, eso no funciona, es posible que desee copiar la solución de <code>Soluciones/7_9</code> a su directorio de trabajo.</p>
+<h5 id="ejercicio-81-escritura-de-pruebas-unitarias">Ejercicio 8.1: Escritura de pruebas unitarias</h5>
+<p>En un archivo separado <code>test_stock.py</code>, escribe un conjunto de pruebas unitarias para la clase <code>Stock</code>. Para comenzar, aquí tienes un pequeño fragmento de código que prueba la creación de instancias:</p>
+<pre><code class="language-python"># test_stock.py
+
+import unittest
+import stock
+
+class TestStock(unittest.TestCase):
+    def test_create(self):
+        s = stock.Stock('GOOG', 100, 490.1)
+        self.assertEqual(s.name, 'GOOG')
+        self.assertEqual(s.shares, 100)
+        self.assertEqual(s.price, 490.1)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+<p>Ejecuta tus pruebas unitarias. Deberías obtener un resultado similar a este:</p>
+<pre><code>.
+----------------------------------------------------------------------
+Ran 1 tests in 0.000s
+
+OK
+</code></pre>
+<p>Una vez que esté satisfecho con el funcionamiento, escriba pruebas unitarias adicionales que verifiquen lo siguiente:</p>
+<ul>
+<li>Asegúrese de que la propiedad <code>s.cost</code> devuelva el valor correcto (49010.0)</li>
+<li>Asegúrese de que el método <code>s.sell()</code> funcione correctamente. Debería disminuir el valor de <code>s.shares</code> en consecuencia.</li>
+<li>Asegúrese de que el atributo <code>s.shares</code> no se pueda configurar en un valor que no sea entero.</li>
+</ul>
+<p>Para la última parte, deberá verificar que se genere una excepción. Una forma sencilla de hacerlo es con un código como este:</p>
+<pre><code class="language-python">class TestStock(unittest.TestCase):
+    ...
+    def test_bad_shares(self):
+        s = stock.Stock('GOOG', 100, 490.1)
+        with self.assertRaises(TypeError):
+            s.shares = '100'
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../07_Advanced_Topics/05_Decorated_methods.Rmd">Anterior (7.5 Métodos estáticos y de clase)</a> | <a href="02_Logging.Rmd">Próximo (8.2 Logging)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

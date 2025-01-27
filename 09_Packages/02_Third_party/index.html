@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/09_Packages/02_Third_party/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>02_Third_party - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Packages.Rmd">Anterior (9.1 Paquetes)</a> | <a href="03_Distribution.Rmd">Próximo (9.3 Entrega tu código a terceros)</a></p>
+<h3 id="92-modulos-de-terceros">9.2 Módulos de terceros</h3>
+<p>Python tiene una gran biblioteca de módulos integrados (<em>baterías incluidas</em>).</p>
+<p>Hay incluso más módulos de terceros. Consúltelos en el <a href="https://pypi.org/">Índice de paquetes de Python</a> o PyPi. O simplemente haga una búsqueda en Google de un tema específico.</p>
+<p>Cómo manejar dependencias de terceros es un tema en constante evolución con Python. Esta sección simplemente cubre los conceptos básicos para ayudarlo a comprender cómo funciona.</p>
+<h4 id="la-ruta-de-busqueda-de-modulos">La ruta de búsqueda de módulos</h4>
+<p><code>sys.path</code> es un directorio que contiene la lista de todos los directorios revisados ​​por la declaración <code>import</code>. Míralo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+... mira el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>Si importas algo y no está ubicado en uno de esos directorios, obtendrás una excepción <code>ImportError</code>.</p>
+<h4 id="modulos-de-la-biblioteca-estandar">Módulos de la biblioteca estándar</h4>
+<p>Los módulos de la biblioteca estándar de Python generalmente provienen de una ubicación como <code>/usr/local/lib/python3.6</code>. Puedes averiguarlo con certeza haciendo una prueba corta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import re
+&gt;&gt;&gt; re
+&lt;module 're' from '/usr/local/lib/python3.6/re.py'&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Simplemente mirar un módulo en el REPL es un buen consejo de depuración que debes conocer. Te mostrará la ubicación del archivo.</p>
+<h4 id="modulos-de-terceros">Módulos de terceros</h4>
+<p>Los módulos de terceros suelen estar ubicados en un directorio <code>site-packages</code> dedicado. Lo verás si realizas los mismos pasos que los anteriores:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import numpy
+&gt;&gt;&gt; numpy
+&lt;module 'numpy' from '/usr/local/lib/python3.6/site-packages/numpy/__init__.py'&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Nuevamente, mirar un módulo es un buen consejo de depuración si estás tratando de averiguar por qué algo relacionado con <code>import</code> no está funcionando como se esperaba.</p>
+<h4 id="instalacion-de-modulos">Instalación de módulos</h4>
+<p>La técnica más común para instalar un módulo de terceros es usar <code>pip</code>. Por ejemplo:</p>
+<pre><code class="language-bash">bash % python -m pip install packagename
+</code></pre>
+<p>Este comando descargará el paquete y lo instalará en el directorio <code>site-packages</code>.</p>
+<h4 id="problemas">Problemas</h4>
+<ul>
+<li>Es posible que estés usando una instalación de Python que no controlas directamente.</li>
+<li>Una instalación aprobada por la empresa</li>
+<li>Estás usando la versión de Python que viene con el sistema operativo.</li>
+<li>Es posible que no tengas permiso para instalar paquetes globales en la computadora.</li>
+<li>Es posible que existan otras dependencias.</li>
+</ul>
+<h4 id="entornos-virtuales">Entornos virtuales</h4>
+<p>Una solución común para los problemas de instalación de paquetes es crear un denominado "entorno virtual" para ti mismo. Naturalmente, no existe una "única forma" de hacerlo; de hecho, existen varias herramientas y técnicas que compiten entre sí. Sin embargo, si estás usando una instalación estándar de Python, puedes intentar escribir lo siguiente:</p>
+<pre><code class="language-bash">bash % python -m venv mypython
+bash %
+</code></pre>
+<p>Después de unos minutos de espera, tendrás un nuevo directorio <code>mypython</code> que es tu propia pequeña instalación de Python. Dentro de ese directorio encontrarás un directorio <code>bin/</code> (Unix) o un directorio <code>Scripts/</code> (Windows). Si ejecuta el script <code>activate</code> que se encuentra allí, "activará" esta versión de Python, convirtiéndolo en el comando <code>python</code> predeterminado para el shell. Por ejemplo:</p>
+<pre><code class="language-bash">bash % source mypython/bin/activate
+(mypython) bash %
+</code></pre>
+<p>Desde aquí, ahora puede comenzar a instalar paquetes de Python por su cuenta. Por ejemplo:</p>
+<pre><code>(mypython) bash % python -m pip install pandas
+...
+</code></pre>
+<p>Para experimentar y probar diferentes paquetes, un entorno virtual generalmente funcionará bien. Si, por otro lado, está creando una aplicación y tiene dependencias de paquetes específicas, ese es un problema ligeramente diferente.</p>
+<h4 id="manejo-de-dependencias-de-terceros-en-su-aplicacion">Manejo de dependencias de terceros en su aplicación</h4>
+<p>Si ha escrito una aplicación y tiene dependencias de terceros específicas, un desafío se relaciona con la creación y preservación del entorno que incluye su código y las dependencias. Lamentablemente, esta ha sido un área de gran confusión y cambios frecuentes durante la existencia de Python. Sigue evolucionando incluso ahora.</p>
+<p>En lugar de proporcionar información que seguramente quedará desactualizada pronto, le recomiendo que consulte la [Guía del usuario de empaquetado de Python] <a href="https://packaging.python.org">https://packaging.python.org</a>).</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-94-creacion-de-un-entorno-virtual">Ejercicio 9.4: Creación de un entorno virtual</h5>
+<p>Vea si puede recrear los pasos para crear un entorno virtual e instalar pandas en él como se muestra arriba.</p>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Packages.Rmd">Anterior (9.1 Paquetes)</a> | <a href="03_Distribution.Rmd">Próximo (9.3 Entrega tu código a terceros)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

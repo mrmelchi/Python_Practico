@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/01_Introduction/03_Numbers/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>03_Numbers - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Hello_world.Rmd">Anterior (1.2 Un primer programa)</a> | <a href="04_Strings.Rmd">Próximo (1.4 Strings)</a></p>
+<h3 id="13-numeros">1.3 Números</h3>
+<p>En esta sección se tratan los cálculos matemáticos.</p>
+<h4 id="tipos-de-numeros">Tipos de números</h4>
+<p>Python tiene 4 tipos de números:</p>
+<ul>
+<li>Booleanos</li>
+<li>Números enteros</li>
+<li>Punto flotante</li>
+<li>Complejos (números imaginarios)</li>
+</ul>
+<h5 id="booleanos-bool">Booleanos (bool)</h5>
+<p>Los valores booleanos tienen dos valores: "Verdadero" y "Falso".</p>
+<pre><code>a = True
+b = False
+</code></pre>
+<p>Numéricamente, se evalúan como números enteros con valor «1», «0».</p>
+<pre><code>c = 4 + True # 5
+d = False
+if d == 0:
+    print('d es falso')
+</code></pre>
+<p><em>Pero no escribas código así. Sería extraño.</em></p>
+<h5 id="numeros-enteros-int">Números enteros (int)</h5>
+<p>Valores con signo, de tamaño y base arbitrarios:</p>
+<pre><code>a = 37
+b = -299392993727716627377128481812241231
+c = 0x7fa8 # Hexadecimal
+d = 0o253 # Octal
+e = 0b10001111 # Binario
+</code></pre>
+<p>Operaciones comunes:</p>
+<pre><code>x + y Sumar
+x - y Restar
+x * y Multiplicar
+x / y Divide (produce un flotante)
+x // y División de piso (produce un entero)
+x % y Módulo (resto)
+x ** y Potencia
+x &lt;&lt; n Desplazamiento de bit a la izquierda
+x &gt;&gt; n Desplazamiento de bit a la derecha
+x &amp; y AND bit a bit
+y | y OR bit a bit
+x ^ y XOR bit a bit
+~x Bit a bit NO
+abs(x) Valor absoluto
+</code></pre>
+<h5 id="punto-flotante-float">Punto flotante (float)</h5>
+<p>Utilice una notación decimal o exponencial para especificar un valor de punto flotante:</p>
+<pre><code>a = 37,45
+b = 4e5 # 4 x 10**5 o 400.000
+c = -1,345e-10
+</code></pre>
+<p>Los flotantes se representan como doble precisión utilizando la representación nativa de CPU <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a>. Esto es lo mismo que el tipo <code>double</code> en el lenguaje de programación C.</p>
+<ul>
+<li>17 dígitos de precisión</li>
+<li>Exponente de -308 a 308</li>
+</ul>
+<p>Tenga en cuenta que los números de punto flotante son inexactos cuando se representan decimales.</p>
+<pre><code>&gt;&gt;&gt; a = 2.1 + 4.2
+&gt;&gt;&gt; a == 6.3
+False
+&gt;&gt;&gt; a
+6.3000000000000001
+&gt;&gt;&gt;
+</code></pre>
+<p>Este <strong>no es un problema de Python</strong>, sino el hardware de punto flotante subyacente en la CPU.</p>
+<p>Operaciones comunes:</p>
+<pre><code>x + y Sumar
+x - y Restar
+x * y Multiplicar
+Dividir x/y
+x // y División de piso
+x % y Módulo
+x ** y Potencia
+abs(x) Valor absoluto
+</code></pre>
+<p>Estos son los mismos operadores que los números enteros, excepto los operadores bit a bit.</p>
+<p>Funciones matemáticas adicionales se encuentran en el módulo 'math'.</p>
+<pre><code>import math
+a = math.sqrt(x)
+b = math.sin(x)
+c = math.cos(x)
+d = math.tan(x)
+e = math.log(x)
+</code></pre>
+<h4 id="comparaciones">Comparaciones</h4>
+<p>Los siguientes operadores de comparación/relacionales funcionan con números:</p>
+<pre><code>x &lt; y Menor que
+x &lt;= y Menor o igual que
+x &gt; y Mayor que
+x &gt;= y Mayor o igual que
+x == y Igual a
+x != y No es igual a
+</code></pre>
+<p>Puedes formar expresiones booleanas más complejas usando</p>
+<p><code>and</code>, <code>or</code>, <code>not</code></p>
+<p>A continuación se muestran algunos ejemplos:</p>
+<pre><code>if b &gt;= a and b &lt;= c:
+    print('b está entre a y c')
+if not (b &lt; a or b &gt; c):
+    print('b todavía está entre a y c')
+</code></pre>
+<h4 id="conversion-de-numeros">Conversión de números</h4>
+<p>El nombre del tipo se puede utilizar para convertir valores:</p>
+<pre><code>a = int(x) # Convertir x a entero
+b = float(x) # Convertir x a float
+</code></pre>
+<p>Pruébalo.</p>
+<pre><code>&gt;&gt;&gt; a = 3.14159
+&gt;&gt;&gt; int(a)
+3
+&gt;&gt;&gt; b = '3.14159' # También funciona con strings que contienen números
+&gt;&gt;&gt; float(b)
+3.14159
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="ejercicios">Ejercicios</h4>
+<p>Recordatorio: Estos ejercicios suponen que estás trabajando en el directorio <code>practical-python/Work</code>. Mira el archivo <code>mortgage.py</code>.</p>
+<h5 id="ejercicio-17-la-hipoteca-de-dave">Ejercicio 1.7: La hipoteca de Dave</h5>
+<blockquote>
+<p>Dave ha decidido contratar una hipoteca a tipo fijo a 30 años por 500.000 dólares. con Guido’s Mortgage, Stock Investment, and Bitcoin trading corporation. La tasa de interés es del 5% y el pago mensual es \$2684.11.</p>
+</blockquote>
+<p>Aquí hay un programa que calcula la cantidad total que tendrá Dave a pagar durante la vida de la hipoteca:</p>
+<pre><code>#hipoteca.py
+capital = 500000.0
+tasa = 0.05
+cuota = 2684.11
+total_pagado = 0.0
+
+while capital &gt; 0:
+    capital = capital * (1 + tasa/12) - cuota
+    total_pagado += cuota
+
+print('Total pagado', round(total_pagado, 2))  
+</code></pre>
+<p>Ingrese a este programa y ejecútelo. Debería obtener una respuesta de <code>Total pagado 966279.6</code>.</p>
+<h5 id="ejercicio-18-pagos-extra">Ejercicio 1.8: Pagos extra</h5>
+<p>Supongamos que Dave paga \$1000 extra al mes durante los primeros 12 meses de la hipoteca.</p>
+<p>Modifique el programa para incorporar este pago adicional y haga que imprima el monto total pagado junto con el número de meses requeridos.</p>
+<p>Al ejecutar el nuevo programa, debería informar <code>Total pagado 929965.62 # de cuotas 342</code></p>
+<h5 id="ejercicio-19-calculadora-para-realizar-un-pago-adicional">Ejercicio 1.9: Calculadora para realizar un pago adicional</h5>
+<p>Modificar el programa para que la información de pago adicional pueda manejarse de forma más general. Haga que el usuario pueda configurar estas variables:</p>
+<pre><code>pago_extra = 1000
+pago_extra_mes_inicial = 61
+pago_extra_mes_final = 108
+</code></pre>
+<p>Haga que el programa tome estas variables y calcule el total a pagar.</p>
+<p>¿Cuánto pagará Dave si paga \$1000 adicionales al mes durante 4 años a partir de que ya se hayan pagado los primeros cinco años?</p>
+<h5 id="ejercicio-110-hacer-una-tabla">Ejercicio 1.10: Hacer una tabla</h5>
+<p>Modifique el programa para imprimir una tabla que muestre el mes, el total pagado hasta el momento y el capital restante. El resultado debería verse así:</p>
+<pre><code>1 2684.11 499399.22
+2 5368,22 498795,94
+3 8052.33 498190
+4 10736,44 497581,83
+5 13420.55 496970.98
+...
+308 874705.88 3478.83
+309 877389.99 809.21
+310 880074.1 -1871.53
+Total pagado 880074.1
+Meses 310
+</code></pre>
+<h5 id="ejercicio-111-bonificacion">Ejercicio 1.11: Bonificación</h5>
+<p>Mientras esté en ello, arregle el programa para corregir el pago en exceso que ocurrió en el último mes.</p>
+<h5 id="ejercicio-112-un-misterio">Ejercicio 1.12: Un misterio</h5>
+<p><code>int()</code> y <code>float()</code> se pueden usar para convertir números. Por ejemplo,</p>
+<pre><code>&gt;&gt;&gt; int(&quot;123&quot;)
+123
+&gt;&gt;&gt; flotante(&quot;1.23&quot;)
+1.23
+&gt;&gt;&gt;
+</code></pre>
+<p>Con esto en mente, ¿puedes explicar este comportamiento?</p>
+<pre><code>&gt;&gt;&gt; bool(&quot;False&quot;)
+True
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Hello_world.Rmd">Anterior (1.2 Un primer programa)</a> | <a href="04_Strings.Rmd">Próximo (1.4 Strings)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

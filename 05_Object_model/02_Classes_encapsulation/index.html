@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/05_Object_model/02_Classes_encapsulation/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>02_Classes_encapsulation - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../Contenido.md">Contenido</a> | <a href="../01_Dicts_revisited/">Anterior (5.1 Diccionarios revisados)</a> | <a href="../06_Generadores/00_Descripción general.md">Siguiente (6 Generadores)</a></p>
+<h3 id="52-clases-y-encapsulacion">5.2 Clases y encapsulación</h3>
+<p>Al escribir clases, es común intentar encapsular detalles internos. Esta sección presenta algunos modismos de programación de Python para esto, incluidas las variables y propiedades privadas.</p>
+<h4 id="publico-vs-privado">Público vs. Privado.</h4>
+<p>Una de las funciones principales de una clase es encapsular datos y detalles de implementación interna de un objeto. Sin embargo, una clase también define una interfaz <em>pública</em> que se supone que el mundo exterior debe usar para manipular el objeto. Esta distinción entre los detalles de implementación y la interfaz pública es importante.</p>
+<h4 id="un-problema">Un problema</h4>
+<p>En Python, casi todo lo relacionado con las clases y los objetos es <em>abierto</em>.</p>
+<ul>
+<li>Puede inspeccionar fácilmente los componentes internos de los objetos.</li>
+<li>Puedes cambiar las cosas a voluntad.</li>
+<li>No existe una noción sólida de control de acceso (es decir, miembros de clase privados)</li>
+</ul>
+<p>Eso es un problema cuando intentas aislar detalles de la <em>implementación interna</em>.</p>
+<h4 id="encapsulacion-de-python">Encapsulación de Python</h4>
+<p>Python se basa en convenciones de programación para indicar el uso previsto de algo. Estas convenciones se basan en la denominación. Existe una actitud general de que es responsabilidad del programador observar las reglas
+en lugar de que el lenguaje las imponga.</p>
+<h4 id="atributos-privados">Atributos privados</h4>
+<p>Cualquier nombre de atributo con <code>_</code> inicial se considera <em>privado</em>.</p>
+<pre><code class="language-python">class Person:
+    def __init__(self, name):
+        self._name = 0
+</code></pre>
+<p>Como se mencionó anteriormente, este es solo un estilo de programación. Aún puedes acceder a él y cambiarlo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; p = Person('Guido')
+&gt;&gt;&gt; p._name
+'Guido'
+&gt;&gt;&gt; p._name = 'Dave'
+&gt;&gt;&gt;
+</code></pre>
+<p>Como regla general, cualquier nombre con un <code>_</code> inicial se considera una implementación interna, ya sea una variable, una función o el nombre de un módulo. Si te encuentras usando dichos nombres directamente, probablemente estés haciendo algo mal. Busca una funcionalidad de nivel superior.</p>
+<h4 id="atributos-simples">Atributos simples</h4>
+<p>Considera la siguiente clase.</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+</code></pre>
+<p>Una característica sorprendente es que puedes establecer los atributos
+con cualquier valor:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('IBM', 50, 91.1)
+&gt;&gt;&gt; s.shares = 100
+&gt;&gt;&gt; s.shares = &quot;hundred&quot;
+&gt;&gt;&gt; s.shares = [1, 0, 0]
+&gt;&gt;&gt;
+</code></pre>
+<p>Puedes ver eso y pensar que necesitas algunas comprobaciones adicionales.</p>
+<pre><code class="language-python">s.shares = '50' # Generar un TypeError, esto es una cadena
+</code></pre>
+<p>¿Cómo lo harías?</p>
+<h4 id="atributos-administrados">Atributos administrados</h4>
+<p>Un enfoque: introducir métodos de acceso.</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.set_shares(shares)
+        self.price = price
+
+    # Función que superpone la operación &quot;get&quot;
+    def get_shares(self):
+        return self._shares
+
+    # Función que superpone la operación &quot;set&quot;
+    def set_shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Se espera un int')
+        self._shares = value
+</code></pre>
+<p>Es una lástima que esto rompa todo nuestro código existente. <code>s.shares = 50</code> se convierte en <code>s.set_shares(50)</code></p>
+<h4 id="propiedades">Propiedades</h4>
+<p>Existe un enfoque alternativo al patrón anterior.</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected int')
+        self._shares = value
+</code></pre>
+<p>El acceso normal a los atributos ahora activa los métodos getter y setter en <code>@property</code> y <code>@shares.setter</code>.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('IBM', 50, 91.1)
+&gt;&gt;&gt; s.shares # Disparado por @property
+50
+&gt;&gt;&gt; s.shares = 75 # Disparado por @shares.setter
+&gt;&gt;&gt;
+</code></pre>
+<p>Con este patrón, no se necesitan <em>cambios</em> en el código fuente. El nuevo <em>setter</em> también se llama cuando hay una asignación dentro de la clase, incluso dentro del método <code>__init__()</code>.</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+    ...
+    # Esta asignación llama al configurador que aparece a continuación
+    self.shares = shares
+    ...
+
+    ...
+    @shares.setter
+    def shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Esperado un int')
+        self._shares = value
+    ```
+
+A menudo existe una confusión entre una propiedad y el uso de nombres privados. Aunque una propiedad usa internamente un nombre privado como `_shares`, el resto de la clase (no la propiedad) puede seguir usando un nombre como `shares`.
+
+Las propiedades también son útiles para los atributos de datos calculados.
+
+```python
+class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+    ...
+</code></pre>
+<p>Esto le permite eliminar los paréntesis adicionales, ocultando el hecho de que en realidad es un método:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.shares # Variable de instancia
+100
+&gt;&gt;&gt; s.cost # Valor calculado
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<h4 id="acceso-uniforme">Acceso uniforme</h4>
+<p>El último ejemplo muestra cómo poner una interfaz más uniforme en un objeto. Si no lo hace, un objeto puede resultar confuso de usar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; a = s.cost() # Método
+49010.0
+&gt;&gt;&gt; b = s.shares # Atributo de datos
+100
+&gt;&gt;&gt;
+</code></pre>
+<p>¿Por qué se requiere <code>()</code> para <code>cost</code>, pero no para <code>shares</code>? Una propiedad puede solucionar esto.</p>
+<h4 id="sintaxis-del-decorador">Sintaxis del decorador</h4>
+<p>La sintaxis <code>@</code> se conoce como "decoración". Especifica un modificador que se aplica a la definición de función que sigue inmediatamente.</p>
+<pre><code class="language-python">...
+@property
+def cost(self):
+    return self.shares * self.price
+</code></pre>
+<p>Se proporcionan más detalles en la <a href="../07_Advanced_Topics/00_Overview">Sección 7</a>.</p>
+<h4 id="atributo-__slots__">Atributo <code>__slots__</code></h4>
+<p>Puede restringir el conjunto de nombres de atributos.</p>
+<pre><code class="language-python">class Stock:
+    __slots__ = ('name','_shares','price')
+    def __init__(self, name, shares, price):
+        self.name = name
+    ...
+</code></pre>
+<p>Se generará un error para otros atributos.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.price = 385.15
+&gt;&gt;&gt; s.prices = 410.2
+Traceback (most recent call last):
+  File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'Stock' object has no attribute 'prices' and no __dict__ for setting new attributes. Did you mean: 'price'?
+</code></pre>
+<p>Aunque esto evita errores y restringe el uso de objetos, en realidad se utiliza para mejorar el rendimiento y hace que Python utilice la memoria de forma más eficiente.</p>
+<h4 id="comentarios-finales-sobre-la-encapsulacion">Comentarios finales sobre la encapsulación</h4>
+<p>No se exceda con los atributos privados, las propiedades, los slots, etc. Tienen una finalidad específica y puede verlos al leer otro código Python. Sin embargo, no son necesarios para la mayoría de la codificación del día a día.</p>
+<h4 id="ejercicios">Ejercicios</h4>
+<h5 id="ejercicio-56-propiedades-simples">Ejercicio 5.6: Propiedades simples</h5>
+<p>Las propiedades son una forma útil de agregar "atributos calculados" a un objeto. En <code>stock.py</code>, creó un objeto <code>Stock</code>. Observa que en tu objeto hay una ligera inconsistencia en cómo se extraen los diferentes tipos de datos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.price
+490.1
+&gt;&gt;&gt; s.cost()
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<p>En concreto, observa cómo tienes que añadir el extra () a <code>cost</code> porque es un método.</p>
+<p>Puedes deshacerte del extra () en <code>cost()</code> si lo conviertes en una propiedad. Tome su clase <code>Stock</code> y modifíquela para que el cálculo de costos funcione de esta manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; ================================= RESTART ==================================
+&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.cost
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente llamar a <code>s.cost()</code> como una función y observe que no funciona ahora que <code>cost</code> se ha definido como una propiedad.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s.cost()
+... falla ...
+&gt;&gt;&gt;
+</code></pre>
+<p>Hacer este cambio probablemente romperá su programa <code>pcost.py</code> anterior. Es posible que deba volver atrás y deshacerse del <code>()</code> en el método <code>cost()</code>.</p>
+<h5 id="ejercicio-57-properties-and-setters">Ejercicio 5.7: Properties and Setters</h5>
+<p>Modifique el atributo <code>shares</code> para que el valor se almacene en un atributo privado y se utilice un par de funciones con <code>@property</code> para garantizar que siempre se establezca en un valor entero. Aquí hay un ejemplo del comportamiento esperado:</p>
+<pre><code class="language-python">&gt;&gt;&gt; ================================= RESTART ==================================
+&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; s.shares = 50
+&gt;&gt;&gt; s.shares = 'a lot'
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: Esperado un int
+&gt;&gt;&gt;
+</code></pre>
+<h5 id="ejercicio-58-agregar-__slots__">Ejercicio 5.8: Agregar <code>__slots__</code></h5>
+<p>Modifique la clase <code>Stock</code> para que tenga un atributo <code>__slots__</code>. Luego, verifique que no se puedan agregar nuevos atributos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; ================================= RESTART =================================
+&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.blah = 42
+... vea qué sucede...
+&gt;&gt;&gt;
+</code></pre>
+<p>Cuando usa <code>__slots__</code>, Python usa una representación interna más eficiente de los objetos. ¿Qué sucede si intenta inspeccionar el diccionario subyacente de <code>s</code> arriba?</p>
+<pre><code class="language-python">&gt;&gt;&gt; s.__dict__
+... vea lo que sucede...
+&gt;&gt;&gt;
+</code></pre>
+<p>Cabe señalar que <code>__slots__</code> se utiliza más comúnmente como una optimización en clases que sirven como estructuras de datos. El uso de slots hará que dichos programas utilicen mucha menos memoria y se ejecuten un poco más rápido. Sin embargo, probablemente debería evitar <code>__slots__</code> en la mayoría de las otras clases.</p>
+<p><a href="../Contenido.md">Contenido</a> | <a href="../01_Dicts_revisited/">Anterior (5.1 Revisión de diccionarios)</a> | <a href="../06_Generadores/00_Descripción general.md">Siguiente (6 Generadores)</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
