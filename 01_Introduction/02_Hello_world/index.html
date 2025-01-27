@@ -66,17 +66,93 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#12-un-primer-programa" class="nav-link">1.2 Un primer programa</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#ejecucion-de-python" class="nav-link">Ejecución de Python</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modo-interactivo" class="nav-link">Modo interactivo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#creando-programas" class="nav-link">Creando programas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#programas-en-ejecucion" class="nav-link">Programas en ejecución</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#un-programa-de-muestra" class="nav-link">Un programa de muestra</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#declaraciones" class="nav-link">Declaraciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentarios" class="nav-link">Comentarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#variables" class="nav-link">Variables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tipos" class="nav-link">Tipos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#sensibilidad-a-mayusculas-y-minusculas" class="nav-link">Sensibilidad a mayúsculas y minúsculas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#bucle" class="nav-link">Bucle</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#sangria" class="nav-link">Sangría</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#practicas-recomendadas-de-sangria" class="nav-link">Prácticas recomendadas de sangría</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#condicionales" class="nav-link">Condicionales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#impresion" class="nav-link">Impresión</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#entrada-del-usuario" class="nav-link">Entrada del usuario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#declaracion-pass" class="nav-link">declaración pass</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Python.Rmd">Anterior (1.1 Introducción a
-Python)</a> | <a href="03_Numbers.Rmd">Próximo (1.3 Números)</a></p>
-<h3 id="12-un-primer-programa">1.2 Un primer programa</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Python/">Anterior (1.1 Introducción a
+Python)</a> | <a href="../03_Numbers/">Próximo (1.3 Números)</a></p>
+<h1 id="12-un-primer-programa">1.2 Un primer programa</h1>
 <p>En esta sección se analiza la creación de su primer programa y su
 ejecución, intérprete y algo de depuración básica.</p>
-<h4 id="ejecucion-de-python">Ejecución de Python</h4>
+<h2 id="ejecucion-de-python">Ejecución de Python</h2>
 <p>Los programas de Python siempre se ejecutan dentro de un intérprete.</p>
 <p>El intérprete es una aplicación "basada en consola" que normalmente se
 ejecuta desde un shell de comandos.</p>
@@ -90,7 +166,7 @@ utilizar el intérprete de esta manera, pero no es tan fácil de usar para
 principiantes. Es posible que estés usando un entorno que proporciona
 una interfaz diferente a Python. Está bien, pero aprender a ejecutar la
 terminal Python sigue siendo una habilidad útil.</p>
-<h4 id="modo-interactivo">Modo interactivo</h4>
+<h2 id="modo-interactivo">Modo interactivo</h2>
 <p>Cuando inicias Python, obtienes un modo <em>interactivo</em> donde puedes
 experimentar.</p>
 <p>Si comienza a escribir declaraciones, se ejecutarán inmediatamente. No
@@ -137,13 +213,13 @@ Se muestra en blanco para facilitar cortar y pegar ejemplos de código.</p>
 </code></pre>
 <p><em>Esto sólo es cierto en el modo interactivo.</em> Nunca uses <code>_</code> en un
 programa.</p>
-<h4 id="creando-programas">Creando programas</h4>
+<h2 id="creando-programas">Creando programas</h2>
 <p>Los programas se colocan en archivos <code>.py</code>.</p>
 <pre><code class="language-python"># hola.py
 print('hola mundo')
 </code></pre>
 <p>Puedes crear estos archivos con tu editor de texto favorito.</p>
-<h4 id="programas-en-ejecucion">Programas en ejecución</h4>
+<h2 id="programas-en-ejecucion">Programas en ejecución</h2>
 <p>Para ejecutar un programa, ejecútelo en la terminal con el comando
 <code>python</code>. Por ejemplo, en la línea de comandos de Unix:</p>
 <pre><code class="language-bash">bash % python hola.py
@@ -161,7 +237,7 @@ Hola Mundo
 intérprete de Python, como <code>c:\python36\python</code>. Sin embargo, si Python
 está instalado de su forma habitual, es posible que puedas simplemente
 escribir el nombre del programa. como por ejemplo <code>hello.py</code>.</p>
-<h4 id="un-programa-de-muestra">Un programa de muestra</h4>
+<h2 id="un-programa-de-muestra">Un programa de muestra</h2>
 <p>Resolvamos el siguiente problema:</p>
 <blockquote>
 <p>Una mañana, sales y colocas un billete de un dólar en la acera junto a
@@ -202,7 +278,7 @@ Altura final 461.37344
 </code></pre>
 <p>Usando este programa como guía, podrás aprender una serie de conceptos
 básicos importantes sobre Python.</p>
-<h4 id="declaraciones">Declaraciones</h4>
+<h2 id="declaraciones">Declaraciones</h2>
 <p>Un programa Python es una secuencia de declaraciones:</p>
 <pre><code>a = 3 + 4
 b = a * 2
@@ -210,7 +286,7 @@ print(b)
 </code></pre>
 <p>Cada declaración termina con una nueva línea. Las declaraciones se
 ejecutan una tras otra hasta que el control llega al final del archivo.</p>
-<h4 id="comentarios">Comentarios</h4>
+<h2 id="comentarios">Comentarios</h2>
 <p>Los comentarios son texto que no se ejecutará.</p>
 <pre><code>a = 3 + 4
 #Esto es un comentario
@@ -219,7 +295,7 @@ print(b)
 </code></pre>
 <p>Los comentarios se indican con <code>#</code> y se extienden hasta el final de la
 línea.</p>
-<h4 id="variables">Variables</h4>
+<h2 id="variables">Variables</h2>
 <p>Una variable es un nombre para un valor. Puedes utilizar letras
 (minúsculas y, minúsculas y mayúsculas) de la a a la z. Además del
 carácter de subrayado <code>_</code>, los números también pueden ser parte del
@@ -229,7 +305,7 @@ _height = 442 # válido
 altura2 = 442 # válido
 2height = 442 # no válido
 </code></pre>
-<h4 id="tipos">Tipos</h4>
+<h2 id="tipos">Tipos</h2>
 <p>No es necesario declarar las variables con el tipo del valor. El tipo
 está asociado con el valor del lado derecho, no con el nombre de la
 variable.</p>
@@ -240,7 +316,7 @@ altura = 'Muy alto' # Una cadena
 <p>Python está tipado dinámicamente. El "tipo" percibido de una variable
 podría cambiar a medida que se ejecuta un programa dependiendo del valor
 actual asignado a ella.</p>
-<h4 id="sensibilidad-a-mayusculas-y-minusculas">Sensibilidad a mayúsculas y minúsculas</h4>
+<h2 id="sensibilidad-a-mayusculas-y-minusculas">Sensibilidad a mayúsculas y minúsculas</h2>
 <p>Python distingue entre mayúsculas y minúsculas. Las letras mayúsculas y
 minúsculas se consideran letras diferentes. Todas estas son variables
 diferentes:</p>
@@ -252,7 +328,7 @@ NOMBRE = 'Guido'
 <pre><code>while x &lt; 0: # OK
 WHILE x &lt; 0: # ERROR
 </code></pre>
-<h4 id="bucle">Bucle</h4>
+<h2 id="bucle">Bucle</h2>
 <p>La instrucción <code>while</code> ejecuta un bucle.</p>
 <pre><code>while num_billetes * espesor_de_billete &lt; altura_torre:
     print(dia, num_billetes, num_billetes * espesor_de_billete)
@@ -263,7 +339,7 @@ print('Numero de días', día)
 </code></pre>
 <p>Las declaraciones sangradas debajo del <code>while</code> se ejecutarán siempre que
 la expresión después del <code>while</code> sea <code>true</code>.</p>
-<h4 id="sangria">Sangría</h4>
+<h2 id="sangria">Sangría</h2>
 <p>La sangría se utiliza para indicar grupos de declaraciones que van
 juntas. Consideremos el ejemplo anterior:</p>
 <pre><code>
@@ -283,7 +359,7 @@ repiten:</p>
 <p>Debido a que la declaración <code>print()</code> al final no está sangrada, no
 pertenece al bucle. La línea vacía es solo para legibilidad. No afecta
 la ejecución.</p>
-<h4 id="practicas-recomendadas-de-sangria">Prácticas recomendadas de sangría</h4>
+<h2 id="practicas-recomendadas-de-sangria">Prácticas recomendadas de sangría</h2>
 <ul>
 <li>Utilice espacios en lugar de tabulaciones.</li>
 <li>Utilice 4 espacios por nivel.</li>
@@ -296,7 +372,7 @@ bloque. Se consistente. Por ejemplo, esto es un error:</p>
         dia = dia + 1 # ERROR
     num_billetes = num_billetes * 2
 </code></pre>
-<h4 id="condicionales">Condicionales</h4>
+<h2 id="condicionales">Condicionales</h2>
 <p>La declaración <code>if</code> se utiliza para ejecutar una condición:</p>
 <pre><code>if a &gt; b:
     print('La computadora dice que no')
@@ -312,7 +388,7 @@ elif a == b:
 else:
     print('La computadora dice tal vez')
 </code></pre>
-<h4 id="impresion">Impresión</h4>
+<h2 id="impresion">Impresión</h2>
 <p>La función <code>print</code> produce una sola línea de texto con los valores
 pasados.</p>
 <pre><code>print('¡Hola mundo!') # Imprime el texto '¡Hola mundo!'
@@ -341,7 +417,7 @@ print('Mi nombre es', 'Jake')
 <p>Este código ahora imprimirá:</p>
 <pre><code>Hola, mi nombre es Jake.
 </code></pre>
-<h4 id="entrada-del-usuario">Entrada del usuario</h4>
+<h2 id="entrada-del-usuario">Entrada del usuario</h2>
 <p>Para leer una línea de entrada escrita por el usuario, utilice la
 función <code>input()</code>:</p>
 <pre><code>nombre = input('Ingrese su nombre:')
@@ -350,7 +426,7 @@ print('Tu nombre es', nombre)
 <p><code>input</code> imprime un mensaje para el usuario y devuelve su respuesta. Esto
 es útil para programas pequeños, ejercicios de aprendizaje o depuración
 simple. No se utiliza mucho para programas reales.</p>
-<h4 id="declaracion-pass">declaración <code>pass</code></h4>
+<h2 id="declaracion-pass">declaración <code>pass</code></h2>
 <p>A veces es necesario especificar un bloque de código vacío. Para ello se
 utiliza la palabra clave <code>pass</code>.</p>
 <pre><code>if a &gt; b:
@@ -361,14 +437,14 @@ else:
 <p>Esto también se llama declaración de "no operación". No hace nada, sirve
 como marcador de posición para declaraciones que posiblemente se
 agregarán más adelante.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Este es el primer conjunto de ejercicios en los que debes crear archivos
 Python y ejecutarlos. A partir de este momento, se asume que usted están
 editando archivos en el directorio <code>practical-python/Work/</code>. Para ayudar
 a ubicar el lugar adecuado, hay varios archivos de inicio vacíos, que se
 han creado con los nombres de archivo apropiados. Busque el archivo
 <code>Work/bounce.py</code> que se utiliza en el primer ejercicio.</p>
-<h5 id="ejercicio-15-la-pelota-que-rebota">Ejercicio 1.5: La pelota que rebota</h5>
+<h3 id="ejercicio-15-la-pelota-que-rebota">Ejercicio 1.5: La pelota que rebota</h3>
 <blockquote>
 <p>Se deja caer una pelota de goma desde una altura de 100 metros y cada
 vez que golpea el suelo, rebota hasta 3/5 de la altura desde la que
@@ -400,7 +476,7 @@ Intente usarlo para redondear la salida a 4 dígitos.</em></p>
 9 1.0078
 10 0,6047
 </code></pre>
-<h5 id="ejercicio-16-depuracion">Ejercicio 1.6: Depuración</h5>
+<h3 id="ejercicio-16-depuracion">Ejercicio 1.6: Depuración</h3>
 <p>El siguiente fragmento de código contiene código del problema de la
 Torre Sears. También tiene un error.</p>
 <pre><code class="language-python">#sears.py
@@ -438,8 +514,8 @@ archivo identificativo y un número de línea.</p>
 <li>Arreglar el error</li>
 <li>Ejecutar el programa exitosamente</li>
 </ul>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Python.Rmd">Anterior (1.1 Introducción a
-Python)</a> | <a href="03_Numbers.Rmd">Próximo (1.3 Números)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Python/">Anterior (1.1 Introducción a
+Python)</a> | <a href="../03_Numbers/">Próximo (1.3 Números)</a></p></div>
             </div>
         </div>
 
