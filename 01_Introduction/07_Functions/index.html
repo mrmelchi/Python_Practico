@@ -66,15 +66,43 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#17-funciones" class="nav-link">1.7 Funciones</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#funciones-personalizadas" class="nav-link">Funciones personalizadas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#funciones-de-la-biblioteca" class="nav-link">Funciones de la biblioteca</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#errores-y-excepciones" class="nav-link">Errores y excepciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#captura-y-manejo-de-excepciones" class="nav-link">Captura y manejo de excepciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#generar-excepciones" class="nav-link">Generar excepciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="06_Files.Rmd">Anterior (1.6 Archivos)</a> | <a href="../02_Working_with_data/00_Overview.Rmd">Próximo (2. Trabajar con datos)</a></p>
-<h3 id="17-funciones">1.7 Funciones</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../06_Files/">Anterior (1.6 Archivos)</a> | <a href="../../02_Working_with_data/00_Overview/">Próximo (2. Trabajar con datos)</a></p>
+<h1 id="17-funciones">1.7 Funciones</h1>
 <p>A medida que sus programas comiencen a crecer, querrá organizarse. Esta sección presenta brevemente las funciones y los módulos de la biblioteca. También se introduce el manejo de errores con excepciones.</p>
-<h4 id="funciones-personalizadas">Funciones personalizadas</h4>
+<h2 id="funciones-personalizadas">Funciones personalizadas</h2>
 <p>Utilice funciones para el código que desea reutilizar. Aquí hay una definición de función:</p>
 <pre><code class="language-python">def sumcount(n):
     '''
@@ -90,7 +118,7 @@
 <pre><code class="language-python">a = sumcount(100)
 </code></pre>
 <p>Una función es una serie de instrucciones que realizan una tarea y devuelven un resultado. La palabra clave <code>return</code> es necesaria para especificar explícitamente el valor de retorno de la función.</p>
-<h4 id="funciones-de-la-biblioteca">Funciones de la biblioteca</h4>
+<h2 id="funciones-de-la-biblioteca">Funciones de la biblioteca</h2>
 <p>Python viene con una gran biblioteca estándar. Se accede a los módulos de la biblioteca mediante 'import'. Por ejemplo:</p>
 <pre><code class="language-python">import math
 x = math.sqrt(10)
@@ -100,7 +128,7 @@ u = urllib.request.urlopen('http://www.python.org/')
 data = u.read()
 </code></pre>
 <p>Cubriremos bibliotecas y módulos con más detalle más adelante.</p>
-<h4 id="errores-y-excepciones">Errores y excepciones</h4>
+<h2 id="errores-y-excepciones">Errores y excepciones</h2>
 <p>Las funciones informan los errores como excepciones. Una excepción provoca la interrupción de una función y puede provocar que todo el programa se detenga si no se controla.</p>
 <p>Pruebe esto en su REPL de Python.</p>
 <pre><code class="language-python">&gt;&gt;&gt; int('N/A')
@@ -110,7 +138,7 @@ ValueError: invalid literal for int() with base 10: 'N/A'
 &gt;&gt;&gt;
 </code></pre>
 <p>Para fines de depuración, el mensaje describe qué sucedió, dónde ocurrió el error y un seguimiento que muestra las otras llamadas de función que llevaron a la falla.</p>
-<h4 id="captura-y-manejo-de-excepciones">Captura y manejo de excepciones</h4>
+<h2 id="captura-y-manejo-de-excepciones">Captura y manejo de excepciones</h2>
 <p>Se pueden detectar y gestionar excepciones.</p>
 <p>Para capturarlo, utilice la instrucción <code>try - except</code>.</p>
 <pre><code class="language-python">for line in file:
@@ -123,7 +151,7 @@ ValueError: invalid literal for int() with base 10: 'N/A'
 </code></pre>
 <p>El nombre <code>ValueError</code> debe coincidir con el tipo de error que estás intentando detectar.</p>
 <p>A menudo es difícil saber con antelación qué tipos de errores podrían producirse en función de la operación que se esté realizando. Para bien o para mal, el manejo de excepciones a menudo se agrega <em>después</em> de que un programa falla inesperadamente (es decir, "oh, olvidamos detectar ese error. ¡Deberíamos manejarlo!").</p>
-<h4 id="generar-excepciones">Generar excepciones</h4>
+<h2 id="generar-excepciones">Generar excepciones</h2>
 <p>Para generar una excepción, utilice la declaración <code>raise</code>.</p>
 <pre><code class="language-python">raise RuntimeError('What a kerfuffle')
 </code></pre>
@@ -134,8 +162,8 @@ Traceback (most recent call last):
     raise RuntimeError(&quot;What a kerfuffle&quot;)
 RuntimeError: What a kerfuffle
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-129-definicion-de-una-funcion">Ejercicio 1.29: Definición de una función</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-129-definicion-de-una-funcion">Ejercicio 1.29: Definición de una función</h3>
 <p>Intente definir una función simple:</p>
 <pre><code class="language-python">&gt;&gt;&gt; def greeting(name):
         'Emite un saludo'
@@ -148,7 +176,7 @@ Hola Paula
 &gt;&gt;&gt;
 </code></pre>
 <p>Si la primera declaración de una función es una cadena, sirve como documentación. Intente escribir un comando como <code>help(greeting)</code> para verlo mostrado.</p>
-<h5 id="ejercicio-130-convertir-un-script-en-una-funcion">Ejercicio 1.30: Convertir un script en una función</h5>
+<h3 id="ejercicio-130-convertir-un-script-en-una-funcion">Ejercicio 1.30: Convertir un script en una función</h3>
 <p>Tome el código que escribió para el programa <code>pcost.py</code> en el [Ejercicio 1.27] y conviértalo en una función <code>portfolio_cost(filename)</code>. Esta función toma un nombre de archivo como entrada, lee los datos de la cartera en ese archivo y devuelve el costo total de la cartera como un número tipo <code>float</code>.</p>
 <p>Para utilizar su función, cambie su programa para que se parezca a esto:</p>
 <pre><code class="language-python">def portfolio_cost(filename):
@@ -168,7 +196,7 @@ print('Costo Total:', cost)
 &gt;&gt;&gt;
 </code></pre>
 <p>Poder experimentar con su código de forma interactiva es útil para realizar pruebas y depuraciones.</p>
-<h5 id="ejercicio-131-manejo-de-errores">Ejercicio 1.31: Manejo de errores</h5>
+<h3 id="ejercicio-131-manejo-de-errores">Ejercicio 1.31: Manejo de errores</h3>
 <p>¿Qué sucede si prueba su función en un archivo con algunos campos faltantes?</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/missing.csv')
 Traceback (most recent call last):
@@ -180,7 +208,7 @@ ValueError: invalid literal for int() with base 10: ''
 </code></pre>
 <p>En este punto, usted se enfrenta a una decisión. Para que el programa funcione, puede desinfectar el archivo de entrada original eliminando las líneas defectuosas o puede modificar su código para manejar las líneas defectuosas de alguna manera.</p>
 <p>Modifique el programa <code>pcost.py</code> para capturar la excepción, imprimir un mensaje de advertencia y continuar procesando el resto del archivo.</p>
-<h5 id="ejercicio-132-uso-de-una-funcion-de-biblioteca">Ejercicio 1.32: Uso de una función de biblioteca</h5>
+<h3 id="ejercicio-132-uso-de-una-funcion-de-biblioteca">Ejercicio 1.32: Uso de una función de biblioteca</h3>
 <p>Python viene con una gran biblioteca estándar de funciones útiles. Una biblioteca que podría ser útil aquí es el módulo <code>csv</code>. Debes usarlo siempre que tengas que trabajar con archivos de datos CSV. He aquí un ejemplo de cómo funciona:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import csv
 &gt;&gt;&gt; f = open('Data/portfolio.csv')
@@ -203,7 +231,7 @@ ValueError: invalid literal for int() with base 10: ''
 </code></pre>
 <p>Una de las ventajas del módulo <code>csv</code> es que se ocupa de una variedad de detalles de bajo nivel, como citas y división adecuada de comas. En el resultado anterior, notarás que se han eliminado las comillas dobles de los nombres en la primera columna.</p>
 <p>Modifique su programa <code>pcost.py</code> para que utilice el módulo <code>csv</code> para analizar e intente ejecutar ejemplos anteriores.</p>
-<h5 id="ejercicio-133-lectura-desde-la-linea-de-comandos">Ejercicio 1.33: Lectura desde la línea de comandos</h5>
+<h3 id="ejercicio-133-lectura-desde-la-linea-de-comandos">Ejercicio 1.33: Lectura desde la línea de comandos</h3>
 <p>En el programa <code>pcost.py</code>, el nombre del archivo de entrada se ha incorporado al código:</p>
 <pre><code class="language-python"># pcost.py
 
@@ -240,7 +268,7 @@ print('Costo Total:', cost)
 Costo Total: 44671.15
 bash %
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="06_Files.Rmd">Anterior (1.6 Archivos)</a> | <a href="../02_Working_with_data/00_Overview.Rmd">Próximo (2. Trabajar con datos)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../06_Files/">Anterior (1.6 Archivos)</a> | <a href="../../02_Working_with_data/00_Overview/">Próximo (2. Trabajar con datos)</a></p></div>
             </div>
         </div>
 

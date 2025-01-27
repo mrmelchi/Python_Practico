@@ -66,15 +66,39 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#16-gestion-de-archivos" class="nav-link">1.6 Gestión de archivos</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#entrada-y-salida-de-archivos" class="nav-link">Entrada y salida de archivos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modismos-comunes-para-leer-datos-de-archivos" class="nav-link">Modismos comunes para leer datos de archivos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modismos-comunes-para-escribir-en-un-archivo" class="nav-link">Modismos comunes para escribir en un archivo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentario-no-deberiamos-usar-pandas-para-esto" class="nav-link">Comentario: ¿No deberíamos usar Pandas para esto?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
 <p><a href="../Contents.Rmd">Contents</a> | <a href="05_Lists.Rmd">Previous (1.5 Lists)</a> | <a href="07_Functions.Rmd">Next (1.7 Functions)</a></p>
-<h3 id="16-gestion-de-archivos">1.6 Gestión de archivos</h3>
+<h1 id="16-gestion-de-archivos">1.6 Gestión de archivos</h1>
 <p>La mayoría de los programas necesitan leer la entrada desde algún lugar. Esta sección analiza el acceso a archivos.</p>
-<h4 id="entrada-y-salida-de-archivos">Entrada y salida de archivos</h4>
+<h2 id="entrada-y-salida-de-archivos">Entrada y salida de archivos</h2>
 <p>Abrir un archivo.</p>
 <pre><code class="language-python">f = open('foo.txt', 'rt')     # Abrir para lectura (r) (texto) (t)
 g = open('bar.txt', 'wt')     # Abrir para escritura (w) (texto) (t)
@@ -100,7 +124,7 @@ g.close()
 ...statements
 </code></pre>
 <p>Esto cierra automáticamente el archivo cuando el control abandona el bloque de código sangrado.</p>
-<h4 id="modismos-comunes-para-leer-datos-de-archivos">Modismos comunes para leer datos de archivos</h4>
+<h2 id="modismos-comunes-para-leer-datos-de-archivos">Modismos comunes para leer datos de archivos</h2>
 <p>Leer un archivo completo de una sola vez como una cadena.</p>
 <pre><code class="language-python">with open('foo.txt', 'rt') as file:
     data = file.read()
@@ -111,7 +135,7 @@ g.close()
     for line in file:
         # Procesar la línea
 </code></pre>
-<h4 id="modismos-comunes-para-escribir-en-un-archivo">Modismos comunes para escribir en un archivo</h4>
+<h2 id="modismos-comunes-para-escribir-en-un-archivo">Modismos comunes para escribir en un archivo</h2>
 <p>Escribe datos de cadena.</p>
 <pre><code class="language-python">with open('outfile', 'wt') as out:
     out.write('Hola mundo\n')
@@ -122,14 +146,14 @@ g.close()
     print('Hola mundo', file=out)
     ...
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Estos ejercicios dependen del archivo <code>Data/portfolio.csv</code>. El archivo contiene una lista de líneas con información sobre una cartera de acciones. Se supone que está trabajando en el directorio <code>practical-python/Work/</code>. Si no está seguro, puede averiguar dónde cree Python que se está ejecutando haciendo esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import os
 &gt;&gt;&gt; os.getcwd()
 '/Users/beazley/practical-python/Work' # La salida varía
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-126-preliminares-del-archivo">Ejercicio 1.26: Preliminares del archivo</h5>
+<h3 id="ejercicio-126-preliminares-del-archivo">Ejercicio 1.26: Preliminares del archivo</h3>
 <p>Primero, intente leer el archivo completo de una sola vez como una gran cadena:</p>
 <pre><code class="language-python">&gt;&gt;&gt; with open('Data/portfolio.csv', 'rt') as f:
         data = f.read()
@@ -191,14 +215,14 @@ name,shares,price
 &gt;&gt;&gt; f.close()
 </code></pre>
 <p><em>Nota: En estos ejemplos, se llama explícitamente a <code>f.close()</code> porque no se está utilizando la declaración <code>with</code>.</em></p>
-<h5 id="ejercicio-127-lectura-de-un-archivo-de-datos">Ejercicio 1.27: Lectura de un archivo de datos</h5>
+<h3 id="ejercicio-127-lectura-de-un-archivo-de-datos">Ejercicio 1.27: Lectura de un archivo de datos</h3>
 <p>Ahora que sabes cómo leer un archivo, escribamos un programa para realizar un cálculo simple.</p>
 <p>Las columnas en <code>portfolio.csv</code> corresponden al nombre de la acción, el número de acciones y el precio de compra de una sola participación en acciones. Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas las líneas y calcule cuánto cuesta comprar todas las acciones de la cartera.</p>
 <p><em>Sugerencia: para convertir una cadena en un entero, utilice <code>int(s)</code>. Para convertir una cadena en un punto flotante, utilice <code>float(s)</code>.</em></p>
 <p>Su programa debería imprimir una salida como la siguiente:</p>
 <pre><code class="language-bash">Total cost 44671.15
 </code></pre>
-<h5 id="ejercicio-128-otros-tipos-de-archivos">Ejercicio 1.28: Otros tipos de "archivos"</h5>
+<h3 id="ejercicio-128-otros-tipos-de-archivos">Ejercicio 1.28: Otros tipos de "archivos"</h3>
 <p>¿Qué sucede si desea leer un archivo que no es de texto, como un archivo de datos comprimido con gzip? La función incorporada <code>open()</code> no te ayudará aquí, pero Python tiene un módulo de biblioteca <code>gzip</code> que puede leer archivos comprimidos gzip.</p>
 <p>Pruébalo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import gzip
@@ -210,7 +234,7 @@ name,shares,price
 &gt;&gt;&gt;
 </code></pre>
 <p>Nota: Incluir el modo de archivo <code>"rt"</code> es fundamental aquí. Si olvidas esto, obtendrás cadenas de bytes en lugar de cadenas de texto normales.</p>
-<h4 id="comentario-no-deberiamos-usar-pandas-para-esto">Comentario: ¿No deberíamos usar Pandas para esto?</h4>
+<h2 id="comentario-no-deberiamos-usar-pandas-para-esto">Comentario: ¿No deberíamos usar Pandas para esto?</h2>
 <p>Los científicos de datos se apresuran a señalar que bibliotecas como <a href="https://pandas.pydata.org">Pandas</a> ya tienen una función para leer archivos CSV. Esto es cierto y funciona bastante bien. Sin embargo, este no es un curso para aprender Pandas. La lectura de archivos es un problema más general que los detalles específicos de los archivos CSV. La razón principal por la que trabajamos con un archivo CSV es que es un formato familiar para la mayoría de los codificadores y es relativamente fácil trabajar con él directamente, lo que ilustra muchas características de Python en el proceso. Así que, sin duda, utiliza Pandas cuando vuelvas a trabajar. Sin embargo, durante el resto de este curso nos quedaremos con la funcionalidad estándar de Python.</p>
 <p><a href="../Contents.Rmd">Contents</a> | <a href="05_Lists.Rmd">Previous (1.5 Lists)</a> | <a href="07_Functions.Rmd">Next (1.7 Functions)</a></p></div>
             </div>

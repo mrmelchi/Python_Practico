@@ -66,15 +66,47 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#15-listas" class="nav-link">1.5 Listas</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#creando-una-lista" class="nav-link">Creando una lista</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#operaciones-de-lista" class="nav-link">Operaciones de lista</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#iteracion-y-busqueda-de-listas" class="nav-link">Iteración y búsqueda de listas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#eliminacion-de-lista" class="nav-link">Eliminación de lista</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ordenacion-de-listas" class="nav-link">Ordenación de listas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#listas-y-matematicas" class="nav-link">Listas y matemáticas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Strings.Rmd">Anterior (1.4 Strings)</a> | <a href="06_Files.Rmd">Next (1.6 Archivos)</a></p>
-<h3 id="15-listas">1.5 Listas</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../04_Strings/">Anterior (1.4 Strings)</a> | <a href="../06_Files/">Próximo (1.6 Archivos)</a></p>
+<h1 id="15-listas">1.5 Listas</h1>
 <p>Esta sección presenta las listas, el tipo principal de Python para almacenar una colección ordenada de valores.</p>
-<h4 id="creando-una-lista">Creando una lista</h4>
+<h2 id="creando-una-lista">Creando una lista</h2>
 <p>Utilice corchetes para definir una lista literal:</p>
 <pre><code>names = [ 'Elwood', 'Jake', 'Curtis' ]
 nums = [ 39, 38, 42, 65, 111]
@@ -86,7 +118,7 @@ nums = [ 39, 38, 42, 65, 111]
 ['GOOG', '100', '490.10']
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="operaciones-de-lista">Operaciones de lista</h4>
+<h2 id="operaciones-de-lista">Operaciones de lista</h2>
 <p>Las listas pueden contener elementos de cualquier tipo. Agregue un nuevo elemento usando <code>append()</code>:</p>
 <pre><code>&gt;&gt;&gt; names.append('Murphy') # Agrega al final
 &gt;&gt;&gt; names.insert(2, 'Aretha') # Inserta en el medio
@@ -124,7 +156,7 @@ len(names)  # 3
 <pre><code class="language-python">s = [1, 2, 3]
 s * 3   # [1, 2, 3, 1, 2, 3, 1, 2, 3]
 </code></pre>
-<h4 id="iteracion-y-busqueda-de-listas">Iteración y búsqueda de listas</h4>
+<h2 id="iteracion-y-busqueda-de-listas">Iteración y búsqueda de listas</h2>
 <p>Utilice <code>for</code> para iterar sobre el contenido de la lista.</p>
 <pre><code class="language-python">for name in names:
     # use name
@@ -138,7 +170,7 @@ names.index('Curtis')   # 2
 </code></pre>
 <p>Si el elemento está presente más de una vez, <code>index()</code> devolverá el índice de la primera aparición.</p>
 <p>Si no se encuentra el elemento, se generará una excepción 'ValueError'.</p>
-<h4 id="eliminacion-de-lista">Eliminación de lista</h4>
+<h2 id="eliminacion-de-lista">Eliminación de lista</h2>
 <p>Puede eliminar elementos por valor de elemento o por índice:</p>
 <pre><code class="language-python"># Usando el valor
 names.remove('Curtis')
@@ -147,7 +179,7 @@ names.remove('Curtis')
 del names[1]
 </code></pre>
 <p>Quitar un elemento no crea un agujero. Otros elementos se moverán hacia abajo para llenar el espacio dejado vacante. Si hay más de una ocurrencia del elemento, <code>remove()</code> eliminará solo la primera ocurrencia.</p>
-<h4 id="ordenacion-de-listas">Ordenación de listas</h4>
+<h2 id="ordenacion-de-listas">Ordenación de listas</h2>
 <p>Las listas se pueden ordenar "en el lugar" ("in-place").</p>
 <pre><code class="language-python">s = [10, 1, 7, 3]
 s.sort() # [1, 3, 7, 10]
@@ -163,7 +195,7 @@ s.sort() # ['bar', 'foo', 'spam']
 <p>Utilice <code>sorted()</code> si desea crear una nueva lista:</p>
 <pre><code class="language-python">t = sorted(s)            # s sin cambios, t contiene valores ordenados
 </code></pre>
-<h4 id="listas-y-matematicas">Listas y matemáticas</h4>
+<h2 id="listas-y-matematicas">Listas y matemáticas</h2>
 <p><em>Precaución: Las listas no fueron diseñadas para operaciones matemáticas.</em></p>
 <pre><code class="language-python">&gt;&gt;&gt; nums = [1, 2, 3, 4, 5]
 &gt;&gt;&gt; nums * 2
@@ -172,14 +204,14 @@ s.sort() # ['bar', 'foo', 'spam']
 [1, 2, 3, 4, 5, 10, 11, 12, 13, 14]
 </code></pre>
 <p>Específicamente, las listas no representan vectores/matrices como en MATLAB, Octave, R, etc. Sin embargo, existen algunos paquetes que pueden ayudarte con eso (por ejemplo, <a href="https://numpy.org">numpy</a>).</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En este ejercicio, experimentamos con el tipo de datos de lista de Python. En la última sección, trabajaste con cadenas que contenían símbolos bursátiles.</p>
 <pre><code class="language-python">&gt;&gt;&gt; symbols = 'HPQ,AAPL,IBM,MSFT,YHOO,DOA,GOOG'
 </code></pre>
 <p>Divídalo en una lista de nombres utilizando la operación <code>split()</code> de cadenas:</p>
 <pre><code class="language-python">&gt;&gt;&gt; symlist = symbols.split(',')
 </code></pre>
-<h5 id="ejercicio-119-extraccion-y-reasignacion-de-elementos-de-lista">Ejercicio 1.19: Extracción y reasignación de elementos de lista</h5>
+<h3 id="ejercicio-119-extraccion-y-reasignacion-de-elementos-de-lista">Ejercicio 1.19: Extracción y reasignación de elementos de lista</h3>
 <p>Pruebe algunas búsquedas:</p>
 <pre><code class="language-python">&gt;&gt;&gt; symlist[0]
 'HPQ'
@@ -217,13 +249,13 @@ s.sort() # ['bar', 'foo', 'spam']
 &gt;&gt;&gt;
 </code></pre>
 <p>Al hacer esto, la lista del lado izquierdo (<code>symlist</code>) se redimensionará según corresponda para que encaje en el lado derecho (<code>mysyms</code>). Por ejemplo, en el ejemplo anterior, los dos últimos elementos de <code>symlist</code> fueron reemplazados por el único elemento de la lista <code>mysyms</code>.</p>
-<h5 id="ejercicio-120-recorrer-los-elementos-de-la-lista">Ejercicio 1.20: Recorrer los elementos de la lista</h5>
+<h3 id="ejercicio-120-recorrer-los-elementos-de-la-lista">Ejercicio 1.20: Recorrer los elementos de la lista</h3>
 <p>El bucle <code>for</code> funciona recorriendo los datos de una secuencia, como por ejemplo una lista. Compruébelo escribiendo el siguiente bucle y observando lo que sucede:</p>
 <pre><code class="language-python">&gt;&gt;&gt; for s in symlist:
         print('s =', s)
 # Mire la salida
 </code></pre>
-<h5 id="ejercicio-121-pruebas-de-pertenencia">Ejercicio 1.21: Pruebas de pertenencia</h5>
+<h3 id="ejercicio-121-pruebas-de-pertenencia">Ejercicio 1.21: Pruebas de pertenencia</h3>
 <p>Utilice el operador <code>in</code> o <code>not in</code> para comprobar si <code>'AIG'</code>, <code>'AA'</code> y <code>'CAT'</code> están en la lista de símbolos.</p>
 <pre><code class="language-python">&gt;&gt;&gt; # Está 'AIG' en `symlist`?
 True
@@ -233,7 +265,7 @@ False
 True
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-122-anadir-insertar-y-eliminar-elementos">Ejercicio 1.22: Añadir, insertar y eliminar elementos</h5>
+<h3 id="ejercicio-122-anadir-insertar-y-eliminar-elementos">Ejercicio 1.22: Añadir, insertar y eliminar elementos</h3>
 <p>Utilice el método <code>append()</code> para agregar el símbolo <code>'RHT'</code> al final de <code>symlist</code>.</p>
 <pre><code class="language-python">&gt;&gt;&gt; # append 'RHT'
 &gt;&gt;&gt; symlist
@@ -278,7 +310,7 @@ True
 &gt;&gt;&gt;
 </code></pre>
 <p>Para que lo sepas, no existe ningún método para encontrar o eliminar todas las apariciones de un elemento. Sin embargo, veremos una forma elegante de hacerlo en la sección 2.</p>
-<h5 id="ejercicio-123-ordenamiento">Ejercicio 1.23: Ordenamiento</h5>
+<h3 id="ejercicio-123-ordenamiento">Ejercicio 1.23: Ordenamiento</h3>
 <p>¿Quieres ordenar una lista? Utilice el método <code>sort()</code>. Pruébelo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; symlist.sort()
 &gt;&gt;&gt; symlist
@@ -292,7 +324,7 @@ True
 &gt;&gt;&gt;
 </code></pre>
 <p>Nota: Ordenar una lista modifica su contenido "en el lugar". Es decir, los elementos de la lista se ordenan, pero no se crea ninguna lista nueva como resultado.</p>
-<h5 id="ejercicio-124-poniendolo-todo-junto-de-nuevo">Ejercicio 1.24: Poniéndolo todo junto de nuevo</h5>
+<h3 id="ejercicio-124-poniendolo-todo-junto-de-nuevo">Ejercicio 1.24: Poniéndolo todo junto de nuevo</h3>
 <p>¿Quieres tomar una lista de cadenas y unirlas en una sola cadena? Utilice el método <code>join()</code> de cadenas como esta (nota: esto parece extraño al principio).</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = ','.join(symlist)
 &gt;&gt;&gt; a
@@ -305,7 +337,7 @@ True
 'YHOORHTHPQGOOGAIGAAPLAA'
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-125-listas-de-cualquier-cosa">Ejercicio 1.25: Listas de cualquier cosa</h5>
+<h3 id="ejercicio-125-listas-de-cualquier-cosa">Ejercicio 1.25: Listas de cualquier cosa</h3>
 <p>Las listas pueden contener cualquier tipo de objeto, incluidas otras listas (por ejemplo, listas anidadas). Prueba esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; nums = [101, 102, 103]
 &gt;&gt;&gt; items = ['spam', symlist, nums]
@@ -331,7 +363,7 @@ True
 &gt;&gt;&gt;
 </code></pre>
 <p>Si bien es técnicamente posible crear estructuras de listas muy complicadas, como regla general, conviene mantener las cosas simples. Generalmente las listas contienen elementos que tienen todos el mismo tipo de valor. Por ejemplo, una lista que consta enteramente de números o una lista de cadenas de texto. Mezclar distintos tipos de datos en la misma lista suele ser una buena forma de hacer que te explote la cabeza, por lo que es mejor evitarlo.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Strings.Rmd">Anterior (1.4 Strings)</a> | <a href="06_Files.Rmd">Next (1.6 Archivos)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../04_Strings/">Anterior (1.4 Strings)</a> | <a href="../06_Files/">Próximo (1.6 Archivos)</a></p></div>
             </div>
         </div>
 
