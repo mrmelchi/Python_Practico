@@ -66,17 +66,52 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            
+            <li class="nav-item" data-bs-level="1"><a href="#22-contenedores" class="nav-link">2.2 Contenedores</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#descripcion-general" class="nav-link">Descripción general</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#listas-como-contenedor" class="nav-link">Listas como contenedor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#dicts-como-contenedor" class="nav-link">Dicts como contenedor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#construccion-de-diccionarios" class="nav-link">Construcción de diccionarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#busquedas-en-el-diccionario" class="nav-link">Búsquedas en el diccionario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#teclas-compuestas" class="nav-link">Teclas compuestas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#set-conjunto" class="nav-link">Set (Conjunto)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
 <p><a href="../Contenido.md">Contenido</a> | <a href="../01_Datatypes/">Anterior (2.1 Tipos de
-datos)</a> | <a href="03_Formato.md">Siguiente (2.3 Formato)</a></p>
-<h3 id="22-contenedores">2.2 Contenedores</h3>
+datos)</a> | <a href="03_Formato.md">Próximo (2.3 Formato)</a></p>
+<h1 id="22-contenedores">2.2 Contenedores</h1>
 <p>En esta sección se tratan listas, diccionarios y sets (conjuntos).</p>
-<h4 id="descripcion-general">Descripción general</h4>
+<h2 id="descripcion-general">Descripción general</h2>
 <p>Los programas a menudo tienen que trabajar con muchos objetos.</p>
 <ul>
 <li>Una cartera de acciones</li>
@@ -88,7 +123,7 @@ datos)</a> | <a href="03_Formato.md">Siguiente (2.3 Formato)</a></p>
 <li>Diccionarios. Datos desordenados.</li>
 <li>Sets. Colección desordenada de elementos únicos.</li>
 </ul>
-<h4 id="listas-como-contenedor">Listas como contenedor</h4>
+<h2 id="listas-como-contenedor">Listas como contenedor</h2>
 <p>Utilice una lista cuando el orden de los datos sea importante. Recuerde
 que las listas pueden contener cualquier tipo de objeto. Por ejemplo,
 una lista de tuplas.</p>
@@ -119,7 +154,7 @@ with open('Data/portfolio.csv', 'rt') as f:
         row = line.split(',')
         records.append((row[0], int(row[1]), float(row[2])))
 </code></pre>
-<h4 id="dicts-como-contenedor">Dicts como contenedor</h4>
+<h2 id="dicts-como-contenedor">Dicts como contenedor</h2>
 <p>Los diccionarios son útiles si desea realizar búsquedas aleatorias
 rápidas (por nombre de clave). Por ejemplo, un diccionario de precios de
 acciones:</p>
@@ -137,7 +172,7 @@ acciones:</p>
 513.25
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="construccion-de-diccionarios">Construcción de diccionarios</h4>
+<h2 id="construccion-de-diccionarios">Construcción de diccionarios</h2>
 <p>Ejemplo de construcción de un diccionario desde cero.</p>
 <pre><code class="language-python">prices = {} # Diccionario vacío inicial
 
@@ -158,7 +193,7 @@ with open('Data/prices.csv', 'rt') as f:
 casi funciona (hay una línea en blanco al final que hace que se
 bloquee). Necesitarás encontrar alguna forma de modificar el código para
 tenerlo en cuenta (ver Ejercicio 2.6).</p>
-<h4 id="busquedas-en-el-diccionario">Búsquedas en el diccionario</h4>
+<h2 id="busquedas-en-el-diccionario">Búsquedas en el diccionario</h2>
 <p>Puedes probar la existencia de una clave.</p>
 <pre><code class="language-python">if key in d:
     # YES
@@ -176,7 +211,7 @@ predeterminado en caso de que no exista.</p>
 0.0
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="teclas-compuestas">Teclas compuestas</h4>
+<h2 id="teclas-compuestas">Teclas compuestas</h2>
 <p>Casi cualquier tipo de valor se puede utilizar como clave de diccionario
 en Python. Una clave de diccionario debe ser de un tipo que sea
 inmutable. Por ejemplo, tuplas:</p>
@@ -193,7 +228,7 @@ inmutable. Por ejemplo, tuplas:</p>
 </code></pre>
 <p><em>Ni una lista, ni un set, ni otro diccionario pueden servir como clave
 de diccionario, porque las listas y los diccionarios son mutables.</em></p>
-<h4 id="set-conjunto">Set (Conjunto)</h4>
+<h2 id="set-conjunto">Set (Conjunto)</h2>
 <p>Los conjuntos son colecciones de elementos únicos no ordenados.</p>
 <pre><code class="language-python">tech_stocks = { 'IBM','AAPL','MSFT' }
 # Sintaxis alternativa
@@ -224,11 +259,11 @@ s1 | s2                 # Set union { 'a', 'b', 'c', 'd' }
 s1 &amp; s2                 # Set intersección { 'c' }
 s1 - s2                 # Set diferencia { 'a', 'b' }
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En estos ejercicios, comenzará a construir uno de los programas
 principales utilizados en el resto de este curso. Realice su trabajo en
 el archivo <code>Work/report.py</code>.</p>
-<h5 id="ejercicio-24-una-lista-de-tuplas">Ejercicio 2.4: Una lista de tuplas</h5>
+<h3 id="ejercicio-24-una-lista-de-tuplas">Ejercicio 2.4: Una lista de tuplas</h3>
 <p>El archivo <code>Data/portfolio.csv</code> contiene una lista de acciones en una
 cartera. En el <a href="../01_Introduction/07_Functions.Rmd">Ejercicio 1.30</a>,
 escribió una función <code>portfolio_cost(filename)</code> que leyó este archivo y
@@ -305,7 +340,7 @@ declaración como esta:</p>
 44671.15
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-25-lista-de-diccionarios">Ejercicio 2.5: Lista de diccionarios</h5>
+<h3 id="ejercicio-25-lista-de-diccionarios">Ejercicio 2.5: Lista de diccionarios</h3>
 <p>Tome la función que escribió en el Ejercicio 2.4 y modifíquela para
 representar cada acción en la cartera con un diccionario en lugar de una
 tupla. En este diccionario, utilice los nombres de campo <code>name</code>,
@@ -351,7 +386,7 @@ limpiar la salida para la depuración, considere usar la función
     {'name': 'IBM', 'price': 70.44, 'shares': 100}]
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-26-los-diccionarios-como-contenedor">Ejercicio 2.6: Los diccionarios como contenedor</h5>
+<h3 id="ejercicio-26-los-diccionarios-como-contenedor">Ejercicio 2.6: Los diccionarios como contenedor</h3>
 <p>Un diccionario es una forma útil de realizar un seguimiento de los
 elementos, en los que desea buscar elementos utilizando un índice que no
 sea un número entero. En el shell de Python, intenta jugar con un
@@ -420,7 +455,7 @@ interactiva para asegurarse de que funciona:</p>
 20.89
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-27-como-saber-si-puedes-jubilarte">Ejercicio 2.7: Cómo saber si puedes jubilarte</h5>
+<h3 id="ejercicio-27-como-saber-si-puedes-jubilarte">Ejercicio 2.7: Cómo saber si puedes jubilarte</h3>
 <p>Conecte todo este trabajo agregando algunas declaraciones adicionales a
 su programa <code>report.py</code> que calcula la ganancia/pérdida. Estas
 afirmaciones deben tomar la lista de acciones del Ejercicio 2.5 y el

@@ -66,18 +66,66 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#21-tipos-y-estructuras-de-datos" class="nav-link">2.1 Tipos y estructuras de datos</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#tipos-de-datos-primitivos" class="nav-link">Tipos de datos primitivos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#none-tipo" class="nav-link">None tipo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#estructuras-de-datos" class="nav-link">Estructuras de datos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tuplas" class="nav-link">Tuplas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#empaquetado-de-tuplas" class="nav-link">Empaquetado de tuplas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#desempaquetado-de-tuplas" class="nav-link">Desempaquetado de tuplas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tuplas-vs-listas" class="nav-link">Tuplas vs. Listas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#diccionarios" class="nav-link">Diccionarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#operaciones-comunes" class="nav-link">Operaciones comunes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#por-que-diccionarios" class="nav-link">¿Por qué diccionarios?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../01_Introduction/06_Files.Rmd">Anterior (1.6
-Archivos)</a> | <a href="02_Containers.Rmd">Próximo (2.2
+<p><a href="../../Contents/">Contenido</a> | <a href="../../01_Introduction/06_Files/">Anterior (1.6
+Archivos)</a> | <a href="../02_Containers/">Próximo (2.2
 Contenedores)</a></p>
-<h3 id="21-tipos-y-estructuras-de-datos">2.1 Tipos y estructuras de datos</h3>
+<h1 id="21-tipos-y-estructuras-de-datos">2.1 Tipos y estructuras de datos</h1>
 <p>Esta sección presenta estructuras de datos en forma de tuplas y
 diccionarios.</p>
-<h4 id="tipos-de-datos-primitivos">Tipos de datos primitivos</h4>
+<h2 id="tipos-de-datos-primitivos">Tipos de datos primitivos</h2>
 <p>Python tiene algunos tipos de datos primitivos:</p>
 <ul>
 <li>Números enteros</li>
@@ -85,7 +133,7 @@ diccionarios.</p>
 <li>Strings (texto)</li>
 </ul>
 <p>Aprendimos sobre esto en la introducción.</p>
-<h4 id="none-tipo">None tipo</h4>
+<h2 id="none-tipo">None tipo</h2>
 <pre><code class="language-python">email_address = None
 </code></pre>
 <p><code>None</code> se utiliza a menudo como marcador de posición para valores
@@ -93,7 +141,7 @@ opcionales o faltantes. Se evalúa como "False" en condicionales.</p>
 <pre><code class="language-python">if email_address:
     send_email(email_address, msg)
 </code></pre>
-<h4 id="estructuras-de-datos">Estructuras de datos</h4>
+<h2 id="estructuras-de-datos">Estructuras de datos</h2>
 <p>Los programas reales tienen datos más complejos. Por ejemplo,
 información sobre una tenencia de acciones:</p>
 <pre><code class="language-code">100 shares of GOOG at $490.10
@@ -104,7 +152,7 @@ información sobre una tenencia de acciones:</p>
 <li>Número de acciones (100, un intero)</li>
 <li>Precio (490.10 por acción, un flotante)</li>
 </ul>
-<h4 id="tuplas">Tuplas</h4>
+<h2 id="tuplas">Tuplas</h2>
 <p>Una tupla es una colección de valores agrupados.</p>
 <p>Ejemplo:</p>
 <pre><code class="language-python">s = ('GOOG', 100, 490.1)
@@ -135,14 +183,14 @@ TypeError: object does not support item assignment
 ``` python
 s = (s[0], 75, s[2])
 </code></pre>
-<h4 id="empaquetado-de-tuplas">Empaquetado de tuplas</h4>
+<h2 id="empaquetado-de-tuplas">Empaquetado de tuplas</h2>
 <p>Las tuplas tratan más bien de agrupar elementos relacionados en una sola
 <em>entidad</em>.</p>
 <pre><code class="language-python">s = ('GOOG', 100, 490.1)
 </code></pre>
 <p>La tupla son luego fácil de pasar a otras partes de un programa como un
 único objeto.</p>
-<h4 id="desempaquetado-de-tuplas">Desempaquetado de tuplas</h4>
+<h2 id="desempaquetado-de-tuplas">Desempaquetado de tuplas</h2>
 <p>Para utilizar la tupla en otro lugar, puedes deswmpaquetar sus partes en
 variables.</p>
 <pre><code class="language-python">name, shares, price = s
@@ -168,7 +216,7 @@ print(price) # 490.1
 </code></pre>
 <p>En ambos casos
 `<code>*_ completa las variables faltantes. Incluir más asterisco en el lado izquierdo de la asignación provocará un SyntaxError: multiple starred expressions in assignment</code>`</p>
-<h4 id="tuplas-vs-listas">Tuplas vs. Listas</h4>
+<h2 id="tuplas-vs-listas">Tuplas vs. Listas</h2>
 <p>Las tuplas parecen listas de solo lectura. Sin embargo, las tuplas se
 utilizan con mayor frecuencia para un <em>único elemento</em> que consta de
 varias partes. Las listas suelen ser una colección de elementos
@@ -176,7 +224,7 @@ distintos, normalmente todos del mismo tipo.</p>
 <pre><code class="language-python">record = ('GOOG', 100, 490.1)       # Una tupla que representa un registro en un portafolio de inversión
 symbols = [ 'GOOG', 'AAPL', 'IBM' ]  # Una lista que representa tres símbolos bursátiles
 </code></pre>
-<h4 id="diccionarios">Diccionarios</h4>
+<h2 id="diccionarios">Diccionarios</h2>
 <p>Un diccionario es una asignación de claves a valores. A veces también se
 le llama tabla hash o matriz asociativa. Las claves sirven como índices
 para acceder a los valores.</p>
@@ -186,7 +234,7 @@ para acceder a los valores.</p>
     'price': 490.1
 }
 </code></pre>
-<h4 id="operaciones-comunes">Operaciones comunes</h4>
+<h2 id="operaciones-comunes">Operaciones comunes</h2>
 <p>Para obtener valores de un diccionario utilice los nombres de clave.</p>
 <pre><code class="language-python">&gt;&gt;&gt; print(s['name'], s['shares'])
 GOOG 100
@@ -204,7 +252,7 @@ las teclas.</p>
 <pre><code class="language-python">&gt;&gt;&gt; del s['date']
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="por-que-diccionarios">¿Por qué diccionarios?</h4>
+<h2 id="por-que-diccionarios">¿Por qué diccionarios?</h2>
 <p>Los diccionarios son útiles cuando hay <em>muchos</em> valores diferentes y
 esos valores pueden modificarse o manipularse. Los diccionarios hacen
 que su código sea más legible.</p>
@@ -212,7 +260,7 @@ que su código sea más legible.</p>
 # en lugar de
 es[2]
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En los últimos ejercicios, escribió un programa que lee un archivo de
 datos <code>Data/portfolio.csv</code>. Usando el módulo <code>csv</code>, es fácil leer el
 archivo fila por fila.</p>
@@ -243,7 +291,7 @@ TypeError: can't multiply sequence by non-int of type 'str'
 de alguna manera y convertirlos en un tipo de objeto más útil para poder
 trabajar con ellos más adelante. Dos opciones simples son tuplas o
 diccionarios.</p>
-<h5 id="ejercicio-21-tuplas">Ejercicio 2.1: Tuplas</h5>
+<h3 id="ejercicio-21-tuplas">Ejercicio 2.1: Tuplas</h3>
 <p>En el modo interactivo, cree la siguiente tupla que representa la fila
 anterior, pero con las columnas numéricas convertidas en números
 adecuados:</p>
@@ -309,7 +357,7 @@ en variables. Pruebe lo siguiente:</p>
 ('AA', 150, 32.2)
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-22-diccionarios-como-estructura-de-datos">Ejercicio 2.2: Diccionarios como estructura de datos</h5>
+<h3 id="ejercicio-22-diccionarios-como-estructura-de-datos">Ejercicio 2.2: Diccionarios como estructura de datos</h3>
 <p>Una alternativa a una tupla es crear un diccionario.</p>
 <pre><code class="language-python">&gt;&gt;&gt; d = {
         'name' : row[0],
@@ -341,7 +389,7 @@ libremente. Añade algunos atributos:</p>
 {'name': 'AA', 'shares': 75, 'price':32.2, 'date': (6, 11, 2007), 'account': 12345}
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-23-algunas-operaciones-adicionales-del-diccionario">Ejercicio 2.3: Algunas operaciones adicionales del diccionario</h5>
+<h3 id="ejercicio-23-algunas-operaciones-adicionales-del-diccionario">Ejercicio 2.3: Algunas operaciones adicionales del diccionario</h3>
 <p>Si conviertes un diccionario en una lista, obtendrás todas sus claves:</p>
 <pre><code class="language-python">&gt;&gt;&gt; list(d)
 ['name', 'shares', 'price', 'date', 'account']
@@ -412,8 +460,8 @@ dict_items([('name', 'AA'), ('shares', 75), ('price', 32.2), ('date', (6, 11, 20
 {'name': 'AA', 'shares': 75, 'price':32.2, 'date': (6, 11, 2007)}
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../01_Introduction/06_Files.Rmd">Anterior (1.6
-Archivos)</a> | <a href="02_Containers.Rmd">Próximo (2.2
+<p><a href="../../Contents/">Contenido</a> | <a href="../../01_Introduction/06_Files/">Anterior (1.6
+Archivos)</a> | <a href="../02_Containers/">Próximo (2.2
 Contenedores)</a></p></div>
             </div>
         </div>

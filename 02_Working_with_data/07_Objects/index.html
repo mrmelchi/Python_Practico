@@ -66,15 +66,63 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#27-objetos" class="nav-link">2.7 Objetos</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#asignacion" class="nav-link">Asignación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejemplo-de-asignacion" class="nav-link">Ejemplo de asignación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#reasignacion-de-valores" class="nav-link">Reasignación de valores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#algunos-peligros" class="nav-link">Algunos peligros</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#identidad-y-referencias" class="nav-link">Identidad y referencias</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#copias-superficiales" class="nav-link">Copias superficiales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#copias-profundas" class="nav-link">Copias profundas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#nombres-valores-tipos" class="nav-link">Nombres, valores, tipos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comprobacion-de-tipos" class="nav-link">Comprobación de tipos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#todo-es-un-objeto" class="nav-link">Todo es un objeto</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="06_List_comprehension.Rmd">Anterior (2.6 Listas por comprensión)</a> | <a href="../03_Program_organization/00_Overview.Rmd">Siguiente (3. Organización del programa)</a></p>
-<h3 id="27-objetos">2.7 Objetos</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../06_List_comprehension/">Anterior (2.6 Listas por comprensión)</a> | <a href="../../03_Program_organization/00_Overview/">Próximo (3. Organización del programa)</a></p>
+<h1 id="27-objetos">2.7 Objetos</h1>
 <p>Esta sección presenta más detalles sobre el modelo de objetos internos de Python y analiza algunos asuntos relacionados con la administración de memoria, la copia y la verificación de tipos.</p>
-<h4 id="asignacion">Asignación</h4>
+<h2 id="asignacion">Asignación</h2>
 <p>Muchas operaciones en Python están relacionadas con la <em>asignación</em> o <em>almacenamiento</em> de valores.</p>
 <pre><code class="language-python">a = value # Asignación a una variable
 s[n] = value # Asignación a una lista
@@ -82,7 +130,7 @@ s.append(value) # Anexar a una lista
 d['key'] = value # Agregar a un diccionario
 </code></pre>
 <p><em>Precaución: las operaciones de asignación </em><em>nunca hacen una copia</em><em> del valor que se está asignando.</em> Todas las asignaciones son simplemente copias de referencia (o copias de puntero si lo prefiere).</p>
-<h4 id="ejemplo-de-asignacion">Ejemplo de asignación</h4>
+<h2 id="ejemplo-de-asignacion">Ejemplo de asignación</h2>
 <p>Considere este fragmento de código.</p>
 <pre><code class="language-python">a = [1,2,3]
 b = a
@@ -101,7 +149,7 @@ c = [a,b]
 &gt;&gt;&gt;
 </code></pre>
 <p>Observe cómo un cambio en la lista original aparece en todos lados (¡vaya!). Esto se debe a que nunca se hicieron copias. Todo apunta a lo mismo.</p>
-<h4 id="reasignacion-de-valores">Reasignación de valores</h4>
+<h2 id="reasignacion-de-valores">Reasignación de valores</h2>
 <p>Reasignar un valor <em>nunca</em> sobrescribe la memoria utilizada por el valor anterior.</p>
 <pre><code class="language-python">a = [1,2,3]
 b = a
@@ -111,10 +159,10 @@ print(a) # [4, 5, 6]
 print(b) # [1, 2, 3] Contiene el valor original
 </code></pre>
 <p>Recuerde: <strong>Las variables son nombres, no ubicaciones de memoria.</strong></p>
-<h4 id="algunos-peligros">Algunos peligros</h4>
+<h2 id="algunos-peligros">Algunos peligros</h2>
 <p>Si no sabe sobre este intercambio, en algún momento se disparará en el pie. Escenario típico. Modifica algunos datos pensando que son su propia copia privada y accidentalmente corrompe algunos datos en alguna otra parte del programa.</p>
 <p><em>Comentario: Esta es una de las razones por las que los tipos de datos primitivos (int, float, string) son inmutables (solo lectura).</em></p>
-<h4 id="identidad-y-referencias">Identidad y referencias</h4>
+<h2 id="identidad-y-referencias">Identidad y referencias</h2>
 <p>Use el operador <code>is</code> para verificar si dos valores son exactamente el mismo objeto.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = [1,2,3]
 &gt;&gt;&gt; b = a
@@ -141,7 +189,7 @@ False
 True
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="copias-superficiales">Copias superficiales</h4>
+<h2 id="copias-superficiales">Copias superficiales</h2>
 <p>Las listas y los diccionarios tienen métodos para copiar.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = [2,3,[100,101],4]
 &gt;&gt;&gt; b = list(a) # Hacer una copia
@@ -159,7 +207,7 @@ True
 </code></pre>
 <p>Por ejemplo, se está compartiendo la lista interna <code>[100, 101, 102]</code>. Esto se conoce como copia superficial. Aquí hay una imagen.</p>
 <p><img alt="Copia superficial" src="../shallow.png" /></p>
-<h4 id="copias-profundas">Copias profundas</h4>
+<h2 id="copias-profundas">Copias profundas</h2>
 <p>A veces es necesario hacer una copia de un objeto y de todos los objetos que contiene. Puede utilizar el módulo <code>copy</code> para esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = [2,3,[100,101],4]
 &gt;&gt;&gt; import copy
@@ -171,7 +219,7 @@ True
 False
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="nombres-valores-tipos">Nombres, valores, tipos</h4>
+<h2 id="nombres-valores-tipos">Nombres, valores, tipos</h2>
 <p>Los nombres de las variables no tienen un <em>tipo</em>. Son solo un nombre. Sin embargo, los valores <em>sí</em> tienen un tipo subyacente.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = 42
 &gt;&gt;&gt; b = 'Hello World'
@@ -181,7 +229,7 @@ False
 &lt;type 'str'&gt;
 </code></pre>
 <p><code>type()</code> le dirá cuál es. El nombre del tipo se utiliza generalmente como una función que crea o convierte un valor a ese tipo.</p>
-<h4 id="comprobacion-de-tipos">Comprobación de tipos</h4>
+<h2 id="comprobacion-de-tipos">Comprobación de tipos</h2>
 <p>Cómo saber si un objeto es de un tipo específico.</p>
 <pre><code class="language-python">if isinstance(a, list):
   print('a is a list')
@@ -191,7 +239,7 @@ False
   print('a is a list or tuple')
 </code></pre>
 <p><em>Precaución: No se exceda con la comprobación de tipos. Puede generar una complejidad excesiva en el código. Por lo general, solo lo haría si al hacerlo evitara errores comunes que cometen otras personas al usar su código.</em></p>
-<h4 id="todo-es-un-objeto">Todo es un objeto</h4>
+<h2 id="todo-es-un-objeto">Todo es un objeto</h2>
 <p>Números, cadenas, listas, funciones, excepciones, clases, instancias, etc. son todos objetos. Esto significa que todos los objetos que se pueden nombrar se pueden pasar como datos, colocar en contenedores, etc., sin ninguna restricción. No hay tipos <em>especiales</em> de objetos. A veces se dice que todos los objetos son "de primera clase".</p>
 <p>Un ejemplo simple:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import math
@@ -217,9 +265,9 @@ items[1].sqrt(2) # math
 except items[2]: # ValueError
 </code></pre>
 <p>Un gran poder conlleva una responsabilidad. El hecho de que puedas hacer eso no significa que debas hacerlo.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En este conjunto de ejercicios, observamos parte del poder que proviene de los objetos de primera clase.</p>
-<h5 id="ejercicio-224-datos-de-primera-clase">Ejercicio 2.24: Datos de primera clase</h5>
+<h3 id="ejercicio-224-datos-de-primera-clase">Ejercicio 2.24: Datos de primera clase</h3>
 <p>En el archivo <code>Data/portfolio.csv</code>, leemos datos organizados en columnas que se ven así:</p>
 <pre><code class="language-csv">name,shares,price
 &quot;AA&quot;,100,32.20
@@ -304,7 +352,7 @@ TypeError: can't multiplicar sequence by non-int of type 'str'
 ['AA', 100, 32.2]
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-225-creacion-de-diccionarios">Ejercicio 2.25: Creación de diccionarios</h5>
+<h3 id="ejercicio-225-creacion-de-diccionarios">Ejercicio 2.25: Creación de diccionarios</h3>
 <p>¿Recuerdas cómo la función <code>dict()</code> puede crear fácilmente un diccionario si tienes una secuencia de nombres y valores de claves? Hagamos un diccionario a partir de los encabezados de las columnas:</p>
 <pre><code class="language-python">&gt;&gt;&gt; headers
 ['name', 'shares', 'price']
@@ -319,7 +367,7 @@ TypeError: can't multiplicar sequence by non-int of type 'str'
 {'price': 32.2, 'name': 'AA', 'shares': 100}
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-226-el-panorama-general">Ejercicio 2.26: El panorama general</h5>
+<h3 id="ejercicio-226-el-panorama-general">Ejercicio 2.26: El panorama general</h3>
 <p>Si utiliza las técnicas de este ejercicio, podrá escribir instrucciones que conviertan fácilmente los campos de casi cualquier archivo de datos orientado a columnas en un diccionario de Python.</p>
 <p>Solo para ilustrar, supongamos que lees datos de un archivo de datos diferente como este:</p>
 <pre><code class="language-python">&gt;&gt;&gt; f = open('Data/dowstocks.csv')
@@ -348,7 +396,7 @@ TypeError: can't multiplicar sequence by non-int of type 'str'
 </code></pre>
 <p>Bonificación: ¿Cómo modificarías este ejemplo para que sea adicional? ¿Cómo analizar la entrada <code>date</code> en una tupla como <code>(6, 11, 2007)</code>?</p>
 <p>Dedica un tiempo a reflexionar sobre lo que has hecho en este ejercicio. Volveremos a tratar estas ideas un poco más adelante.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="06_List_comprehension.Rmd">Anterior (2.6 Listas por comprensión)</a> | <a href="../03_Program_organization/00_Overview.Rmd">Siguiente (3. Organización del programa)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../06_List_comprehension/">Anterior (2.6 Listas por comprensión)</a> | <a href="../../03_Program_organization/00_Overview/">Próximo (3. Organización del programa)</a></p></div>
             </div>
         </div>
 

@@ -66,16 +66,64 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#24-secuencias" class="nav-link">2.4 Secuencias</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#tipos-de-datos-de-secuencia" class="nav-link">Tipos de datos de secuencia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#rebanar" class="nav-link">Rebanar</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#reasignacion-de-sectores" class="nav-link">Reasignación de sectores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#reducciones-de-secuencia" class="nav-link">Reducciones de secuencia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#declaracion-break" class="nav-link">Declaración break</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#declaracion-continue" class="nav-link">Declaración continue</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#recorriendo-numeros-enteros" class="nav-link">Recorriendo números enteros</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#funcion-enumerate" class="nav-link">Función enumerate()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#fory-tuplas" class="nav-link">fory tuplas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#funcion-zip" class="nav-link">Función zip()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Formatting.Rmd">Anterior (2.3 Salida con
-formato)</a> | <a href="05_Collections.Rmd">Próximo (2.5 Módulo
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Formatting/">Anterior (2.3 Salida con
+formato)</a> | <a href="../05_Collections/">Próximo (2.5 Módulo
 Collections)</a></p>
-<h3 id="24-secuencias">2.4 Secuencias</h3>
-<h4 id="tipos-de-datos-de-secuencia">Tipos de datos de secuencia</h4>
+<h1 id="24-secuencias">2.4 Secuencias</h1>
+<h2 id="tipos-de-datos-de-secuencia">Tipos de datos de secuencia</h2>
 <p>Python tiene tres tipos de datos de <em>secuencia</em>.</p>
 <ul>
 <li>Cadena: <code>'Hola'</code>. Una cadena es una secuencia de caracteres.</li>
@@ -119,7 +167,7 @@ Traceback (most recent call last):
   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
 TypeError: can only concatenate tuple (not &quot;list&quot;) to tuple
 </code></pre>
-<h4 id="rebanar">Rebanar</h4>
+<h2 id="rebanar">Rebanar</h2>
 <p>Rebanar significa tomar una subsecuencia de una secuencia. La sintaxis
 es <code>s[inicio:fin]</code>. Donde <code>inicio</code> y <code>fin</code> son los índices de la
 subsecuencia que desea.</p>
@@ -136,7 +184,7 @@ a[:3]     # [0,1,2]
 <li>Si se omiten los índices, el valor predeterminado es el principio o
     el final de la lista.</li>
 </ul>
-<h4 id="reasignacion-de-sectores">Reasignación de sectores</h4>
+<h2 id="reasignacion-de-sectores">Reasignación de sectores</h2>
 <p>En las listas, las porciones se pueden reasignar y eliminar.</p>
 <pre><code class="language-python"># Reasignación
 a = [0,1,2,3,4,5,6,7,8]
@@ -147,7 +195,7 @@ a[2:4] = [10,11,12]       # [0,1,10,11,12,4,5,6,7,8]
 a = [0,1,2,3,4,5,6,7,8]
 del a[2:4]                # [0,1,4,5,6,7,8]
 </code></pre>
-<h4 id="reducciones-de-secuencia">Reducciones de secuencia</h4>
+<h2 id="reducciones-de-secuencia">Reducciones de secuencia</h2>
 <p>Hay algunas funciones comunes para reducir una secuencia a un solo
 valor.</p>
 <pre><code class="language-python">&gt;&gt;&gt; s = [1, 2, 3, 4]
@@ -163,7 +211,7 @@ valor.</p>
 &gt;&gt;&gt;
 </code></pre>
 <pre><code>
-#### Iteración sobre una secuencia
+## Iteración sobre una secuencia
 
 El bucle for itera sobre los elementos de una secuencia.
 
@@ -187,7 +235,7 @@ este ejemplo, la variable de iteración es <code>x</code>:</p>
 <p>En cada iteración, se sobrescribe el valor anterior de la variable de
 iteración (si lo hay). Una vez finalizado el bucle, la variable conserva
 el último valor.</p>
-<h4 id="declaracion-break">Declaración <code>break</code></h4>
+<h2 id="declaracion-break">Declaración <code>break</code></h2>
 <p>Puede utilizar la declaración <code>break</code> para salir de un bucle antes de
 tiempo.</p>
 <pre><code class="language-python">for name in namelist:
@@ -201,7 +249,7 @@ declaraciones
 siguientes <code>declaraciones</code>. La declaración <code>break</code> sólo se aplica al
 bucle más interno. Si este bucle está dentro de otro bucle, no romperá
 el bucle externo.</p>
-<h4 id="declaracion-continue">Declaración <code>continue</code></h4>
+<h2 id="declaracion-continue">Declaración <code>continue</code></h2>
 <p>Para omitir un elemento y pasar al siguiente, utilice la instrucción
 <code>continue</code>.</p>
 <pre><code class="language-python">for line in lines:
@@ -212,7 +260,7 @@ el bucle externo.</p>
 </code></pre>
 <p>Esto es útil cuando el elemento actual no es de interés o no necesita
 ser revisado, ignoradolo en el procesamiento.</p>
-<h4 id="recorriendo-numeros-enteros">Recorriendo números enteros</h4>
+<h2 id="recorriendo-numeros-enteros">Recorriendo números enteros</h2>
 <p>Si necesita contar, utilice <code>range()</code>.</p>
 <pre><code class="language-python">for i in range(100):
     # i = 0,1,...,99
@@ -234,7 +282,7 @@ rebanadas.</p>
 <li><code>range()</code> calcula valores según sea necesario. En realidad no
     almacena un rango amplio de números.</li>
 </ul>
-<h4 id="funcion-enumerate">Función enumerate()</h4>
+<h2 id="funcion-enumerate">Función enumerate()</h2>
 <p>La función <code>enumerate</code> agrega un valor de contador adicional a la
 iteración.</p>
 <pre><code class="language-python">names = ['Elwood', 'Jake', 'Curtis']
@@ -258,7 +306,7 @@ for x in s:
 </code></pre>
 <p>El uso de <code>enumerate</code> implica escribir menos y se ejecuta un poco más
 rápido.</p>
-<h4 id="fory-tuplas"><code>for</code>y tuplas</h4>
+<h2 id="fory-tuplas"><code>for</code>y tuplas</h2>
 <p>Puedes iterar con múltiples variables de iteración.</p>
 <pre><code class="language-python">points = [
   (1, 4),(10, 40),(23, 14),(5, 6),(7, 8)
@@ -272,7 +320,7 @@ for x, y in points:
 <p>Cuando se utilizan múltiples variables, cada tupla se <em>desempaqueta</em> en
 un conjunto de variables de iteración. El número de variables debe
 coincidir con el número de elementos en cada tupla.</p>
-<h4 id="funcion-zip">Función <code>zip()</code></h4>
+<h2 id="funcion-zip">Función <code>zip()</code></h2>
 <p>La función <code>zip</code> toma múltiples secuencias y crea un iterador que las
 combina.</p>
 <pre><code class="language-python">columns = ['name', 'shares', 'price']
@@ -289,8 +337,8 @@ para desempaquetar las tuplas como se mostró anteriormente.</p>
 diccionarios.</p>
 <pre><code class="language-python">d = dict(zip(columns, values))
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-213-contar">Ejercicio 2.13: Contar</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-213-contar">Ejercicio 2.13: Contar</h3>
 <p>Pruebe algunos ejemplos básicos de conteo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; for n in range(10):            # Count 0 ... 9
         print(n, end=' ')
@@ -306,7 +354,7 @@ diccionarios.</p>
 0 2 4 6 8
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-214-mas-operaciones-de-secuencia">Ejercicio 2.14: Más operaciones de secuencia</h5>
+<h3 id="ejercicio-214-mas-operaciones-de-secuencia">Ejercicio 2.14: Más operaciones de secuencia</h3>
 <p>Experimente interactivamente con algunas de las operaciones de reducción
 de secuencia.</p>
 <pre><code class="language-python">&gt;&gt;&gt; data = [4, 9, 1, 25, 16, 100, 49]
@@ -356,7 +404,7 @@ profundidades de un programa C oxidado.
 además es ineficiente con la memoria y funciona mucho más lento.
 Simplemente use un bucle <code>for</code> normal si desea iterar sobre los datos.
 Utilice <code>enumerate()</code> si necesita el índice por algún motivo.</p>
-<h5 id="ejercicio-215-un-ejemplo-practico-de-enumerate">Ejercicio 2.15: Un ejemplo práctico de enumerate()</h5>
+<h3 id="ejercicio-215-un-ejemplo-practico-de-enumerate">Ejercicio 2.15: Un ejemplo práctico de enumerate()</h3>
 <p>Recuerde que el archivo <code>Data/missing.csv</code> contiene datos de una cartera
 de acciones, pero tiene algunas filas con datos faltantes. Usando
 <code>enumerate()</code>, modifique su programa <code>pcost.py</code> para que imprima un
@@ -375,7 +423,7 @@ for rowno, row in enumerate(rows, start=1):
     except ValueError:
         print(f'Row {rowno}: Bad row: {row}')
 </code></pre>
-<h5 id="ejercicio-216-uso-de-la-funcion-zip">Ejercicio 2.16: Uso de la función <code>zip()</code></h5>
+<h3 id="ejercicio-216-uso-de-la-funcion-zip">Ejercicio 2.16: Uso de la función <code>zip()</code></h3>
 <p>En el archivo <code>Data/portfolio.csv</code>, la primera línea contiene
 encabezados de columna. En todo el código anterior, los hemos estado
 descartando.</p>
@@ -458,7 +506,7 @@ columna.</p>
 <p>Intente ejecutar el programa <code>report.py</code> en el archivo
 <code>Data/portfoliodate.csv</code> y verá que produce la misma respuesta que
 antes.</p>
-<h5 id="ejercicio-217-invertir-un-diccionario">Ejercicio 2.17: Invertir un diccionario</h5>
+<h3 id="ejercicio-217-invertir-un-diccionario">Ejercicio 2.17: Invertir un diccionario</h3>
 <p>Un diccionario asigna claves a valores. Por ejemplo, un diccionario de
 precios de acciones.</p>
 <pre><code class="language-python">&gt;&gt;&gt; prices = {
@@ -516,8 +564,8 @@ secuencia de entrada más corta.</p>
 [(1, 'x'), (2, 'y'), (3, 'z')]
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Formatting.Rmd">Anterior (2.3 Salida con
-formato)</a> | <a href="05_Collections.Rmd">Próximo (2.5 Módulo
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Formatting/">Anterior (2.3 Salida con
+formato)</a> | <a href="../05_Collections/">Próximo (2.5 Módulo
 Collections)</a></p></div>
             </div>
         </div>

@@ -66,17 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            
-            
+            <li class="nav-item" data-bs-level="1"><a href="#23-formato" class="nav-link">2.3 Formato</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#formato-de-cadena" class="nav-link">Formato de cadena</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodo-format" class="nav-link">Método format()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#formato-estilo-c" class="nav-link">Formato estilo C</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Containers.Rmd">Anterior (2.2
-Contenedores)</a> | <a href="04_Sequences.Rmd">Próximo (2.4
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Containers/">Anterior (2.2
+Contenedores)</a> | <a href="../04_Sequences/">Próximo (2.4
 Secuencias)</a></p>
-<h3 id="23-formato">2.3 Formato</h3>
+<h1 id="23-formato">2.3 Formato</h1>
 <p>Esta sección es una ligera digresión, pero cuando se trabaja con datos,
 a menudo se desea producir resultados estructurados (tablas, etc.). Por
 ejemplo:</p>
@@ -90,7 +108,7 @@ ejemplo:</p>
       MSFT          50        65.10
        IBM         100        70.44
 </code></pre>
-<h4 id="formato-de-cadena">Formato de cadena</h4>
+<h2 id="formato-de-cadena">Formato de cadena</h2>
 <p>Una forma de formatear cadenas en Python 3.6+ es con <code>f-strings</code>.</p>
 <pre><code class="language-python">&gt;&gt;&gt; name = 'IBM'
 &gt;&gt;&gt; shares = 100
@@ -136,7 +154,7 @@ un diccionario de valores:</p>
 </code></pre>
 <p>Utiliza los mismos códigos que <code>f-strings</code> pero toma los valores del
 diccionario suministrado.</p>
-<h4 id="metodo-format">Método format()</h4>
+<h2 id="metodo-format">Método format()</h2>
 <p>Hay un método <code>format()</code> que puede aplicar formato a argumentos o
 argumentos de palabras clave.</p>
 <pre><code class="language-python">&gt;&gt;&gt; '{name:&gt;10s} {shares:10d} {price:10.2f}'.format(name='IBM', shares=100, price=91.1)
@@ -147,7 +165,7 @@ argumentos de palabras clave.</p>
 </code></pre>
 <p>Francamente, <code>format()</code> es un poco verborrágico. Prefiero las
 <code>f-strngs</code>.</p>
-<h4 id="formato-estilo-c">Formato estilo C</h4>
+<h2 id="formato-estilo-c">Formato estilo C</h2>
 <p>También puede utilizar el operador de formato <code>%</code>.</p>
 <pre><code class="language-python">&gt;&gt;&gt; 'The value is %d' % 3
 'The value is 3'
@@ -165,8 +183,8 @@ b'Dave tiene 37 mensajes
 b'Dave tiene 37 mensajes
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-28-como-formatear-numeros">Ejercicio 2.8: Cómo formatear números</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-28-como-formatear-numeros">Ejercicio 2.8: Cómo formatear números</h3>
 <p>Un problema común con la impresión de números es especificar el número
 de decimales. Una forma de solucionar esto es utilizar <code>f-strings</code>.
 Pruebe estos ejemplos:</p>
@@ -205,7 +223,7 @@ Simplemente asígnelo a una variable.</p>
 '42863.1000'
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-29-recopilacion-de-datos">Ejercicio 2.9: Recopilación de datos</h5>
+<h3 id="ejercicio-29-recopilacion-de-datos">Ejercicio 2.9: Recopilación de datos</h3>
 <p>En el ejercicio 2.7, escribió un programa llamado <code>report.py</code> que
 calculó la ganancia/pérdida de una cartera de acciones. En este
 ejercicio, comenzarás a modificarlo para producir una tabla como esta:</p>
@@ -243,7 +261,7 @@ funcionar si lo intentas de forma interactiva:</p>
 ...
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-210-impresion-de-una-tabla-formateada">Ejercicio 2.10: Impresión de una tabla formateada</h5>
+<h3 id="ejercicio-210-impresion-de-una-tabla-formateada">Ejercicio 2.10: Impresión de una tabla formateada</h3>
 <p>Rehaga el bucle for del Ejercicio 2.9, pero cambie la declaración de
 impresión para formatear las tuplas.</p>
 <pre><code class="language-python">&gt;&gt;&gt; for r in report:
@@ -271,7 +289,7 @@ Por ejemplo:</p>
 <p>Tome las declaraciones anteriores y agréguelas a su programa
 <code>report.py</code>. Haga que su programa tome la salida de la función
 <code>make_report()</code> e imprima una tabla bien formateada como se muestra.</p>
-<h5 id="ejercicio-211-agregar-algunos-encabezados">Ejercicio 2.11: Agregar algunos encabezados</h5>
+<h3 id="ejercicio-211-agregar-algunos-encabezados">Ejercicio 2.11: Agregar algunos encabezados</h3>
 <p>Supongamos que tienes una tupla de nombres de encabezado como éste:</p>
 <pre><code class="language-python">headers = ('Name', 'Shares', 'Price', 'Change')
 </code></pre>
@@ -367,8 +385,8 @@ moneda (\$) y el resultado se vea así:</p>
       MSFT         50     $20.89     -44.21
        IBM        100    $106.28      35.84
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Containers.Rmd">Anterior (2.2
-Contenedores)</a> | <a href="04_Sequences.Rmd">Próximo (2.4
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Containers/">Anterior (2.2
+Contenedores)</a> | <a href="../04_Sequences/">Próximo (2.4
 Secuencias)</a></p></div>
             </div>
         </div>
