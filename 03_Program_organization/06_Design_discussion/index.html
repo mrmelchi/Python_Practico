@@ -66,15 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#36-discusion-sobre-el-diseno" class="nav-link">3.6 Discusión sobre el diseño</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#nombres-de-archivo-versus-iterables" class="nav-link">Nombres de archivo versus iterables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#idea-profunda-duck-typing" class="nav-link">Idea profunda: "Duck Typing"</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mejores-practicas-de-diseno-de-bibliotecas" class="nav-link">Mejores prácticas de diseño de bibliotecas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicio" class="nav-link">Ejercicio</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="05_Main_module.Rmd">Anterior (3.5 Módulo principal)</a> | <a href="../04_Classes_objects/00_Overview.Rmd">Siguiente (4. Classes and Objetos)</a></p>
-<h3 id="36-discusion-sobre-el-diseno">3.6 Discusión sobre el diseño</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../05_Main_module/">Anterior (3.5 Módulo principal)</a> | <a href="../../04_Classes_objects/00_Overview/">Próximo (4. Clases y Objetos)</a></p>
+<h1 id="36-discusion-sobre-el-diseno">3.6 Discusión sobre el diseño</h1>
 <p>En esta sección reconsideramos una decisión de diseño tomada anteriormente.</p>
-<h4 id="nombres-de-archivo-versus-iterables">Nombres de archivo versus iterables</h4>
+<h2 id="nombres-de-archivo-versus-iterables">Nombres de archivo versus iterables</h2>
 <p>Compare estos dos programas que devuelven el mismo resultado.</p>
 <pre><code class="language-python"># Proporcione un nombre de archivo
 def read_data(filename):
@@ -102,7 +122,7 @@ with open('file.csv') as f:
 <li>¿Cuál de estas funciones prefiere? ¿Por qué?</li>
 <li>¿Cuál de estas funciones es más flexible?</li>
 </ul>
-<h4 id="idea-profunda-duck-typing">Idea profunda: "Duck Typing"</h4>
+<h2 id="idea-profunda-duck-typing">Idea profunda: "Duck Typing"</h2>
 <p><a href="https://en.wikipedia.org/wiki/Duck_typing">Duck Typing</a> es un concepto de programación informática para determinar si un objeto se puede usar para un propósito particular. Es una aplicación de la [prueba del pato] <a href="https://en.wikipedia.org/wiki/Duck_test">https://en.wikipedia.org/wiki/Duck_test</a>).</p>
 <blockquote>
 <p>Si parece un pato, nada como un pato y grazna como un pato, entonces probablemente sea un pato.</p>
@@ -134,10 +154,10 @@ data = read_data(lines)
 </code></pre>
 <p>Este diseño ofrece una flexibilidad considerable.</p>
 <p><em>Pregunta: ¿Deberíamos adoptar o luchar contra esta flexibilidad?</em></p>
-<h4 id="mejores-practicas-de-diseno-de-bibliotecas">Mejores prácticas de diseño de bibliotecas</h4>
+<h2 id="mejores-practicas-de-diseno-de-bibliotecas">Mejores prácticas de diseño de bibliotecas</h2>
 <p>Las bibliotecas de código suelen funcionar mejor si adoptan la flexibilidad. No restrinja sus opciones. Una gran flexibilidad conlleva un gran poder.</p>
-<h4 id="ejercicio">Ejercicio</h4>
-<h5 id="ejercicio-317-de-nombres-de-archivo-a-objetos-similares-a-archivos">Ejercicio 3.17: De nombres de archivo a objetos similares a archivos</h5>
+<h2 id="ejercicio">Ejercicio</h2>
+<h3 id="ejercicio-317-de-nombres-de-archivo-a-objetos-similares-a-archivos">Ejercicio 3.17: De nombres de archivo a objetos similares a archivos</h3>
 <p>Ahora ha creado un archivo <code>fileparse.py</code> que contenía una función <code>parse_csv()</code>. La función funcionaba de la siguiente manera:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import fileparse
 &gt;&gt;&gt; portfolio = fileparse.parse_csv('Data/portfolio.csv', types=str,int,float])
@@ -160,9 +180,9 @@ data = read_data(lines)
 &gt;&gt;&gt;
 </code></pre>
 <p>Sí, tendrás que tener cuidado. ¿Podrías agregar una comprobación de seguridad para evitar esto?</p>
-<h5 id="ejercicio-318-corregir-funciones-existentes">Ejercicio 3.18: Corregir funciones existentes</h5>
+<h3 id="ejercicio-318-corregir-funciones-existentes">Ejercicio 3.18: Corregir funciones existentes</h3>
 <p>Corrige las funciones <code>read_portfolio()</code> y <code>read_prices()</code> en el archivo <code>report.py</code> para que funcionen con la versión modificada de <code>parse_csv()</code>. Esto solo debería implicar una modificación menor. Después, tus programas <code>report.py</code> y <code>pcost.py</code> deberían funcionar de la misma manera que siempre lo hicieron.</p>
-<p><a href="../Contenido.Rmd">Contenido</a> | <a href="05_Main_module.Rmd">Anterior (3.5 Módulo principal)</a> | <a href="../04_Classes_objects/00_Overview.Rmd">Siguiente (4. Classes and Objetos)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../05_Main_module/">Anterior (3.5 Módulo principal)</a> | <a href="../../04_Classes_objects/00_Overview/">Próximo (4. Clases y Objetos)</a></p></div>
             </div>
         </div>
 

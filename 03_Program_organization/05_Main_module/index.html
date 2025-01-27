@@ -66,15 +66,71 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#35-modulo-principal" class="nav-link">3.5 Módulo principal</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#funciones-principales" class="nav-link">Funciones principales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modulo-principal-de-python" class="nav-link">Módulo principal de Python</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#__main__-verificacion" class="nav-link">__main__ verificación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#programas-principales-vs-importaciones-de-bibliotecas" class="nav-link">Programas principales vs. importaciones de bibliotecas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#plantilla-de-programa" class="nav-link">Plantilla de programa</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#herramientas-de-linea-de-comandos" class="nav-link">Herramientas de línea de comandos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#argumentos-de-la-linea-de-comandos" class="nav-link">Argumentos de la línea de comandos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#es-estandar" class="nav-link">E/S estándar</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#variables-de-entorno" class="nav-link">Variables de entorno</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#salida-del-programa" class="nav-link">Salida del programa</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#la-linea" class="nav-link">La línea #!</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#plantilla-de-script" class="nav-link">Plantilla de script</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Conteido</a> | <a href="04_Modules.Rmd">Anterior (3.4 Módulos)</a> | <a href="06_Design_discussion.Rmd">Próximo (3.6 Discusión sobre el diseño)</a></p>
-<h3 id="35-modulo-principal">3.5 Módulo principal</h3>
+<p><a href="../../Contents/">Conteido</a> | <a href="../04_Modules/">Anterior (3.4 Módulos)</a> | <a href="../06_Design_discussion/">Próximo (3.6 Discusión sobre el diseño)</a></p>
+<h1 id="35-modulo-principal">3.5 Módulo principal</h1>
 <p>Esta sección presenta el concepto de un programa principal o módulo principal.</p>
-<h4 id="funciones-principales">Funciones principales</h4>
+<h2 id="funciones-principales">Funciones principales</h2>
 <p>En muchos lenguajes de programación, existe el concepto de una función o método <em>principal</em>.</p>
 <pre><code class="language-c">// c / c++
 int main(int argc, char *argv[]) {
@@ -89,13 +145,13 @@ public static void main(String args[]) {
 }
 </code></pre>
 <p>Esta es la primera función que se ejecuta cuando se inicia una aplicación.</p>
-<h4 id="modulo-principal-de-python">Módulo principal de Python</h4>
+<h2 id="modulo-principal-de-python">Módulo principal de Python</h2>
 <p>Python no tiene una función o método <em>principal</em>. En cambio, hay un módulo <em>principal</em>. El <em>módulo principal</em> es el archivo fuente que se ejecuta primero.</p>
 <pre><code class="language-bash">bash % python3 prog.py
 ...
 </code></pre>
 <p>Cualquier archivo que le dé al intérprete al inicio se convierte en <em>principal</em>. No importa el nombre.</p>
-<h4 id="__main__-verificacion"><code>__main__</code> verificación</h4>
+<h2 id="__main__-verificacion"><code>__main__</code> verificación</h2>
 <p>Es una práctica estándar para los módulos que se ejecutan como un script principal usar esta convención:</p>
 <pre><code class="language-python"># prog.py
 ...
@@ -105,7 +161,7 @@ if __name__ == '__main__':
     ...
 </code></pre>
 <p>Las declaraciones incluidas dentro de la declaración <code>if</code> se convierten en el programa <em>principal</em>.</p>
-<h4 id="programas-principales-vs-importaciones-de-bibliotecas">Programas principales vs. importaciones de bibliotecas</h4>
+<h2 id="programas-principales-vs-importaciones-de-bibliotecas">Programas principales vs. importaciones de bibliotecas</h2>
 <p>Cualquier archivo Python puede ejecutarse como principal o como una importación de biblioteca:</p>
 <pre><code class="language-bash">bash % python prog.py # Ejecutando como principal
 </code></pre>
@@ -116,7 +172,7 @@ if __name__ == '__main__':
 <pre><code class="language-python">if __name__ == '__main__':
     # No se ejecuta si se carga con importación ...
 </code></pre>
-<h4 id="plantilla-de-programa">Plantilla de programa</h4>
+<h2 id="plantilla-de-programa">Plantilla de programa</h2>
 <p>A continuación, se incluye una plantilla de programa común para escribir un programa Python:</p>
 <pre><code class="language-python"># prog.py
 # Declaraciones de importación (bibliotecas)
@@ -136,12 +192,12 @@ def main():
 if __name__ == '__main__':
     main()
 </code></pre>
-<h4 id="herramientas-de-linea-de-comandos">Herramientas de línea de comandos</h4>
+<h2 id="herramientas-de-linea-de-comandos">Herramientas de línea de comandos</h2>
 <p>Python se utiliza a menudo para herramientas de línea de comandos</p>
 <pre><code class="language-bash">bash % python report.py portfolio.csv prices.csv
 </code></pre>
 <p>Significa que los scripts se ejecutan desde el shell/terminal. Los casos de uso más comunes son la automatización, las tareas en segundo plano, etc.</p>
-<h4 id="argumentos-de-la-linea-de-comandos">Argumentos de la línea de comandos</h4>
+<h2 id="argumentos-de-la-linea-de-comandos">Argumentos de la línea de comandos</h2>
 <p>La línea de comandos es una lista de cadenas de texto.</p>
 <pre><code class="language-bash">bash % python report.py portfolio.csv prices.csv
 </code></pre>
@@ -158,7 +214,7 @@ portfile = sys.argv[1]
 pricefile = sys.argv[2]
 ...
 </code></pre>
-<h4 id="es-estandar">E/S estándar</h4>
+<h2 id="es-estandar">E/S estándar</h2>
 <p>La entrada/salida estándar (o stdio) son archivos que funcionan de la misma manera que los archivos normales.</p>
 <pre><code class="language-python">sys.stdout
 sys.stderr
@@ -170,7 +226,7 @@ sys.stdin
 # o
 bash % cmd1 | python prog.py | cmd2
 </code></pre>
-<h4 id="variables-de-entorno">Variables de entorno</h4>
+<h2 id="variables-de-entorno">Variables de entorno</h2>
 <p>Las variables de entorno se configuran en el shell.</p>
 <pre><code class="language-bash">bash % setenv NAME dave
 bash % setenv RSH ssh
@@ -182,7 +238,7 @@ bash % python3 prog.py
 name = os.environ['NAME'] # 'dave'
 </code></pre>
 <p>Los cambios se reflejan en cualquier subproceso que el programa inicie posteriormente.</p>
-<h4 id="salida-del-programa">Salida del programa</h4>
+<h2 id="salida-del-programa">Salida del programa</h2>
 <p>La salida del programa se maneja mediante excepciones.</p>
 <pre><code class="language-python">raise SystemExit
 raise SystemExit(exitcode)
@@ -193,7 +249,7 @@ raise SystemExit('Mensaje Informativo')
 sys.exit(exitcode)
 </code></pre>
 <p>Un código de salida distinto de cero indica un error.</p>
-<h4 id="la-linea">La línea <code>#!</code></h4>
+<h2 id="la-linea">La línea <code>#!</code></h2>
 <p>En Unix, la línea <code>#!</code> puede iniciar un script como Python. Agregue lo siguiente a la primera línea de su archivo de script.</p>
 <pre><code class="language-python">#!/usr/bin/env python3
 # prog.py
@@ -206,7 +262,7 @@ bash % prog.py
 ... output ...
 </code></pre>
 <p><em>Nota: El lanzador de Python en Windows también busca la línea <code>#!</code> para indicar la versión del idioma.</em></p>
-<h4 id="plantilla-de-script">Plantilla de script</h4>
+<h2 id="plantilla-de-script">Plantilla de script</h2>
 <p>Finalmente, aquí hay una plantilla de código común para programas Python que se ejecutan como scripts de línea de comandos:</p>
 <pre><code class="language-python">#!/usr/bin/env python
 # prog.py
@@ -230,8 +286,8 @@ if __name__ == '__main__':
     import sys
     main(sys.argv)
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-315-funciones-main">Ejercicio 3.15: funciones <code>main()</code></h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-315-funciones-main">Ejercicio 3.15: funciones <code>main()</code></h3>
 <p>En el archivo <code>report.py</code>, agregue una función <code>main()</code> que acepte una lista de opciones de línea de comandos y produzca el mismo resultado que antes. Debería poder ejecutarla en modo interactivo de esta manera:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import report
 &gt;&gt;&gt; report.main(['report.py', 'Data/portfolio.csv', 'Data/prices.csv'])
@@ -255,7 +311,7 @@ Modifique el archivo `pcost.py` para que tenga una función `main()` similar:
 Total cost: 44671.15
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-316-creacion-de-scripts">Ejercicio 3.16: Creación de scripts</h5>
+<h3 id="ejercicio-316-creacion-de-scripts">Ejercicio 3.16: Creación de scripts</h3>
 <p>Modifique los programas <code>report.py</code> y <code>pcost.py</code> para que puedan ejecutarse como un script en la línea de comandos:</p>
 <pre><code class="language-bash">bash $ python report.py Data/portfolio.csv Data/prices.csv
       Name     Shares      Price     Change
@@ -271,7 +327,7 @@ Total cost: 44671.15
 bash $ python3 pcost.py Data/portfolio.csv
 Total cost: 44671.15
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Modules.Rmd">Anterior (3.4 Módulos)</a> | <a href="06_Design_discussion.Rmd">Próximo (3.6 Discusión sobre el diseño)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../04_Modules/">Anterior (3.4 Módulos)</a> | <a href="../06_Design_discussion/">Próximo (3.6 Discusión sobre el diseño)</a></p></div>
             </div>
         </div>
 

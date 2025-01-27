@@ -66,15 +66,67 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#31-creacion-de-scripts" class="nav-link">3.1 Creación de scripts</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#que-es-un-script" class="nav-link">¿Qué es un script?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#un-problema" class="nav-link">Un problema</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#definicion-de-cosas" class="nav-link">Definición de cosas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#definicion-de-funciones" class="nav-link">Definición de funciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#que-es-una-funcion" class="nav-link">¿Qué es una función?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#definicion-de-funcion" class="nav-link">Definición de función</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#estilo-de-abajo-hacia-arriba" class="nav-link">Estilo de abajo hacia arriba</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#diseno-de-funciones" class="nav-link">Diseño de funciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#cadenas-de-documentacion" class="nav-link">Cadenas de documentación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#anotaciones-de-tipo" class="nav-link">Anotaciones de tipo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentario" class="nav-link">Comentario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../02_Working_with_data/07_Objects.Rmd">Anterior (2.7 Model de Objetos)</a> | <a href="02_More_functions.Rmd">Próximo (Más detalles sobre las funciones)</a></p>
-<h3 id="31-creacion-de-scripts">3.1 Creación de scripts</h3>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../../02_Working_with_data/07_Objects/">Anterior (2.7 Objetos)</a> | <a href="../02_More_functions/">Próximo (3.2 Más detalles sobre las funciones)</a></p>
+<h1 id="31-creacion-de-scripts">3.1 Creación de scripts</h1>
 <p>En esta parte, analizamos más de cerca la práctica de escribir scripts de Python.</p>
-<h4 id="que-es-un-script">¿Qué es un script?</h4>
+<h2 id="que-es-un-script">¿Qué es un script?</h2>
 <p>Un <em>script</em> es un programa que ejecuta una serie de instrucciones y se detiene.</p>
 <pre><code class="language-python"># program.py
 
@@ -84,9 +136,9 @@ declaración3
 ...
 </code></pre>
 <p>Hasta este punto, hemos estado escribiendo principalmente scripts.</p>
-<h4 id="un-problema">Un problema</h4>
+<h2 id="un-problema">Un problema</h2>
 <p>Si escribe un script útil, crecerá en características y funcionalidades. Es posible que desee aplicarlo a otros problemas relacionados. Con el tiempo, podría convertirse en una aplicación crítica. Y si no tienes cuidado, puede convertirse en un gran lío. Así que, organicémonos.</p>
-<h4 id="definicion-de-cosas">Definición de cosas</h4>
+<h2 id="definicion-de-cosas">Definición de cosas</h2>
 <p>Los nombres siempre deben definirse antes de que se utilicen más adelante.</p>
 <pre><code class="language-python">def square(x):
     return x*x
@@ -97,7 +149,7 @@ b = a + 2 # Requiere que `a` esté definido
 z = square(b) # Requiere que `square` y `b` estén definidos
 </code></pre>
 <p><strong>El orden es importante.</strong> Casi siempre colocas las definiciones de variables y funciones cerca de la parte superior.</p>
-<h4 id="definicion-de-funciones">Definición de funciones</h4>
+<h2 id="definicion-de-funciones">Definición de funciones</h2>
 <p>Es una buena idea poner todo el código relacionado con una sola <em>tarea</em> en un solo lugar. Usa una función.</p>
 <pre><code class="language-python">def read_prices(filename):
     prices = {}
@@ -111,7 +163,7 @@ z = square(b) # Requiere que `square` y `b` estén definidos
 <pre><code class="language-python">oldprices = read_prices('oldprices.csv')
 newprices = read_prices('newprices.csv')
 </code></pre>
-<h4 id="que-es-una-funcion">¿Qué es una función?</h4>
+<h2 id="que-es-una-funcion">¿Qué es una función?</h2>
 <p>Una función es una secuencia de instrucciones con nombre.</p>
 <pre><code class="language-python">def funcname(args):
     statement
@@ -126,7 +178,7 @@ newprices = read_prices('newprices.csv')
     help(math)
 </code></pre>
 <p>No hay instrucciones <em>especiales</em> en Python (lo que hace que sea fácil de recordar).</p>
-<h4 id="definicion-de-funcion">Definición de función</h4>
+<h2 id="definicion-de-funcion">Definición de función</h2>
 <p>Las funciones se pueden <em>definir</em> en cualquier orden.</p>
 <pre><code class="language-python">def foo(x):
     bar(x)
@@ -145,7 +197,7 @@ def foo(x):
 <pre><code class="language-python">foo(3) # foo ya debe estar definido
 </code></pre>
 <p>Estilísticamente, es probablemente más común ver funciones definidas de manera <em>de abajo hacia arriba</em>.</p>
-<h4 id="estilo-de-abajo-hacia-arriba">Estilo de abajo hacia arriba</h4>
+<h2 id="estilo-de-abajo-hacia-arriba">Estilo de abajo hacia arriba</h2>
 <p>Las funciones se tratan como bloques de construcción. Los bloques más pequeños/simples van primero.</p>
 <pre><code class="language-python"># myprogram.py
 def foo(x):
@@ -164,9 +216,9 @@ def spam(x):
 spam(42) # El código que usa las funciones aparece al final
 </code></pre>
 <p>Las funciones posteriores se basan en funciones anteriores. Nuevamente, esto es solo una cuestión de estilo. Lo único que importa en el programa anterior es que la llamada a <code>spam(42)</code> va al final.</p>
-<h4 id="diseno-de-funciones">Diseño de funciones</h4>
+<h2 id="diseno-de-funciones">Diseño de funciones</h2>
 <p>Idealmente, las funciones deberían ser una <em>caja negra</em>. Solo deberían operar en entradas pasadas y evitar variables globales y efectos secundarios misteriosos. Sus principales objetivos: <em>Modularidad</em> y <em>Predictibilidad</em>.</p>
-<h4 id="cadenas-de-documentacion">Cadenas de documentación</h4>
+<h2 id="cadenas-de-documentacion">Cadenas de documentación</h2>
 <p>Es una buena práctica incluir la documentación en forma de cadena de documentación. Las cadenas de documentación son cadenas que se escriben inmediatamente después del nombre de la función. Alimentan <code>help()</code>, IDEs y otras herramientas.</p>
 <pre><code class="language-python">def read_prices(filename):
     '''
@@ -180,7 +232,7 @@ spam(42) # El código que usa las funciones aparece al final
     return prices
 </code></pre>
 <p>Una buena práctica para las cadenas de documentación es escribir un resumen breve de una oración de lo que hace la función. Si se necesita más información, incluya un breve ejemplo de uso junto con una descripción más detallada de los argumentos.</p>
-<h4 id="anotaciones-de-tipo">Anotaciones de tipo</h4>
+<h2 id="anotaciones-de-tipo">Anotaciones de tipo</h2>
 <p>También puede agregar sugerencias de tipo opcionales a las definiciones de funciones.</p>
 <pre><code class="language-python">def read_prices(filename: str) -&gt; dict:
     '''
@@ -194,7 +246,7 @@ spam(42) # El código que usa las funciones aparece al final
     return prices
 </code></pre>
 <p>Las sugerencias no hacen nada operativamente. Son puramente informativas. Sin embargo, pueden ser utilizadas por IDE, verificadores de código y otras herramientas para hacer más.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En la sección 2, escribió un programa llamado <code>report.py</code> que imprimía un informe que mostraba el rendimiento de una cartera de acciones. Este programa constaba de algunas funciones. Por ejemplo:</p>
 <pre><code class="language-python"># report.py
 import csv
@@ -233,12 +285,12 @@ for row in report:
 ...
 </code></pre>
 <p>En este ejercicio, tomaremos este programa y lo organizaremos un poco más en torno al uso de funciones.</p>
-<h5 id="ejercicio-31-estructurar-un-programa-como-una-coleccion-de-funciones">Ejercicio 3.1: Estructurar un programa como una colección de funciones</h5>
+<h3 id="ejercicio-31-estructurar-un-programa-como-una-coleccion-de-funciones">Ejercicio 3.1: Estructurar un programa como una colección de funciones</h3>
 <p>Modifique su programa <code>report.py</code> para que todas las operaciones principales, incluidos los cálculos y la salida, se realicen mediante una colección de funciones. Específicamente:</p>
 <ul>
 <li>Cree una función <code>print_report(report)</code> que imprima el informe. * Cambie la última parte del programa para que no sea más que una serie de llamadas de función y ningún otro cálculo.</li>
 </ul>
-<h5 id="ejercicio-32-creacion-de-una-funcion-de-nivel-superior-para-la-ejecucion-del-programa">Ejercicio 3.2: Creación de una función de nivel superior para la ejecución del programa</h5>
+<h3 id="ejercicio-32-creacion-de-una-funcion-de-nivel-superior-para-la-ejecucion-del-programa">Ejercicio 3.2: Creación de una función de nivel superior para la ejecución del programa</h3>
 <p>Tome la última parte de su programa y empaquetela en una sola función <code>portfolio_report(portfolio_filename, prices_filename)</code>. Haga que la función funcione de modo que la siguiente llamada de función cree el informe como antes:</p>
 <pre><code class="language-python">portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
 </code></pre>
@@ -255,9 +307,9 @@ for row in report:
 ... Observa la salida ...
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="comentario">Comentario</h5>
+<h2 id="comentario">Comentario</h2>
 <p>Python hace que sea muy fácil escribir código de script relativamente desestructurado, en el que solo tienes un archivo con una secuencia de declaraciones. En el panorama general, casi siempre es mejor utilizar funciones siempre que puedas. En algún momento, ese script crecerá y desearás tener un poco más de organización. Además, un hecho poco conocido es que Python se ejecuta un poco más rápido si se utilizan funciones.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../02_Working_with_data/07_Objects.Rmd">Anterior (2.7 Model de Objetos)</a> | <a href="02_More_functions.Rmd">Próximo (Más detalles sobre las funciones)</a></p></div>
+<p><a href="../Contents.Rmd">Contenido</a> | <a href="../../02_Working_with_data/07_Objects/">Anterior (2.7 Objetos)</a> | <a href="../02_More_functions/">Próximo (3.2 Más detalles sobre las funciones)</a></p></div>
             </div>
         </div>
 

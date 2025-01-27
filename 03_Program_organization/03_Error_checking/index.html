@@ -66,19 +66,79 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#33-comprobacion-de-errores" class="nav-link">3.3 Comprobación de errores</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#como-fallan-los-programas" class="nav-link">Cómo fallan los programas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#excepciones" class="nav-link">Excepciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#manejo-de-excepciones" class="nav-link">Manejo de excepciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#excepciones-integradas" class="nav-link">Excepciones integradas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#valores-de-excepcion" class="nav-link">Valores de excepción</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#captura-de-multiples-errores" class="nav-link">Captura de múltiples errores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#capturar-todos-los-errores" class="nav-link">Capturar todos los errores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#forma-incorrecta-de-capturar-errores" class="nav-link">Forma incorrecta de capturar errores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#enfoque-un-poco-mejor" class="nav-link">Enfoque un poco mejor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#volver-a-generar-una-excepcion" class="nav-link">Volver a generar una excepción</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mejores-practicas-para-excepciones" class="nav-link">Mejores prácticas para excepciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#instruccion-finally" class="nav-link">Instrucción finally</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#instruccion-with" class="nav-link">Instrucción with</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_More_functions.Rmd">Anterior (3.2 Más detalles sobre las
-funciones)</a> | <a href="04_Modules.Rmd">Próximo (3.4
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_More_functions/">Anterior (3.2 Más detalles sobre las
+funciones)</a> | <a href="../04_Modules/">Próximo (3.4
 Módulos)</a></p>
-<h3 id="33-comprobacion-de-errores">3.3 Comprobación de errores</h3>
+<h1 id="33-comprobacion-de-errores">3.3 Comprobación de errores</h1>
 <p>Aunque las excepciones se introdujeron anteriormente, esta sección
 completa algunos detalles adicionales sobre la comprobación de errores y
 el manejo de excepciones.</p>
-<h4 id="como-fallan-los-programas">Cómo fallan los programas</h4>
+<h2 id="como-fallan-los-programas">Cómo fallan los programas</h2>
 <p>Python no realiza ninguna comprobación o validación de los tipos o
 valores de los argumentos de la función. Una función funcionará con
 cualquier dato que sea compatible con las declaraciones de la función.</p>
@@ -103,7 +163,7 @@ TypeError: unsupported operand type(s) for +:
 </code></pre>
 <p>Para verificar el código, se hace mucho hincapié en las pruebas (que se
 tratan más adelante).</p>
-<h4 id="excepciones">Excepciones</h4>
+<h2 id="excepciones">Excepciones</h2>
 <p>Las excepciones se utilizan para señalar errores. Para generar una
 excepción usted mismo, utilice la declaración <code>raise</code>.</p>
 <pre><code class="language-python">if name not in authorized:
@@ -115,7 +175,7 @@ excepción usted mismo, utilice la declaración <code>raise</code>.</p>
 except RuntimeError as e:
     print(e)
 </code></pre>
-<h4 id="manejo-de-excepciones">Manejo de excepciones</h4>
+<h2 id="manejo-de-excepciones">Manejo de excepciones</h2>
 <p>Las excepciones se propagan al primer <code>except</code> coincidente.</p>
 <pre><code class="language-python">def grok():
     ...
@@ -171,7 +231,7 @@ def bar():
 
 bar()
 </code></pre>
-<h4 id="excepciones-integradas">Excepciones integradas</h4>
+<h2 id="excepciones-integradas">Excepciones integradas</h2>
 <p>Hay alrededor de dos docenas de excepciones integradas. Generalmente el
 nombre de la excepción es indicativo de lo que está mal (por ejemplo, se
 genera un <code>ValueError</code> porque usted proporcionó un valor incorrecto).
@@ -195,7 +255,7 @@ SystemError
 TypeError
 ValueError
 </code></pre>
-<h4 id="valores-de-excepcion">Valores de excepción</h4>
+<h2 id="valores-de-excepcion">Valores de excepción</h2>
 <p>Las excepciones tienen un valor asociado. Contiene información más
 específica sobre lo que está mal.</p>
 <pre><code class="language-python">raise RuntimeError('Nombre de usuario no válido')
@@ -212,7 +272,7 @@ una cadena cuando se imprime.</p>
 <pre><code class="language-python">except RuntimeError as e:
     print('Falló : Razón', e)
 </code></pre>
-<h4 id="captura-de-multiples-errores">Captura de múltiples errores</h4>
+<h2 id="captura-de-multiples-errores">Captura de múltiples errores</h2>
 <p>Puedes capturar diferentes tipos de excepciones usando múltiples bloques
 <code>except</code>.</p>
 <pre><code class="language-python">try:
@@ -233,7 +293,7 @@ puede agruparlas:</p>
 except (IOError,LookupError,RuntimeError) as e:
 ...
 </code></pre>
-<h4 id="capturar-todos-los-errores">Capturar todos los errores</h4>
+<h2 id="capturar-todos-los-errores">Capturar todos los errores</h2>
 <p>Para capturar cualquier excepción, use <code>Exception</code> de esta manera:</p>
 <pre><code class="language-python">try:
 ...
@@ -242,7 +302,7 @@ except Exception: # DANGER. Vea a continuación
 </code></pre>
 <p>En general, escribir código como ese es una mala idea porque no tendrá
 idea de por qué falló.</p>
-<h4 id="forma-incorrecta-de-capturar-errores">Forma incorrecta de capturar errores</h4>
+<h2 id="forma-incorrecta-de-capturar-errores">Forma incorrecta de capturar errores</h2>
 <p>Esta es la forma incorrecta de usar excepciones.</p>
 <pre><code class="language-python">try:
     go_do_something()
@@ -252,7 +312,7 @@ except Exception:
 <p>Esto captura todos los errores posibles y puede hacer que sea imposible
 depurar cuando el código falla por alguna razón que no esperabas en
 absoluto (por ejemplo, módulo Python desinstalado, etc.).</p>
-<h4 id="enfoque-un-poco-mejor">Enfoque un poco mejor</h4>
+<h2 id="enfoque-un-poco-mejor">Enfoque un poco mejor</h2>
 <p>Si vas a capturar todos los errores, este es un enfoque más sensato.</p>
 <pre><code class="language-python">try:
     go_do_something()
@@ -266,7 +326,7 @@ código que captura todas las excepciones posibles.</p>
 específica posible. Solo capture los errores que realmente puede
 manejar. Deje pasar otros errores, tal vez algún otro código pueda
 manejarlos.</p>
-<h4 id="volver-a-generar-una-excepcion">Volver a generar una excepción</h4>
+<h2 id="volver-a-generar-una-excepcion">Volver a generar una excepción</h2>
 <p>Use <code>raise</code> para propagar un error capturado.</p>
 <pre><code class="language-python">try:
     go_do_something()
@@ -276,12 +336,12 @@ except Exception as e:
 </code></pre>
 <p>Esto le permite tomar medidas (por ejemplo, registrar) y pasar el error
 al autor de la llamada.</p>
-<h4 id="mejores-practicas-para-excepciones">Mejores prácticas para excepciones</h4>
+<h2 id="mejores-practicas-para-excepciones">Mejores prácticas para excepciones</h2>
 <p>No capture excepciones. Falle rápido y en voz alta. Si es importante,
 alguien más se ocupará del problema. Solo capture una excepción si usted
 es <em>esa</em> persona. Es decir, solo captura errores de los que puedas
 recuperarte y seguir adelante de forma sensata.</p>
-<h4 id="instruccion-finally">Instrucción <code>finally</code></h4>
+<h2 id="instruccion-finally">Instrucción <code>finally</code></h2>
 <p>Especifica el código que debe ejecutarse independientemente de si se
 produce o no una excepción.</p>
 <pre><code class="language-python">lock = Lock()
@@ -294,7 +354,7 @@ finally:
 </code></pre>
 <p>Se utiliza habitualmente para gestionar recursos de forma segura
 (especialmente bloqueos, archivos, etc.).</p>
-<h4 id="instruccion-with">Instrucción <code>with</code></h4>
+<h2 id="instruccion-with">Instrucción <code>with</code></h2>
 <p>En el código moderno, <code>try-finally</code> suele sustituirse por la instrucción
 <code>with</code>.</p>
 <pre><code class="language-python">lock = Lock()
@@ -313,8 +373,8 @@ with lock:
 abandona ese contexto, se liberan los recursos. <code>with</code> sólo funciona con
 ciertos objetos que han sido programados específicamente para
 soportarlo.</p>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-38-generar-excepciones">Ejercicio 3.8: Generar excepciones</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-38-generar-excepciones">Ejercicio 3.8: Generar excepciones</h3>
 <p>La función <code>parse_csv()</code> que escribió en la última sección permite
 seleccionar columnas especificadas por el usuario, pero eso sólo
 funciona si el archivo de datos de entrada tiene encabezados de columna.</p>
@@ -343,7 +403,7 @@ que no hay encabezados).</p>
 <p>Esto indica un error de programación por parte del código que realiza la
 llamada. Comprobar los casos que "no deberían ocurrir" suele ser una
 buena idea.</p>
-<h5 id="ejercicio-39-captura-de-excepciones">Ejercicio 3.9: Captura de excepciones</h5>
+<h3 id="ejercicio-39-captura-de-excepciones">Ejercicio 3.9: Captura de excepciones</h3>
 <p>La función <code>parse_csv()</code> que escribiste se usa para procesar todo el
 contenido de un archivo. Sin embargo, en el mundo real, es posible que
 los archivos de entrada tengan datos corruptos, faltantes o sucios.
@@ -372,7 +432,7 @@ Fila 7: Motivo por el que el literal no es válido para int() con base 10: ''
 [{'price': 32.2, 'name': 'AA', 'shares': 100}, {'price': 91.1, 'name': 'IBM', 'shares': 50}, {'price': 83.44, 'name': 'CAT', 'shares': 150}, {'price': 40,37, 'name': 'GE', 'shares': 95}, {'price': 65,1, 'name': 'MSFT', 'shares': 50}]
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-310-silenciamiento-de-errores">Ejercicio 3.10: Silenciamiento de errores</h5>
+<h3 id="ejercicio-310-silenciamiento-de-errores">Ejercicio 3.10: Silenciamiento de errores</h3>
 <p>Modifique la función <code>parse_csv()</code> para que los mensajes de error de
 análisis puedan silenciarse si el usuario lo desea explícitamente. Por
 ejemplo:</p>
@@ -386,8 +446,8 @@ la mayoría de los programas. Como regla general, no debería ignorar los
 errores en silencio. En cambio, es mejor informar los problemas y darle
 al usuario una opción para silenciar el mensaje de error si así lo
 desea.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_More_functions.Rmd">Anterior (3.2 Más detalles sobre las
-funciones)</a> | <a href="04_Modules.Rmd">Próximo (3.4
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_More_functions/">Anterior (3.2 Más detalles sobre las
+funciones)</a> | <a href="../04_Modules/">Próximo (3.4
 Módulos)</a></p></div>
             </div>
         </div>

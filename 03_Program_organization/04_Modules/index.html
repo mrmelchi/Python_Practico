@@ -66,15 +66,71 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#34-modulos" class="nav-link">3.4 Módulos</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#modulos-e-importacion" class="nav-link">Módulos e importación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#espacio-de-nombres" class="nav-link">Espacio de nombres</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#definiciones-globales" class="nav-link">Definiciones globales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modulos-como-entornos" class="nav-link">Módulos como entornos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejecucion-de-modulo" class="nav-link">Ejecución de módulo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#instruccion-import-as" class="nav-link">Instrucción import as</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#importacion-de-modulo-from" class="nav-link">Importación de módulo from</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentarios-sobre-la-importacion" class="nav-link">Comentarios sobre la importación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#carga-de-modulos" class="nav-link">Carga de módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#localizacion-de-modulos" class="nav-link">Localización de módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ruta-de-busqueda-de-modulos" class="nav-link">Ruta de búsqueda de módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentario" class="nav-link">Comentario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
 <p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Error_checking.Rmd">Anterior (3.3 Comprobación de errores)</a> | <a href="05_Main_module.Rmd">Próximo (3.5 Módulo principal)</a></p>
-<h3 id="34-modulos">3.4 Módulos</h3>
+<h1 id="34-modulos">3.4 Módulos</h1>
 <p>Esta sección presenta el concepto de módulos y el trabajo con funciones que abarcan varios archivos.</p>
-<h4 id="modulos-e-importacion">Módulos e importación</h4>
+<h2 id="modulos-e-importacion">Módulos e importación</h2>
 <p>Cualquier archivo fuente de Python es un módulo.</p>
 <pre><code class="language-python"># foo.py
 def grok(a):
@@ -90,7 +146,7 @@ a = foo.grok(2)
 b = foo.spam('Hola')
 ...
 </code></pre>
-<h4 id="espacio-de-nombres">Espacio de nombres</h4>
+<h2 id="espacio-de-nombres">Espacio de nombres</h2>
 <p>Un módulo es una colección de valores nombrados y a veces se dice que es un <em>espacio de nombres o namespace</em>. Los nombres son todas las variables y funciones globales definidas en el archivo fuente. Después de la importación, el nombre del módulo se utiliza como prefijo. De ahí el <em>espacio de nombres</em>.</p>
 <pre><code class="language-python">import foo
 
@@ -99,7 +155,7 @@ b = foo.spam('Hola')
 ...
 </code></pre>
 <p>El nombre del módulo está directamente vinculado al nombre del archivo (foo -&gt; foo.py).</p>
-<h4 id="definiciones-globales">Definiciones globales</h4>
+<h2 id="definiciones-globales">Definiciones globales</h2>
 <p>Todo lo definido en el ámbito <em>global</em> es lo que llena el espacio de nombres del módulo. Considere dos módulos que definen la misma variable <code>x</code>.</p>
 <pre><code class="language-python"># foo.py
 x = 42
@@ -113,7 +169,7 @@ def spam(a):
 </code></pre>
 <p>En este caso, las definiciones de <code>x</code> se refieren a diferentes variables. Una es <code>foo.x</code> y la otra es <code>bar.x</code>. Diferentes módulos pueden usar los mismos nombres y esos nombres no entrarán en conflicto entre sí.</p>
 <p><strong>Los módulos están aislados.</strong></p>
-<h4 id="modulos-como-entornos">Módulos como entornos</h4>
+<h2 id="modulos-como-entornos">Módulos como entornos</h2>
 <p>Los módulos forman un entorno envolvente para todo el código definido en su interior.</p>
 <pre><code class="language-python"># foo.py
 x = 42
@@ -122,9 +178,9 @@ def grok(a):
     print(x)
 </code></pre>
 <p>Las variables <em>globales</em> siempre están vinculadas al módulo envolvente (mismo archivo). Cada archivo fuente es su propio pequeño universo.</p>
-<h4 id="ejecucion-de-modulo">Ejecución de módulo</h4>
+<h2 id="ejecucion-de-modulo">Ejecución de módulo</h2>
 <p>Cuando se importa un módulo, <em>todas las instrucciones del módulo se ejecutan</em> una tras otra hasta llegar al final del archivo. El contenido del espacio de nombres del módulo son todos los nombres <em>globales</em> que todavía están definidos al final del proceso de ejecución. Si hay instrucciones de script que realizan tareas en el ámbito global (imprimir, crear archivos, etc.), verá que se ejecutan durante la importación.</p>
-<h4 id="instruccion-import-as">Instrucción <code>import as</code></h4>
+<h2 id="instruccion-import-as">Instrucción <code>import as</code></h2>
 <p>Puede cambiar el nombre de un módulo mientras lo importa:</p>
 <pre><code class="language-python">import math as m
 def rectangular(r, theta):
@@ -133,7 +189,7 @@ def rectangular(r, theta):
     return x, y
 </code></pre>
 <p>Funciona igual que una importación normal. Simplemente cambia el nombre del módulo en ese archivo.</p>
-<h4 id="importacion-de-modulo-from">Importación de módulo <code>from</code></h4>
+<h2 id="importacion-de-modulo-from">Importación de módulo <code>from</code></h2>
 <p>Esto selecciona símbolos seleccionados de un módulo y los pone a disposición localmente.</p>
 <pre><code class="language-python">from math import sin, cos
 
@@ -143,7 +199,7 @@ def rectangular(r, theta):
     return x, y
 </code></pre>
 <p>Esto permite que se utilicen partes de un módulo sin tener que escribir el prefijo del módulo. Es útil para nombres de uso frecuente.</p>
-<h4 id="comentarios-sobre-la-importacion">Comentarios sobre la importación</h4>
+<h2 id="comentarios-sobre-la-importacion">Comentarios sobre la importación</h2>
 <p>Las variaciones en la importación <em>no</em> cambian la forma en que funcionan los módulos.</p>
 <pre><code class="language-python">import math
 # versus
@@ -154,7 +210,7 @@ from math import cos, sin
 </code></pre>
 <p>Específicamente, <code>import</code> siempre ejecuta el archivo <em>completo</em> y los módulos siguen siendo entornos aislados.</p>
 <p>La declaración <code>import module as</code> solo cambia el nombre localmente. La declaración <code>from math import cos, sin</code> todavía carga el módulo matemático completo detrás de escena. Simplemente copia los nombres <code>cos</code> y <code>sin</code> del módulo al espacio local después de que finaliza.</p>
-<h4 id="carga-de-modulos">Carga de módulos</h4>
+<h2 id="carga-de-modulos">Carga de módulos</h2>
 <p>Cada módulo se carga y se ejecuta solo <em>una vez</em>. <em>Nota: Las importaciones repetidas solo devuelven una referencia al módulo cargado previamente.</em></p>
 <p><code>sys.modules</code> es un diccionario de todos los módulos cargados.</p>
 <pre><code class="language-python">&gt;&gt;&gt; import sys
@@ -163,7 +219,7 @@ from math import cos, sin
 &gt;&gt;&gt;
 </code></pre>
 <p><strong>Precaución:</strong> Surge una confusión común si repite una declaración <code>import</code> después de cambiar el código fuente de un módulo. Debido a la caché de módulos <code>sys.modules</code>, las importaciones repetidas siempre devuelven el módulo cargado previamente, incluso si se realizó un cambio. La forma más segura de cargar código modificado en Python es salir y reiniciar el intérprete.</p>
-<h4 id="localizacion-de-modulos">Localización de módulos</h4>
+<h2 id="localizacion-de-modulos">Localización de módulos</h2>
 <p>Python consulta una lista de rutas (sys.path) cuando busca módulos.</p>
 <pre><code class="language-python">&gt;&gt;&gt; import sys
 &gt;&gt;&gt; sys.path
@@ -175,7 +231,7 @@ from math import cos, sin
 ]
 </code></pre>
 <p>El directorio de trabajo actual suele ser el primero.</p>
-<h4 id="ruta-de-busqueda-de-modulos">Ruta de búsqueda de módulos</h4>
+<h2 id="ruta-de-busqueda-de-modulos">Ruta de búsqueda de módulos</h2>
 <p>Como se indicó, <code>sys.path</code> contiene las rutas de búsqueda. Puede ajustarlas manualmente si es necesario.</p>
 <pre><code class="language-python">import sys
 sys.path.append('/project/foo/pyfiles')
@@ -189,9 +245,9 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 ['', 'C:\\Program Files\\Git\\project\\foo\\pyfiles', ...]
 </code></pre>
 <p>Como regla general, no debería ser necesario ajustar manualmente la ruta de búsqueda del módulo. Sin embargo, a veces surge si intenta importar código Python que se encuentra en una ubicación inusual o que no es fácilmente accesible desde el directorio de trabajo actual.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Para este ejercicio que involucra módulos, es de vital importancia asegurarse de que está ejecutando Python en un entorno adecuado. Los módulos a menudo presentan a los nuevos programadores problemas relacionados con el directorio de trabajo actual o con la configuración de la ruta de Python. Para este curso, se supone que está escribiendo todo su código en el directorio <code>Work/</code>. Para obtener mejores resultados, debe asegurarse de que también está en ese directorio cuando inicia el intérprete. Si no es así, debe asegurarse de que <code>practical-python/Work</code> se agregue a <code>sys.path</code>.</p>
-<h5 id="ejercicio-311-importaciones-de-modulos">Ejercicio 3.11: Importaciones de módulos</h5>
+<h3 id="ejercicio-311-importaciones-de-modulos">Ejercicio 3.11: Importaciones de módulos</h3>
 <p>En la sección 3, creamos una función de propósito general <code>parse_csv()</code> para analizar el contenido de los archivos de datos CSV.</p>
 <p>Ahora, vamos a ver cómo usar esa función en otros programas. Primero, comienza en una nueva ventana de shell. Navega hasta la carpeta donde tienes todos tus archivos. Vamos a importarlos.</p>
 <p>Inicia el modo interactivo de Python.</p>
@@ -238,7 +294,7 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 ... mira el resultado...
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-312-uso-del-modulo-de-la-biblioteca">Ejercicio 3.12: Uso del módulo de la biblioteca</h5>
+<h3 id="ejercicio-312-uso-del-modulo-de-la-biblioteca">Ejercicio 3.12: Uso del módulo de la biblioteca</h3>
 <p>En la sección 2, escribiste un programa <code>report.py</code> que produjo un informe de acciones como este:</p>
 <pre><code>Nombre Acciones Precio Cambio
 ---------- ---------- ---------- ----------
@@ -252,8 +308,8 @@ IBM 100 106,28 35,84
 </code></pre>
 <p>Tome ese programa y modifíquelo de modo que todo el procesamiento del archivo de entrada se realice utilizando funciones en su módulo <code>fileparse</code>. Para ello, importe <code>fileparse</code> como módulo y cambie las funciones <code>read_portfolio()</code> y <code>read_prices()</code> para utilizar la función <code>parse_csv()</code>.</p>
 <p>Use el modo interactivo al comienzo de este ejercicio como guía. Después, debería obtener exactamente el mismo resultado que antes.</p>
-<h5 id="ejercicio-313-se-dejo-en-blanco-intencionalmente-omitir">Ejercicio 3.13: Se dejó en blanco intencionalmente (omitir)</h5>
-<h5 id="ejercicio-314-uso-de-mas-importaciones-de-bibliotecas">Ejercicio 3.14: Uso de más importaciones de bibliotecas</h5>
+<h3 id="ejercicio-313-se-dejo-en-blanco-intencionalmente-omitir">Ejercicio 3.13: Se dejó en blanco intencionalmente (omitir)</h3>
+<h3 id="ejercicio-314-uso-de-mas-importaciones-de-bibliotecas">Ejercicio 3.14: Uso de más importaciones de bibliotecas</h3>
 <p>En la sección 1, escribió un programa <code>pcost.py</code> que lee una cartera y calcula su costo.</p>
 <pre><code class="language-python">&gt;&gt;&gt; import pcost
 &gt;&gt;&gt; pcost.portfolio_cost('Data/portfolio.csv')
@@ -261,7 +317,7 @@ IBM 100 106,28 35,84
 &gt;&gt;&gt;
 </code></pre>
 <p>Modifique el archivo <code>pcost.py</code> para que use la función <code>report.read_portfolio()</code>.</p>
-<h4 id="comentario">Comentario</h4>
+<h2 id="comentario">Comentario</h2>
 <p>Cuando haya terminado con este ejercicio, debería tener tres programas. <code>fileparse.py</code> que contiene una función <code>parse_csv()</code> de propósito general. <code>report.py</code> que produce un informe atractivo, pero también contiene las funciones read_portfolio()<code>y</code>read_prices()<code>. Y finalmente,</code>pcost.py<code>que calcula el costo de la cartera, pero hace uso de la función</code>read_portfolio()<code>escrita para el programa</code>report.py`.</p>
 <p><a href="../../Contents.Rmd">Contenido</a> | <a href="3.3%20Error%20Checking.Rmd">Anterior (3.3 Comprobación de errores)</a> | <a href="05_Main_module.Rmd">Próximo (3.5 Módulo principal)</a></p></div>
             </div>
