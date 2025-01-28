@@ -66,15 +66,71 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#42-herencia" class="nav-link">4.2 Herencia</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#introduccion" class="nav-link">Introducción</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#extencion" class="nav-link">Extención</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejemplo" class="nav-link">Ejemplo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#agrega-un-nuevo-metodo" class="nav-link">Agrega un nuevo método</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#redefinicion-de-un-metodo-existente" class="nav-link">Redefinición de un método existente</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#sobreescritura" class="nav-link">Sobreescritura</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#__init__-y-herencia" class="nav-link">__init__ y herencia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#uso-de-herencia" class="nav-link">Uso de herencia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#relacion-es-una" class="nav-link">Relación "es una"</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#clase-base-object" class="nav-link">Clase base object</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#herencia-multiple" class="nav-link">Herencia múltiple</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#discusion" class="nav-link">Discusión</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Class.Rmd">Anterior (4.1 Clases)</a> | <a href="03_Special_methods.Rmd">Próximo (4.3 Métodos especiales)</a></p>
-<h3 id="42-herencia">4.2 Herencia</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Class/">Anterior (4.1 Clases)</a> | <a href="../03_Special_methods/">Próximo (4.3 Métodos especiales)</a></p>
+<h1 id="42-herencia">4.2 Herencia</h1>
 <p>La herencia es una herramienta que se utiliza habitualmente para escribir programas extensibles. Esta sección explora esa idea.</p>
-<h4 id="introduccion">Introducción</h4>
+<h2 id="introduccion">Introducción</h2>
 <p>La herencia se utiliza para especializar objetos existentes:</p>
 <pre><code class="language-python">class Parent:
 ...
@@ -83,7 +139,7 @@ class Child(Parent):
 ...
 </code></pre>
 <p>La nueva clase <code>Child</code> se denomina clase derivada o subclase. La clase <code>Parent</code> se conoce como clase base o superclase. <code>Parent</code> se especifica en <code>()</code> después del nombre de la clase, <code>class Child(Parent):</code>.</p>
-<h4 id="extencion">Extención</h4>
+<h2 id="extencion">Extención</h2>
 <p>Con la herencia, tomas una clase existente y:</p>
 <ul>
 <li>Agregas nuevos métodos</li>
@@ -91,7 +147,7 @@ class Child(Parent):
 <li>Agregas nuevos atributos a las instancias</li>
 </ul>
 <p>Al final, <strong>extiendes el código existente</strong>.</p>
-<h4 id="ejemplo">Ejemplo</h4>
+<h2 id="ejemplo">Ejemplo</h2>
 <p>Supón que esta es tu clase inicial:</p>
 <pre><code class="language-python">class Stock:
     def __init__(self, name, shares, price):
@@ -106,7 +162,7 @@ class Child(Parent):
         self.shares -= nshares
 </code></pre>
 <p>Puedes cambiar cualquier parte de esto mediante la herencia.</p>
-<h4 id="agrega-un-nuevo-metodo">Agrega un nuevo método</h4>
+<h2 id="agrega-un-nuevo-metodo">Agrega un nuevo método</h2>
 <pre><code class="language-python">class MyStock(Stock):
     def panic(self):
         self.sell(self.shares)
@@ -121,7 +177,7 @@ class Child(Parent):
 0
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="redefinicion-de-un-metodo-existente">Redefinición de un método existente</h4>
+<h2 id="redefinicion-de-un-metodo-existente">Redefinición de un método existente</h2>
 <pre><code class="language-python">class MyStock(Stock):
     def cost(self):
         return 1.25 * self.shares * self.price
@@ -133,7 +189,7 @@ class Child(Parent):
 &gt;&gt;&gt;
 </code></pre>
 <p>El nuevo método reemplaza al anterior. Los otros métodos no se ven afectados. Es fantástico.</p>
-<h4 id="sobreescritura">Sobreescritura</h4>
+<h2 id="sobreescritura">Sobreescritura</h2>
 <p>A veces, una clase extiende un método existente, pero desea utilizar la implementación original dentro de la redefinición. Para ello, utilice <code>super()</code>:</p>
 <pre><code class="language-python">class Stock:
     ...
@@ -151,7 +207,7 @@ class MyStock(Stock):
 <p><em>Precaución: En Python 2, la sintaxis era más detallada.</em></p>
 <pre><code class="language-python">actual_cost = super(MyStock, self).cost()
 </code></pre>
-<h4 id="__init__-y-herencia"><code>__init__</code> y herencia</h4>
+<h2 id="__init__-y-herencia"><code>__init__</code> y herencia</h2>
 <p>Si se redefine <code>__init__</code>, es esencial inicializar el padre.</p>
 <pre><code class="language-python">class Stock:
     def __init__(self, name, shares, price):
@@ -169,7 +225,7 @@ class MyStock(Stock):
         return self.factor * super().cost()
 </code></pre>
 <p>Debes llamar al método <code>__init__()</code> en <code>super</code>, que es la forma de llamar a la versión anterior como se mostró anteriormente.</p>
-<h4 id="uso-de-herencia">Uso de herencia</h4>
+<h2 id="uso-de-herencia">Uso de herencia</h2>
 <p>La herencia se usa a veces para organizar objetos relacionados.</p>
 <pre><code class="language-python">class Shape:
 ...
@@ -187,7 +243,7 @@ class Rectangle(Shape):
     # Procesamiento personalizado
 </code></pre>
 <p>La clase base contiene código de propósito general. Tu clase hereda y personaliza partes específicas.</p>
-<h4 id="relacion-es-una">Relación "es una"</h4>
+<h2 id="relacion-es-una">Relación "es una"</h2>
 <p>La herencia establece una relación de tipos.</p>
 <pre><code class="language-python">class Shape:
 ...
@@ -202,14 +258,14 @@ True
 &gt;&gt;&gt;
 </code></pre>
 <p><em>Importante: idealmente, cualquier código que haya funcionado con instancias de la clase padre también funcionará con instancias de la clase hija.</em></p>
-<h4 id="clase-base-object">Clase base <code>object</code></h4>
+<h2 id="clase-base-object">Clase base <code>object</code></h2>
 <p>Si una clase no tiene padre, a veces verás que <code>object</code> se usa como base.</p>
 <pre><code class="language-python">class Shape(object):
 ...
 </code></pre>
 <p><code>object</code> es el padre de todos los objetos en Python.</p>
 <p>*Nota: técnicamente no es obligatorio, pero a menudo lo ves especificado como un remanente de su uso obligatorio en Python 2. Si se omite, la clase aún hereda implícitamente de <code>object</code>.</p>
-<h4 id="herencia-multiple">Herencia múltiple</h4>
+<h2 id="herencia-multiple">Herencia múltiple</h2>
 <p>Puedes heredar de varias clases especificándolas en la definición de la clase.</p>
 <pre><code class="language-python">class Mother:
 ...
@@ -221,7 +277,7 @@ class Child(Mother, Father):
 ...
 </code></pre>
 <p>La clase <code>Child</code> hereda características de ambos padres. Hay algunos detalles un poco complicados. No lo hagas a menos que sepas lo que estás haciendo. Se dará más información en la siguiente sección, pero no vamos a utilizar más la herencia múltiple en este curso.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Un uso importante de la herencia es escribir código que se puede ampliar o personalizar de varias maneras, especialmente en bibliotecas o marcos. Para ilustrarlo, considere la función <code>print_report()</code> en su programa <code>report.py</code>. Debería verse algo como esto:</p>
 <pre><code class="language-python">def print_report(reportdata):
     '''
@@ -246,7 +302,7 @@ class Child(Mother, Father):
       MSFT         50      20.89     -44.21
        IBM        100     106.28      35.84
 </code></pre>
-<h5 id="ejercicio-45-un-problema-de-extensibilidad">Ejercicio 4.5: Un problema de extensibilidad</h5>
+<h3 id="ejercicio-45-un-problema-de-extensibilidad">Ejercicio 4.5: Un problema de extensibilidad</h3>
 <p>Supongamos que desea modificar la función <code>print_report()</code> para que admita una variedad de formatos de salida diferentes, como texto sin formato, HTML, CSV o XML. Para ello, podría intentar escribir una función gigantesca que hiciera todo. Sin embargo, hacerlo probablemente conduciría a un desastre imposible de mantener. En cambio, esta es una oportunidad perfecta para utilizar la herencia.</p>
 <p>Para comenzar, concéntrese en los pasos que intervienen en la creación de una tabla. En la parte superior de la tabla hay un conjunto de encabezados de tabla. Después de eso, aparecen las filas de datos de la tabla. Tomemos esos pasos y pongámoslos en su propia clase. Cree un archivo llamado <code>tableformat.py</code> y defina la siguiente clase:</p>
 <pre><code class="language-python"># tableformat.py
@@ -306,7 +362,7 @@ def portfolio_report(portfoliofile, pricefile):
 ... se bloquea ...
 </code></pre>
 <p>Debería bloquearse inmediatamente con una excepción <code>NotImplementedError</code>. No es muy interesante, pero es exactamente lo que esperábamos. Continúe con la siguiente parte.</p>
-<h5 id="ejercicio-46-uso-de-la-herencia-para-producir-resultados-diferentes">Ejercicio 4.6: Uso de la herencia para producir resultados diferentes</h5>
+<h3 id="ejercicio-46-uso-de-la-herencia-para-producir-resultados-diferentes">Ejercicio 4.6: Uso de la herencia para producir resultados diferentes</h3>
 <p>La clase <code>TableFormatter</code> que definió en la parte (a) está pensada para extenderse mediante herencia. De hecho, esa es la idea. Para ilustrarlo, defina una clase <code>TextTableFormatter</code> de la siguiente manera:</p>
 <pre><code class="language-python"># tableformat.py
 ...
@@ -411,7 +467,7 @@ IBM,100,106.28,35.84
 &lt;tr&gt;&lt;td&gt;IBM&lt;/td&gt;&lt;td&gt;100&lt;/td&gt;&lt;td&gt;106.28&lt;/td&gt;&lt;td&gt;35.84&lt;/td&gt;&lt;/tr&gt;
 </code></pre>
 <p>Pruebe Su código modificando el programa principal para crear un objeto <code>HTMLTableFormatter</code> en lugar de un objeto <code>CSVTableFormatter</code>.</p>
-<h5 id="ejercicio-47-polimorfismo-en-accion">Ejercicio 4.7: Polimorfismo en acción</h5>
+<h3 id="ejercicio-47-polimorfismo-en-accion">Ejercicio 4.7: Polimorfismo en acción</h3>
 <p>Una característica importante de la programación orientada a objetos es que puede conectar un objeto a un programa y funcionará sin tener que cambiar nada del código existente. Por ejemplo, si escribió un programa que esperaba utilizar un objeto <code>TableFormatter</code>, funcionaría sin importar qué tipo de <code>TableFormatter</code> le haya asignado. Este comportamiento a veces se denomina "polimorfismo".</p>
 <p>Un problema potencial es averiguar cómo permitir que un usuario elija el formateador que desea. El uso directo de los nombres de clase como <code>TextTableFormatter</code> suele ser molesto. Por lo tanto, puede considerar un enfoque simplificado. Tal vez puedas incorporar una declaración <code>if-</code> en el código de esta manera:</p>
 <pre><code class="language-python">def portfolio_report(portfoliofile, pricefile, fmt='txt'):
@@ -453,7 +509,7 @@ IBM,100,106.28,35.84
     print_report(report, formatter)
 </code></pre>
 <p>Intente llamar a la función con diferentes formatos para asegurarse de que esté funcionando.</p>
-<h5 id="ejercicio-48-uniendo-todo">Ejercicio 4.8: Uniendo todo</h5>
+<h3 id="ejercicio-48-uniendo-todo">Ejercicio 4.8: Uniendo todo</h3>
 <p>Modifique el programa <code>report.py</code> para que la función <code>portfolio_report()</code> acepte un argumento opcional que especifique el formato de salida. Por ejemplo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; report.portfolio_report('Data/portfolio.csv', 'Data/prices.csv', 'txt')
       Name     Shares      Price     Change
@@ -479,11 +535,11 @@ MSFT,50,20.89,-44.21
 IBM,100,106.28,35.84
 bash $
 </code></pre>
-<h4 id="discusion">Discusión</h4>
+<h2 id="discusion">Discusión</h2>
 <p>Escribir código extensible es uno de los usos más comunes de la herencia en bibliotecas y marcos. Por ejemplo, un marco puede indicarle que defina su propio objeto que hereda de una clase base proporcionada. Luego se le indica que complete varios métodos que implementan varios fragmentos de funcionalidad.</p>
 <p>Otro concepto un poco más profundo es la idea de "ser dueño de sus abstracciones". En los ejercicios, definimos <em>nuestra propia clase</em> para formatear una tabla. Puede mirar su código y decirse a sí mismo "¡Debería usar una biblioteca de formato o algo que alguien más ya haya creado!" No, debe usar TANTO su clase como una biblioteca. Usar su propia clase promueve el acoplamiento estrecho (<em>loose coupling</em>) [<a href="https://en.wikipedia.org/wiki/Loose_coupling">https://en.wikipedia.org/wiki/Loose_coupling</a>] es más independiente y es más flexible. Mientras su aplicación use la interfaz de programación de su clase, puede cambiar la implementación interna para que funcione de la forma que desee. Puede escribir código totalmente personalizado. Puede usar el paquete de terceros de alguien. Puede cambiar un paquete de terceros por un paquete diferente cuando encuentre uno mejor. No importa: nada del código de su aplicación se romperá mientras conserve la interfaz. Esa es una idea poderosa y es una de las razones por las que podría considerar la herencia para algo como esto.</p>
 <p>Dicho esto, diseñar programas orientados a objetos puede ser extremadamente difícil. Para obtener más información, probablemente debería buscar libros sobre el tema de los patrones de diseño (aunque comprender lo que sucedió en este ejercicio lo llevará bastante lejos en términos de usar objetos de una manera práctica y útil).</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Class.Rmd">Anterior (4.1 Clases)</a> | <a href="03_Special_methods.Rmd">Próximo (4.3 Métodos especiales)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Class/">Anterior (4.1 Clases)</a> | <a href="../03_Special_methods/">Próximo (4.3 Métodos especiales)</a></p></div>
             </div>
         </div>
 

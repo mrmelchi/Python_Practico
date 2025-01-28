@@ -66,14 +66,38 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#72-funciones-anonimas-y-lambda" class="nav-link">7.2 Funciones anónimas y Lambda</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#revision-del-ordenamiento-de-listas" class="nav-link">Revisión del ordenamiento de listas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#funciones-de-devolucion-de-llamada" class="nav-link">Funciones de devolución de llamada</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#lambda-funciones-anonimas" class="nav-link">Lambda: Funciones anónimas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#uso-de-lambda" class="nav-link">Uso de lambda</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Variable_arguments.Rmd">Anterior (7.1 Funciones con argumentos variables)</a> | <a href="03_Returning_functions.Rmd">Próximo (7.3 Retornando Funciones y clousures)</a></p>
-<h3 id="72-funciones-anonimas-y-lambda">7.2 Funciones anónimas y Lambda</h3>
-<h4 id="revision-del-ordenamiento-de-listas">Revisión del ordenamiento de listas</h4>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Variable_arguments/">Anterior (7.1 Funciones con argumentos variables)</a> | <a href="../03_Returning_functions/">Próximo (7.3 Retornando Funciones y clousures)</a></p>
+<h1 id="72-funciones-anonimas-y-lambda">7.2 Funciones anónimas y Lambda</h1>
+<h2 id="revision-del-ordenamiento-de-listas">Revisión del ordenamiento de listas</h2>
 <p>Las listas se pueden ordenar <em>in situ</em>. Utilizando el método <code>sort</code>.</p>
 <pre><code class="language-python">s = [10,1,7,3]
 s.sort() # s = [1,3,7,10]
@@ -110,9 +134,9 @@ portfolio.sort(key=stock_name)
 {'name': 'MSFT', 'price': 65.1, 'shares': 50}
 ]
 </code></pre>
-<h4 id="funciones-de-devolucion-de-llamada">Funciones de devolución de llamada</h4>
+<h2 id="funciones-de-devolucion-de-llamada">Funciones de devolución de llamada</h2>
 <p>En el ejemplo anterior, la función clave es un ejemplo de una función de devolución de llamada. El método <code>sort()</code> "devuelve la llamada" a una función que usted proporciona. Las funciones de devolución de llamada suelen ser funciones cortas de una sola línea que solo se utilizan para esa operación. Los programadores suelen pedir un atajo para especificar este procesamiento adicional.</p>
-<h4 id="lambda-funciones-anonimas">Lambda: Funciones anónimas</h4>
+<h2 id="lambda-funciones-anonimas">Lambda: Funciones anónimas</h2>
 <p>Utilice una lambda en lugar de crear la función. En nuestro ejemplo de ordenación anterior.</p>
 <pre><code class="language-python">portfolio.sort(key=lambda s: s['name'])
 </code></pre>
@@ -125,14 +149,14 @@ portfolio.sort(key=stock_name)
 # vs lambda
 portfolio.sort(key=lambda s: s['name'])
 </code></pre>
-<h4 id="uso-de-lambda">Uso de lambda</h4>
+<h2 id="uso-de-lambda">Uso de lambda</h2>
 <ul>
 <li>Lambda está muy restringida.</li>
 <li>Solo se permite una única expresión.</li>
 <li>No se permiten declaraciones como <code>if</code>, <code>while</code>, etc.</li>
 <li>El uso más común es con funciones como <code>sort()</code>.</li>
 </ul>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Lea algunos datos de una cartera de acciones y conviértalos en una lista:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import report
 &gt;&gt;&gt; portfolio = list(report.read_portfolio('Data/portfolio.csv'))
@@ -148,7 +172,7 @@ Stock('MSFT', 50, 65.1)
 Stock('IBM', 100, 70.44)
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-75-ordenar-por-un-campo">Ejercicio 7.5: Ordenar por un campo</h5>
+<h3 id="ejercicio-75-ordenar-por-un-campo">Ejercicio 7.5: Ordenar por un campo</h3>
 <p>Pruebe las siguientes instrucciones que ordenan la cartera datos ordenados alfabéticamente por nombre de la acción.</p>
 <pre><code class="language-python">&gt;&gt;&gt; def stock_name(s):
         return s.name
@@ -161,7 +185,7 @@ Stock('IBM', 100, 70.44)
 &gt;&gt;&gt;
 </code></pre>
 <p>En esta parte, la función <code>stock_name()</code> extrae el nombre de una acción de una sola entrada en la lista <code>portfolio</code>. <code>sort()</code> utiliza el resultado de esta función para hacer la comparación.</p>
-<h5 id="ejercicio-76-ordenar-por-un-campo-con-lambda">Ejercicio 7.6: Ordenar por un campo con lambda</h5>
+<h3 id="ejercicio-76-ordenar-por-un-campo-con-lambda">Ejercicio 7.6: Ordenar por un campo con lambda</h3>
 <p>Intenta ordenar la cartera según la cantidad de acciones usando una expresión <code>lambda</code>:</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio.sort(key=lambda s: s.shares)
 &gt;&gt;&gt; for s in portfolio:
@@ -179,7 +203,7 @@ Stock('IBM', 100, 70.44)
 &gt;&gt;&gt;
 </code></pre>
 <p>Nota: <code>lambda</code> es un atajo útil porque te permite definir una función de procesamiento especial directamente en la llamada a <code>sort()</code> en lugar de tener que definir una función separada primero.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Variable_arguments.Rmd">Anterior (7.1 Funciones con argumentos variables)</a> | <a href="03_Returning_functions.Rmd">Próximo (7.3 Retornando Funciones y clousures)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Variable_arguments/">Anterior (7.1 Funciones con argumentos variables)</a> | <a href="../03_Returning_functions/">Próximo (7.3 Retornando Funciones y clousures)</a></p></div>
             </div>
         </div>
 

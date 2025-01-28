@@ -66,15 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#61-protocolo-de-iteracion" class="nav-link">6.1 Protocolo de iteración</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#iteracion-en-todas-partes" class="nav-link">Iteración en todas partes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#iteracion-protocolo" class="nav-link">Iteración: Protocolo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#soporte-de-iteracion" class="nav-link">Soporte de iteración</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../05_Object_model/02_Classes_encapsulation.Rmd">Anterior (5.2 Técnicas de encapsulación)</a> | <a href="02_Customizing_iteration.Rmd">Próximo (6.2 Personalización de la iteración con generadores)</a></p>
-<h3 id="61-protocolo-de-iteracion">6.1 Protocolo de iteración</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../05_Object_model/02_Classes_encapsulation/">Anterior (5.2 Técnicas de encapsulación)</a> | <a href="../02_Customizing_iteration/">Próximo (6.2 Personalización de la iteración con generadores)</a></p>
+<h1 id="61-protocolo-de-iteracion">6.1 Protocolo de iteración</h1>
 <p>Esta sección analiza el proceso subyacente de la iteración.</p>
-<h4 id="iteracion-en-todas-partes">Iteración en todas partes</h4>
+<h2 id="iteracion-en-todas-partes">Iteración en todas partes</h2>
 <p>Muchos objetos diferentes admiten la iteración.</p>
 <pre><code class="language-python">a = 'hello'
 for c in a: # Recorrer caracteres en a
@@ -92,7 +112,7 @@ f = open('foo.txt')
 for x in f: # Recorrer líneas en un archivo
     ...
 </code></pre>
-<h4 id="iteracion-protocolo">Iteración: Protocolo</h4>
+<h2 id="iteracion-protocolo">Iteración: Protocolo</h2>
 <p>Considere la declaración <code>for</code>.</p>
 <pre><code class="language-python">for x in obj:
     # declaraciones
@@ -126,7 +146,7 @@ Traceback (most recent call last):
 File &quot;&lt;stdin&gt;&quot;, line 1, in ? StopIteration
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="soporte-de-iteracion">Soporte de iteración</h4>
+<h2 id="soporte-de-iteracion">Soporte de iteración</h2>
 <p>Conocer la iteración es útil si desea agregarla a sus propios objetos. Por ejemplo, crear un contenedor personalizado.</p>
 <pre><code class="language-python">class Portfolio:
     def __init__(self):
@@ -140,8 +160,8 @@ port = Portfolio()
 for s in port:
     ...
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-61-iteracion-ilustrada">Ejercicio 6.1: Iteración ilustrada</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-61-iteracion-ilustrada">Ejercicio 6.1: Iteración ilustrada</h3>
 <p>Cree la siguiente lista:</p>
 <pre><code class="language-python">a = [1,9,4,25,16]
 </code></pre>
@@ -178,7 +198,7 @@ StopIteration
 &gt;&gt;&gt;
 </code></pre>
 <p>Siga llamando a <code>next(f)</code> hasta que llegue al final del archivo. Observe lo que sucede.</p>
-<h5 id="ejercicio-62-compatibilidad-con-iteraciones">Ejercicio 6.2: Compatibilidad con iteraciones</h5>
+<h3 id="ejercicio-62-compatibilidad-con-iteraciones">Ejercicio 6.2: Compatibilidad con iteraciones</h3>
 <p>En ocasiones, es posible que desee hacer que uno de sus propios objetos admita la iteración, especialmente si su objeto envuelve una lista existente u otro iterable. En un nuevo archivo <code>portfolio.py</code>, defina la siguiente clase:</p>
 <pre><code class="language-python"># portfolio.py
 
@@ -264,7 +284,7 @@ def portfolio_cost(filename):
 44671.15
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-63-como-crear-un-contenedor-mas-apropiado">Ejercicio 6.3: Cómo crear un contenedor más apropiado</h5>
+<h3 id="ejercicio-63-como-crear-un-contenedor-mas-apropiado">Ejercicio 6.3: Cómo crear un contenedor más apropiado</h3>
 <p>Si crea una clase contenedora, a menudo querrá hacer más que solo iterar. Modifique la clase <code>Portfolio</code> para que tenga otros métodos especiales como este:</p>
 <pre><code class="language-python">class Portfolio:
     def __init__(self, holdings):
@@ -311,7 +331,7 @@ False
 &gt;&gt;&gt;
 </code></pre>
 <p>Una observación importante sobre esto: en general, el código se considera "Pythonic" si habla el vocabulario común de cómo funcionan normalmente otras partes de Python. Para los objetos contenedores, la compatibilidad con la iteración, la indexación, la contención y otros tipos de operadores es una parte importante de esto.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../05_Object_model/02_Classes_encapsulation.Rmd">Anterior (5.2 Técnicas de encapsulación)</a> | <a href="02_Customizing_iteration.Rmd">Próximo (6.2 Personalización de la iteración con generadores)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../05_Object_model/02_Classes_encapsulation/">Anterior (5.2 Técnicas de encapsulación)</a> | <a href="../02_Customizing_iteration/">Próximo (6.2 Personalización de la iteración con generadores)</a></p></div>
             </div>
         </div>
 

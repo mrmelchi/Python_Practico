@@ -66,13 +66,21 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#44-definicion-de-excepciones" class="nav-link">4.4 Definición de excepciones</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Special_methods.Rmd">Anterior (4.3 Métodos especiales)</a> | <a href="../05_Modelo_de_objetos/00_Descripción_general.Rmd">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p>
-<h3 id="44-definicion-de-excepciones">4.4 Definición de excepciones</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Special_methods/">Anterior (4.3 Métodos especiales)</a> | <a href="../../05_Object_model/00_Overview/">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p>
+<h1 id="44-definicion-de-excepciones">4.4 Definición de excepciones</h1>
 <p>Las excepciones definidas por el usuario se definen por clases.</p>
 <pre><code class="language-python">class NetworkError(Exception):
     pass
@@ -89,8 +97,8 @@ class AuthenticationError(NetworkError):
 class ProtocolError(NetworkError):
     pass
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-411-definicion-de-una-excepcion-personalizada">Ejercicio 4.11: Definición de una excepción personalizada</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-411-definicion-de-una-excepcion-personalizada">Ejercicio 4.11: Definición de una excepción personalizada</h3>
 <p>A menudo, es una buena práctica que las bibliotecas definan sus propias excepciones.</p>
 <p>Esto facilita la distinción entre las excepciones de Python generadas en respuesta a errores de programación comunes y las excepciones generadas intencionalmente por una biblioteca para señalar un problema de uso específico.</p>
 <p>Modifique la función <code>create_formatter()</code> del último ejercicio para que genere una excepción <code>FormatError</code> personalizada cuando el usuario proporcione un nombre de formato incorrecto.</p>
@@ -104,7 +112,7 @@ Traceback (most recent call last):
 FormatError: Unknown table format xls
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Special_methods.Rmd">Anterior (4.3 Métodos especiales)</a> | <a href="../05_Modelo_de_objetos/00_Descripción_general.Rmd">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Special_methods/">Anterior (4.3 Métodos especiales)</a> | <a href="../../05_Object_model/00_Overview/">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p></div>
             </div>
         </div>
 

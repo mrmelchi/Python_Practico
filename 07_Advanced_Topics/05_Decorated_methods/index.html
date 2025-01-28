@@ -66,15 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#75-metodos-estaticos-y-de-clase" class="nav-link">7.5 Métodos estáticos y de clase</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#decoradores-predefinidos" class="nav-link">Decoradores predefinidos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-estaticos" class="nav-link">Métodos estáticos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-de-clase" class="nav-link">Métodos de clase</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Function_decorators.Rmd">Anterior (7.4 Decoradores de funciones)</a> | <a href="../08_Testing_debugging/00_Overview.Rmd">Próximo (8 Pruebas y depuración)</a></p>
-<h3 id="75-metodos-estaticos-y-de-clase">7.5 Métodos estáticos y de clase</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../04_Function_decorators/">Anterior (7.4 Decoradores de funciones)</a> | <a href="../../08_Testing_debugging/00_Overview/">Próximo (8 Pruebas y depuración)</a></p>
+<h1 id="75-metodos-estaticos-y-de-clase">7.5 Métodos estáticos y de clase</h1>
 <p>Esta sección analiza algunos decoradores integrados que se utilizan en combinación con definiciones de métodos.</p>
-<h4 id="decoradores-predefinidos">Decoradores predefinidos</h4>
+<h2 id="decoradores-predefinidos">Decoradores predefinidos</h2>
 <p>Existen decoradores predefinidos que se utilizan para especificar tipos especiales de métodos en las definiciones de clase.</p>
 <pre><code class="language-python">class Foo:
     def bar(self,a):
@@ -93,7 +113,7 @@
         ...
 </code></pre>
 <p>Veamos uno por uno.</p>
-<h4 id="metodos-estaticos">Métodos estáticos</h4>
+<h2 id="metodos-estaticos">Métodos estáticos</h2>
 <p><code>@staticmethod</code> se utiliza para definir los llamados métodos de clase <em>estáticos</em> (de C++/Java). Un método estático es una función que forma parte de la clase, pero que <em>no</em> opera en instancias.</p>
 <pre><code class="language-python">class Foo(object):
     @staticmethod
@@ -104,7 +124,7 @@
 &gt;&gt;&gt;
 </code></pre>
 <p>Los métodos estáticos se utilizan a veces para implementar código de soporte interno para una clase. Por ejemplo, código para ayudar a administrar instancias creadas (administración de memoria, recursos del sistema, persistencia, bloqueo, etc.). También se utilizan en ciertos patrones de diseño (no se analizan aquí).</p>
-<h4 id="metodos-de-clase">Métodos de clase</h4>
+<h2 id="metodos-de-clase">Métodos de clase</h2>
 <p><code>@classmethod</code> se utiliza para definir métodos de clase. Un método de clase es un método que recibe el objeto de <em>clase</em> como primer parámetro en lugar de la instancia.</p>
 <pre><code class="language-python">class Foo:
     def bar(self):
@@ -152,8 +172,8 @@ class NewDate(Date):
 
 d = NewDate.today()
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-711-metodos-de-clase-en-la-practica">Ejercicio 7.11: Métodos de clase en la práctica</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-711-metodos-de-clase-en-la-practica">Ejercicio 7.11: Métodos de clase en la práctica</h3>
 <p>En los archivos <code>report.py</code> y <code>portfolio.py</code>, la creación de un objeto <code>Portfolio</code> es un poco confusa. Por ejemplo, el programa <code>report.py</code> tiene un código como este:</p>
 <pre><code class="language-python">def read_portfolio(filename, **opts):
     '''
@@ -226,7 +246,7 @@ class Portfolio:
 &gt;&gt;&gt;
 </code></pre>
 <p>Realice estos cambios en la clase <code>Portfolio</code> y modifique el código <code>report.py</code> para utilizar el método de clase.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="04_Function_decorators.Rmd">Anterior (7.4 Decoradores de funciones)</a> | <a href="../08_Testing_debugging/00_Overview.Rmd">Próximo (8 Pruebas y depuración)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../04_Function_decorators/">Anterior (7.4 Decoradores de funciones)</a> | <a href="../../08_Testing_debugging/00_Overview/">Próximo (8 Pruebas y depuración)</a></p></div>
             </div>
         </div>
 

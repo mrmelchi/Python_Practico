@@ -66,15 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#64-mas-generadores" class="nav-link">6.4 Más generadores</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#expresiones-generadoras" class="nav-link">Expresiones generadoras</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#por-que-generadores" class="nav-link">Por qué generadores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modulo-itertools" class="nav-link">Módulo itertools</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Producers_consumers.Rmd">Anterior (6.3 Problemas y flujos de trabajo de productores y consumidores)</a> | <a href="../07_Advanced_Topics/00_Overview.Rmd">Próximo (7. Algunos temas avanzados)</a></p>
-<h3 id="64-mas-generadores">6.4 Más generadores</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Producers_consumers/">Anterior (6.3 Problemas y flujos de trabajo de productores y consumidores)</a> | <a href="../../07_Advanced_Topics/00_Overview/">Próximo (7. Algunos temas avanzados)</a></p>
+<h1 id="64-mas-generadores">6.4 Más generadores</h1>
 <p>Esta sección presenta algunos temas adicionales relacionados con los generadores, incluidas las expresiones de generador y el módulo <code>itertools</code>.</p>
-<h4 id="expresiones-generadoras">Expresiones generadoras</h4>
+<h2 id="expresiones-generadoras">Expresiones generadoras</h2>
 <p>Una versión de generador de una lista por comprensión.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = [1,2,3,4]
 &gt;&gt;&gt; b = (2*x for x in a)
@@ -116,7 +136,7 @@ for line in lines:
 f.close()
 </code></pre>
 <p>Con los generadores, el código se ejecuta más rápido y usa menos memoria. Es como un filtro aplicado a una secuencia.</p>
-<h4 id="por-que-generadores">Por qué generadores</h4>
+<h2 id="por-que-generadores">Por qué generadores</h2>
 <ul>
 <li>Muchos problemas se expresan mucho más claramente en términos de iteración.</li>
 <li>Recorrer una colección de elementos y realizar algún tipo de operación (buscar, reemplazar, modificar, etc.).</li>
@@ -129,7 +149,7 @@ f.close()
 <li>Separa la <em>iteración</em> del código que utiliza la iteración.</li>
 <li>Puede crear una caja de herramientas de funciones de iteración interesantes y <em>mezclar y combinar</em>.</li>
 </ul>
-<h4 id="modulo-itertools">Módulo <code>itertools</code></h4>
+<h2 id="modulo-itertools">Módulo <code>itertools</code></h2>
 <p><code>itertools</code> es un módulo de biblioteca con varias funciones diseñadas para ayudar con los iteradores/generadores.</p>
 <pre><code class="language-python">itertools.chain(s1,s2)
 itertools.count(n)
@@ -144,9 +164,9 @@ itertools.izip(s1, ... , sN)
 </code></pre>
 <p>Todas las funciones procesan datos de forma iterativa. Implementan varios tipos de patrones de interación.</p>
 <p>Más información en el tutorial <a href="http://www.dabeaz.com/generators/">Generator Tricks for Systems Programmers</a> de PyCon '08.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En los ejercicios anteriores, escribió un código que seguía las líneas que se escribían en un archivo de registro y las analizó en una secuencia de filas. Este ejercicio continúa basándose en eso. Asegúrese de que <code>Data/stocksim.py</code> todavía se esté ejecutando.</p>
-<h5 id="ejercicio-613-expresiones-generadoras">Ejercicio 6.13: Expresiones generadoras</h5>
+<h3 id="ejercicio-613-expresiones-generadoras">Ejercicio 6.13: Expresiones generadoras</h3>
 <p>Las expresiones generadoras son una versión generadora de una comprensión de lista. Por ejemplo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; nums = [1, 2, 3, 4, 5]
 &gt;&gt;&gt; squares = (x*x for x in nums)
@@ -167,7 +187,7 @@ itertools.izip(s1, ... , sN)
 ...
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-614-expresiones-generadoras-en-argumentos-de-funcion">Ejercicio 6.14: Expresiones generadoras en argumentos de función</h5>
+<h3 id="ejercicio-614-expresiones-generadoras-en-argumentos-de-funcion">Ejercicio 6.14: Expresiones generadoras en argumentos de función</h3>
 <p>A veces, las expresiones generadoras se colocan en los argumentos de función. Parece un poco extraño al principio, pero prueba este experimento:</p>
 <pre><code class="language-python">&gt;&gt;&gt; nums = [1,2,3,4,5]
 &gt;&gt;&gt; sum([x*x for x in nums]) # Una comprensión de lista
@@ -178,7 +198,7 @@ itertools.izip(s1, ... , sN)
 </code></pre>
 <p>En el ejemplo anterior, la segunda versión que usa generadores utilizaría significativamente menos memoria si se manipulara una lista grande.</p>
 <p>En tu archivo <code>portfolio.py</code>, realizaste algunos cálculos que involucraban comprensiones de lista. Intente reemplazarlas con expresiones generadoras.</p>
-<h5 id="ejercicio-615-simplificacion-de-codigo">Ejercicio 6.15: Simplificación de código</h5>
+<h3 id="ejercicio-615-simplificacion-de-codigo">Ejercicio 6.15: Simplificación de código</h3>
 <p>Las expresiones generadoras suelen ser un reemplazo útil para funciones generadoras pequeñas. Por ejemplo, en lugar de escribir una función como esta:</p>
 <pre><code class="language-python">def filter_symbols(rows, names):
     for row in rows:
@@ -189,7 +209,7 @@ itertools.izip(s1, ... , sN)
 <pre><code class="language-python">rows = (row for row in rows if row['name'] in names)
 </code></pre>
 <p>Modifique el programa <code>ticker.py</code> para usar expresiones generadoras según corresponda.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="03_Producers_consumers.Rmd">Anterior (6.3 Problemas y flujos de trabajo de productores y consumidores)</a> | <a href="../07_Advanced_Topics/00_Overview.Rmd">Próximo (7. Algunos temas avanzados)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Producers_consumers/">Anterior (6.3 Problemas y flujos de trabajo de productores y consumidores)</a> | <a href="../../07_Advanced_Topics/00_Overview/">Próximo (7. Algunos temas avanzados)</a></p></div>
             </div>
         </div>
 

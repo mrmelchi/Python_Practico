@@ -66,15 +66,51 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#43-metodos-especiales" class="nav-link">4.3 Métodos especiales</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#introduccion" class="nav-link">Introducción</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-especiales-para-conversiones-de-strins" class="nav-link">Métodos especiales para conversiones de strins</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-especiales-para-matematicas" class="nav-link">Métodos especiales para matemáticas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-especiales-para-el-acceso-a-elementos" class="nav-link">Métodos especiales para el acceso a elementos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#invocacion-al-metodo" class="nav-link">Invocación al método</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-enlazados" class="nav-link">Métodos enlazados</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#acceso-a-atributos" class="nav-link">Acceso a atributos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Inheritance.Rmd">Anterior (4.2 Herencia)</a> | <a href="04_Defining_exceptions.Rmd">Próximo (4.4 Definición de excepciones)</a></p>
-<h3 id="43-metodos-especiales">4.3 Métodos especiales</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Inheritance/">Anterior (4.2 Herencia)</a> | <a href="../04_Defining_exceptions/">Próximo (4.4 Definición de excepciones)</a></p>
+<h1 id="43-metodos-especiales">4.3 Métodos especiales</h1>
 <p>Varias partes del comportamiento de Python se pueden personalizar mediante métodos especiales o los llamados "mágicos". Esta sección presenta esa idea. Además, se analizan el acceso dinámico a los atributos y los métodos enlazados.</p>
-<h4 id="introduccion">Introducción</h4>
+<h2 id="introduccion">Introducción</h2>
 <p>Las clases pueden definir métodos especiales. Estos tienen un significado especial para el intérprete de Python. Siempre están precedidos y seguidos por <code>__</code>. Por ejemplo, <code>__init__</code>.</p>
 <pre><code class="language-python">class Stock(object):
     def __init__(self):
@@ -84,7 +120,7 @@
 ...
 </code></pre>
 <p>Existen docenas de métodos especiales, pero solo veremos algunos ejemplos específicos.</p>
-<h4 id="metodos-especiales-para-conversiones-de-strins">Métodos especiales para conversiones de strins</h4>
+<h2 id="metodos-especiales-para-conversiones-de-strins">Métodos especiales para conversiones de strins</h2>
 <p>Los objetos tienen dos representaciones de cadena.</p>
 <pre><code class="language-python">&gt;&gt;&gt; from datetime import date
 &gt;&gt;&gt; d = date(2012, 12, 21)
@@ -120,7 +156,7 @@ datetime.date(2012, 12, 21)
         return f'Date({self.year},{self.month},{self.day})'
 </code></pre>
 <p><em>Nota: La convención para <code>__repr__()</code> es devolver una cadena que, cuando se ingresa en <code>eval()</code>, recreará el objeto subyacente. Si esto no es posible, se utiliza algún tipo de representación de fácil lectura en su lugar.</em></p>
-<h4 id="metodos-especiales-para-matematicas">Métodos especiales para matemáticas</h4>
+<h2 id="metodos-especiales-para-matematicas">Métodos especiales para matemáticas</h2>
 <p>Los operadores matemáticos implican llamadas a los siguientes métodos.</p>
 <pre><code class="language-python">a + b       a.__add__(b)
 a - b       a.__sub__(b)
@@ -138,7 +174,7 @@ a ** b      a.__pow__(b)
 ~a          a.__invert__()
 abs(a)      a.__abs__()
 </code></pre>
-<h4 id="metodos-especiales-para-el-acceso-a-elementos">Métodos especiales para el acceso a elementos</h4>
+<h2 id="metodos-especiales-para-el-acceso-a-elementos">Métodos especiales para el acceso a elementos</h2>
 <p>Estos son los métodos para implementar contenedores.</p>
 <pre><code class="language-python">len(x)      x.__len__()
 x[a]        x.__getitem__(a)
@@ -156,7 +192,7 @@ del x[a]    x.__delitem__(a)
     def __delitem__(self,a):
         ...
 </code></pre>
-<h4 id="invocacion-al-metodo">Invocación al método</h4>
+<h2 id="invocacion-al-metodo">Invocación al método</h2>
 <p>Invocar un método es un proceso de dos pasos.</p>
 <ol>
 <li>Búsqueda: el operador <code>.</code></li>
@@ -170,7 +206,7 @@ del x[a]    x.__delitem__(a)
 49010.0
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="metodos-enlazados">Métodos enlazados</h4>
+<h2 id="metodos-enlazados">Métodos enlazados</h2>
 <p>Un método que aún no ha sido invocado por el operador de llamada de función ()` se conoce como <em>método enlazado</em>. Opera en la instancia en la que se originó.</p>
 <pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
 &gt;&gt;&gt; s
@@ -196,7 +232,7 @@ TypeError: float argument required
 f.close # Ups, no hice nada en absoluto. `f` sigue abierto.
 </code></pre>
 <p>En ambos casos, el error se debe a que se olvidó incluir los paréntesis finales. Por ejemplo, <code>s.cost()</code> o <code>f.close()</code>.</p>
-<h4 id="acceso-a-atributos">Acceso a atributos</h4>
+<h2 id="acceso-a-atributos">Acceso a atributos</h2>
 <p>Existe una forma alternativa de acceder, manipular y administrar atributos.</p>
 <pre><code class="language-python">getattr(obj, 'name') # Igual que obj.name
 setattr(obj, 'name', value) # Igual que obj.name = value
@@ -212,8 +248,8 @@ else:
 <p><em>Nota: <code>getattr()</code> también tiene un valor predeterminado útil</em> arg*.</p>
 <pre><code class="language-python">x = getattr(obj, 'x', None)
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-49-mejor-salida-para-imprimir-objetos">Ejercicio 4.9: Mejor salida para imprimir objetos</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-49-mejor-salida-para-imprimir-objetos">Ejercicio 4.9: Mejor salida para imprimir objetos</h3>
 <p>Modifique el objeto <code>Stock</code> que definió en <code>stock.py</code> para que el método <code>__repr__()</code> produzca una salida más útil. Por ejemplo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; goog = Stock('GOOG', 100, 490.1)
 &gt;&gt;&gt; goog
@@ -227,7 +263,7 @@ Stock('GOOG', 100, 490.1)
 ... observa cuál es el resultado...
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-410-un-ejemplo-de-uso-de-getattr">Ejercicio 4.10: Un ejemplo de uso de getattr()</h5>
+<h3 id="ejercicio-410-un-ejemplo-de-uso-de-getattr">Ejercicio 4.10: Un ejemplo de uso de getattr()</h3>
 <p><code>getattr()</code> es un mecanismo alternativo para leer atributos. Se puede utilizar para escribir código extremadamente flexible. Para comenzar, pruebe este ejemplo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import stock
 &gt;&gt;&gt; s = stock.Stock('GOOG', 100, 490.1)
@@ -268,7 +304,7 @@ shares = 100
        IBM        100      70.44
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Inheritance.Rmd">Anterior (4.2 Herencia)</a> | <a href="04_Defining_exceptions.Rmd">Próximo (4.4 Definición de una nueva excepción)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Inheritance/">Anterior (4.2 Herencia)</a> | <a href="../04_Defining_exceptions/">Próximo (4.4 Definición de una nueva excepción)</a></p></div>
             </div>
         </div>
 

@@ -66,15 +66,47 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#41-clases" class="nav-link">4.1 Clases</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#programacion-orientada-a-objetos-oo" class="nav-link">Programación Orientada a Objetos (OO)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#la-declaracion-class" class="nav-link">La declaración class</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#instancias" class="nav-link">Instancias</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#datos-de-instancia" class="nav-link">Datos de instancia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#metodos-de-instancia" class="nav-link">Métodos de instancia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#alcance-de-la-clase" class="nav-link">Alcance de la clase</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../03_Program_organization/06_Design_discussion.Rmd">Anterior (3.6 Discusión sobre el diseño)</a> | <a href="02_Inheritance.Rmd">Próximo (4.2 Herencia)</a></p>
-<h3 id="41-clases">4.1 Clases</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../03_Program_organization/06_Design_discussion/">Anterior (3.6 Discusión sobre el diseño)</a> | <a href="../02_Inheritance/">Próximo (4.2 Herencia)</a></p>
+<h1 id="41-clases">4.1 Clases</h1>
 <p>Esta sección presenta la declaración de clase y la idea de crear nuevos objetos.</p>
-<h4 id="programacion-orientada-a-objetos-oo">Programación Orientada a Objetos (OO)</h4>
+<h2 id="programacion-orientada-a-objetos-oo">Programación Orientada a Objetos (OO)</h2>
 <p>Una técnica de programación en la que el código se organiza como una colección de <em>objetos</em>.</p>
 <p>Un <em>objeto</em> consta de:</p>
 <ul>
@@ -92,7 +124,7 @@
 </code></pre>
 <p><code>nums</code> es una <em>instancia</em> de una lista.</p>
 <p>Los métodos (<code>append()</code> y <code>insert()</code>) se adjuntan a la instancia (<code>nums</code>).</p>
-<h4 id="la-declaracion-class">La declaración <code>class</code></h4>
+<h2 id="la-declaracion-class">La declaración <code>class</code></h2>
 <p>Use la declaración <code>class</code> para definir un nuevo objeto.</p>
 <pre><code class="language-python">class Player:
     def __init__(self, x, y):
@@ -108,7 +140,7 @@ def damage(self, pts):
         self.health -= pts
 </code></pre>
 <p>En pocas palabras, una clase es un conjunto de funciones que realizan varias operaciones en las llamadas <em>instancias</em>.</p>
-<h4 id="instancias">Instancias</h4>
+<h2 id="instancias">Instancias</h2>
 <p>Las instancias son los <em>objetos</em> reales que manipulas en tu programa.</p>
 <p>Se crean llamando a la clase como una función.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = Player(2, 3)
@@ -117,7 +149,7 @@ def damage(self, pts):
 </code></pre>
 <p><code>a</code> y <code>b</code> son instancias de <code>Player</code>.</p>
 <p><em>Enfatizar: La declaración de clase es solo la definición (no hace nada por sí misma). Similar a una definición de función.</em></p>
-<h4 id="datos-de-instancia">Datos de instancia</h4>
+<h2 id="datos-de-instancia">Datos de instancia</h2>
 <p>Cada instancia tiene sus propios datos locales.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a.x
 2
@@ -133,7 +165,7 @@ def damage(self, pts):
         self.health = 100
 </code></pre>
 <p>No hay restricciones sobre la cantidad total o el tipo de atributos almacenados.</p>
-<h4 id="metodos-de-instancia">Métodos de instancia</h4>
+<h2 id="metodos-de-instancia">Métodos de instancia</h2>
 <p>Los métodos de instancia son funciones que se aplican a instancias de un objeto.</p>
 <pre><code class="language-python">class Player:
     ...
@@ -151,7 +183,7 @@ def damage(self, pts):
 def move(self, dx, dy):
 </code></pre>
 <p>Por convención, la instancia se llama <code>self</code>. Sin embargo, el nombre real utilizado no es importante. El objeto siempre se pasa como primer argumento. Es simplemente el estilo de programación de Python llamar a este argumento <code>self</code>.</p>
-<h4 id="alcance-de-la-clase">Alcance de la clase</h4>
+<h2 id="alcance-de-la-clase">Alcance de la clase</h2>
 <p>Las clases no definen un alcance de nombres.</p>
 <pre><code class="language-python">class Player:
     ...
@@ -164,9 +196,9 @@ def move(self, dx, dy):
         self.move(-amt, 0) # SÍ. Llama al método `move` de arriba.
 </code></pre>
 <p>Si desea operar en una instancia, siempre debe hacer referencia a ella explícitamente (por ejemplo, <code>self</code>).</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>A partir de este conjunto de ejercicios, comenzaremos a realizar una serie de cambios en el código existente de las secciones anteriores. Es fundamental que tenga una versión funcional del Ejercicio 3.18 para comenzar. Si no la tiene, trabaje a partir del código de solución que se encuentra en el directorio <code>Solutions/3_18</code>. Está bien copiarlo.</p>
-<h5 id="ejercicio-41-objetos-como-estructuras-de-datos">Ejercicio 4.1: Objetos como estructuras de datos</h5>
+<h3 id="ejercicio-41-objetos-como-estructuras-de-datos">Ejercicio 4.1: Objetos como estructuras de datos</h3>
 <p>En las secciones 2 y 3, trabajamos con datos representados como tuplas y diccionarios. Por ejemplo, una cartera de acciones se podría representar como una tupla como esta:</p>
 <pre><code class="language-python">s = ('GOOG',100,490.10)
 </code></pre>
@@ -209,7 +241,7 @@ def move(self, dx, dy):
 </code></pre>
 <p>Una cosa que hay que destacar aquí es que la clase <code>Stock</code> actúa como una fábrica para crear instancias de objetos. Básicamente, la llamas como una función y crea un nuevo objeto para ti. Además, hay que destacar que cada objeto es distinto: cada uno tiene sus propios datos que están separados de otros objetos que se han creado.</p>
 <p>Un objeto definido por una clase es algo similar a un diccionario, solo que con una sintaxis ligeramente diferente. Por ejemplo, en lugar de escribir <code>s['nombre']</code> o <code>s['precio']</code>, ahora escribes <code>s.nombre</code> y <code>s.precio</code>.</p>
-<h5 id="ejercicio-42-agregar-algunos-metodos">Ejercicio 4.2: Agregar algunos métodos</h5>
+<h3 id="ejercicio-42-agregar-algunos-metodos">Ejercicio 4.2: Agregar algunos métodos</h3>
 <p>Con las clases, puedes adjuntar funciones a tus objetos. Estas se conocen como métodos y son funciones que operan sobre los datos almacenados dentro de un objeto. Agrega un método <code>cost()</code> y <code>sell()</code> a tu objeto <code>Stock</code>. Deberían funcionar así:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import stock
 &gt;&gt;&gt; s = stock.Stock('GOOG', 100, 490.10)
@@ -224,7 +256,7 @@ def move(self, dx, dy):
 36757.5
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-43-creacion-de-una-lista-de-instancias">Ejercicio 4.3: Creación de una lista de instancias</h5>
+<h3 id="ejercicio-43-creacion-de-una-lista-de-instancias">Ejercicio 4.3: Creación de una lista de instancias</h3>
 <p>Pruebe estos pasos para crear una lista de instancias de <code>Stock</code> a partir de una lista de diccionarios. Luego, calcula el costo total:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import fileparse
 &gt;&gt;&gt; with open('Data/portfolio.csv') as lines:
@@ -239,7 +271,7 @@ def move(self, dx, dy):
 44671.15
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="ejercicio-44-utilizando-tu-clase">Ejercicio 4.4: Utilizando tu clase</h4>
+<h3 id="ejercicio-44-utilizando-tu-clase">Ejercicio 4.4: Utilizando tu clase</h3>
 <p>Modifique la función <code>read_portfolio()</code> en el programa <code>report.py</code> para que lea un portfolio en una lista de instancias de <code>Stock</code> como se muestra en el Ejercicio 4.3. Una vez que haya hecho eso, corrija todo el código en <code>report.py</code> y <code>pcost.py</code> para que funcione con instancias <code>Stock</code> en lugar de diccionarios.</p>
 <p>Sugerencia: No debería tener que hacer cambios importantes en el código. Principalmente cambiará el acceso al diccionario como <code>s['shares']</code> a <code>s.shares</code>.</p>
 <p>Deberías poder ejecutar tus funciones de la misma manera que antes:</p>
@@ -259,7 +291,7 @@ def move(self, dx, dy):
        IBM        100     106.28      35.84
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../03_Program_organization/06_Design_discussion.Rmd">Anterior (3.6 Discusión sobre el diseño)</a> | <a href="02_Inheritance.Rmd">Próximo (4.2 Herencia)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../03_Program_organization/06_Design_discussion/">Anterior (3.6 Discusión sobre el diseño)</a> | <a href="../02_Inheritance/">Próximo (4.2 Herencia)</a></p></div>
             </div>
         </div>
 

@@ -66,15 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#62-personalizacion-de-la-iteracion" class="nav-link">6.2 Personalización de la iteración</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#un-problema" class="nav-link">Un problema</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#generadores" class="nav-link">Generadores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#discusion" class="nav-link">Discusión</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contenido.md">Contenido</a> | <a href="01_Protocolo_de_iteración.md">Anterior (6.1 Protocolo de iteración)</a> | <a href="03_Productores_consumidores.md">Siguiente (6.3 Productor/Consumidor)</a></p>
-<h3 id="62-personalizacion-de-la-iteracion">6.2 Personalización de la iteración</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Iteration_protocol/">Anterior (6.1 Protocolo de iteración)</a> | <a href="../03_Producers_consumers/">Próximo (6.3 Problemas y flujos de trabajo de productores y consumidores)</a></p>
+<h1 id="62-personalizacion-de-la-iteracion">6.2 Personalización de la iteración</h1>
 <p>Esta sección analiza cómo se puede personalizar la iteración utilizando una función generadora.</p>
-<h4 id="un-problema">Un problema</h4>
+<h2 id="un-problema">Un problema</h2>
 <p>Supongamos que desea crear su propio patrón de iteración personalizado.</p>
 <p>Por ejemplo, una cuenta regresiva.</p>
 <pre><code class="language-python">&gt;&gt;&gt; for x in countdown(10):
@@ -84,7 +104,7 @@
 &gt;&gt;&gt;
 </code></pre>
 <p>Hay una manera fácil de hacer esto.</p>
-<h4 id="generadores">Generadores</h4>
+<h2 id="generadores">Generadores</h2>
 <p>Un generador es una función que define la iteración.</p>
 <pre><code class="language-python">def countdown(n):
     while n &gt; 0:
@@ -138,8 +158,8 @@ File &quot;&lt;stdin&gt;&quot;, line 1, in ? StopIteration
 &gt;&gt;&gt;
 </code></pre>
 <p><em>Observación: una función generadora implementa el mismo protocolo de bajo nivel que las instrucciones <code>for</code> usan en listas, tuplas, diccionarios, archivos, etc.</em></p>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-64-un-generador-simple">Ejercicio 6.4: Un generador simple</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-64-un-generador-simple">Ejercicio 6.4: Un generador simple</h3>
 <p>Si alguna vez te encuentras con ganas de personalizar la iteración, siempre debes pensar en funciones generadoras. Son fáciles de escribir: crea una función que lleve a cabo la lógica de iteración deseada y usa <code>yield</code> para emitir valores.</p>
 <p>Por ejemplo, prueba este generador que busca en un archivo líneas que contengan una subcadena coincidente:</p>
 <pre><code class="language-python">&gt;&gt;&gt; def filematch(filename, substr):
@@ -167,7 +187,7 @@ name,shares,price
 &gt;&gt;&gt;
 </code></pre>
 <p>Esto es bastante interesante: la idea de que se puede ocultar un montón de procesamiento personalizado en una función y utilizarlo para alimentar un bucle <code>for</code>. El siguiente ejemplo analiza un caso más inusual.</p>
-<h5 id="ejercicio-65-monitoreo-de-una-fuente-de-datos-en-tiempo-real">Ejercicio 6.5: Monitoreo de una fuente de datos en tiempo real</h5>
+<h3 id="ejercicio-65-monitoreo-de-una-fuente-de-datos-en-tiempo-real">Ejercicio 6.5: Monitoreo de una fuente de datos en tiempo real</h3>
 <p>Los generadores pueden ser una forma interesante de monitorear fuentes de datos en tiempo real, como archivos de registro o feeds del mercado de valores. En esta parte, exploraremos esta idea. Para comenzar, siga atentamente las siguientes instrucciones.</p>
 <p>El programa <code>Data/stocksim.py</code> es un programa que simula datos del mercado de valores. Como salida, el programa escribe constantemente datos en tiempo real en un archivo <code>Data/stocklog.csv</code>. En una ventana de comandos independiente, vaya al directorio <code>Data/</code> y ejecute este programa:</p>
 <pre><code class="language-bash">bash % python3 stocksim.py
@@ -195,7 +215,7 @@ while True:
 </code></pre>
 <p>Si ejecutas el programa, verás un indicador de cotización de acciones en tiempo real. Debajo del capó, Este código es similar al comando <code>tail -f</code> de Unix que se usa para ver un archivo de registro.</p>
 <p>Nota: El uso del método <code>readline()</code> en este ejemplo es algo inusual, ya que no es la forma habitual de leer líneas de un archivo (normalmente, solo se usaría un bucle <code>for</code>). Sin embargo, en este caso, lo estamos usando para sondear repetidamente el final del archivo para ver si se han agregado más datos (<code>readline()</code> devolverá datos nuevos o una cadena vacía).</p>
-<h5 id="ejercicio-66-uso-de-un-generador-para-producir-datos">Ejercicio 6.6: Uso de un generador para producir datos</h5>
+<h3 id="ejercicio-66-uso-de-un-generador-para-producir-datos">Ejercicio 6.6: Uso de un generador para producir datos</h3>
 <p>Si observa el código del Ejercicio 6.5, la primera parte del código produce líneas de datos, mientras que las instrucciones al final del bucle <code>while</code> consumen los datos. Una característica importante de las funciones generadoras es que puede mover todo el código de producción de datos a una función reutilizable.</p>
 <p>Modifique el código del Ejercicio 6.5 para que la lectura del archivo la realice una función generadora <code>follow(filename)</code>. Haz que funcione el siguiente código:</p>
 <pre><code class="language-python">&gt;&gt;&gt; for line in follow('Data/stocklog.csv'):
@@ -213,7 +233,7 @@ while True:
         if change &lt; 0:
             print(f'{name:&gt;10s} {price:&gt;10.2f} {change:&gt;10.2f}')
 </code></pre>
-<h5 id="ejercicio-67-observando-tu-cartera">Ejercicio 6.7: Observando tu cartera</h5>
+<h3 id="ejercicio-67-observando-tu-cartera">Ejercicio 6.7: Observando tu cartera</h3>
 <p>Modifica el programa <code>follow.py</code> para que observe el flujo de datos de acciones e imprime un ticker que muestra información solo de las acciones en una cartera. Por ejemplo:</p>
 <pre><code class="language-python">if __name__ == '__main__':
     import report
@@ -228,10 +248,10 @@ while True:
         if name in portfolio:
             print(f'{name:&gt;10s} {price:&gt;10.2f} {change:&gt;10.2f}')
 </code></pre>
-<p>Nota: Para que esto funcione, su clase <code>Portfolio</code> debe admitir el operador <code>in</code>. Consulte el <a href="01_Iteration_protocol">Ejercicio 6.3</a> y asegúrese de implementar el operador <code>__contains__()</code>.</p>
-<h4 id="discusion">Discusión</h4>
+<p>Nota: Para que esto funcione, su clase <code>Portfolio</code> debe admitir el operador <code>in</code>. Consulte el <a href="../01_Iteration_protocol/">Ejercicio 6.3</a> y asegúrese de implementar el operador <code>__contains__()</code>.</p>
+<h2 id="discusion">Discusión</h2>
 <p>Aquí acaba de ocurrir algo muy poderoso. Has trasladado un patrón de iteración interesante (leer líneas al final de un archivo) a su propia pequeña función. La función <code>follow()</code> es ahora una utilidad de propósito completamente general que puede utilizar en cualquier programa. Por ejemplo, puede utilizarla para ver registros de servidores, registros de depuración y otras fuentes de datos similares. Eso es genial.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Iteration_protocol.Rmd">Anterior (6.1 Protocolo de iteración)</a> | <a href="03_Producers_consumers.Rmd">Próximo (6.3 Problemas y flujos de trabajo de productores y consumidores)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Iteration_protocol/">Anterior (6.1 Protocolo de iteración)</a> | <a href="../03_Producers_consumers/">Próximo (6.3 Problemas y flujos de trabajo de productores y consumidores)</a></p></div>
             </div>
         </div>
 

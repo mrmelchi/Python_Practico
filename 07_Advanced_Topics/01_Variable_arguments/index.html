@@ -66,15 +66,39 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#71-argumentos-variables" class="nav-link">7.1 Argumentos variables</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#argumentos-de-variables-posicionales-args" class="nav-link">Argumentos de variables posicionales (*args)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#argumentos-variables-de-palabra-clave-kwargs" class="nav-link">Argumentos variables de palabra clave (*kwargs)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#combinacion-de-ambos" class="nav-link">Combinación de ambos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#pasar-tuplas-y-diccionarios" class="nav-link">Pasar tuplas y diccionarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../06_Generadores/04_Más_generadores.Rmd">Anterior (6.4 Expresiones generadoras)</a> | <a href="02_Anonymous_function.Rmd">Próximo (7.2 Funciones anónimas y lambda)</a></p>
-<h3 id="71-argumentos-variables">7.1 Argumentos variables</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../06_Generators/04_More_generators/">Anterior (6.4 Expresiones generadoras)</a> | <a href="../02_Anonymous_function/">Próximo (7.2 Funciones anónimas y lambda)</a></p>
+<h1 id="71-argumentos-variables">7.1 Argumentos variables</h1>
 <p>Esta sección cubre argumentos de funciones variables, a veces descritos como "*args" y "**kwargs".</p>
-<h4 id="argumentos-de-variables-posicionales-args">Argumentos de variables posicionales (<code>*args</code>)</h4>
+<h2 id="argumentos-de-variables-posicionales-args">Argumentos de variables posicionales (<code>*args</code>)</h2>
 <p>Se dice que una función que acepta <em>cualquier número</em> de argumentos usa argumentos variables. Por ejemplo:</p>
 <pre><code class="language-python">def f(x, *args):
     ...
@@ -87,7 +111,7 @@
     # x -&gt; 1
     # args -&gt; (2,3,4,5)
 </code></pre>
-<h4 id="argumentos-variables-de-palabra-clave-kwargs">Argumentos variables de palabra clave (<code>*kwargs</code>)</h4>
+<h2 id="argumentos-variables-de-palabra-clave-kwargs">Argumentos variables de palabra clave (<code>*kwargs</code>)</h2>
 <p>Una función también puede aceptar cualquier número de argumentos de palabra clave. Por ejemplo:</p>
 <pre><code class="language-python">def f(x, y, **kwargs):
     ...
@@ -101,7 +125,7 @@
     # y -&gt; 3
     # kwargs -&gt; { 'flag': True, 'mode': 'fast', 'header': 'debug' }
 </code></pre>
-<h4 id="combinacion-de-ambos">Combinación de ambos</h4>
+<h2 id="combinacion-de-ambos">Combinación de ambos</h2>
 <p>Una función también puede aceptar cualquier número de argumentos variables, tanto de palabras clave como de palabras no clave.</p>
 <pre><code class="language-python">def f(*args, **kwargs):
     ...
@@ -116,7 +140,7 @@
     ...
 </code></pre>
 <p>Esta función acepta cualquier combinación de argumentos posicionales o de palabras clave. A veces se utiliza al escribir contenedores o cuando se quieren pasar argumentos a otra función.</p>
-<h4 id="pasar-tuplas-y-diccionarios">Pasar tuplas y diccionarios</h4>
+<h2 id="pasar-tuplas-y-diccionarios">Pasar tuplas y diccionarios</h2>
 <p>Las tuplas se pueden expandir en argumentos variables.</p>
 <pre><code class="language-python">numbers = (2,3,4)
 f(1, *numbers) # Igual que f(1,2,3,4)
@@ -130,8 +154,8 @@ f(1, *numbers) # Igual que f(1,2,3,4)
 f(data, **options)
 # Igual que f(data, color='red', delimiter=',', width=400)
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-71-un-ejemplo-simple-de-argumentos-variables">Ejercicio 7.1: Un ejemplo simple de argumentos variables</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-71-un-ejemplo-simple-de-argumentos-variables">Ejercicio 7.1: Un ejemplo simple de argumentos variables</h3>
 <p>Intenta definir la siguiente función:</p>
 <pre><code class="language-python">&gt;&gt;&gt; def avg(x,*more):
         return float(x+sum(more))/(1+len(more))
@@ -145,7 +169,7 @@ f(data, **options)
 &gt;&gt;&gt;
 </code></pre>
 <p>Observa cómo el parámetro <code>*more</code> recopila todos los argumentos adicionales.</p>
-<h5 id="ejercicio-72-pasar-tuplas-y-diccionarios-como-argumentos">Ejercicio 7.2: Pasar tuplas y diccionarios como argumentos</h5>
+<h3 id="ejercicio-72-pasar-tuplas-y-diccionarios-como-argumentos">Ejercicio 7.2: Pasar tuplas y diccionarios como argumentos</h3>
 <p>Supongamos que lees algunos datos de un archivo y obtienes una tupla como esta:</p>
 <pre><code class="language-python">&gt;&gt;&gt; data = ('GOOG', 100, 490.1)
 &gt;&gt;&gt;
@@ -170,7 +194,7 @@ Stock('GOOG', 100, 490.1)
 Stock('GOOG', 100, 490.1)
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-73-creacion-de-una-lista-de-instancias">Ejercicio 7.3: Creación de una lista de instancias</h5>
+<h3 id="ejercicio-73-creacion-de-una-lista-de-instancias">Ejercicio 7.3: Creación de una lista de instancias</h3>
 <p>En su programa <code>report.py</code>, creó una lista de instancias utilizando un código como este:</p>
 <pre><code class="language-python">def read_portfolio(filename):
     '''
@@ -188,7 +212,7 @@ Stock('GOOG', 100, 490.1)
     return Portfolio(portfolio)
 </code></pre>
 <p>Puede simplificar ese código usando <code>Stock(**d)</code> en su lugar. Realice ese cambio.</p>
-<h5 id="ejercicio-74-paso-de-argumentos">Ejercicio 7.4: Paso de argumentos</h5>
+<h3 id="ejercicio-74-paso-de-argumentos">Ejercicio 7.4: Paso de argumentos</h3>
 <p>La función <code>fileparse.parse_csv()</code> tiene algunas opciones para cambiar el delimitador de archivo y para informar errores. Tal vez le gustaría exponer esas opciones a la función <code>read_portfolio()</code> anterior. Realice este cambio:</p>
 <pre><code>def read_portfolio(filename, **opts):
     '''
@@ -217,7 +241,7 @@ Row 7: Reason invalid literal for int() with base 10: ''
 &gt;&gt;&gt; port = report.read_portfolio('Data/missing.csv', silence_errors=True)
 &gt;&gt;&gt;
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../06_Generadores/04_Más_generadores.Rmd">Anterior (6.4 Expresiones generadoras)</a> | <a href="02_Anonymous_function.Rmd">Próximo (7.2 Funciones anónimas y lambda)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../06_Generators/04_More_generators/">Anterior (6.4 Expresiones generadoras)</a> | <a href="../02_Anonymous_function/">Próximo (7.2 Funciones anónimas y lambda)</a></p></div>
             </div>
         </div>
 

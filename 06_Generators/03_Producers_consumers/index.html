@@ -66,15 +66,35 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#63-problemas-y-flujos-de-trabajo-de-productores-y-consumidores" class="nav-link">6.3 Problemas y flujos de trabajo de productores y consumidores</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#problemas-de-productor-consumidor" class="nav-link">Problemas de productor-consumidor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tuberias-de-generadores" class="nav-link">Tuberias de generadores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#discusion" class="nav-link">Discusión</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Customizing_iteration.Rmd">Anterior (6.2 Personalización de la iteración)</a> | <a href="04_More_generators.Rmd">Próximo (6.4 Expresiones generadoras)</a></p>
-<h3 id="63-problemas-y-flujos-de-trabajo-de-productores-y-consumidores">6.3 Problemas y flujos de trabajo de productores y consumidores</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Customizing_iteration/">Anterior (6.2 Personalización de la iteración)</a> | <a href="../04_More_generators/">Próximo (6.4 Expresiones generadoras)</a></p>
+<h1 id="63-problemas-y-flujos-de-trabajo-de-productores-y-consumidores">6.3 Problemas y flujos de trabajo de productores y consumidores</h1>
 <p>Los generadores son una herramienta útil para configurar varios tipos de problemas de productor/consumidor y las tuberías de flujo de datos. Esta sección trata sobre eso.</p>
-<h4 id="problemas-de-productor-consumidor">Problemas de productor-consumidor</h4>
+<h2 id="problemas-de-productor-consumidor">Problemas de productor-consumidor</h2>
 <p>Los generadores están estrechamente relacionados con varias formas de problemas de <em>productor-consumidor</em>.</p>
 <pre><code class="language-python"># Productor
 def follow(f):
@@ -89,7 +109,7 @@ for line in follow(f):    # Consume el valor de `yield` arriba
     ...
 </code></pre>
 <p><code>yield</code> produce valores que <code>for</code> consume.</p>
-<h4 id="tuberias-de-generadores">Tuberias de generadores</h4>
+<h2 id="tuberias-de-generadores">Tuberias de generadores</h2>
 <p>Puede utilizar este aspecto de los generadores para configurar tuberías de procesamiento (como las tuberías de Unix).</p>
 <p><em>productor</em> =&gt; <em>procesamiento</em> =&gt; <em>procesamiento</em> =&gt; <em>consumidor</em></p>
 <p>Las tuberías de procesamiento tienen un productor de datos inicial, un conjunto de etapas de procesamiento intermedias y un consumidor final.</p>
@@ -136,9 +156,9 @@ b = procesamiento(a)
 c = consumidor(b)
 </code></pre>
 <p>Notarás que los datos fluyen de manera incremental a través de las diferentes funciones.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>Para este ejercicio, el programa <code>stocksim.py</code> debe seguir ejecutándose en segundo plano. Vas a utilizar la función <code>follow()</code> que escribiste en el ejercicio anterior.</p>
-<h5 id="ejercicio-68-configuracion-de-una-tuberia-simple">Ejercicio 6.8: Configuración de una tubería simple</h5>
+<h3 id="ejercicio-68-configuracion-de-una-tuberia-simple">Ejercicio 6.8: Configuración de una tubería simple</h3>
 <p>Veamos la idea de la tubería en acción. Escriba la siguiente función:</p>
 <pre><code class="language-python">&gt;&gt;&gt; def filematch(lines, substr):
 ...     for line in lines:
@@ -158,7 +178,7 @@ c = consumidor(b)
 ... espere la salida ...
 </code></pre>
 <p>Puede que la salida tarde un poco en aparecer, pero con el tiempo debería ver algunas líneas que contienen datos de IBM.</p>
-<h5 id="ejercicio-69-configuracion-de-una-secuencia-de-comandos-mas-compleja">Ejercicio 6.9: Configuración de una secuencia de comandos más compleja</h5>
+<h3 id="ejercicio-69-configuracion-de-una-secuencia-de-comandos-mas-compleja">Ejercicio 6.9: Configuración de una secuencia de comandos más compleja</h3>
 <p>Lleve la idea de la secuencia de comandos un poco más allá realizando más acciones.</p>
 <pre><code class="language-python">&gt;&gt;&gt; from follow import follow
 &gt;&gt;&gt; import csv
@@ -173,7 +193,7 @@ c = consumidor(b)
 ['PG', '62.95', '6/11/2007', '09:41.08', '-0.12', '62.80', '62.97', '62.61', '454327']
 </code></pre>
 <p>Bueno, eso es interesante. Lo que estás viendo aquí es que la salida de la función <code>follow()</code> se ha canalizado a la función <code>csv.reader()</code> y ahora estamos obteniendo una secuencia de filas divididas.</p>
-<h5 id="ejercicio-610-creacion-de-mas-componentes-de-tuberia">Ejercicio 6.10: Creación de más componentes de tubería</h5>
+<h3 id="ejercicio-610-creacion-de-mas-componentes-de-tuberia">Ejercicio 6.10: Creación de más componentes de tubería</h3>
 <p>Extendamos toda la idea a una canalización más grande. En un archivo separado <code>ticker.py</code>, comience por crear una función que lea un archivo CSV como lo hizo anteriormente:</p>
 <pre><code class="language-python"># ticker.py
 
@@ -236,7 +256,7 @@ def parse_stock_data(lines):
 { 'name':'PG', 'price':62.95, 'change':-0.12 }
 ...
 </code></pre>
-<h5 id="ejercicio-611-filtrado-de-datos">Ejercicio 6.11: Filtrado de datos</h5>
+<h3 id="ejercicio-611-filtrado-de-datos">Ejercicio 6.11: Filtrado de datos</h3>
 <p>Escribe una función que filtre datos. Por ejemplo:</p>
 <pre><code class="language-python"># ticker.py
 ...
@@ -254,7 +274,7 @@ rows = filter_symbols(rows, portfolio)
 for row in rows:
     print(row)
 </code></pre>
-<h5 id="ejercicio-612-poniendolo-todo-junto">Ejercicio 6.12: Poniéndolo todo junto</h5>
+<h3 id="ejercicio-612-poniendolo-todo-junto">Ejercicio 6.12: Poniéndolo todo junto</h3>
 <p>En el programa <code>ticker.py</code>, escriba una función <code>ticker(portfile, logfile, fmt)</code> que cree un ticker de acciones en tiempo real a partir de una cartera, un archivo de registro y un formato de tabla determinados. Por ejemplo::</p>
 <pre><code class="language-python">&gt;&gt;&gt; from ticker import ticker
 &gt;&gt;&gt; ticker('Data/portfolio.csv', 'Data/stocklog.csv', 'txt')
@@ -274,9 +294,9 @@ AA,39.35,-0.31
 CAT,78.05,-0.47
 ...
 </code></pre>
-<h4 id="discusion">Discusión</h4>
+<h2 id="discusion">Discusión</h2>
 <p>Algunas lecciones aprendidas: Puede crear varias funciones generadoras y encadenarlas para realizar un procesamiento que involucre flujos de datos. Además, puede crear funciones que empaqueten una serie de etapas de flujos de datos en una única llamada a la función (por ejemplo, la función <code>parse_stock_data()</code>).</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Customizing_iteration.Rmd">Anterior (6.2 Personalización de la iteración)</a> | <a href="04_More_generators.Rmd">Próximo (6.4 Expresiones generadoras)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Customizing_iteration/">Anterior (6.2 Personalización de la iteración)</a> | <a href="../04_More_generators/">Próximo (6.4 Expresiones generadoras)</a></p></div>
             </div>
         </div>
 
