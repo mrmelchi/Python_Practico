@@ -66,15 +66,43 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#93-entrega-tu-codigo-a-terceros" class="nav-link">9.3 Entrega tu código a terceros</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#creacion-de-un-archivo-setuppy" class="nav-link">Creación de un archivo setup.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#creacion-de-manifestin" class="nav-link">Creación de MANIFEST.in</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#creacion-de-una-distribucion-de-codigo-fuente" class="nav-link">Creación de una distribución de código fuente</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#instalacion-de-tu-codigo" class="nav-link">Instalación de tu código</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentario" class="nav-link">Comentario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Third_party.Rmd">Anterior (9.2 Módulos de terceros)</a> | <a href="TheEnd.Rmd">Próximo (Fin)</a></p>
-<h3 id="93-entrega-tu-codigo-a-terceros">9.3 Entrega tu código a terceros</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Third_party/">Anterior (9.2 Módulos de terceros)</a> | <a href="../TheEnd/">Próximo (Fin)</a></p>
+<h1 id="93-entrega-tu-codigo-a-terceros">9.3 Entrega tu código a terceros</h1>
 <p>En algún momento, es posible que desee entregar su código a otra persona, posiblemente solo a un compañero de trabajo. Esta sección proporciona la técnica más básica para hacerlo. Para obtener información más detallada, deberá consultar la <a href="https://packaging.python.org">Guía del usuario de empaquetado de Python</a>.</p>
-<h4 id="creacion-de-un-archivo-setuppy">Creación de un archivo setup.py</h4>
+<h2 id="creacion-de-un-archivo-setuppy">Creación de un archivo setup.py</h2>
 <p>Agregue un archivo <code>setup.py</code> al nivel superior del directorio de su proyecto.</p>
 <pre><code class="language-python"># setup.py
 import setuptools
@@ -88,28 +116,28 @@ setuptools.setup(
     packages=setuptools.find_packages(),
 )
 </code></pre>
-<h4 id="creacion-de-manifestin">Creación de MANIFEST.in</h4>
+<h2 id="creacion-de-manifestin">Creación de MANIFEST.in</h2>
 <p>Si hay archivos adicionales asociados con su proyecto, especifíquelos con un archivo <code>MANIFEST.in</code>. Por ejemplo:</p>
 <pre><code># MANIFEST.in
 include *.csv
 </code></pre>
 <p>Coloque el archivo <code>MANIFEST.in</code> en el mismo directorio que <code>setup.py</code>.</p>
-<h4 id="creacion-de-una-distribucion-de-codigo-fuente">Creación de una distribución de código fuente</h4>
+<h2 id="creacion-de-una-distribucion-de-codigo-fuente">Creación de una distribución de código fuente</h2>
 <p>Para crear una distribución de su código, utilice el archivo <code>setup.py</code>. Por ejemplo:</p>
 <pre><code>bash % python setup.py sdist
 </code></pre>
 <p>Esto creará un archivo <code>.tar.gz</code> o <code>.zip</code> en el directorio <code>dist/</code>. Ese archivo es algo que ahora puedes regalar a otros.</p>
-<h4 id="instalacion-de-tu-codigo">Instalación de tu código</h4>
+<h2 id="instalacion-de-tu-codigo">Instalación de tu código</h2>
 <p>Otros pueden instalar tu código Python usando <code>pip</code> de la misma manera que lo hacen con otros paquetes. Simplemente necesitan proporcionar el archivo creado en el paso anterior. Por ejemplo:</p>
 <pre><code>bash % python -m pip install porty-0.0.1.tar.gz
 </code></pre>
-<h4 id="comentario">Comentario</h4>
+<h2 id="comentario">Comentario</h2>
 <p>Los pasos anteriores describen los conceptos básicos más mínimos para crear un paquete de código Python que puedes regalar a otra persona. En realidad, puede ser mucho más complicado dependiendo de las dependencias de terceros, si tu aplicación incluye o no código externo (es decir, C/C++), etc. Cubrir eso está fuera del alcance de este curso. Solo hemos dado un pequeño primer paso.</p>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-95-crea-un-paquete">Ejercicio 9.5: Crea un paquete</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-95-crea-un-paquete">Ejercicio 9.5: Crea un paquete</h3>
 <p>Toma el código <code>porty-app/</code> que creaste para el Ejercicio 9.3 y ve si puedes recrear los pasos que se describen aquí. Específicamente, agrega un archivo <code>setup.py</code> y un archivo <code>MANIFEST.in</code> al directorio de nivel superior. Crea un archivo de distribución de origen ejecutando <code>python setup.py sdist</code>.</p>
 <p>Como paso final, ve si puedes instalar tu paquete en un entorno virtual de Python.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Third_party.Rmd">Anterior (9.2 Módulos de terceros)</a> | <a href="TheEnd.Rmd">Próximo (Fin)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Third_party/">Anterior (9.2 Módulos de terceros)</a> | <a href="../TheEnd/">Próximo (Fin)</a></p></div>
             </div>
         </div>
 

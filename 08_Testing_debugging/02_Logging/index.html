@@ -66,17 +66,49 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#82-registro-manejo-de-errores-y-diagnosticos" class="nav-link">8.2 Registro, manejo de errores y diagnósticos</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#modulo-de-registro" class="nav-link">Módulo de registro</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#excepciones-revisitadas" class="nav-link">Excepciones revisitadas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#uso-del-registro" class="nav-link">Uso del registro</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#conceptos-basicos-de-registro" class="nav-link">Conceptos básicos de registro</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#configuracion-del-registro" class="nav-link">Configuración del registro</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentarios" class="nav-link">Comentarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Testing.Rmd">Anterior (8.1 Pruebas)</a> | <a href="03_Debugging.Rmd">Próximo (8.3 Depuración)</a></p>
-<h3 id="82-registro-manejo-de-errores-y-diagnosticos">8.2 Registro, manejo de errores y diagnósticos</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Testing/">Anterior (8.1 Pruebas)</a> | <a href="../03_Debugging/">Próximo (8.3 Depuración)</a></p>
+<h1 id="82-registro-manejo-de-errores-y-diagnosticos">8.2 Registro, manejo de errores y diagnósticos</h1>
 <p>Esta sección presenta brevemente el módulo de registro.</p>
-<h4 id="modulo-de-registro">Módulo de registro</h4>
+<h2 id="modulo-de-registro">Módulo de registro</h2>
 <p>El módulo <code>logging</code> es un módulo de la biblioteca estándar para registrar información de diagnóstico. También es un módulo muy grande con muchas funciones sofisticadas. Mostraremos un ejemplo simple para ilustrar su utilidad.</p>
-<h4 id="excepciones-revisitadas">Excepciones revisitadas</h4>
+<h2 id="excepciones-revisitadas">Excepciones revisitadas</h2>
 <p>En los ejercicios, escribimos una función <code>parse()</code> que se parecía a esto:</p>
 <pre><code class="language-python"># fileparse.py
 def parse(f, types=None, names=None, delimiter=None):
@@ -106,7 +138,7 @@ except ValueError as e:
     pass
 </code></pre>
 <p>Ninguna solución es satisfactoria porque a menudo se desean <em>ambos</em> comportamientos (seleccionables por el usuario).</p>
-<h4 id="uso-del-registro">Uso del registro</h4>
+<h2 id="uso-del-registro">Uso del registro</h2>
 <p>El módulo <code>logging</code> puede solucionar este problema.</p>
 <pre><code class="language-python"># fileparse.py
 import logging
@@ -121,7 +153,7 @@ def parse(f,types=None,names=None,delimiter=None):
         log.debug(&quot;Razón: %s&quot;, e)
 </code></pre>
 <p>Se modifica el código para emitir mensajes de advertencia o un objeto <code>Logger</code> especial. El creado con <code>logging.getLogger(__name__)</code>.</p>
-<h4 id="conceptos-basicos-de-registro">Conceptos básicos de registro</h4>
+<h2 id="conceptos-basicos-de-registro">Conceptos básicos de registro</h2>
 <p>Crear un objeto de registro.</p>
 <pre><code class="language-python">log = logging.getLogger(name) # name es una cadena
 </code></pre>
@@ -136,7 +168,7 @@ log.debug(message [, args])
 <p>Todos ellos crean un mensaje de registro formateado. <code>args</code> se utiliza con el operador <code>%</code> para crear el mensaje.</p>
 <pre><code class="language-python">logmsg = message % args # Escrito en el registro
 </code></pre>
-<h4 id="configuracion-del-registro">Configuración del registro</h4>
+<h2 id="configuracion-del-registro">Configuración del registro</h2>
 <p>El comportamiento del registro se configura por separado.</p>
 <pre><code class="language-python"># main.py
 
@@ -150,10 +182,10 @@ if __name__ == '__main__':
     )
 </code></pre>
 <p>Normalmente, esta es una configuración única al iniciar el programa. La configuración es independiente del código que realiza las llamadas de registro.</p>
-<h4 id="comentarios">Comentarios</h4>
+<h2 id="comentarios">Comentarios</h2>
 <p>El registro es altamente configurable. Puede ajustar cada aspecto del mismo: archivos de salida, niveles, formatos de mensajes, etc. Sin embargo, el código que usa el registro no tiene que preocuparse por eso.</p>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-82-agregar-registro-a-un-modulo">Ejercicio 8.2: Agregar registro a un módulo</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-82-agregar-registro-a-un-modulo">Ejercicio 8.2: Agregar registro a un módulo</h3>
 <p>En <code>fileparse.py</code>, hay un manejo de errores relacionado con excepciones causadas por una entrada incorrecta. Se parece a esto:</p>
 <pre><code class="language-python"># fileparse.py
 import csv
@@ -234,7 +266,7 @@ DEBUG:fileparse:Row 7: Reason: invalid literal for int() with base 10: ''
 &gt;&gt;&gt; a = report.read_portfolio('Datos/missing.csv')
 &gt;&gt;&gt;
 </code></pre>
-<h5 id="ejercicio-83-agregar-registros-a-un-programa">Ejercicio 8.3: Agregar registros a un programa</h5>
+<h3 id="ejercicio-83-agregar-registros-a-un-programa">Ejercicio 8.3: Agregar registros a un programa</h3>
 <p>Para agregar registro a una aplicación, necesita tener algún mecanismo para inicializar el módulo de registro en el módulo principal. Una forma de hacerlo es incluir un código de configuración similar a este:</p>
 <pre><code class="language-python"># Este archivo establece la configuración básica del módulo de registro.
 # Cambie la configuración aquí para ajustar la salida del registro según sea necesario.
@@ -246,7 +278,7 @@ logging.basicConfig(
 )
 </code></pre>
 <p>Nuevamente, deberá colocar esto en algún lugar de los pasos de inicio de su programa. Por ejemplo, ¿dónde colocaría esto en su <code>report ¿Programa .py</code>?</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Testing.Rmd">Anterior (8.1 Pruebas)</a> | <a href="03_Debugging.Rmd">Próximo (8.3 Depuración)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Testing/">Anterior (8.1 Pruebas)</a> | <a href="../03_Debugging/">Próximo (8.3 Depuración)</a></p></div>
             </div>
         </div>
 

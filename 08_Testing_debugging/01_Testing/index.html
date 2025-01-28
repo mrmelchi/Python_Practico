@@ -66,16 +66,60 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#81-pruebas" class="nav-link">8.1 Pruebas</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#las-pruebas-son-geniales-la-depuracion-es-un-asco" class="nav-link">Las pruebas son geniales, la depuración es un asco</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#afirmaciones" class="nav-link">Afirmaciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#programacion-por-contrato" class="nav-link">Programación por contrato</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#pruebas-en-linea" class="nav-link">Pruebas en línea</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modulo-unittest" class="nav-link">Módulo unittest</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#uso-de-unittest" class="nav-link">Uso de unittest</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejecutar-unittest" class="nav-link">Ejecutar unittest</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#comentario" class="nav-link">Comentario</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#herramientas-de-prueba-de-terceros" class="nav-link">Herramientas de prueba de terceros</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../07_Advanced_Topics/05_Decorated_methods.Rmd">Anterior (7.5 Métodos estáticos y de clase)</a> | <a href="02_Logging.Rmd">Próximo (8.2 Logging)</a></p>
-<h3 id="81-pruebas">8.1 Pruebas</h3>
-<h4 id="las-pruebas-son-geniales-la-depuracion-es-un-asco">Las pruebas son geniales, la depuración es un asco</h4>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../07_Advanced_Topics/05_Decorated_methods/">Anterior (7.5 Métodos estáticos y de clase)</a> | <a href="../02_Logging/">Próximo (8.2 Logging)</a></p>
+<h1 id="81-pruebas">8.1 Pruebas</h1>
+<h2 id="las-pruebas-son-geniales-la-depuracion-es-un-asco">Las pruebas son geniales, la depuración es un asco</h2>
 <p>La naturaleza dinámica de Python hace que las pruebas sean de vital importancia para la mayoría de las aplicaciones. No hay ningún compilador que encuentre errores. La única forma de encontrarlos es ejecutar el código y asegurarse de probar todas sus funciones.</p>
-<h4 id="afirmaciones">Afirmaciones</h4>
+<h2 id="afirmaciones">Afirmaciones</h2>
 <p>La declaración <code>assert</code> es una verificación interna del programa. Si una expresión no es verdadera, genera una excepción <code>AssertionError</code>.</p>
 <p>Sintaxis de la declaración <code>assert</code>.</p>
 <pre><code class="language-python">assert &lt;expresiónn&gt; [, 'Mensaje de diagnóstico']
@@ -84,7 +128,7 @@
 <pre><code class="language-python">assert isinstance(10, int), 'Int esperado'
 </code></pre>
 <p>No debería usarse para verificar la entrada del usuario (es decir, los datos ingresados en un formulario web o algo así). Su propósito es más para verificaciones internas e invariantes (condiciones que siempre deben ser verdaderas).</p>
-<h4 id="programacion-por-contrato">Programación por contrato</h4>
+<h2 id="programacion-por-contrato">Programación por contrato</h2>
 <p>También conocida como Diseño por contrato, el uso liberal de aserciones es un enfoque para diseñar software. Prescribe que los diseñadores de software deben definir especificaciones de interfaces precisas para los componentes del software.</p>
 <p>Por ejemplo, puede colocar aserciones en todas las entradas de una función.</p>
 <pre><code class="language-python">def add(x, y):
@@ -101,7 +145,7 @@ Traceback (most recent call last):
 AssertionError: Esperado un int
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="pruebas-en-linea">Pruebas en línea</h4>
+<h2 id="pruebas-en-linea">Pruebas en línea</h2>
 <p>Las afirmaciones también se pueden usar para pruebas simples.</p>
 <pre><code class="language-python">def add(x, y):
     return x + y
@@ -111,7 +155,7 @@ assert add(2,2) == 4
 <p>De esta manera, está incluyendo la prueba en el mismo módulo que su código.</p>
 <p><em>Beneficio: si el código está claramente dañado, los intentos de importar el módulo fallarán.</em></p>
 <p>Esto no se recomienda para pruebas exhaustivas. Es más bien una "prueba de humo" básica. ¿Funciona la función en algún ejemplo? Si no, entonces algo está definitivamente dañado.</p>
-<h4 id="modulo-unittest">Módulo <code>unittest</code></h4>
+<h2 id="modulo-unittest">Módulo <code>unittest</code></h2>
 <p>Supongamos que tiene un código.</p>
 <pre><code class="language-python"># simple.py
 
@@ -154,7 +198,7 @@ class TestAdd(unittest.TestCase):
         self.assertEqual(r, 'helloworld')
 </code></pre>
 <p>*Importante: Cada método debe comenzar con <code>test</code>.</p>
-<h4 id="uso-de-unittest">Uso de <code>unittest</code></h4>
+<h2 id="uso-de-unittest">Uso de <code>unittest</code></h2>
 <p>Hay varias afirmaciones integradas que vienen con <code>unittest</code>. Cada una de ellas afirma algo diferente.</p>
 <pre><code class="language-python"># Afirmar que expr es True
 self.assertTrue(expr)
@@ -172,7 +216,7 @@ self.assertAlmostEqual(x,y,places)
 self.assertRaises(exc, callable, arg1, arg2, ...)
 </code></pre>
 <p>Esta no es una lista exhaustiva. Hay otras afirmaciones en el módulo.</p>
-<h4 id="ejecutar-unittest">Ejecutar <code>unittest</code></h4>
+<h2 id="ejecutar-unittest">Ejecutar <code>unittest</code></h2>
 <p>Para ejecutar las pruebas, convierta el código en un script.</p>
 <pre><code class="language-python"># test_simple.py
 
@@ -195,10 +239,10 @@ AssertionError: 4 != 5
 Ran 2 tests in 0.000s
 FAILED (failures=1)
 </code></pre>
-<h4 id="comentario">Comentario</h4>
+<h2 id="comentario">Comentario</h2>
 <p>La realización de pruebas unitarias efectivas es un arte y puede volverse bastante complicada para aplicaciones grandes.</p>
 <p>El módulo <code>unittest</code> tiene una gran cantidad de opciones relacionadas con los ejecutores de pruebas, la recopilación de resultados y otros aspectos de las pruebas. Consulta la documentación para obtener más detalles.</p>
-<h4 id="herramientas-de-prueba-de-terceros">Herramientas de prueba de terceros</h4>
+<h2 id="herramientas-de-prueba-de-terceros">Herramientas de prueba de terceros</h2>
 <p>El módulo <code>unittest</code> integrado tiene la ventaja de estar disponible en todas partes: es parte de Python. Sin embargo, muchos programadores también lo consideran bastante detallado. Una alternativa popular es <a href="https://docs.pytest.org/en/latest/">pytest</a>. Con pytest, tu archivo de prueba se simplifica a algo como lo siguiente:</p>
 <pre><code class="language-python"># test_simple.py
 import simple
@@ -211,10 +255,10 @@ def test_str():
 </code></pre>
 <p>Para ejecutar las pruebas, simplemente escriba un comando como <code>python -m pytest</code>. Descubrirá todas las pruebas y las ejecutará.</p>
 <p><code>pytest</code> es mucho más que este ejemplo, pero suele ser bastante fácil comenzar si decide probarlo.</p>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En este ejercicio, explorará la mecánica básica del uso del módulo <code>unittest</code> de Python.</p>
-<p>En ejercicios anteriores, escribió un archivo <code>stock.py</code> que contenía una clase <code>Stock</code>. Para este ejercicio, se asumió que está usando el código escrito para <a href="../07_Advanced_Topics/03_Returning_functions">Ejercicio 7.9</a> que involucra propiedades tipificadas. Si, por alguna razón, eso no funciona, es posible que desee copiar la solución de <code>Soluciones/7_9</code> a su directorio de trabajo.</p>
-<h5 id="ejercicio-81-escritura-de-pruebas-unitarias">Ejercicio 8.1: Escritura de pruebas unitarias</h5>
+<p>En ejercicios anteriores, escribió un archivo <code>stock.py</code> que contenía una clase <code>Stock</code>. Para este ejercicio, se asumió que está usando el código escrito para <a href="../../07_Advanced_Topics/03_Returning_functions/">Ejercicio 7.9</a> que involucra propiedades tipificadas. Si, por alguna razón, eso no funciona, es posible que desee copiar la solución de <code>Soluciones/7_9</code> a su directorio de trabajo.</p>
+<h3 id="ejercicio-81-escritura-de-pruebas-unitarias">Ejercicio 8.1: Escritura de pruebas unitarias</h3>
 <p>En un archivo separado <code>test_stock.py</code>, escribe un conjunto de pruebas unitarias para la clase <code>Stock</code>. Para comenzar, aquí tienes un pequeño fragmento de código que prueba la creación de instancias:</p>
 <pre><code class="language-python"># test_stock.py
 
@@ -252,7 +296,7 @@ OK
         with self.assertRaises(TypeError):
             s.shares = '100'
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../07_Advanced_Topics/05_Decorated_methods.Rmd">Anterior (7.5 Métodos estáticos y de clase)</a> | <a href="02_Logging.Rmd">Próximo (8.2 Logging)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../../07_Advanced_Topics/05_Decorated_methods/">Anterior (7.5 Métodos estáticos y de clase)</a> | <a href="../02_Logging/">Próximo (8.2 Logging)</a></p></div>
             </div>
         </div>
 

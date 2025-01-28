@@ -66,14 +66,46 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#83-depuracion" class="nav-link">8.3 Depuración</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#consejos-de-depuracion" class="nav-link">Consejos de depuración</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#lectura-de-los-tracebacks" class="nav-link">Lectura de los tracebacks</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#uso-del-repl" class="nav-link">Uso del REPL</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#depuracion-con-print" class="nav-link">Depuración con Print</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#el-depurador-de-python" class="nav-link">El depurador de Python</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejecutar-bajo-el-depurador" class="nav-link">Ejecutar bajo el depurador</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Logging.Rmd">Anterior (8.2 Registro, manejo de errores y diagnósticos)</a> | <a href="../09_Packages/00_Overview.Rmd">Próximo (9 Paquetes)</a></p>
-<h3 id="83-depuracion">8.3 Depuración</h3>
-<h4 id="consejos-de-depuracion">Consejos de depuración</h4>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Logging/">Anterior (8.2 Registro, manejo de errores y diagnósticos)</a> | <a href="../../09_Packages/00_Overview/">Próximo (9 Paquetes)</a></p>
+<h1 id="83-depuracion">8.3 Depuración</h1>
+<h2 id="consejos-de-depuracion">Consejos de depuración</h2>
 <p>Entonces, su programa se ha bloqueado...</p>
 <pre><code class="language-bash">bash % python blah.py
 Traceback (última llamada más reciente):
@@ -88,7 +120,7 @@ línea x.append(3)
 AttributeError: el objeto 'int' no tiene el atributo 'append'
 </code></pre>
 <p>¿Y ahora qué?!</p>
-<h4 id="lectura-de-los-tracebacks">Lectura de los tracebacks</h4>
+<h2 id="lectura-de-los-tracebacks">Lectura de los tracebacks</h2>
 <p>La última línea es la causa específica del fallo.</p>
 <pre><code class="language-bash">bash % python blah.py
 Traceback (most recent call last):
@@ -105,7 +137,7 @@ AttributeError: el objeto 'int' no tiene el atributo 'append'
 </code></pre>
 <p>Sin embargo, no siempre es fácil de leer o comprender.</p>
 <p><em>CONSEJO PROFESIONAL: Pegue el traceback completo en Google.</em></p>
-<h4 id="uso-del-repl">Uso del REPL</h4>
+<h2 id="uso-del-repl">Uso del REPL</h2>
 <p>Use la opción <code>-i</code> para mantener Python activo al ejecutar un script.</p>
 <pre><code class="language-bash">bash % python -i blah.py
 Traceback (most recent call last):
@@ -121,7 +153,7 @@ AttributeError: el objeto 'int' no tiene el atributo 'append'
 &gt;&gt;&gt;
 </code></pre>
 <p>Conserva el estado del intérprete. Eso significa que puede seguir investigando después de la falla. Verificando los valores de las variables y otros estados.</p>
-<h4 id="depuracion-con-print">Depuración con Print</h4>
+<h2 id="depuracion-con-print">Depuración con Print</h2>
 <p>La depuración con <code>print()</code> es bastante común.</p>
 <p><em>Consejo: asegúrate de usar <code>repr()</code></em></p>
 <pre><code class="language-python">def spam(x):
@@ -139,7 +171,7 @@ AttributeError: el objeto 'int' no tiene el atributo 'append'
 Decimal('3.4')
 &gt;&gt;&gt;
 </code></pre>
-<h4 id="el-depurador-de-python">El depurador de Python</h4>
+<h2 id="el-depurador-de-python">El depurador de Python</h2>
 <p>Puedes iniciar manualmente el depurador dentro de un programa.</p>
 <pre><code class="language-python">def some_function():
     ...
@@ -153,7 +185,7 @@ Decimal('3.4')
 pdb.set_trace() # En lugar de `breakpoint()`
 ...
 </code></pre>
-<h4 id="ejecutar-bajo-el-depurador">Ejecutar bajo el depurador</h4>
+<h2 id="ejecutar-bajo-el-depurador">Ejecutar bajo el depurador</h2>
 <p>También puedes ejecutar un programa completo bajo el depurador.</p>
 <pre><code class="language-bash">bash % python -m pdb someprogram.py
 </code></pre>
@@ -176,10 +208,10 @@ pdb.set_trace() # En lugar de `breakpoint()`
 (Pdb) b foo # Función foo() en el archivo actual
 (Pdb) b module.foo # Función foo() en un módulo
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-84-errores-que-errores">Ejercicio 8.4: ¿Errores? ¿Qué errores?</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-84-errores-que-errores">Ejercicio 8.4: ¿Errores? ¿Qué errores?</h3>
 <p>Funciona. ¡Envíalo!</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="02_Logging.Rmd">Anterior (8.2 Registro, manejo de errores y diagnósticos)</a> | <a href="../09_Packages/00_Overview.Rmd">Próximo (9 Paquetes)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../02_Logging/">Anterior (8.2 Registro, manejo de errores y diagnósticos)</a> | <a href="../../09_Packages/00_Overview/">Próximo (9 Paquetes)</a></p></div>
             </div>
         </div>
 

@@ -66,19 +66,67 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#91-paquetes" class="nav-link">9.1 Paquetes</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#modulos" class="nav-link">Módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#paquetes-vs-modulos" class="nav-link">Paquetes vs. módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#uso-de-un-paquete" class="nav-link">Uso de un paquete</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#dos-problemas" class="nav-link">Dos problemas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#problema-importaciones" class="nav-link">Problema: Importaciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#importaciones-relativas" class="nav-link">Importaciones relativas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#problema-scripts-principales" class="nav-link">Problema: Scripts principales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#archivos-__init__py" class="nav-link">Archivos __init__.py</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#otra-solucion-para-los-scripts" class="nav-link">Otra solución para los scripts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#estructura-de-la-aplicacion" class="nav-link">Estructura de la aplicación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../08_Testing_debugging/03_Debugging.Rmd">Anterior (8.3
-Depuración)</a> | <a href="02_Third_party.Rmd">Próximo (9.2
+<p><a href="../../Contents/">Contenido</a> | <a href="../../08_Testing_debugging/03_Debugging/">Anterior (8.3
+Depuración)</a> | <a href="../02_Third_party/">Próximo (9.2
 Módulos de terceros)</a></p>
-<h3 id="91-paquetes">9.1 Paquetes</h3>
+<h1 id="91-paquetes">9.1 Paquetes</h1>
 <p>Si escribe un programa más grande, no querrá organizarlo como una gran
 colección de archivos independientes en el nivel superior. Esta sección
 presenta el concepto de paquete.</p>
-<h4 id="modulos">Módulos</h4>
+<h2 id="modulos">Módulos</h2>
 <p>Cualquier archivo fuente de Python es un módulo.</p>
 <pre><code class="language-python"># foo.py
     def grok(a):
@@ -94,7 +142,7 @@ a = foo.grok(2)
 b = foo.spam('Hola')
 ...
 </code></pre>
-<h4 id="paquetes-vs-modulos">Paquetes vs. módulos</h4>
+<h2 id="paquetes-vs-modulos">Paquetes vs. módulos</h2>
 <p>Para colecciones de código más grandes, es común organizar los módulos
 en un paquete.</p>
 <pre><code class="language-code"># Desde esto
@@ -114,7 +162,7 @@ ejemplo anterior (claramente elegir este nombre es el primer paso más
 importante).</p>
 <p>Agrega un archivo <code>__init__.py</code> al directorio. Puede estar vacío.</p>
 <p>Coloca tus archivos fuente en el directorio.</p>
-<h4 id="uso-de-un-paquete">Uso de un paquete</h4>
+<h2 id="uso-de-un-paquete">Uso de un paquete</h2>
 <p>Un paquete sirve como un espacio de nombres para las importaciones.</p>
 <p>Esto significa que ahora hay importaciones de varios niveles.</p>
 <pre><code class="language-python">import porty.report
@@ -127,14 +175,14 @@ port = report.read_portfolio('portfolio.csv')
 from porty.report import read_portfolio
 port = read_portfolio('portfolio.csv')
 </code></pre>
-<h4 id="dos-problemas">Dos problemas</h4>
+<h2 id="dos-problemas">Dos problemas</h2>
 <p>Hay dos problemas principales con este enfoque.</p>
 <ul>
 <li>Las importaciones entre archivos del mismo paquete se interrumpen.</li>
 <li>Los scripts principales ubicados dentro del paquete se interrumpen.</li>
 </ul>
 <p>Básicamente, todo se interrumpe. Pero, aparte de eso, funciona.</p>
-<h4 id="problema-importaciones">Problema: Importaciones</h4>
+<h2 id="problema-importaciones">Problema: Importaciones</h2>
 <p>Las importaciones entre archivos del mismo paquete <em>ahora deben incluir
 el nombre del paquete en la importación</em>. Recuerde la estructura.</p>
 <pre><code class="language-code">porty/
@@ -156,7 +204,7 @@ import fileparse # FALLA. fileparse not found
 
 ...
 </code></pre>
-<h4 id="importaciones-relativas">Importaciones relativas</h4>
+<h2 id="importaciones-relativas">Importaciones relativas</h2>
 <p>En lugar de usar directamente el nombre del paquete, puede usar <code>.</code> para
 hacer referencia al paquete actual.</p>
 <pre><code class="language-python"># report.py
@@ -169,7 +217,7 @@ def read_portfolio(filename):
 <pre><code class="language-python">from . import modname
 </code></pre>
 <p>Esto facilita cambiar el nombre del paquete.</p>
-<h4 id="problema-scripts-principales">Problema: Scripts principales</h4>
+<h2 id="problema-scripts-principales">Problema: Scripts principales</h2>
 <p>Ejecutar un submódulo de paquete como un script principal falla.</p>
 <pre><code class="language-bash">bash $ python porty/pcost.py # FALLA
 ...
@@ -182,7 +230,7 @@ programa de una manera diferente, usando la opción <code>-m</code>.</p>
 <pre><code class="language-bash">bash $ python -m porty.pcost # FUNCIONA
 ...
 </code></pre>
-<h4 id="archivos-__init__py">Archivos <code>__init__.py</code></h4>
+<h2 id="archivos-__init__py">Archivos <code>__init__.py</code></h2>
 <p>El propósito principal de estos archivos es unir módulos.</p>
 <p>Ejemplo: consolidación de funciones</p>
 <pre><code class="language-python"># porty/__init__.py
@@ -197,7 +245,7 @@ portfolio_cost('portfolio.csv')
 <pre><code class="language-python">from porty import pcost
 pcost.portfolio_cost('portfolio.csv')
 </code></pre>
-<h4 id="otra-solucion-para-los-scripts">Otra solución para los scripts</h4>
+<h2 id="otra-solucion-para-los-scripts">Otra solución para los scripts</h2>
 <p>Como se indicó, ahora debe usar <code>-m package.module</code> para ejecutar
 scripts dentro de su paquete.</p>
 <pre><code class="language-bash">bash % python3 -m porty.pcost portfolio.csv
@@ -217,7 +265,7 @@ porty/ # directorio de paquetes
     pcost.py
     ...
 </code></pre>
-<h4 id="estructura-de-la-aplicacion">Estructura de la aplicación</h4>
+<h2 id="estructura-de-la-aplicacion">Estructura de la aplicación</h2>
 <p>La organización del código y la estructura de archivos son clave para la
 capacidad de mantenimiento de una aplicación.</p>
 <p>No existe un enfoque "universal" para Python. Sin embargo, una
@@ -243,7 +291,7 @@ import porty
 
 porty.report.main(sys.argv)
 </code></pre>
-<h4 id="ejercicios">Ejercicios</h4>
+<h2 id="ejercicios">Ejercicios</h2>
 <p>En este punto, tienes un directorio con varios programas:</p>
 <pre><code>pcost.py # calcula el costo de la cartera
 report.py # crea un informe
@@ -259,7 +307,7 @@ typedproperty.py # Propiedades de clase tipificadas
 </code></pre>
 <p>En este ejercicio, vamos a limpiar el código y ponerlo en un paquete
 común.</p>
-<h5 id="ejercicio-91-crear-un-paquete-simple">Ejercicio 9.1: Crear un paquete simple</h5>
+<h3 id="ejercicio-91-crear-un-paquete-simple">Ejercicio 9.1: Crear un paquete simple</h3>
 <p>Cree un directorio llamado <code>porty/</code> y coloque todos los archivos de
 Python anteriores en él. Además, cree un archivo <code>__init__.py</code> vacío y
 colóquelo en el directorio. Debería tener un directorio de archivos como
@@ -298,7 +346,7 @@ el código a lo siguiente:</p>
 from .fileparse import parse_csv
 ...
 </code></pre>
-<h5 id="ejercicio-92-crear-un-directorio-de-aplicacion">Ejercicio 9.2: Crear un directorio de aplicación</h5>
+<h3 id="ejercicio-92-crear-un-directorio-de-aplicacion">Ejercicio 9.2: Crear un directorio de aplicación</h3>
 <p>Poner todo el código en un "paquete" no suele ser suficiente para una
 aplicación. A veces hay archivos de soporte, documentación, scripts y
 otras cosas. Estos archivos deben existir FUERA del directorio <code>porty/</code>
@@ -335,7 +383,7 @@ bash % python3 -m porty.report portfolio.csv prices.csv txt
 
 bash %
 </code></pre>
-<h5 id="ejercicio-93-scripts-de-nivel-superior">Ejercicio 9.3: Scripts de nivel superior</h5>
+<h3 id="ejercicio-93-scripts-de-nivel-superior">Ejercicio 9.3: Scripts de nivel superior</h3>
 <p>Usar el comando <code>python -m</code> suele ser un poco extraño. Es posible que
 desee escribir un script de nivel superior que simplemente se ocupe de
 las rarezas de los paquetes. Cree un script <code>print-report.py</code> que
@@ -381,8 +429,8 @@ esto:</p>
         ticker.py
         typedproperty.py
 </code></pre>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="../08_Testing_debugging/03_Debugging.Rmd">Anterior (8.3
-Depuración)</a> | <a href="02_Third_party.Rmd">Próximo (9.2
+<p><a href="../../Contents/">Contenido</a> | <a href="../../08_Testing_debugging/03_Debugging/">Anterior (8.3
+Depuración)</a> | <a href="../02_Third_party/">Próximo (9.2
 Módulos de terceros)</a></p></div>
             </div>
         </div>

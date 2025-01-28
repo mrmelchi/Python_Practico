@@ -66,17 +66,53 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-bs-level="1"><a href="#92-modulos-de-terceros" class="nav-link">9.2 Módulos de terceros</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#la-ruta-de-busqueda-de-modulos" class="nav-link">La ruta de búsqueda de módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modulos-de-la-biblioteca-estandar" class="nav-link">Módulos de la biblioteca estándar</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#modulos-de-terceros" class="nav-link">Módulos de terceros</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#instalacion-de-modulos" class="nav-link">Instalación de módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#problemas" class="nav-link">Problemas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#entornos-virtuales" class="nav-link">Entornos virtuales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#manejo-de-dependencias-de-terceros-en-su-aplicacion" class="nav-link">Manejo de dependencias de terceros en su aplicación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Packages.Rmd">Anterior (9.1 Paquetes)</a> | <a href="03_Distribution.Rmd">Próximo (9.3 Entrega tu código a terceros)</a></p>
-<h3 id="92-modulos-de-terceros">9.2 Módulos de terceros</h3>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Packages/">Anterior (9.1 Paquetes)</a> | <a href="../03_Distribution/">Próximo (9.3 Entrega tu código a terceros)</a></p>
+<h1 id="92-modulos-de-terceros">9.2 Módulos de terceros</h1>
 <p>Python tiene una gran biblioteca de módulos integrados (<em>baterías incluidas</em>).</p>
 <p>Hay incluso más módulos de terceros. Consúltelos en el <a href="https://pypi.org/">Índice de paquetes de Python</a> o PyPi. O simplemente haga una búsqueda en Google de un tema específico.</p>
 <p>Cómo manejar dependencias de terceros es un tema en constante evolución con Python. Esta sección simplemente cubre los conceptos básicos para ayudarlo a comprender cómo funciona.</p>
-<h4 id="la-ruta-de-busqueda-de-modulos">La ruta de búsqueda de módulos</h4>
+<h2 id="la-ruta-de-busqueda-de-modulos">La ruta de búsqueda de módulos</h2>
 <p><code>sys.path</code> es un directorio que contiene la lista de todos los directorios revisados ​​por la declaración <code>import</code>. Míralo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import sys
 &gt;&gt;&gt; sys.path
@@ -84,7 +120,7 @@
 &gt;&gt;&gt;
 </code></pre>
 <p>Si importas algo y no está ubicado en uno de esos directorios, obtendrás una excepción <code>ImportError</code>.</p>
-<h4 id="modulos-de-la-biblioteca-estandar">Módulos de la biblioteca estándar</h4>
+<h2 id="modulos-de-la-biblioteca-estandar">Módulos de la biblioteca estándar</h2>
 <p>Los módulos de la biblioteca estándar de Python generalmente provienen de una ubicación como <code>/usr/local/lib/python3.6</code>. Puedes averiguarlo con certeza haciendo una prueba corta:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import re
 &gt;&gt;&gt; re
@@ -92,7 +128,7 @@
 &gt;&gt;&gt;
 </code></pre>
 <p>Simplemente mirar un módulo en el REPL es un buen consejo de depuración que debes conocer. Te mostrará la ubicación del archivo.</p>
-<h4 id="modulos-de-terceros">Módulos de terceros</h4>
+<h2 id="modulos-de-terceros">Módulos de terceros</h2>
 <p>Los módulos de terceros suelen estar ubicados en un directorio <code>site-packages</code> dedicado. Lo verás si realizas los mismos pasos que los anteriores:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import numpy
 &gt;&gt;&gt; numpy
@@ -100,12 +136,12 @@
 &gt;&gt;&gt;
 </code></pre>
 <p>Nuevamente, mirar un módulo es un buen consejo de depuración si estás tratando de averiguar por qué algo relacionado con <code>import</code> no está funcionando como se esperaba.</p>
-<h4 id="instalacion-de-modulos">Instalación de módulos</h4>
+<h2 id="instalacion-de-modulos">Instalación de módulos</h2>
 <p>La técnica más común para instalar un módulo de terceros es usar <code>pip</code>. Por ejemplo:</p>
 <pre><code class="language-bash">bash % python -m pip install packagename
 </code></pre>
 <p>Este comando descargará el paquete y lo instalará en el directorio <code>site-packages</code>.</p>
-<h4 id="problemas">Problemas</h4>
+<h2 id="problemas">Problemas</h2>
 <ul>
 <li>Es posible que estés usando una instalación de Python que no controlas directamente.</li>
 <li>Una instalación aprobada por la empresa</li>
@@ -113,7 +149,7 @@
 <li>Es posible que no tengas permiso para instalar paquetes globales en la computadora.</li>
 <li>Es posible que existan otras dependencias.</li>
 </ul>
-<h4 id="entornos-virtuales">Entornos virtuales</h4>
+<h2 id="entornos-virtuales">Entornos virtuales</h2>
 <p>Una solución común para los problemas de instalación de paquetes es crear un denominado "entorno virtual" para ti mismo. Naturalmente, no existe una "única forma" de hacerlo; de hecho, existen varias herramientas y técnicas que compiten entre sí. Sin embargo, si estás usando una instalación estándar de Python, puedes intentar escribir lo siguiente:</p>
 <pre><code class="language-bash">bash % python -m venv mypython
 bash %
@@ -127,13 +163,13 @@ bash %
 ...
 </code></pre>
 <p>Para experimentar y probar diferentes paquetes, un entorno virtual generalmente funcionará bien. Si, por otro lado, está creando una aplicación y tiene dependencias de paquetes específicas, ese es un problema ligeramente diferente.</p>
-<h4 id="manejo-de-dependencias-de-terceros-en-su-aplicacion">Manejo de dependencias de terceros en su aplicación</h4>
+<h2 id="manejo-de-dependencias-de-terceros-en-su-aplicacion">Manejo de dependencias de terceros en su aplicación</h2>
 <p>Si ha escrito una aplicación y tiene dependencias de terceros específicas, un desafío se relaciona con la creación y preservación del entorno que incluye su código y las dependencias. Lamentablemente, esta ha sido un área de gran confusión y cambios frecuentes durante la existencia de Python. Sigue evolucionando incluso ahora.</p>
 <p>En lugar de proporcionar información que seguramente quedará desactualizada pronto, le recomiendo que consulte la [Guía del usuario de empaquetado de Python] <a href="https://packaging.python.org">https://packaging.python.org</a>).</p>
-<h4 id="ejercicios">Ejercicios</h4>
-<h5 id="ejercicio-94-creacion-de-un-entorno-virtual">Ejercicio 9.4: Creación de un entorno virtual</h5>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-94-creacion-de-un-entorno-virtual">Ejercicio 9.4: Creación de un entorno virtual</h3>
 <p>Vea si puede recrear los pasos para crear un entorno virtual e instalar pandas en él como se muestra arriba.</p>
-<p><a href="../Contents.Rmd">Contenido</a> | <a href="01_Packages.Rmd">Anterior (9.1 Paquetes)</a> | <a href="03_Distribution.Rmd">Próximo (9.3 Entrega tu código a terceros)</a></p></div>
+<p><a href="../../Contents/">Contenido</a> | <a href="../01_Packages/">Anterior (9.1 Paquetes)</a> | <a href="../03_Distribution/">Próximo (9.3 Entrega tu código a terceros)</a></p></div>
             </div>
         </div>
 
