@@ -397,7 +397,7 @@
         <li class="md-nav__item">
   <a href="#declaracion-pass" class="md-nav__link">
     <span class="md-ellipsis">
-      declaración pass
+      Declaración pass
     </span>
   </a>
   
@@ -475,7 +475,7 @@ terminal Python sigue siendo una habilidad útil.</p>
 experimentar.</p>
 <p>Si comienza a escribir declaraciones, se ejecutarán inmediatamente. No
 hay ciclo de edición/compilación/ejecución/depuración.</p>
-<pre><code>&gt;&gt;&gt; print('hola mundo')
+<pre><code>&gt;&gt;&gt; print('Hola Mundo')
 Hola Mundo
 &gt;&gt;&gt; 37*42
 1554
@@ -505,7 +505,7 @@ asumen que puedes Interactuar con el intérprete.</p>
     que ha ingresado.</li>
 </ul>
 <p>El mensaje <code>...</code> puede aparecer o no según su entorno. Para este curso,
-Se muestra en blanco para facilitar cortar y pegar ejemplos de código.</p>
+se muestra en blanco para facilitar cortar y pegar ejemplos de código.</p>
 <p>El guión bajo <code>_</code> contiene el último resultado.</p>
 <pre><code class="language-python">&gt;&gt;&gt; 37 * 42
 1554
@@ -520,7 +520,7 @@ programa.</p>
 <h2 id="creando-programas">Creando programas</h2>
 <p>Los programas se colocan en archivos <code>.py</code>.</p>
 <pre><code class="language-python"># hola.py
-print('hola mundo')
+print('Hola Mundo')
 </code></pre>
 <p>Puedes crear estos archivos con tu editor de texto favorito.</p>
 <h2 id="programas-en-ejecucion">Programas en ejecución</h2>
@@ -534,13 +534,13 @@ bash %
 <pre><code>C:\AlgunaCarpeta&gt;hola.py
 Hola Mundo
 
-C:\AlgunaCarpeta&gt;c:\python36\python hello.py
+C:\AlgunaCarpeta&gt;c:\python36\python hola.py
 Hola Mundo
 </code></pre>
 <p>Nota: En Windows, es posible que deba especificar una ruta completa al
 intérprete de Python, como <code>c:\python36\python</code>. Sin embargo, si Python
 está instalado de su forma habitual, es posible que puedas simplemente
-escribir el nombre del programa. como por ejemplo <code>hello.py</code>.</p>
+escribir el nombre del programa. como por ejemplo <code>hola.py</code>.</p>
 <h2 id="un-programa-de-muestra">Un programa de muestra</h2>
 <p>Resolvamos el siguiente problema:</p>
 <blockquote>
@@ -590,6 +590,8 @@ print(b)
 </code></pre>
 <p>Cada declaración termina con una nueva línea. Las declaraciones se
 ejecutan una tras otra hasta que el control llega al final del archivo.</p>
+<p><em>IMPORTANTE</em>: A través del curso los vocablos <em>declaración, sentencia e
+instrucción</em> se utilizarán con el mismo significado.</p>
 <h2 id="comentarios">Comentarios</h2>
 <p>Los comentarios son texto que no se ejecutará.</p>
 <pre><code>a = 3 + 4
@@ -605,17 +607,17 @@ línea.</p>
 carácter de subrayado <code>_</code>, los números también pueden ser parte del
 nombre de una variable, excepto que se trate del primer caracter.</p>
 <pre><code>altura = 442 # válido
-_height = 442 # válido
+_altura = 442 # válido
 altura2 = 442 # válido
-2height = 442 # no válido
+2altura = 442 # no válido
 </code></pre>
 <h2 id="tipos">Tipos</h2>
 <p>No es necesario declarar las variables con el tipo del valor. El tipo
 está asociado con el valor del lado derecho, no con el nombre de la
 variable.</p>
-<pre><code>altura = 442 # Un entero
-altura = 442.0 # Punto flotante
-altura = 'Muy alto' # Una cadena
+<pre><code>altura = 442 # Un entero `int`
+altura = 442.0 # Punto flotante `float`
+altura = 'Muy alto' # Una cadena o string `str`
 </code></pre>
 <p>Python está tipado dinámicamente. El "tipo" percibido de una variable
 podría cambiar a medida que se ejecuta un programa dependiendo del valor
@@ -695,14 +697,14 @@ else:
 <h2 id="impresion">Impresión</h2>
 <p>La función <code>print</code> produce una sola línea de texto con los valores
 pasados.</p>
-<pre><code>print('¡Hola mundo!') # Imprime el texto '¡Hola mundo!'
+<pre><code>print('¡Hola mundo!') # Imprime el texto ¡Hola mundo!
 </code></pre>
 <p>Puedes utilizar variables. El texto impreso será el valor de la
 variable, no el nombre.</p>
 <pre><code>x = 100
-print(x) # Imprime el texto '100'
+print(x) # Imprime el texto 100
 </code></pre>
-<p>Si pasa más de un valor a <code>print</code> se separan con espacios.</p>
+<p>Si pasa más de un valor a <code>print</code>, los mismos se separan con espacios.</p>
 <pre><code>nombre = 'Jake'
 print('Mi nombre es', nombre) # Imprime el texto 'Mi nombre es Jake'
 </code></pre>
@@ -712,25 +714,26 @@ print('Mi nombre es', 'Jake')
 </code></pre>
 <p>Esto imprime:</p>
 <pre><code>Hola
-Mi nombre es Jake.
+Mi nombre es Jake
 </code></pre>
 <p>El carácter de nueva línea adicional se puede suprimir:</p>
-<pre><code>print('Hola', fin=' ')
-print('Mi nombre es', 'Jake')
+<pre><code>print('Hola', end=' ')
+print('mi nombre es', 'Jake')
+
 </code></pre>
 <p>Este código ahora imprimirá:</p>
-<pre><code>Hola, mi nombre es Jake.
+<pre><code>Hola mi nombre es Jake
 </code></pre>
 <h2 id="entrada-del-usuario">Entrada del usuario</h2>
 <p>Para leer una línea de entrada escrita por el usuario, utilice la
 función <code>input()</code>:</p>
-<pre><code>nombre = input('Ingrese su nombre:')
-print('Tu nombre es', nombre)
+<pre><code>nombre = input('Ingrese su nombre: ')
+print('Tu nombre es ', nombre)
 </code></pre>
 <p><code>input</code> imprime un mensaje para el usuario y devuelve su respuesta. Esto
 es útil para programas pequeños, ejercicios de aprendizaje o depuración
 simple. No se utiliza mucho para programas reales.</p>
-<h2 id="declaracion-pass">declaración <code>pass</code></h2>
+<h2 id="declaracion-pass">Declaración <code>pass</code></h2>
 <p>A veces es necesario especificar un bloque de código vacío. Para ello se
 utiliza la palabra clave <code>pass</code>.</p>
 <pre><code>if a &gt; b:
@@ -767,18 +770,18 @@ muestra la altura de la primeros 10 rebotes.</p>
 9 1.0077695999999998
 10 0,6046617599999998
 </code></pre>
-<p><em>Nota: Puedes limpiar un poco la salida si usas la función round().
+<p><em>Nota: Puedes limpiar un poco la salida si usas la función <code>round()</code>.
 Intente usarlo para redondear la salida a 4 dígitos.</em></p>
-<pre><code>1 60,0
-2 36,0
+<pre><code>1 60.0
+2 36.0
 3 21.6
-4 12,96
+4 12.96
 5 7.776
 6 4.6656
 7 2.7994
 8 1.6796
 9 1.0078
-10 0,6047
+10 0.6047
 </code></pre>
 <h3 id="ejercicio-16-depuracion">Ejercicio 1.6: Depuración</h3>
 <p>El siguiente fragmento de código contiene código del problema de la
