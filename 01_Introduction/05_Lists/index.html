@@ -269,9 +269,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#iteracion-y-busqueda-de-listas" class="md-nav__link">
+  <a href="#iteracion-y-busqueda-en-listas" class="md-nav__link">
     <span class="md-ellipsis">
-      Iteración y búsqueda de listas
+      Iteración y búsqueda en listas
     </span>
   </a>
   
@@ -406,9 +406,9 @@
 nums = [ 39, 38, 42, 65, 111]
 </code></pre>
 <p>A veces las listas se crean mediante otros métodos. Por ejemplo, una cadena se puede dividir en una lista usando el método <code>split()</code>:</p>
-<pre><code>&gt;&gt;&gt; linea = 'GOOG,100,490.10' # sin tilde
-&gt;&gt;&gt; fila = linea.split(',')
-&gt;&gt;&gt; fila
+<pre><code>&gt;&gt;&gt; line = 'GOOG,100,490.10'
+&gt;&gt;&gt; row = line.split(',')
+&gt;&gt;&gt; row
 ['GOOG', '100', '490.10']
 &gt;&gt;&gt;
 </code></pre>
@@ -450,14 +450,14 @@ len(names)  # 3
 <pre><code class="language-python">s = [1, 2, 3]
 s * 3   # [1, 2, 3, 1, 2, 3, 1, 2, 3]
 </code></pre>
-<h2 id="iteracion-y-busqueda-de-listas">Iteración y búsqueda de listas</h2>
+<h2 id="iteracion-y-busqueda-en-listas">Iteración y búsqueda en listas</h2>
 <p>Utilice <code>for</code> para iterar sobre el contenido de la lista.</p>
 <pre><code class="language-python">for name in names:
     # use name
     # e.g. print(name)
     ...
 </code></pre>
-<p>Esto es similar a una declaración 'foreach' de otros lenguajes de programación.</p>
+<p>Esto es similar a una declaración <code>foreach</code> de otros lenguajes de programación.</p>
 <p>Para encontrar la posición de algo rápidamente, utilice <code>index()</code>.</p>
 <pre><code class="language-python">names = ['Elwood','Jake','Curtis']
 names.index('Curtis')   # 2
@@ -567,20 +567,20 @@ True
 &gt;&gt;&gt;
 </code></pre>
 <p>Utilice el método <code>insert()</code> para insertar el símbolo <code>'AA'</code> como el segundo elemento de la lista.</p>
-<pre><code class="language-python">&gt;&gt;&gt; # Insertar 'AA' como el segundo elemento de la lista
+<pre><code class="language-python">&gt;&gt;&gt; # Inserta 'AA' como el segundo elemento de la lista
 &gt;&gt;&gt; symlist
 ['HPQ', 'AA', 'AAPL', 'AIG', 'MSFT', 'YHOO', 'GOOG', 'RHT']
 &gt;&gt;&gt;
 </code></pre>
 <p>Utilice el método <code>remove()</code> para eliminar <code>'MSFT'</code> de la lista.</p>
-<pre><code class="language-python">&gt;&gt;&gt; # Eliminar 'MSFT'
+<pre><code class="language-python">&gt;&gt;&gt; # Elimina 'MSFT'
 &gt;&gt;&gt; symlist
 ['HPQ', 'AA', 'AAPL', 'AIG', 'YHOO', 'GOOG', 'RHT']
 &gt;&gt;&gt;
 </code></pre>
 <p>Añade una entrada duplicada para <code>'YHOO'</code> al final de la lista.</p>
-<p><em>Nota: está perfectamente bien que una lista tenga valores duplicados.</em></p>
-<pre><code class="language-python">&gt;&gt;&gt; # Añadir 'YHOO'
+<p><em>Nota: Es perfectamente correcto que una lista tenga elementos duplicados.</em></p>
+<pre><code class="language-python">&gt;&gt;&gt; # Añade 'YHOO'
 &gt;&gt;&gt; symlist
 ['HPQ', 'AA', 'AAPL', 'AIG', 'YHOO', 'GOOG', 'RHT', 'YHOO']
 &gt;&gt;&gt;
@@ -592,20 +592,20 @@ True
 'YHOO'
 &gt;&gt;&gt;
 </code></pre>
-<p>Cuente cuántas veces aparece <code>'YHOO'</code> en la lista:</p>
+<p>Cuenta cuántas veces aparece <code>'YHOO'</code> en la lista:</p>
 <pre><code class="language-python">&gt;&gt;&gt; symlist.count('YHOO')
 2
 &gt;&gt;&gt;
 </code></pre>
-<p>Eliminar la primera aparición de "YHOO".</p>
-<pre><code class="language-python">&gt;&gt;&gt; # Eliminar la primera aparición de 'YHOO'
+<p>Elimina la primera aparición de "YHOO".</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Elimina la primera aparición de 'YHOO'
 &gt;&gt;&gt; symlist
 ['HPQ', 'AA', 'AAPL', 'AIG', 'GOOG', 'RHT', 'YHOO']
 &gt;&gt;&gt;
 </code></pre>
 <p>Para que lo sepas, no existe ningún método para encontrar o eliminar todas las apariciones de un elemento. Sin embargo, veremos una forma elegante de hacerlo en la sección 2.</p>
 <h3 id="ejercicio-123-ordenamiento">Ejercicio 1.23: Ordenamiento</h3>
-<p>¿Quieres ordenar una lista? Utilice el método <code>sort()</code>. Pruébelo:</p>
+<p>¿Quieres ordenar una lista? Utilice el método <code>sort()</code>. Pruébalo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; symlist.sort()
 &gt;&gt;&gt; symlist
 ['AA', 'AAPL', 'AIG', 'GOOG', 'HPQ', 'RHT', 'YHOO']

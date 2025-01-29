@@ -372,7 +372,7 @@
 
 <p><a href="../../Contents/">Contenido</a> | <a href="../06_Files/">Anterior (1.6 Archivos)</a> | <a href="../../02_Working_with_data/00_Overview/">Próximo (2. Trabajar con datos)</a></p>
 <h1 id="17-funciones">1.7 Funciones</h1>
-<p>A medida que sus programas comiencen a crecer, querrá organizarse. Esta sección presenta brevemente las funciones y los módulos de la biblioteca. También se introduce el manejo de errores con excepciones.</p>
+<p>A medida que sus programas se hagan más grandes, querrá organizarse. Esta sección presenta brevemente las funciones y los módulos de la biblioteca estándar de Python. También se presenta el manejo de errores con excepciones.</p>
 <h2 id="funciones-personalizadas">Funciones personalizadas</h2>
 <p>Utilice funciones para el código que desea reutilizar. Aquí hay una definición de función:</p>
 <pre><code class="language-python">def sumcount(n):
@@ -390,7 +390,7 @@
 </code></pre>
 <p>Una función es una serie de instrucciones que realizan una tarea y devuelven un resultado. La palabra clave <code>return</code> es necesaria para especificar explícitamente el valor de retorno de la función.</p>
 <h2 id="funciones-de-la-biblioteca">Funciones de la biblioteca</h2>
-<p>Python viene con una gran biblioteca estándar. Se accede a los módulos de la biblioteca mediante 'import'. Por ejemplo:</p>
+<p>Python viene con una gran biblioteca estándar. Se accede a los módulos de la biblioteca mediante <code>import</code>. Por ejemplo:</p>
 <pre><code class="language-python">import math
 x = math.sqrt(10)
 
@@ -417,21 +417,21 @@ ValueError: invalid literal for int() with base 10: 'N/A'
     try:
         shares = int(fields[1])
     except ValueError:
-        print(&quot;Couldn't parse&quot;, line)
+        print(&quot;No puede analizarse&quot;, line)
     ...
 </code></pre>
 <p>El nombre <code>ValueError</code> debe coincidir con el tipo de error que estás intentando detectar.</p>
 <p>A menudo es difícil saber con antelación qué tipos de errores podrían producirse en función de la operación que se esté realizando. Para bien o para mal, el manejo de excepciones a menudo se agrega <em>después</em> de que un programa falla inesperadamente (es decir, "oh, olvidamos detectar ese error. ¡Deberíamos manejarlo!").</p>
 <h2 id="generar-excepciones">Generar excepciones</h2>
 <p>Para generar una excepción, utilice la declaración <code>raise</code>.</p>
-<pre><code class="language-python">raise RuntimeError('What a kerfuffle')
+<pre><code class="language-python">raise RuntimeError('Que alboroto')
 </code></pre>
 <p>Esto provocará que el programa se cancele con un seguimiento de excepción. A menos que sea detectado por un bloque <code>try-except</code>.</p>
 <pre><code class="language-bash">% python3 foo.py
 Traceback (most recent call last):
   File &quot;foo.py&quot;, line 21, in &lt;module&gt;
-    raise RuntimeError(&quot;What a kerfuffle&quot;)
-RuntimeError: What a kerfuffle
+    raise RuntimeError(&quot;Que alboroto&quot;)
+RuntimeError: Que alboroto
 </code></pre>
 <h2 id="ejercicios">Ejercicios</h2>
 <h3 id="ejercicio-129-definicion-de-una-funcion">Ejercicio 1.29: Definición de una función</h3>
@@ -459,14 +459,14 @@ cost = portfolio_cost('Data/portfolio.csv')
 print('Costo Total:', cost)
 </code></pre>
 <p>Cuando ejecute su programa, debería ver el mismo resultado que antes. Después de ejecutar su programa, también puede llamar a su función de forma interactiva escribiendo lo siguiente:</p>
-<pre><code class="language-bash">bash % python3 -i pcost.py
+<pre><code class="language-bash">bash % python -i pcost.py
 </code></pre>
 <p>Esto le permitirá llamar a su función desde el modo interactivo.</p>
-<pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Datos/portfolio.csv')
+<pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/portfolio.csv')
 44671.15
 &gt;&gt;&gt;
 </code></pre>
-<p>Poder experimentar con su código de forma interactiva es útil para realizar pruebas y depuraciones.</p>
+<p>Poder experimentar con su código en modo interactivo es útil para realizar pruebas y depuraciones.</p>
 <h3 id="ejercicio-131-manejo-de-errores">Ejercicio 1.31: Manejo de errores</h3>
 <p>¿Qué sucede si prueba su función en un archivo con algunos campos faltantes?</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/missing.csv')
@@ -530,12 +530,12 @@ else:
     filename = 'Data/portfolio.csv'
 
 cost = portfolio_cost(filename)
-print('Costo Total:', cost)
+print('Costo total:', cost)
 </code></pre>
 <p><code>sys.argv</code> es una lista que contiene los argumentos pasados en la línea de comando (si los hay).</p>
 <p>Para ejecutar su programa, necesitará ejecutar Python desde la terminal.</p>
 <p>Por ejemplo, desde bash en Unix:</p>
-<pre><code class="language-bash">bash % python3 pcost.py Data/portfolio.csv
+<pre><code class="language-bash">bash % python pcost.py Data/portfolio.csv
 Costo Total: 44671.15
 bash %
 </code></pre>

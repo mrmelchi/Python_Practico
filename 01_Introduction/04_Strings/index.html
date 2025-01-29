@@ -453,8 +453,8 @@
 <h1 id="14-strings">1.4 Strings</h1>
 <p>Esta sección presenta formas de trabajar con texto.</p>
 <ul>
-<li>IMPORTANTE: Las palabras <code>strings</code> y <code>cadena</code> son utilizadas con el
-    mismo significado*</li>
+<li>IMPORTANTE: Las palabras <code>string</code> y <code>cadena</code> son utilizadas con el
+    mismo significado</li>
 </ul>
 <h2 id="representacion-de-texto-literal">Representación de texto literal</h2>
 <p>Los literales de cadena se escriben en programas con comillas.</p>
@@ -484,7 +484,7 @@ teclado. A continuación se muestran algunos códigos de escape comunes:</p>
 '\r' Retorno de carro
 '\t' Tabulador
 '\'' Comilla simple literal
-'\&quot;' Comillas dobles literales
+'\&quot;' Comillas dobles literal
 '\\' Barra invertida literal
 </code></pre>
 <h2 id="representacion-de-cadena">Representación de cadena</h2>
@@ -492,10 +492,10 @@ teclado. A continuación se muestran algunos códigos de escape comunes:</p>
 <em>punto de código</em> Unicode, que es un número entero. Puede especificar un
 valor de punto de código exacto utilizando las siguientes secuencias de
 escape:</p>
-<pre><code>a = '\xf1' # a = 'ñ'
-b = '\u2200' # b = '∀'
-c = '\U0001D122' # c = '𝄢'
-d = '\N{PARA TODOS}' # d = '∀'
+<pre><code>a = '\xf1'          # a = 'ñ'
+b = '\u2200'        # b = '∀'
+c = '\U0001D122'    # c = '𝄢'
+d = '\N{FOR ALL}'   # d = '∀'
 </code></pre>
 <p>La <a href="https://unicode.org/charts">base de datos de caracteres Unicode</a> es
 una referencia para todos los códigos de caracteres disponibles.</p>
@@ -511,7 +511,7 @@ d = a[-1] # 'o' (fin de la cadena)
 <p>También puedes cortar o seleccionar substrings especificando un rango de
 índices con <code>:</code>.</p>
 <pre><code>d = a[:5] # 'Hola'
-e = a[6:] # 'mundo'
+e = a[6:] # 'undo'
 f = a[3:8] # 'a mun'
 g = a[-5:] # 'mundo'
 </code></pre>
@@ -525,12 +525,12 @@ b = 'Decir ' + a # 'Decir HolaMundo'
 
 # Longitud (len)
 s = 'Hola'
-número(s) # 4
+len(s) # 4
 
 # Prueba de membresía (`in`, `not in`)
 t = 'o' in s # True
-f = 'x' en s # False
-g = 'hola' no está en s # True
+f = 'x' in s # False
+g = 'hola' not in s # True
 
 # Replicación (s * n)
 rep = s * 5 # 'HolaHolaHolaHolaHola'
@@ -554,22 +554,22 @@ t = s.replace('Hola' , 'Hello') # 'Hello mundo'
 <p><strong>Más métodos de String:</strong></p>
 <p>Las cadenas tienen una amplia variedad de otros métodos para probar y
 manipular los datos de texto. Esta es una pequeña muestra de métodos:</p>
-<pre><code>s.endswith(suffix) # Verifica si la cadena termina con sufijo
+<pre><code>s.endswith(suffix) # Verifica si la cadena termina con suffix
 s.find(t) # Primera aparición de t en s
 s.index(t) # Primera aparición de t en s
 s.isalpha() # Comprueba si los caracteres son alfabéticos
 s.isdigit() # Comprueba si los caracteres son numéricos
 s.islower() # Verifica si los caracteres están en minúsculas
 s.isupper() # Verifica si los caracteres están en mayúsculas
-s.join(slist) # Unir una lista de cadenas usando s como delimitador
-s.lower() # Convertir a minúsculas
-s.replace(old,new) # Reemplazar texto
+s.join(slist) # Une una lista de cadenas usando s como delimitador
+s.lower() # Convierte a minúsculas
+s.replace(old,new) # Reemplaza texto
 s.rfind(t) # Busca t desde el final de la cadena
 s.rindex(t) # Busca t desde el final de la cadena
 s.split([delim]) # Divide la cadena en una lista de subcadenas
 s.startswith(prefix) # Verifica si la cadena comienza con prefijo
 s.strip() # Elimina los espacios iniciales y finales
-s.upper() # Convertir a mayúsculas
+s.upper() # Convierte a mayúsculas
 </code></pre>
 <h2 id="mutabilidad-de-los-strings">Mutabilidad de los strings</h2>
 <p>Los strings son "inmutables" o de sólo lectura. Una vez creado, el valor
@@ -604,11 +604,11 @@ se trata de una cadena de bytes y no de una cadena de texto.</p>
 <p>La mayoría de las operaciones de cadena habituales funcionan.</p>
 <pre><code>len(datos) # 12
 datos[0:4] # b'Hola'
-datos.replace(b'Hola', b'Cruel') # b'Mundo Cruel\r\n'
+datos.replace(b'Hola', b'Cruel') # b'Cruel mundo\r\n'
 </code></pre>
 <p>La indexación es un poco diferente porque devuelve valores de bytes como
 números enteros.</p>
-<pre><code>data[0] # 72 (código ASCII para 'H')
+<pre><code>datos[0] # 72 (código ASCII para 'H')
 </code></pre>
 <p>Conversión a/desde cadenas de texto.</p>
 <pre><code>texto = datos.decode('utf-8') # bytes -&gt; texto
@@ -644,14 +644,14 @@ regulares, etc.</p>
 <p><strong>Nota: Esto requiere Python 3.6 o más reciente.</strong> El significado de los
 códigos de formato se trata más adelante.</p>
 <h2 id="ejercicios">Ejercicios</h2>
-<p>En estos ejercicios, experimentará con operaciones en el tipo de cadena
-de Python. Debes hacer esto en el indicador interactivo de Python, donde
+<p>En estos ejercicios, experimentará con operaciones usando el tipo de cadena
+de Python. Debes hacer esto en el modo interactivo de Python, donde
 podrás ver fácilmente los resultados.</p>
 <blockquote>
 <p>Nota importante:</p>
 <p>En ejercicios en los que se supone que debes interactuar con el
 intérprete, <code>&gt;&gt;&gt;</code> es el mensaje de solicitud del intérprete que
-aparece cuando Python desea que escriba una nueva declaración. Algunas
+aparece cuando Python desea que escribas una nueva declaración. Algunas
 afirmaciones en el ejercicio abarcan varias líneas: para que se
 ejecuten estas instrucciones, es posible que tenga que presionar
 'Enter' unas cuantas veces. Solo un recordatorio de que NO debes
@@ -683,10 +683,10 @@ caracteres:</p>
 'a' minúscula.</p>
 <pre><code>&gt;&gt;&gt; symbols[0] = 'a'
 Traceback (most recent call last):
-  File &quot;&lt;python-input-10&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;&lt;python-input-3&gt;&quot;, line 1, in &lt;module&gt;
     symbols[0] = 'a'
-    ^^^^^^^
-NameError: name 'symbols' is not defined
+    ~~~~~~~^^^
+TypeError: 'str' object does not support item assignment
 &gt;&gt;&gt; 
 </code></pre>
 <h3 id="ejercicio-114-concatenacion-de-cadenas">Ejercicio 1.14: Concatenación de cadenas</h3>
@@ -741,7 +741,7 @@ los métodos de cadena.</p>
 </code></pre>
 <p>Recuerde, las cadenas siempre son de solo lectura. Si desea guardar el
 resultado de una operación, debe colocarlo en una variable:</p>
-<pre><code>&gt;&gt;&gt; lowersyms = símbolos.lower()
+<pre><code>&gt;&gt;&gt; lowersyms = symbols.lower()
 &gt;&gt;&gt;
 </code></pre>
 <p>Pruebe algunas operaciones más:</p>
@@ -753,7 +753,7 @@ resultado de una operación, debe colocarlo en una variable:</p>
 &gt;&gt;&gt; symbols
 ?
 &gt;&gt;&gt; name = '   IBM   \n'
-&gt;&gt;&gt; name = name.strip() # Eliminar los espacios en blanco circundantes
+&gt;&gt;&gt; name = name.strip() # Elimina los espacios en blanco circundantes
 &gt;&gt;&gt; name
 ?
 &gt;&gt;&gt;
@@ -783,7 +783,7 @@ breve ejemplo:</p>
 &gt;&gt;&gt; import re
 &gt;&gt;&gt; re.findall(r'\d+/\d+/\d+', texto)
 ['27/3/2018', '28/3/2018']
-&gt;&gt;&gt; # Reemplazar todas las apariciones de una fecha con texto de reemplazo
+&gt;&gt;&gt; # Reemplaza todas las apariciones de una fecha con el texto de reemplazo
 &gt;&gt;&gt; re.sub(r'(\d+)/(\d+)/(\d+)', r'\3-\1-\2', texto)
 'Hoy es 2018-27-3. Mañana es 2018-28-03.'
 &gt;&gt;&gt;
@@ -800,7 +800,7 @@ cadena?</p>
 de métodos disponibles mediante la función de completar tabulaciones.
 Por ejemplo, intenta escribir esto:</p>
 <pre><code>&gt;&gt;&gt; s = 'hola mundo'
-&gt;&gt;&gt; s.&lt;tecla de tabulación&gt;
+&gt;&gt;&gt; s.&lt;tecla de tabulación&gt; # Algunas veces tendrás que colocar &lt;tecla de tabulación&gt; dos veces.
 &gt;&gt;&gt;
 </code></pre>
 <p>Si presionar la tecla <code>tab</code> no hace nada, puedes recurrir a la función

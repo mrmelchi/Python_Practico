@@ -306,9 +306,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ejercicio-128-otros-tipos-de-archivos" class="md-nav__link">
+  <a href="#ejercicio-128-otro-tipo-de-archivos" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejercicio 1.28: Otros tipos de "archivos"
+      Ejercicio 1.28: Otro tipo de "archivos"
     </span>
   </a>
   
@@ -364,12 +364,12 @@ data = f.read([maxbytes])
 <pre><code class="language-python">f.close()
 g.close()
 </code></pre>
-<p>Los archivos deben estar correctamente cerrados y es un paso fácil de olvidar. Por lo tanto, el enfoque preferido es utilizar la declaración 'with' de esta manera.</p>
+<p>Los archivos deben estar correctamente cerrados y es un paso fácil de olvidar. Por lo tanto, el enfoque preferido es utilizar la declaración <code>with</code> de esta manera.</p>
 <pre><code class="language-python">with open(filename, 'rt') as file:
     # Utilice el archivo `file`
     ...
     # No es necesario cerrar explícitamente
-...statements
+...declaraciones
 </code></pre>
 <p>Esto cierra automáticamente el archivo cuando el control abandona el bloque de código sangrado.</p>
 <h2 id="modismos-comunes-para-leer-datos-de-archivos">Modismos comunes para leer datos de archivos</h2>
@@ -395,7 +395,7 @@ g.close()
     ...
 </code></pre>
 <h2 id="ejercicios">Ejercicios</h2>
-<p>Estos ejercicios dependen del archivo <code>Data/portfolio.csv</code>. El archivo contiene una lista de líneas con información sobre una cartera de acciones. Se supone que está trabajando en el directorio <code>practical-python/Work/</code>. Si no está seguro, puede averiguar dónde cree Python que se está ejecutando haciendo esto:</p>
+<p>Estos ejercicios dependen del archivo <code>Data/portfolio.csv</code>. El archivo contiene una lista de líneas con información sobre una cartera de acciones. Se supone que está trabajando en el directorio <code>practical-python/Work/</code>. Si no está seguro, puede averiguar dónde cree Python que se está ejecutando, haciendo esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import os
 &gt;&gt;&gt; os.getcwd()
 '/Users/beazley/practical-python/Work' # La salida varía
@@ -439,7 +439,7 @@ name,shares,price
 &gt;&gt;&gt; headers
 'name,shares,price\n'
 &gt;&gt;&gt; for line in f:
-    print(line, end='')
+        print(line, end='')
 
 &quot;AA&quot;,100,32.20
 &quot;IBM&quot;,50,91.10
@@ -447,15 +447,15 @@ name,shares,price
 &gt;&gt;&gt; f.close()
 &gt;&gt;&gt;
 </code></pre>
-<p><code>next()</code> devuelve la siguiente línea de texto en el archivo. Si lo llamaras repetidamente obtendrías líneas sucesivas. Sin embargo, para que lo sepas, el bucle for ya utiliza next() para obtener sus datos. Por lo tanto, normalmente no lo llamarías directamente a menos que intentes omitir o leer explícitamente una sola línea como se muestra.</p>
+<p><code>next()</code> devuelve la siguiente línea de texto en el archivo. Si lo llamaras repetidamente obtendrías líneas sucesivas. Sin embargo, para que lo sepas, el bucle for ya utiliza <code>next()</code> para obtener sus datos. Por lo tanto, normalmente no lo llamarías directamente a menos que intentes omitir o leer explícitamente una sola línea como se muestra.</p>
 <p>Una vez que esté leyendo líneas de un archivo, puede comenzar a realizar más procesamiento, como dividirlo. Por ejemplo, prueba esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; f = open('Data/portfolio.csv', 'rt')
 &gt;&gt;&gt; headers = next(f).split(',')
 &gt;&gt;&gt; headers
 ['name', 'shares', 'price\n']
 &gt;&gt;&gt; for line in f:
-    row = line.split(',')
-    print(row)
+        row = line.split(',')
+        print(row)
 
 ['&quot;AA&quot;', '100', '32.20\n']
 ['&quot;IBM&quot;', '50', '91.10\n']
@@ -470,7 +470,7 @@ name,shares,price
 <p>Su programa debería imprimir una salida como la siguiente:</p>
 <pre><code class="language-bash">Total cost 44671.15
 </code></pre>
-<h3 id="ejercicio-128-otros-tipos-de-archivos">Ejercicio 1.28: Otros tipos de "archivos"</h3>
+<h3 id="ejercicio-128-otro-tipo-de-archivos">Ejercicio 1.28: Otro tipo de "archivos"</h3>
 <p>¿Qué sucede si desea leer un archivo que no es de texto, como un archivo de datos comprimido con gzip? La función incorporada <code>open()</code> no te ayudará aquí, pero Python tiene un módulo de biblioteca <code>gzip</code> que puede leer archivos comprimidos gzip.</p>
 <p>Pruébalo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import gzip
