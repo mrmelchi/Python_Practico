@@ -284,9 +284,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dicts-como-contenedor" class="md-nav__link">
+  <a href="#diccionarios-como-contenedor" class="md-nav__link">
     <span class="md-ellipsis">
-      Dicts como contenedor
+      Diccionarios como contenedor
     </span>
   </a>
   
@@ -357,9 +357,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ejercicio-26-los-diccionarios-como-contenedor" class="md-nav__link">
+  <a href="#ejercicio-26-diccionarios-como-contenedor" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejercicio 2.6: Los diccionarios como contenedor
+      Ejercicio 2.6: Diccionarios como contenedor
     </span>
   </a>
   
@@ -436,12 +436,12 @@ records.append(('IBM', 50, 91.3))
 <pre><code class="language-python">records = []  # Initial empty list
 
 with open('Data/portfolio.csv', 'rt') as f:
-    next(f) # salt los encabezados
+    next(f) # salta los encabezados
     for line in f:
         row = line.split(',')
         records.append((row[0], int(row[1]), float(row[2])))
 </code></pre>
-<h2 id="dicts-como-contenedor">Dicts como contenedor</h2>
+<h2 id="diccionarios-como-contenedor">Diccionarios como contenedor</h2>
 <p>Los diccionarios son útiles si desea realizar búsquedas aleatorias
 rápidas (por nombre de clave). Por ejemplo, un diccionario de precios de
 acciones:</p>
@@ -673,10 +673,10 @@ limpiar la salida para la depuración, considere usar la función
     {'name': 'IBM', 'price': 70.44, 'shares': 100}]
 &gt;&gt;&gt;
 </code></pre>
-<h3 id="ejercicio-26-los-diccionarios-como-contenedor">Ejercicio 2.6: Los diccionarios como contenedor</h3>
+<h3 id="ejercicio-26-diccionarios-como-contenedor">Ejercicio 2.6: Diccionarios como contenedor</h3>
 <p>Un diccionario es una forma útil de realizar un seguimiento de los
 elementos, en los que desea buscar elementos utilizando un índice que no
-sea un número entero. En el shell de Python, intenta jugar con un
+sea un número entero. En el modo interactivo de Python, intenta jugar con un
 diccionario:</p>
 <pre><code class="language-python">&gt;&gt;&gt; prices = { }
 &gt;&gt;&gt; prices['IBM'] = 92.45
@@ -747,7 +747,14 @@ interactiva para asegurarse de que funciona:</p>
 su programa <code>report.py</code> que calcula la ganancia/pérdida. Estas
 afirmaciones deben tomar la lista de acciones del Ejercicio 2.5 y el
 diccionario de precios del Ejercicio 2.6 y calcular el valor actual de
-la cartera junto con la ganancia/pérdida.</p>
+la cartera junto con la ganancia/pérdida. Si ejectuta:</p>
+<pre><code class="language-bash">% bash python -i report.py
+</code></pre>
+<p>La salida debería verse así:</p>
+<pre><code class="language-python">Total cost 44671.15
+Current value 28686.1
+Gain/Loss -15985.050000000003
+</code></pre>
 <p><a href="../../Contents/">Contenido</a> | <a href="../01_Datatypes/">Anterior (2.1 Tipos de
 datos)</a> | <a href="../03_Formatting/">Próximo (2.3 Salida con
 formato)</a></p>

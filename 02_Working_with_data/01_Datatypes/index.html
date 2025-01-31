@@ -260,9 +260,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#none-tipo" class="md-nav__link">
+  <a href="#tipo-none" class="md-nav__link">
     <span class="md-ellipsis">
-      None tipo
+      Tipo None
     </span>
   </a>
   
@@ -406,16 +406,16 @@ diccionarios.</p>
 <h2 id="tipos-de-datos-primitivos">Tipos de datos primitivos</h2>
 <p>Python tiene algunos tipos de datos primitivos:</p>
 <ul>
-<li>Números enteros</li>
-<li>Números de punto flotante</li>
-<li>Strings (texto)</li>
+<li>Números enteros <code>int</code></li>
+<li>Números de punto flotante <code>float</code></li>
+<li>Strings (texto) <code>str</code></li>
 </ul>
 <p>Aprendimos sobre esto en la introducción.</p>
-<h2 id="none-tipo">None tipo</h2>
+<h2 id="tipo-none">Tipo <code>None</code></h2>
 <pre><code class="language-python">email_address = None
 </code></pre>
 <p><code>None</code> se utiliza a menudo como marcador de posición para valores
-opcionales o faltantes. Se evalúa como "False" en condicionales.</p>
+opcionales o faltantes. Se evalúa como <code>False</code> en condicionales.</p>
 <pre><code class="language-python">if email_address:
     send_email(email_address, msg)
 </code></pre>
@@ -426,8 +426,8 @@ información sobre una tenencia de acciones:</p>
 </code></pre>
 <p>Este es un "objeto" con tres partes:</p>
 <ul>
-<li>Nombre o símbolo de la acción ("GOOG", una cadena)</li>
-<li>Número de acciones (100, un intero)</li>
+<li>Nombre o símbolo de la acción ("GOOG", un string)</li>
+<li>Número de acciones (100, un entero)</li>
 <li>Precio (490.10 por acción, un flotante)</li>
 </ul>
 <h2 id="tuplas">Tuplas</h2>
@@ -454,7 +454,7 @@ price = s[2]                # 490.1
 </code></pre>
 <p>Sin embargo, el contenido no se puede modificar.</p>
 <pre><code class="language-python">&gt;&gt;&gt; s[1] = 75
-TypeError: object does not support item assignment
+TypeError: 'tuple' object does not support item assignment
 </code></pre>
 <p>Sin embargo, puedes crear una nueva tupla basada en una tupla actual.</p>
 <pre><code>
@@ -466,10 +466,10 @@ s = (s[0], 75, s[2])
 <em>entidad</em>.</p>
 <pre><code class="language-python">s = ('GOOG', 100, 490.1)
 </code></pre>
-<p>La tupla son luego fácil de pasar a otras partes de un programa como un
+<p>La tupla es luego fácil de pasar a otras partes de un programa como un
 único objeto.</p>
 <h2 id="desempaquetado-de-tuplas">Desempaquetado de tuplas</h2>
-<p>Para utilizar la tupla en otro lugar, puedes deswmpaquetar sus partes en
+<p>Para utilizar la tupla en otro lugar, puedes desempaquetar sus partes en
 variables.</p>
 <pre><code class="language-python">name, shares, price = s
 print('Cost', shares * price)
@@ -492,8 +492,7 @@ print(name) # 'GOOG'
 <pre><code class="language-python">*_ , price = s    
 print(price) # 490.1
 </code></pre>
-<p>En ambos casos
-`<code>*_ completa las variables faltantes. Incluir más asterisco en el lado izquierdo de la asignación provocará un SyntaxError: multiple starred expressions in assignment</code>`</p>
+<p>En ambos casos <code>*_</code> completa las variables faltantes. Incluir más asterisco en el lado izquierdo de la asignación provocará un <code>SyntaxError: multiple starred expressions in assignment</code></p>
 <h2 id="tuplas-vs-listas">Tuplas vs. Listas</h2>
 <p>Las tuplas parecen listas de solo lectura. Sin embargo, las tuplas se
 utilizan con mayor frecuencia para un <em>único elemento</em> que consta de
@@ -554,8 +553,8 @@ f.close()
 &gt;&gt;&gt;
 </code></pre>
 <p>Aunque leer el archivo es fácil, a menudo deseamos hacer más con los
-datos que leerlos. Por ejemplo, quizás desee almacenarlo y comenzar a
-realizar algunos cálculos en él. Desafortunadamente, una "fila" de datos
+datos que leerlos. Por ejemplo, quizás desee almacenarlos y comenzar a
+realizar algunos cálculos en ellos. Desafortunadamente, una "fila" de datos
 sin procesar no le brinda suficiente información con la que trabajar.
 Por ejemplo, ni siquiera un cálculo matemático simple funciona:</p>
 <pre><code class="language-python">&gt;&gt;&gt; row = ['AA', '100', '32.20']
@@ -720,7 +719,7 @@ utilizar el método <code>items()</code>. Esto le proporciona tuplas
 <pre><code class="language-python">&gt;&gt;&gt; items = d.items()
 &gt;&gt;&gt; items
 dict_items([('name', 'AA'), ('shares', 75), ('price', 32.2), ('date', (6, 11, 2007))])
-&gt;&gt;&gt; for k, v in d.items():
+&gt;&gt;&gt; for k, v in items:
         print(k, '=', v)
 
 name = AA
