@@ -347,6 +347,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ejercicio-212-desafio-de-formato" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejercicio 2.12: Desafío de formato
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -393,7 +402,7 @@ ejemplo:</p>
 '       IBM        100      91.10'
 &gt;&gt;&gt;
 </code></pre>
-<p>Se reemplaza la parte <code>{expression:format}</code>.</p>
+<p>Se reemplaza la parte <code>{expresión:formato}</code>.</p>
 <p>Se utiliza comúnmente con <code>print</code>.</p>
 <pre><code class="language-python">print(f'{name:&gt;10s} {shares:&gt;10d} {price:&gt;10.2f}')
 </code></pre>
@@ -411,10 +420,11 @@ c       Character (desde entero)
 </code></pre>
 <p>Los modificadores comunes ajustan el ancho del campo y la precisión
 decimal. Esta es una lista parcial:</p>
-<pre><code class="language-code">:&gt;10d Entero alineado a la derecha en un campo de 10 caracteres
-:&lt;10d Entero alineado a la izquierda en un campo de 10 caracteres
-:^10d Entero centrado en un campo de 10 caracteres
-:0.2f Flotante con precisión de 2 dígitos
+<pre><code class="language-code">:&gt;10d   Entero alineado a la derecha en un campo de 10 caracteres
+:&lt;10d   Entero alineado a la izquierda en un campo de 10 caracteres
+:^10d   Entero centrado en un campo de 10 caracteres
+:0.2f   Flotante con precisión de 2 dígitos
+:0,.2f  Flotante con precisión de 2 dígitos y coma en los miles.
 </code></pre>
 <h3 id="formato-del-diccionario">Formato del diccionario</h3>
 <p>Puede utilizar el método <code>format_map()</code> para aplicar formato de cadena a
@@ -430,7 +440,7 @@ un diccionario de valores:</p>
 </code></pre>
 <p>Utiliza los mismos códigos que <code>f-strings</code> pero toma los valores del
 diccionario suministrado.</p>
-<h2 id="metodo-format">Método format()</h2>
+<h2 id="metodo-format">Método <code>format()</code></h2>
 <p>Hay un método <code>format()</code> que puede aplicar formato a argumentos o
 argumentos de palabras clave.</p>
 <pre><code class="language-python">&gt;&gt;&gt; '{name:&gt;10s} {shares:10d} {price:10.2f}'.format(name='IBM', shares=100, price=91.1)
@@ -446,6 +456,8 @@ argumentos de palabras clave.</p>
 <pre><code class="language-python">&gt;&gt;&gt; 'The value is %d' % 3
 'The value is 3'
 &gt;&gt;&gt; '%5d %-5d %10d' % (3,4,5)
+'    3 4              5'
+&gt;&gt;&gt; '%5d %d %14d' % (3,4,5)   # mismo resultado que al anterior
 '    3 4              5'
 &gt;&gt;&gt; '%0.2f' % (3.1415926,)
 '3.14'
@@ -486,11 +498,16 @@ cadenas.</p>
 42863.1000
 &gt;&gt;&gt; print('%16.2f' % value)
         42863.10
+&gt;&gt;&gt; print('%16,.2f' % value)
+Traceback (most recent call last):
+  File &quot;&lt;python-input-39&gt;&quot;, line 1, in &lt;module&gt;
+    print('%16,.2f' % value)
+          ~~~~~~~~~~^~~~~~~
+ValueError: unsupported format character ',' (0x2c) at index 3
 &gt;&gt;&gt;
 </code></pre>
 <p>La documentación sobre varios códigos utilizados con <code>%</code> se puede
-encontrar [aquí]
-(<a href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting</a>).</p>
+encontrar <a href="https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting">aquí</a>.</p>
 <p>Aunque se usa comúnmente con <code>print</code>, el formato de cadena no está
 vinculado a la impresión. Si desea guardar una cadena formateada.
 Simplemente asígnelo a una variable.</p>
@@ -538,7 +555,7 @@ funcionar si lo intentas de forma interactiva:</p>
 &gt;&gt;&gt;
 </code></pre>
 <h3 id="ejercicio-210-impresion-de-una-tabla-formateada">Ejercicio 2.10: Impresión de una tabla formateada</h3>
-<p>Rehaga el bucle for del Ejercicio 2.9, pero cambie la declaración de
+<p>Rehaga el bucle <code>for</code> del Ejercicio 2.9, pero cambie la declaración de
 impresión para formatear las tuplas.</p>
 <pre><code class="language-python">&gt;&gt;&gt; for r in report:
         print('%10s %10d %10.2f %10.2f' % r)
@@ -578,79 +595,25 @@ por un solo espacio.</p>
 <p>Escriba el código que tome los encabezados y cree la cadena separadora
 entre los encabezados y los datos a seguir. Esta cadena es solo un
 conjunto de caracteres "-" debajo de cada nombre de campo. Por ejemplo:</p>
-<p>``pitón '---------- ---------- ---------- -----------'</p>
-<pre><code>
-Cuando haya terminado, su programa debería producir la tabla que se
-muestra en la parte superior de este ejercicio.
+<pre><code class="language-python">'---------- ---------- ---------- -----------'
+
 </code></pre>
-<table>
-<thead>
-<tr>
-<th style="text-align: right;">Name</th>
-<th style="text-align: right;">Shares</th>
-<th style="text-align: right;">Price</th>
-<th style="text-align: right;">Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: right;">AA</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">9.22</td>
-<td style="text-align: right;">-22.98</td>
-</tr>
-<tr>
-<td style="text-align: right;">IBM</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">106.28</td>
-<td style="text-align: right;">15.18</td>
-</tr>
-<tr>
-<td style="text-align: right;">CAT</td>
-<td style="text-align: right;">150</td>
-<td style="text-align: right;">35.46</td>
-<td style="text-align: right;">-47.98</td>
-</tr>
-<tr>
-<td style="text-align: right;">MSFT</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">20.89</td>
-<td style="text-align: right;">-30.34</td>
-</tr>
-<tr>
-<td style="text-align: right;">GE</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: right;">13.48</td>
-<td style="text-align: right;">-26.89</td>
-</tr>
-<tr>
-<td style="text-align: right;">MSFT</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">20.89</td>
-<td style="text-align: right;">-44.21</td>
-</tr>
-<tr>
-<td style="text-align: right;">IBM</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">106.28</td>
-<td style="text-align: right;">35.84</td>
-</tr>
-<tr>
-<td style="text-align: right;">```</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td style="text-align: right;">### Ejercic</td>
-<td style="text-align: right;">io 2.12: De</td>
-<td style="text-align: right;">safío de fo</td>
-<td style="text-align: right;">rmato</td>
-</tr>
-</tbody>
-</table>
+<p>Cuando haya terminado, su programa debería producir la tabla que se
+muestra en la parte superior de este ejercicio.</p>
+<pre><code class="language-python">
+      Name     Shares      Price     Change
+---------- ---------- ---------- ----------
+        AA        100       9.22     -22.98
+       IBM         50     106.28      15.18
+       CAT        150      35.46     -47.98
+      MSFT        200      20.89     -30.34
+        GE         95      13.48     -26.89
+      MSFT         50      20.89     -44.21
+       IBM        100     106.28      35.84
+</code></pre>
+<h3 id="ejercicio-212-desafio-de-formato">Ejercicio 2.12: Desafío de formato</h3>
 <p>¿Cómo modificarías tu código para que el precio incluya el símbolo de
-moneda (\$) y el resultado se vea así:</p>
+moneda ($) y el resultado se vea así:</p>
 <pre><code>      Name     Shares      Price     Change
 ---------- ---------- ---------- ----------
         AA        100      $9.22     -22.98
