@@ -402,8 +402,8 @@
 <p>Esta sección presenta más detalles sobre el modelo de objetos internos de Python y analiza algunos asuntos relacionados con la administración de memoria, la copia y la verificación de tipos.</p>
 <h2 id="asignacion">Asignación</h2>
 <p>Muchas operaciones en Python están relacionadas con la <em>asignación</em> o <em>almacenamiento</em> de valores.</p>
-<pre><code class="language-python">a = value # Asignación a una variable
-s[n] = value # Asignación a una lista
+<pre><code class="language-python">a = value # Asignar a una variable
+s[n] = value # Asignar a una lista
 s.append(value) # Anexar a una lista
 d['key'] = value # Agregar a un diccionario
 </code></pre>
@@ -500,7 +500,7 @@ False
 <h2 id="nombres-valores-tipos">Nombres, valores, tipos</h2>
 <p>Los nombres de las variables no tienen un <em>tipo</em>. Son solo un nombre. Sin embargo, los valores <em>sí</em> tienen un tipo subyacente.</p>
 <pre><code class="language-python">&gt;&gt;&gt; a = 42
-&gt;&gt;&gt; b = 'Hello World'
+&gt;&gt;&gt; b = 'Hola Mundo'
 &gt;&gt;&gt; type(a)
 &lt;type 'int'&gt;
 &gt;&gt;&gt; type(b)
@@ -510,11 +510,11 @@ False
 <h2 id="comprobacion-de-tipos">Comprobación de tipos</h2>
 <p>Cómo saber si un objeto es de un tipo específico.</p>
 <pre><code class="language-python">if isinstance(a, list):
-  print('a is a list')
+  print('a es a lista')
 </code></pre>
 <p>Comprobación de uno de los muchos tipos posibles.</p>
 <pre><code class="language-python">if isinstance(a, (list,tuple)):
-  print('a is a list or tuple')
+  print('a es a lista o tupla')
 </code></pre>
 <p><em>Precaución: No se exceda con la comprobación de tipos. Puede generar una complejidad excesiva en el código. Por lo general, solo lo haría si al hacerlo evitara errores comunes que cometen otras personas al usar su código.</em></p>
 <h2 id="todo-es-un-objeto">Todo es un objeto</h2>
@@ -612,7 +612,7 @@ TypeError: can't multiplicar sequence by non-int of type 'str'
 &gt;&gt;&gt;
 </code></pre>
 <p>Notarás que esto ha emparejado una conversión de tipo con un valor. Por ejemplo, <code>int</code> está emparejado con el valor <code>'100'</code>.</p>
-<p>La lista comprimida es útil si quieres realizar conversiones en todos los valores, uno después del otro. Prueba esto:</p>
+<p>La lista por compresión es útil si quieres realizar conversiones en todos los valores, uno después del otro. Prueba esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; converted = []
 &gt;&gt;&gt; for func, val in zip(types, row):
           converted.append(func(val))
@@ -634,9 +634,9 @@ TypeError: can't multiplicar sequence by non-int of type 'str'
 <p>¿Recuerdas cómo la función <code>dict()</code> puede crear fácilmente un diccionario si tienes una secuencia de nombres y valores de claves? Hagamos un diccionario a partir de los encabezados de las columnas:</p>
 <pre><code class="language-python">&gt;&gt;&gt; headers
 ['name', 'shares', 'price']
-&gt;&gt;&gt; convert
+&gt;&gt;&gt; converted
 ['AA', 100, 32.2]
-&gt;&gt;&gt; dict(zip(headers, convert))
+&gt;&gt;&gt; dict(zip(headers, converted))
 {'price': 32.2, 'name': 'AA', 'shares': 100}
 &gt;&gt;&gt;
 </code></pre>

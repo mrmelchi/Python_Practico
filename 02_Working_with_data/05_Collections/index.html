@@ -396,6 +396,22 @@ with open(filename) as f:
         history.append(line)
         ...
 </code></pre>
+<ul>
+<li>
+<p>Abre un archivo cuyo nombre está en la variable <code>filename</code> para
+    lectura.</p>
+</li>
+<li>
+<p>Lee el archivo línea por línea.</p>
+</li>
+<li>
+<p>Añade cada línea al deque llamado <code>history</code>.</p>
+</li>
+</ul>
+<p>De esta manera, al finalizar, el deque <code>history</code> contendrá las últimas N
+líneas del archivo. Si el archivo tiene menos de N líneas, contendrá
+todas las líneas del archivo. Si tiene más de N líneas, solo contendrá
+las últimas N líneas debido al límite máximo establecido.</p>
 <h2 id="ejercicios">Ejercicios</h2>
 <p>El módulo <code>collections</code> podría ser uno de los módulos de biblioteca más
 útiles para tratar problemas de manejo de datos de propósitos
@@ -403,7 +419,7 @@ especiales, tales como tabulación e indexación.</p>
 <p>En este ejercicio, veremos algunos ejemplos sencillos. Comience
 ejecutando su programa <code>report.py</code> para que tenga la cartera de acciones
 cargada en modo interactivo.</p>
-<pre><code class="language-bash">bash % python3 -i report.py
+<pre><code class="language-bash">bash % python -i report.py
 </code></pre>
 <h3 id="ejercicio-218-tabulacion-con-contadores">Ejercicio 2.18: Tabulación con contadores</h3>
 <p>Supongamos que desea tabular la tenencia total de cada acción. Esto es
@@ -429,12 +445,12 @@ valores individuales:</p>
 &gt;&gt;&gt;
 </code></pre>
 <p>Si desea clasificar los valores, haga lo siguiente:</p>
-<pre><code class="language-python">&gt;&gt;&gt; # Get three most held stocks
+<pre><code class="language-python">&gt;&gt;&gt; # Obtenga las tres acciones más importantes
 &gt;&gt;&gt; holdings.most_common(3)
 [('MSFT', 250), ('IBM', 150), ('CAT', 150)]
 &gt;&gt;&gt;
 </code></pre>
-<p>Tomemos otra cartera de acciones y creemos un nuevo contador:</p>
+<p>Tomemos otra cartera de acciones y construyamos un nuevo contador:</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio2 = read_portfolio('Data/portfolio2.csv')
 &gt;&gt;&gt; holdings2 = Counter()
 &gt;&gt;&gt; for s in portfolio2:

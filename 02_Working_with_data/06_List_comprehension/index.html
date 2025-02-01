@@ -306,9 +306,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ejercicio-219-comprension-de-listas" class="md-nav__link">
+  <a href="#ejercicio-219-listas-por-comprension" class="md-nav__link">
     <span class="md-ellipsis">
-      Ejercicio 2.19: Comprensión de listas
+      Ejercicio 2.19: Listas por Comprensión
     </span>
   </a>
   
@@ -396,10 +396,10 @@ cada elemento de una secuencia.</p>
 &gt;&gt;&gt;
 </code></pre>
 <p>Otro ejemplo:</p>
-<pre><code class="language-python">&gt;&gt;&gt; a = [1, 2, 3, 4, 5]
-&gt;&gt;&gt; b = [2*x for x in a ]
-&gt;&gt;&gt; b
-[2, 4, 6, 8, 10]
+<pre><code class="language-python">&gt;&gt;&gt; names = ['Elwood', 'Jake']
+&gt;&gt;&gt; a = [name.lower() for name in names]
+&gt;&gt;&gt; a
+['elwood', 'jake']
 &gt;&gt;&gt;
 </code></pre>
 <p>La sintaxis general es:
@@ -414,7 +414,7 @@ cada elemento de una secuencia.</p>
 </code></pre>
 <h2 id="casos-de-uso">Casos de uso</h2>
 <p>Las listas por comprensión son muy útiles. Por ejemplo, puede recopilar
-valores de un campo de diccionario específico:</p>
+valores de un diccionario específico:</p>
 <pre><code class="language-python">stocknames = [s['name'] for s in stocks]
 </code></pre>
 <p>Puede realizar consultas similares a bases de datos en secuencias.</p>
@@ -447,13 +447,13 @@ crear listas.</p>
 <h2 id="ejercicios">Ejercicios</h2>
 <p>Comience ejecutando su programa <code>report.py</code> para que tenga la Cartera de
 acciones cargadas en el modo interactivo.</p>
-<pre><code class="language-bash">bash % python3 -i report.py
+<pre><code class="language-bash">bash % python -i report.py
 </code></pre>
 <p>Ahora, en modo interactivo de Python, escriba instrucciones para
 realizar la operaciones que se describen a continuación. Estas
 operaciones realizan varios tipos de reducciones de datos,
 transformaciones y consultas sobre los datos de la cartera.</p>
-<h3 id="ejercicio-219-comprension-de-listas">Ejercicio 2.19: Comprensión de listas</h3>
+<h3 id="ejercicio-219-listas-por-comprension">Ejercicio 2.19: Listas por Comprensión</h3>
 <p>Pruebe algunas listas por comprensión simples solo para familiarizarse
 con la sintaxis.</p>
 <pre><code class="language-python">&gt;&gt;&gt; nums = [1,2,3,4]
@@ -513,15 +513,15 @@ emergente de big data.</p>
   {'price': 65.1, 'name': 'MSFT', 'shares': 50}, {'price': 70.44, 'name': 'IBM', 'shares': 100}]
 &gt;&gt;&gt;
 </code></pre>
-<p>Una lista de todas las tenencias de acciones que cuestan más de \$10000.</p>
+<p>Una lista de todas las tenencias de acciones que cuestan más de $10000.</p>
 <pre><code class="language-python">&gt;&gt;&gt; cost10k = [ s for s in portfolio if s['shares'] * s['price'] &gt; 10000 ]
 &gt;&gt;&gt; cost10k
 [{'price': 83.44, 'name': 'CAT', 'shares': 150}, {'price': 51.23, 'name': 'MSFT', 'shares': 200}]
 &gt;&gt;&gt;
 </code></pre>
 <h3 id="ejercicio-222-extraccion-de-datos">Ejercicio 2.22: Extracción de datos</h3>
-<p>Muestra cómo podrías construir una lista de tuplas <code>(nombre, acciones)</code>
-donde <code>name</code> y <code>shares</code> se toman de <code>cartera</code>.</p>
+<p>Muestra cómo podrías construir una lista de tuplas <code>(name, shares)</code>
+donde <code>name</code> y <code>shares</code> se toman de <code>portfolio</code>.</p>
 <pre><code class="language-python">&gt;&gt;&gt; name_shares =[ (s['name'], s['shares']) for s in portfolio ]
 &gt;&gt;&gt; name_shares
 [('AA', 100), ('IBM', 50), ('CAT', 150), ('MSFT', 200), ('GE', 95), ('MSFT', 50), ('IBM', 100)]
@@ -556,7 +556,8 @@ comprensión</strong>. Vamos a tabular:</p>
 </code></pre>
 <p>Pruebe este ejemplo que filtra el diccionario de <code>prices</code> solo a
 aquellos nombres que aparecen en la cartera:</p>
-<pre><code class="language-python">&gt;&gt;&gt; portfolio_prices = { name: prices[name] for name in names }
+<pre><code class="language-python">&gt;&gt;&gt; names
+&gt;&gt;&gt; portfolio_prices = { name: prices[name] for name in names }
 &gt;&gt;&gt; portfolio_prices
 {'AA': 9.22, 'GE': 13.48, 'IBM': 106.28, 'MSFT': 20.89, 'CAT': 35.46}
 &gt;&gt;&gt;
