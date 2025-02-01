@@ -323,9 +323,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fory-tuplas" class="md-nav__link">
+  <a href="#for-y-tuplas" class="md-nav__link">
     <span class="md-ellipsis">
-      fory tuplas
+      for y tuplas
     </span>
   </a>
   
@@ -422,9 +422,9 @@ Collections)</a></p>
 <h2 id="tipos-de-datos-de-secuencia">Tipos de datos de secuencia</h2>
 <p>Python tiene tres tipos de datos de <em>secuencia</em>.</p>
 <ul>
-<li>Cadena: <code>'Hola'</code>. Una cadena es una secuencia de caracteres.</li>
-<li>Lista: <code>[1, 4, 5]</code>.</li>
-<li>Tupla: <code>('GOOG', 100, 490.1)</code>.</li>
+<li>Cadena: <code>'Hola'</code>. Una cadena es una secuencia de caracteres. <code>str</code></li>
+<li>Lista: <code>[1, 4, 5]</code>. <code>list</code></li>
+<li>Tupla: <code>('GOOG', 100, 490.1)</code>. <code>tuple</code></li>
 </ul>
 <p>Todas las secuencias están ordenadas, indexadas por números enteros y
 tienen una longitud.</p>
@@ -514,8 +514,7 @@ El bucle for itera sobre los elementos de una secuencia.
 ```python
 &gt;&gt;&gt; s = [1, 4, 9, 16]
 &gt;&gt;&gt; for i in s:
-...     print(i)
-...
+        print(i)
 1
 4
 9
@@ -561,22 +560,30 @@ ser revisado, ignoradolo en el procesamiento.</p>
 <pre><code class="language-python">for i in range(100):
     # i = 0,1,...,99
 </code></pre>
-<p>La sintaxis es <code>range([inicio,] fin [,paso])</code></p>
+<p>La sintaxis es <code>range([inicio,] fin [,escalón])</code></p>
 <pre><code class="language-python">for i in range(100):
     # i = 0,1,...,99
 for j in range(10,20):
     # j = 10,11,..., 19
 for k in range(10,50,2):
     # k = 10,12,...,48
-    # Observe que se cuenta en pasos de 2, no de 1.
+    # Observe que se cuenta en escalones de 2, no de 1.
 </code></pre>
-<p>*El valor final nunca se incluye. Refleja el comportamiento de las
-rebanadas.</p>
 <ul>
-<li><code>start</code> es opcional. Valor predeterminado <code>0</code>.</li>
-<li><code>step</code> es opcional. Valor predeterminado <code>1</code>.</li>
-<li><code>range()</code> calcula valores según sea necesario. En realidad no
-    almacena un rango amplio de números.</li>
+<li>
+<p>El valor final nunca se incluye. Espeja el comportamiento de las
+    rebanadas.</p>
+</li>
+<li>
+<p><code>start</code> es opcional. Valor predeterminado <code>0</code>.</p>
+</li>
+<li>
+<p><code>step</code> es opcional. Valor predeterminado <code>1</code>.</p>
+</li>
+<li>
+<p><code>range()</code> calcula valores según sea necesario. En realidad no
+    almacena un rango amplio de números.</p>
+</li>
 </ul>
 <h2 id="funcion-enumerate">Función enumerate()</h2>
 <p>La función <code>enumerate</code> agrega un valor de contador adicional a la
@@ -597,21 +604,21 @@ los números de línea mientras se lee un archivo:</p>
 <p>Al final, <code>enumerate</code> es simplemente un buen atajo para:</p>
 <pre><code class="language-python">i = 0
 for x in s:
-    statements
+    declaraciones
     i += 1
 </code></pre>
 <p>El uso de <code>enumerate</code> implica escribir menos y se ejecuta un poco más
 rápido.</p>
-<h2 id="fory-tuplas"><code>for</code>y tuplas</h2>
+<h2 id="for-y-tuplas"><code>for</code> y tuplas</h2>
 <p>Puedes iterar con múltiples variables de iteración.</p>
 <pre><code class="language-python">points = [
   (1, 4),(10, 40),(23, 14),(5, 6),(7, 8)
 ]
 for x, y in points:
     # Bucle con x = 1, y = 4
-    #            x = 10, y = 40
-    #            x = 23, y = 14
-    #            ...
+    #           x = 10, y = 40
+    #           x = 23, y = 14
+    #           ...
 </code></pre>
 <p>Cuando se utilizan múltiples variables, cada tupla se <em>desempaqueta</em> en
 un conjunto de variables de iteración. El número de variables debe
@@ -663,31 +670,25 @@ de secuencia.</p>
 &gt;&gt;&gt;
 </code></pre>
 <p>Intente recorrer los datos en un bucle.</p>
-<pre><code class="language-python">&gt;&gt;&gt; data = [4, 9, 1, 25, 16, 100, 49]
-&gt;&gt;&gt; min(data)
-1
-&gt;&gt;&gt; max(data)
-100
-&gt;&gt;&gt; sum(data)
-204
+<pre><code class="language-python">&gt;&gt;&gt; for x in data:
+        print(x)
+
+4
+9
+...
+&gt;&gt;&gt; for n, x in enumerate(data):
+        print(n, x)
+
+0 4
+1 9
+2 1
+...
 &gt;&gt;&gt;
 </code></pre>
-<p>...</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>for n, x in enumerate(data): print(n, x)</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>0 4 1 9 2 1 ... &gt;&gt;&gt;</p>
-<pre><code>
-A veces, los novatos utilizan la declaración `for`, `len()` y `range()`
+<p>A veces, los novatos utilizan la declaración <code>for</code>, <code>len()</code> y <code>range()</code>
 en algún tipo de fragmento de código horrible que parece surgido de las
-profundidades de un programa C oxidado.
-
-```python
-&gt;&gt;&gt; for n in range(len(data)):
+profundidades de un programa C oxidado.</p>
+<pre><code class="language-python">&gt;&gt;&gt; for n in range(len(data)):
         print(data[n])
 
 4
@@ -723,7 +724,8 @@ for rowno, row in enumerate(rows, start=1):
 <p>En el archivo <code>Data/portfolio.csv</code>, la primera línea contiene
 encabezados de columna. En todo el código anterior, los hemos estado
 descartando.</p>
-<pre><code class="language-python">&gt;&gt;&gt; f = open('Data/portfolio.csv')
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/portfolio.csv')
 &gt;&gt;&gt; rows = csv.reader(f)
 &gt;&gt;&gt; headers = next(rows)
 &gt;&gt;&gt; headers
