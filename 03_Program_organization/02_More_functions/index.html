@@ -488,12 +488,13 @@ parse_data(data, debug=True, ignore_errors=True)
 </code></pre>
 <p>Si no se proporciona ningún valor de retorno o falta <code>return</code>, se devuelve <code>None</code>.</p>
 <pre><code class="language-python">def bar(x):
-    eclaraciones
+    declaraciones
     return
 
 a = bar(4)      # a = None
 
-# O
+# de otro modo
+
 def foo(x):
     declaraciones  # Sin `return`
 
@@ -502,35 +503,37 @@ b = foo(4)      # b = None
 <h2 id="valores-de-retorno-multiples">Valores de retorno múltiples</h2>
 <p>Las funciones solo pueden devolver un valor. Sin embargo, una función puede devolver múltiples valores al devolverlos en una tupla.</p>
 <pre><code class="language-python">def divide(a,b):
-    q = a // b # Cociente
-    r = a % b # Resto
-    return q, r # Devuelve una tupla
+    q = a // b      # Cociente entero
+    r = a % b       # Resto
+    return q, r     # Devuelve una tupla
 </code></pre>
 <p>Ejemplo de uso:</p>
-<pre><code class="language-python">x, y = divide(37,5) # x = 7, y = 2
+<pre><code class="language-python">x, y = divide(37,5)     # x = 7, y = 2
 
-x = divide(37, 5) # x = (7, 2)
+x = divide(37, 5)       # x = (7, 2)
 </code></pre>
 <h2 id="ambito-de-la-variable">Ámbito de la variable</h2>
 <p>Los programas asignan valores a las variables.</p>
-<pre><code class="language-python">x = valor # Variable global
+<pre><code class="language-python">x = valor       # Variable global
 
 def foo():
-    y = valor # Variable local
+    y = valor   # Variable local
 </code></pre>
 <p>Las asignaciones de variables ocurren fuera y dentro de las definiciones de funciones. Las variables definidas fuera son "globales". Las variables dentro de una función son "locales".</p>
 <h2 id="variables-locales">Variables locales</h2>
 <p>Las variables asignadas dentro de las funciones son privadas.</p>
 <pre><code class="language-python">def read_portfolio(filename):
     portfolio = []
-    for line in open(filename):
-        fields = line.split(',')
-        s = (fields[0], int(fields[1]), float(fields[2]))
-        portfolio.append(s)
+    with open(filename) as file:
+        headers = next(file)
+        for line in file:
+            fields = line.split(',')
+            s = (fields[0], int(fields[1]), float(fields[2]))
+            portfolio.append(s)
     return portfolio
 </code></pre>
-<p>En este ejemplo, <code>filename</code>, <code>portfolio</code>, <code>line</code>, <code>fields</code> y <code>s</code> son variables locales. Esas variables no se conservan ni se puede acceder a ellas después de la llamada a la función.</p>
-<pre><code class="language-python">&gt;&gt;&gt; stocks = read_portfolio('portfolio.csv')
+<p>En este ejemplo, <code>filename</code>, ´file´, <code>portfolio</code>, <code>line</code>, <code>fields</code> y <code>s</code> son variables locales. Esas variables no se conservan ni se puede acceder a ellas después de la llamada a la función.</p>
+<pre><code class="language-python">&gt;&gt;&gt; stocks = read_portfolio('Data/portfolio.csv')
 &gt;&gt;&gt; fields
 Traceback (most recent call last):
 File &quot;&lt;stdin&gt;&quot;, line 1, in ?
@@ -565,7 +568,7 @@ def spam():
 </code></pre>
 <p>La declaración global debe aparecer antes de su uso y la variable correspondiente debe existir en el mismo archivo que la función. Habiendo visto esto, debes saber que se considera una mala forma de hacerlo. De hecho, intenta evitar el uso de "global" por completo si puedes. Si necesitas una función para modificar algún tipo de estado fuera de la función, es mejor usar una clase en su lugar (más sobre esto más adelante).</p>
 <h2 id="pase-de-argumentos">Pase de argumentos</h2>
-<p>Cuando llamas a una función, las variables de argumento son nombres que hacen referencia a los valores pasados. Estos valores NO son copias (ver [sección 2.7] ../02_Working_with_data/07_Objects.md)). Si se pasan tipos de datos mutables (por ejemplo, listas, diccionarios), se pueden modificar <em>in situ</em>.</p>
+<p>Cuando llamas a una función, las variables de argumento son nombres que hacen referencia a los valores pasados. Estos valores NO son copias (ver <a href="../../02_Working_with_data/07_Objects/">sección 2.7</a>). Si se pasan tipos de datos mutables (por ejemplo, listas, diccionarios), se pueden modificar <em>in situ</em>.</p>
 <pre><code class="language-python">def foo(items):
     items.append(42)    # Modifies the input object
 
@@ -586,7 +589,7 @@ print(a) # [1, 2, 3, 42]
 # en lugar de
 
 def bar(items):
-    items = [4,5,6] # Cambia la variable `items` local para que apunte a un objeto diferente
+    items = [4,5,6] # Reasigna la variable `items` local para que apunte a un objeto diferente
 
 b = [1, 2, 3]
 bar(b)
@@ -621,12 +624,12 @@ def parse_csv(filename):
 
     return records
 </code></pre>
-<p>Esta función lee un archivo CSV en una lista de diccionarios mientras oculta los detalles de apertura del archivo, lo envuelve con el módulo <code>csv</code>, ignora las líneas en blanco, etc.</p>
+<p>Esta función lee un archivo CSV y crea una lista de diccionarios mientras oculta los detalles de apertura del archivo, lo envuelve con el módulo <code>csv</code>, ignora las líneas en blanco, etc.</p>
 <p>Pruébelo:</p>
 <p>Sugerencia: <code>python -i fileparse.py</code>.</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio = parse_csv('Data/portfolio.csv')
 &gt;&gt;&gt; portfolio
-[{'price': '32.20', 'name': 'AA', 'shares': '100'}, {'price': '91.10', 'name': 'IBM', 'shares': '50'}, {'price': '83.44', 'name': 'CAT', 'shares': '150'}, {'price': '51.23', 'name': 'MSFT', 'shares': '200'}, {'price': '40.37', 'name': 'GE', 'shares': '95'}, {'price': '65.10', 'name': 'MSFT', 'shares': '50'}, {'price': '70.44', 'name': 'IBM', 'shares': '100'}]
+[{'name': 'AA', 'shares': '100', 'price': '32.20'}, {'name': 'IBM', 'shares': '50', 'price': '91.10'}, {'name': 'CAT', 'shares': '150', 'price': '83.44'}, {'name': 'MSFT', 'shares': '200', 'price': '51.23'}, {'name': 'GE', 'shares': '95', 'price': '40.37'}, {'name': 'MSFT', 'shares': '50', 'price': '65.10'}, {'name': 'IBM', 'shares': '100', 'price': '70.44'}]
 &gt;&gt;&gt;
 </code></pre>
 <p>Esto es bueno, excepto que no se puede hacer ningún tipo de cálculo útil con los datos porque todo se representa como una cadena. Arreglaremos esto en breve, pero sigamos trabajando en ello.</p>
@@ -635,7 +638,7 @@ def parse_csv(filename):
 <pre><code class="language-python">&gt;&gt;&gt; # Leer todos los datos
 &gt;&gt;&gt; portfolio = parse_csv('Data/portfolio.csv')
 &gt;&gt;&gt; portfolio
-[{'price': '32.20', 'name': 'AA', 'shares': '100'}, {'price': '91.10', 'name': 'IBM', 'shares': '50'}, {'price': '83.44', 'name': 'CAT', 'shares': '150'}, {'price': '51.23', 'name': 'MSFT', 'shares': '200'}, {'price': '40.37', 'name': 'GE', 'shares': '95'}, {'price': '65.10', 'name': 'MSFT', 'shares': '50'}, {'price': '70.44', 'name': 'IBM', 'shares': '100'}]
+[{'name': 'AA', 'shares': '100', 'price': '32.20'}, {'name': 'IBM', 'shares': '50', 'price': '91.10'}, {'name': 'CAT', 'shares': '150', 'price': '83.44'}, {'name': 'MSFT', 'shares': '200', 'price': '51.23'}, {'name': 'GE', 'shares': '95', 'price': '40.37'}, {'name': 'MSFT', 'shares': '50', 'price': '65.10'}, {'name': 'IBM', 'shares': '100', 'price': '70.44'}]
 
 &gt;&gt;&gt; # Leer solo algunos de los datos
 &gt;&gt;&gt; shares_held = parse_csv('Data/portfolio.csv', select=['name','shares'])
@@ -659,7 +662,10 @@ def parse_csv(filename, select=None):
 
         # Si se proporcionó un selector de columnas, buscar los índices de las columnas especificadas
         # También se limita el conjunto de encabezados utilizados para los diccionarios resultantes
-        if else:
+        if select:
+            indices = [headers.index(colname) for colname in select]
+            headers = select
+        else:
             indices = []
 
         records = []
@@ -690,7 +696,7 @@ def parse_csv(filename, select=None):
 [0, 3]
 &gt;&gt;&gt;
 </code></pre>
-<p>En otras palabras, 'name' es la columna 0 y 'shares` es la columna 3. Cuando se lee una fila de datos del archivo, se utilizan los índices para filtrarla:</p>
+<p>En otras palabras, ´name´ es la columna 0 y ´shares` es la columna 3. Cuando se lee una fila de datos del archivo, se utilizan los índices para filtrarla:</p>
 <pre><code class="language-python">&gt;&gt;&gt; row = ['AA', '6/11/2007', '9:50am', '100', '32.20' ]
 &gt;&gt;&gt; row = [ row[index] for index in indices ]
 &gt;&gt;&gt; row
@@ -701,7 +707,7 @@ def parse_csv(filename, select=None):
 <p>Modifique la función <code>parse_csv()</code> para que permita opcionalmente conversiones de tipo que se aplicarán a los datos devueltos. Por ejemplo:</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio = parse_csv('Data/portfolio.csv', types=[str, int, float])
 &gt;&gt;&gt; portfolio
-[{'price': 32.2, 'name': 'AA', 'shares': 100}, {'price': 91.1, 'name': 'IBM', 'shares': 50}, {'price': 83.44, 'name': 'CAT', 'shares': 150}, {'price': 51.23, 'name': 'MSFT', 'shares': 200}, {'price': 40.37, 'name': 'GE', 'shares': 95}, {'price': 65.1, 'name': 'MSFT', 'shares': 50}, {'price': 70.44, 'name': 'IBM', 'shares': 100}]
+[{'name': 'AA', 'shares': 100, 'price': 32.2}, {'name': 'IBM', 'shares': 50, 'price': 91.1}, {'name': 'CAT', 'shares': 150, 'price': 83.44}, {'name': 'MSFT', 'shares': 200, 'price': 51.23}, {'name': 'GE', 'shares': 95, 'price': 40.37}, {'name': 'MSFT', 'shares': 50, 'price': 65.1}, {'name': 'IBM', 'shares': 100, 'price': 70.44}]
 
 &gt;&gt;&gt; shares_held = parse_csv('Data/portfolio.csv', select=['name', 'shares'], types=[str, int])
 &gt;&gt;&gt; shares_held
@@ -729,7 +735,7 @@ if types:
 [('AA', 9.22), ('AXP', 24.85), ('BA', 44.85), ('BAC', 11.27), ('C', 3.72), ('CAT', 35.46), ('CVX', 66.67), ('DD', 28.47), ('DIS', 24.22), ('GE', 13.48), ('GM', 0.75), ('HD', 23.16), ('HPQ', 34.35), ('IBM', 106.28), ('INTC', 15.72), ('JNJ', 55.16), ('JPM', 36.9), ('KFT', 26.11), ('KO', 49.16), ('MCD', 58.99), ('MMM', 57.1), ('MRK', 27.58), ('MSFT', 20.89), ('PFE', 15.19), ('PG', 51.94), ('T', 24.79), ('UTX', 52.61), ('VZ', 29.26), ('WMT', 49.74), ('XOM', 69.35)]
 &gt;&gt;&gt;
 </code></pre>
-<p>Para realizar este cambio, deberá modificar el código de modo que la primera línea de datos No se interpreta como una línea de encabezado. Además, deberá asegurarse de no crear diccionarios, ya que ya no hay nombres de columnas para usar como claves.</p>
+<p>Para realizar este cambio, deberá modificar el código de modo que la primera línea de datos <strong>No</strong> se interprete como una línea de encabezado. Además, deberá asegurarse de no crear diccionarios, ya que ya no hay nombres de columnas para usar como claves.</p>
 <h3 id="ejercicio-37-elegir-un-delimitador-de-columna-diferente">Ejercicio 3.7: Elegir un delimitador de columna diferente</h3>
 <p>Aunque los archivos CSV son bastante comunes, también es posible encontrar un archivo que utilice un separador de columnas diferente, como una tabulación o un espacio. Por ejemplo, el archivo <code>Data/portfolio.dat</code> tiene este aspecto:</p>
 <pre><code class="language-csv">name shares price
@@ -752,7 +758,7 @@ Por ejemplo:
 ```python
 &gt;&gt;&gt; portfolio = parse_csv('Data/portfolio.dat', types=[str, int, float], delimiter=' ')
 &gt;&gt;&gt; portfolio
-[{'price': '32.20', 'name': 'AA', 'shares': '100'}, {'price': '91.10', 'name': 'IBM', 'shares': '50'}, {'price': '83.44', 'name': 'CAT', 'shares': '150'}, {'price': '51.23', 'name': 'MSFT', 'shares': '200'}, {'price': '40.37', 'name': 'GE', 'shares': '95'}, {'price': '65.10', 'name': 'MSFT', 'shares': '50'}, {'price': '70.44', 'name': 'IBM', 'shares': '100'}]
+[{'name': 'AA', 'shares': 100, 'price': 32.2}, {'name': 'IBM', 'shares': 50, 'price': 91.1}, {'name': 'CAT', 'shares': 150, 'price': 83.44}, {'name': 'MSFT', 'shares': 200, 'price': 51.23}, {'name': 'GE', 'shares': 95, 'price': 40.37}, {'name': 'MSFT', 'shares': 50, 'price': 65.1}, {'name': 'IBM', 'shares': 100, 'price': 70.44}]
 &gt;&gt;&gt;
 </code></pre>
 <h2 id="comentario">Comentario</h2>
