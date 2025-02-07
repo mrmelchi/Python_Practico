@@ -357,7 +357,7 @@ with open('file.csv') as f:
 <li>¿Cuál de estas funciones es más flexible?</li>
 </ul>
 <h2 id="idea-profunda-duck-typing">Idea profunda: "Duck Typing"</h2>
-<p><a href="https://en.wikipedia.org/wiki/Duck_typing">Duck Typing</a> es un concepto de programación informática para determinar si un objeto se puede usar para un propósito particular. Es una aplicación de la [prueba del pato] <a href="https://en.wikipedia.org/wiki/Duck_test">https://en.wikipedia.org/wiki/Duck_test</a>).</p>
+<p><a href="https://en.wikipedia.org/wiki/Duck_typing">Duck Typing</a> es un concepto de programación informática para determinar si un objeto se puede usar para un propósito particular. Es una aplicación de la <a href="https://en.wikipedia.org/wiki/Duck_test">prueba del pato</a>.</p>
 <blockquote>
 <p>Si parece un pato, nada como un pato y grazna como un pato, entonces probablemente sea un pato.</p>
 </blockquote>
@@ -394,7 +394,7 @@ data = read_data(lines)
 <h3 id="ejercicio-317-de-nombres-de-archivo-a-objetos-similares-a-archivos">Ejercicio 3.17: De nombres de archivo a objetos similares a archivos</h3>
 <p>Ahora ha creado un archivo <code>fileparse.py</code> que contenía una función <code>parse_csv()</code>. La función funcionaba de la siguiente manera:</p>
 <pre><code class="language-python">&gt;&gt;&gt; import fileparse
-&gt;&gt;&gt; portfolio = fileparse.parse_csv('Data/portfolio.csv', types=str,int,float])
+&gt;&gt;&gt; portfolio = fileparse.parse_csv('Data/portfolio.csv', types=[str,int,float])
 &gt;&gt;&gt;
 </code></pre>
 <p>En este momento, la función espera que se le pase un nombre de archivo. Sin embargo, puede hacer que el código sea más flexible. Modifique la función para que funcione con cualquier objeto iterable o similar a un archivo. Por ejemplo:</p>

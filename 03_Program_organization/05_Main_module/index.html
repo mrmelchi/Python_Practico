@@ -426,7 +426,7 @@ public static void main(String args[]) {
 <p>Esta es la primera función que se ejecuta cuando se inicia una aplicación.</p>
 <h2 id="modulo-principal-de-python">Módulo principal de Python</h2>
 <p>Python no tiene una función o método <em>principal</em>. En cambio, hay un módulo <em>principal</em>. El <em>módulo principal</em> es el archivo fuente que se ejecuta primero.</p>
-<pre><code class="language-bash">bash % python3 prog.py
+<pre><code class="language-bash">bash % python prog.py
 ...
 </code></pre>
 <p>Cualquier archivo que le dé al intérprete al inicio se convierte en <em>principal</em>. No importa el nombre.</p>
@@ -478,13 +478,14 @@ if __name__ == '__main__':
 <p>Significa que los scripts se ejecutan desde el shell/terminal. Los casos de uso más comunes son la automatización, las tareas en segundo plano, etc.</p>
 <h2 id="argumentos-de-la-linea-de-comandos">Argumentos de la línea de comandos</h2>
 <p>La línea de comandos es una lista de cadenas de texto.</p>
-<pre><code class="language-bash">bash % python report.py portfolio.csv prices.csv
+<pre><code class="language-bash">bash % python -i report.py portfolio.csv prices.csv
 </code></pre>
 <p>Esta lista de cadenas de texto se encuentra en <code>sys.argv</code>.</p>
 <pre><code class="language-python"># En el comando bash anterior
-sys.argv # ['report.py, 'portfolio.csv', 'prices.csv']
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.argv # ['report.py, 'portfolio.csv', 'prices.csv']
 </code></pre>
-<p>A continuación, se incluye un ejemplo simple de procesamiento de los argumentos:</p>
+<p>A continuación, se incluye un ejemplo simple de procesamiento de argumentos:</p>
 <pre><code class="language-python">import sys
 
 if len(sys.argv) != 3:
@@ -494,7 +495,7 @@ pricefile = sys.argv[2]
 ...
 </code></pre>
 <h2 id="es-estandar">E/S estándar</h2>
-<p>La entrada/salida estándar (o stdio) son archivos que funcionan de la misma manera que los archivos normales.</p>
+<p>La entrada/salida estándar (o <code>stdio</code>) son archivos que funcionan de la misma manera que los archivos normales.</p>
 <pre><code class="language-python">sys.stdout
 sys.stderr
 sys.stdin
@@ -509,7 +510,7 @@ bash % cmd1 | python prog.py | cmd2
 <p>Las variables de entorno se configuran en el shell.</p>
 <pre><code class="language-bash">bash % setenv NAME dave
 bash % setenv RSH ssh
-bash % python3 prog.py
+bash % python prog.py
 </code></pre>
 <p><code>os.environ</code> es un diccionario que contiene estos valores.</p>
 <pre><code class="language-python">import os
@@ -530,7 +531,7 @@ sys.exit(exitcode)
 <p>Un código de salida distinto de cero indica un error.</p>
 <h2 id="la-linea">La línea <code>#!</code></h2>
 <p>En Unix, la línea <code>#!</code> puede iniciar un script como Python. Agregue lo siguiente a la primera línea de su archivo de script.</p>
-<pre><code class="language-python">#!/usr/bin/env python3
+<pre><code class="language-python">#!/usr/bin/env python
 # prog.py
 ...
 </code></pre>

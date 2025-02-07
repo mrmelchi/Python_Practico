@@ -508,7 +508,8 @@ from math import cos, sin
 <p>Específicamente, <code>import</code> siempre ejecuta el archivo <em>completo</em> y los módulos siguen siendo entornos aislados.</p>
 <p>La declaración <code>import module as</code> solo cambia el nombre localmente. La declaración <code>from math import cos, sin</code> todavía carga el módulo matemático completo detrás de escena. Simplemente copia los nombres <code>cos</code> y <code>sin</code> del módulo al espacio local después de que finaliza.</p>
 <h2 id="carga-de-modulos">Carga de módulos</h2>
-<p>Cada módulo se carga y se ejecuta solo <em>una vez</em>. <em>Nota: Las importaciones repetidas solo devuelven una referencia al módulo cargado previamente.</em></p>
+<p>Cada módulo se carga y se ejecuta solo <em>una vez</em>. </p>
+<p><em>Nota: Las importaciones repetidas solo devuelven una referencia al módulo cargado previamente.</em></p>
 <p><code>sys.modules</code> es un diccionario de todos los módulos cargados.</p>
 <pre><code class="language-python">&gt;&gt;&gt; import sys
 &gt;&gt;&gt; sys.modules.keys()
@@ -581,7 +582,7 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 &gt;&gt;&gt; prices
 ... mira el resultado...
 &gt;&gt;&gt; prices['IBM']
-106.11
+106.28
 &gt;&gt;&gt;
 </code></pre>
 <p>Intenta importar una función de modo que no necesites incluir el nombre del módulo:</p>
@@ -593,15 +594,15 @@ Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;licen
 </code></pre>
 <h3 id="ejercicio-312-uso-del-modulo-de-la-biblioteca">Ejercicio 3.12: Uso del módulo de la biblioteca</h3>
 <p>En la sección 2, escribiste un programa <code>report.py</code> que produjo un informe de acciones como este:</p>
-<pre><code>Nombre Acciones Precio Cambio
----------- ---------- ---------- ----------
-AA 100 9.22 -22.98
-IBM 50 106.28 15.18
-CAT 150 35,46 -47,98
-MSFT 200 20,89 -30,34
-GE 95 13,48 -26,89
-MSFT 50 20,89 -44,21
-IBM 100 106,28 35,84
+<pre><code>Name            Shares      Price     Change
+---------- ---------- ---------- ---------- 
+        AA        100       9.22     -22.98
+       IBM         50     106.28      15.18
+       CAT        150      35.46     -47.98
+      MSFT        200      20.89     -30.34
+        GE         95      13.48     -26.89
+      MSFT         50      20.89     -44.21
+       IBM        100     106.28      35.84
 </code></pre>
 <p>Tome ese programa y modifíquelo de modo que todo el procesamiento del archivo de entrada se realice utilizando funciones en su módulo <code>fileparse</code>. Para ello, importe <code>fileparse</code> como módulo y cambie las funciones <code>read_portfolio()</code> y <code>read_prices()</code> para utilizar la función <code>parse_csv()</code>.</p>
 <p>Use el modo interactivo al comienzo de este ejercicio como guía. Después, debería obtener exactamente el mismo resultado que antes.</p>
@@ -615,7 +616,7 @@ IBM 100 106,28 35,84
 </code></pre>
 <p>Modifique el archivo <code>pcost.py</code> para que use la función <code>report.read_portfolio()</code>.</p>
 <h2 id="comentario">Comentario</h2>
-<p>Cuando haya terminado con este ejercicio, debería tener tres programas. <code>fileparse.py</code> que contiene una función <code>parse_csv()</code> de propósito general. <code>report.py</code> que produce un informe atractivo, pero también contiene las funciones read_portfolio()<code>y</code>read_prices()<code>. Y finalmente,</code>pcost.py<code>que calcula el costo de la cartera, pero hace uso de la función</code>read_portfolio()<code>escrita para el programa</code>report.py`.</p>
+<p>Cuando haya terminado con este ejercicio, debería tener tres programas. <code>fileparse.py</code> que contiene una función <code>parse_csv()</code> de propósito general. <code>report.py</code> que produce un informe atractivo, pero también contiene las funciones <code>read_portfolio()</code> y <code>read_prices()</code>. Y finalmente,<code>pcost.py</code>que calcula el costo de la cartera, pero hace uso de la función<code>read_portfolio()</code>escrita para el programa<code>report.py\</code>.</p>
 <p><a href="../../Contents/">Contenido</a> | <a href="../03_Error_checking/">Anterior (3.3 Comprobación de errores)</a> | <a href="../05_Main_module/">Próximo (3.5 Módulo principal)</a></p>
 
 
