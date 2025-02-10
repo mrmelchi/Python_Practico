@@ -606,16 +606,16 @@ class Child(Mother, Father):
 
 class TableFormatter:
     def headers(self, headers):
-    '''
-    Emite los encabezados de la tabla.
-    '''
-    raise NotImplementedError()
+      '''
+      Emite los encabezados de la tabla.
+      '''
+      raise NotImplementedError()
 
     def row(self, rowdata):
-    '''
-    Emite una sola fila de datos de la tabla.
-    '''
-    raise NotImplementedError()
+      '''
+      Emite una sola fila de datos de la tabla.
+      '''
+      raise NotImplementedError()
 </code></pre>
 <p>Esta clase no hace nada, pero sirve como una especie de especificación de diseño para clases adicionales que se definirán en breve. A una clase como esta a veces se la llama "clase base abstracta".</p>
 <p>Modifique la función <code>print_report()</code> para que acepte un objeto <code>TableFormatter</code> como entrada e invoque métodos en él para producir la salida. Por ejemplo, de esta manera:</p>
@@ -631,7 +631,7 @@ def print_report(reportdata, formatter):
         rowdata = [ name, str(shares), f'{price:0.2f}', f'{change:0.2f}' ]
         formatter.row(rowdata)
 </code></pre>
-<p>Dado que agregaste un argumento a print_report(), también necesitarás modificar la función portfolio_report()<code>. Cámbielo para que cree un</code>TableFormatter` como este:</p>
+<p>Dado que agregaste un argumento a <code>print_report()</code>, también necesitarás modificar la función portfolio_report()<code>. Cámbielo para que cree un</code>TableFormatter` como este:</p>
 <pre><code class="language-python"># report.py
 
 import tableformat
@@ -667,7 +667,7 @@ class TextTableFormatter(TableFormatter):
     '''
     Emite una tabla en formato de texto simple
     '''
-    def headers(self, headers):
+    def headings(self, headers):
         for h in headers:
               print(f'{h:&gt;10s}', end=' ')
         print()
@@ -718,7 +718,7 @@ class CSVTableFormatter(TableFormatter):
     '''
     Datos de cartera de salida en formato CSV.
     '''
-    def headers(self, headers):
+    def headings(self, headers):
     print(','.join(headers))
 
     def row(self, rowdata):
@@ -780,15 +780,15 @@ IBM,100,106.28,35.84
     # Imprimirlo
     if fmt == 'txt':
         formatter = tableformat.TextTableFormatter()
-        elif fmt == 'csv':
+    elif fmt == 'csv':
         formatter = tableformat.CSVTableFormatter()
     elif fmt == 'html':
         formatter = tableformat.HTMLTableFormatter()
     else:
-        raise RuntimeError(f'Unknown format {fmt}')
+        raise RuntimeError(f'Formato deconocido {fmt}')
     print_report(report, formatter)
 </code></pre>
-<p>En este código, el usuario especifica un nombre simplificado como <code>'txt'</code> o <code>'csv'</code> para elegir un formato. Sin embargo, ¿es la mejor idea poner una declaración <code>si</code> grande en la función <code>portfolio_report()</code>? Tal vez sea mejor mover ese código a una función de propósito general en otro lugar.</p>
+<p>En este código, el usuario especifica un nombre simplificado como <code>'txt'</code> o <code>'csv'</code> para elegir un formato. Sin embargo, ¿es la mejor idea poner una declaración <code>if</code> grande en la función <code>portfolio_report()</code>? Tal vez sea mejor mover ese código a una función de propósito general en otro lugar.</p>
 <p>En el archivo <code>tableformat.py</code>, agregue una función <code>create_formatter(name)</code> que permita a un usuario crear un formateador dado un nombre de salida como <code>'txt'</code>, <code>'csv'</code> o <code>'html'</code>. Modifique <code>portfolio_report()</code> para que se vea así:</p>
 <pre><code class="language-python">def portfolio_report(portfoliofile, pricefile, fmt='txt'):
     '''
@@ -834,7 +834,7 @@ bash $
 </code></pre>
 <h2 id="discusion">Discusión</h2>
 <p>Escribir código extensible es uno de los usos más comunes de la herencia en bibliotecas y marcos. Por ejemplo, un marco puede indicarle que defina su propio objeto que hereda de una clase base proporcionada. Luego se le indica que complete varios métodos que implementan varios fragmentos de funcionalidad.</p>
-<p>Otro concepto un poco más profundo es la idea de "ser dueño de sus abstracciones". En los ejercicios, definimos <em>nuestra propia clase</em> para formatear una tabla. Puede mirar su código y decirse a sí mismo "¡Debería usar una biblioteca de formato o algo que alguien más ya haya creado!" No, debe usar TANTO su clase como una biblioteca. Usar su propia clase promueve el acoplamiento estrecho (<em>loose coupling</em>) [<a href="https://en.wikipedia.org/wiki/Loose_coupling">https://en.wikipedia.org/wiki/Loose_coupling</a>] es más independiente y es más flexible. Mientras su aplicación use la interfaz de programación de su clase, puede cambiar la implementación interna para que funcione de la forma que desee. Puede escribir código totalmente personalizado. Puede usar el paquete de terceros de alguien. Puede cambiar un paquete de terceros por un paquete diferente cuando encuentre uno mejor. No importa: nada del código de su aplicación se romperá mientras conserve la interfaz. Esa es una idea poderosa y es una de las razones por las que podría considerar la herencia para algo como esto.</p>
+<p>Otro concepto un poco más profundo es la idea de "ser dueño de sus abstracciones". En los ejercicios, definimos <em>nuestra propia clase</em> para formatear una tabla. Puede mirar su código y decirse a sí mismo "¡Debería usar una biblioteca de formato o algo que alguien más ya haya creado!" No, debe usar TANTO su clase como una biblioteca. Usar su propia clase promueve el acoplamiento estrecho (<em>loose coupling</em>) [<a href="https://en.wikipedia.org/wiki/Loose_coupling">https://en.wikipedia.org/wiki/Loose_coupling</a>] es más independiente y es más flexible. Mientras su aplicación use la interfaz de programación de su clase, puede cambiar la implementación interna para que funcione de la forma que desee. Puede escribir código totalmente personalizado. Puede usar el paquete de alguien. Puede cambiar un paquete de terceros por un paquete diferente cuando encuentre uno mejor. No importa: nada del código de su aplicación se romperá mientras conserve la interfaz. Esa es una idea poderosa y es una de las razones por las que podría considerar la herencia para algo como esto.</p>
 <p>Dicho esto, diseñar programas orientados a objetos puede ser extremadamente difícil. Para obtener más información, probablemente debería buscar libros sobre el tema de los patrones de diseño (aunque comprender lo que sucedió en este ejercicio lo llevará bastante lejos en términos de usar objetos de una manera práctica y útil).</p>
 <p><a href="../../Contents/">Contenido</a> | <a href="../01_Class/">Anterior (4.1 Clases)</a> | <a href="../03_Special_methods/">Próximo (4.3 Métodos especiales)</a></p>
 

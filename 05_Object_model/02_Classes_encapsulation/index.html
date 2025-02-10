@@ -420,13 +420,12 @@
 </ul>
 <p>Eso es un problema cuando intentas aislar detalles de la <em>implementación interna</em>.</p>
 <h2 id="encapsulacion-de-python">Encapsulación de Python</h2>
-<p>Python se basa en convenciones de programación para indicar el uso previsto de algo. Estas convenciones se basan en la denominación. Existe una actitud general de que es responsabilidad del programador observar las reglas
-en lugar de que el lenguaje las imponga.</p>
+<p>Python se basa en convenciones de programación para indicar el uso previsto de algo. Estas convenciones se basan en la denominación. Existe una actitud general de que es responsabilidad del programador observar las reglas en lugar de que el lenguaje las imponga.</p>
 <h2 id="atributos-privados">Atributos privados</h2>
 <p>Cualquier nombre de atributo con <code>_</code> inicial se considera <em>privado</em>.</p>
 <pre><code class="language-python">class Person:
     def __init__(self, name):
-        self._name = 0
+        self._name = name
 </code></pre>
 <p>Como se mencionó anteriormente, este es solo un estilo de programación. Aún puedes acceder a él y cambiarlo.</p>
 <pre><code class="language-python">&gt;&gt;&gt; p = Person('Guido')
@@ -444,8 +443,7 @@ en lugar de que el lenguaje las imponga.</p>
         self.shares = shares
         self.price = price
 </code></pre>
-<p>Una característica sorprendente es que puedes establecer los atributos
-con cualquier valor:</p>
+<p>Una característica sorprendente es que puedes establecer los atributos con cualquier valor:</p>
 <pre><code class="language-python">&gt;&gt;&gt; s = Stock('IBM', 50, 91.1)
 &gt;&gt;&gt; s.shares = 100
 &gt;&gt;&gt; s.shares = &quot;hundred&quot;
@@ -490,7 +488,7 @@ con cualquier valor:</p>
     @shares.setter
     def shares(self, value):
         if not isinstance(value, int):
-            raise TypeError('Expected int')
+            raise TypeError('Esperado un int')
         self._shares = value
 </code></pre>
 <p>El acceso normal a los atributos ahora activa los métodos getter y setter en <code>@property</code> y <code>@shares.setter</code>.</p>
@@ -514,14 +512,10 @@ con cualquier valor:</p>
         if not isinstance(value, int):
             raise TypeError('Esperado un int')
         self._shares = value
-    ```
-
-A menudo existe una confusión entre una propiedad y el uso de nombres privados. Aunque una propiedad usa internamente un nombre privado como `_shares`, el resto de la clase (no la propiedad) puede seguir usando un nombre como `shares`.
-
-Las propiedades también son útiles para los atributos de datos calculados.
-
-```python
-class Stock:
+</code></pre>
+<p>A menudo existe una confusión entre una propiedad y el uso de nombres privados. Aunque una propiedad usa internamente un nombre privado como <code>_shares</code>, el resto de la clase (no la propiedad) puede seguir usando un nombre como <code>shares</code>.</p>
+<p>Las propiedades también son útiles para los atributos de datos calculados.</p>
+<pre><code class="language-python">class Stock:
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
@@ -590,8 +584,8 @@ AttributeError: 'Stock' object has no attribute 'prices' and no __dict__ for set
 49010.0
 &gt;&gt;&gt;
 </code></pre>
-<p>En concreto, observa cómo tienes que añadir el extra () a <code>cost</code> porque es un método.</p>
-<p>Puedes deshacerte del extra () en <code>cost()</code> si lo conviertes en una propiedad. Tome su clase <code>Stock</code> y modifíquela para que el cálculo de costos funcione de esta manera:</p>
+<p>En concreto, observa cómo tienes que añadir el extra <code>()</code> a <code>cost</code> porque es un método.</p>
+<p>Puedes deshacerte del extra <code>()</code> en <code>cost()</code> si lo conviertes en una propiedad. Tome su clase <code>Stock</code> y modifíquela para que el cálculo de costos funcione de esta manera:</p>
 <pre><code class="language-python">&gt;&gt;&gt; ================================= RESTART ==================================
 &gt;&gt;&gt; from stock import Stock
 &gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)

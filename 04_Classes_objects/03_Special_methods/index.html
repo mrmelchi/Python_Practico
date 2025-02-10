@@ -397,9 +397,9 @@ datetime.date(2012, 12, 21)
 <p>Estas funciones, <code>str()</code> y <code>repr()</code>, utilizan un par de métodos especiales en la clase para producir la cadena que se mostrará.</p>
 <pre><code class="language-python">class Date(object):
     def __init__(self, year, month, day):
-    self.year = year
-    self.month = month
-    self.day = day
+        self.year = year
+        self.month = month
+        self.day = day
 
     # Se utiliza con `str()`
     def __str__(self):
@@ -461,7 +461,7 @@ del x[a]    x.__delitem__(a)
 &gt;&gt;&gt;
 </code></pre>
 <h2 id="metodos-enlazados">Métodos enlazados</h2>
-<p>Un método que aún no ha sido invocado por el operador de llamada de función ()` se conoce como <em>método enlazado</em>. Opera en la instancia en la que se originó.</p>
+<p>Un método que aún no ha sido invocado por el operador de llamada de función <code>()</code> se conoce como <em>método enlazado</em>. Opera en la instancia en la que se originó.</p>
 <pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
 &gt;&gt;&gt; s
 &lt;Stock object at 0x590d0&gt;
@@ -488,10 +488,10 @@ f.close # Ups, no hice nada en absoluto. `f` sigue abierto.
 <p>En ambos casos, el error se debe a que se olvidó incluir los paréntesis finales. Por ejemplo, <code>s.cost()</code> o <code>f.close()</code>.</p>
 <h2 id="acceso-a-atributos">Acceso a atributos</h2>
 <p>Existe una forma alternativa de acceder, manipular y administrar atributos.</p>
-<pre><code class="language-python">getattr(obj, 'name') # Igual que obj.name
-setattr(obj, 'name', value) # Igual que obj.name = value
-delattr(obj, 'name') # Igual que del obj.name
-hasattr(obj, 'name') # Comprueba si el atributo existe
+<pre><code class="language-python">getattr(obj, 'name')          # Igual que obj.name
+setattr(obj, 'name', value)   # Igual que obj.name = value
+delattr(obj, 'name')          # Igual que del obj.name
+hasattr(obj, 'name')          # Comprueba si el atributo existe
 </code></pre>
 <p>Ejemplo:</p>
 <pre><code class="language-python">if hasattr(obj, 'x'):
@@ -499,7 +499,7 @@ hasattr(obj, 'name') # Comprueba si el atributo existe
 else:
     x = None
 </code></pre>
-<p><em>Nota: <code>getattr()</code> también tiene un valor predeterminado útil</em> arg*.</p>
+<p>*Nota: <code>getattr()</code> también tiene un valor predeterminado útil <code>default</code>.</p>
 <pre><code class="language-python">x = getattr(obj, 'x', None)
 </code></pre>
 <h2 id="ejercicios">Ejercicios</h2>

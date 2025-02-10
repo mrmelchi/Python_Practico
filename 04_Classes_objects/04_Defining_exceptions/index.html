@@ -294,14 +294,10 @@
 <p>Las excepciones definidas por el usuario se definen por clases.</p>
 <pre><code class="language-python">class NetworkError(Exception):
     pass
-    ```
-
-**Las excepciones siempre heredan de `Exception`.**
-
-Normalmente son clases vacías. Utilice `pass` para el cuerpo. También puede crear una jerarquía de sus excepciones.
-
-```python
-class AuthenticationError(NetworkError):
+</code></pre>
+<p><strong>Las excepciones siempre heredan de <code>Exception</code>.</strong></p>
+<p>Normalmente son clases vacías. Utilice <code>pass</code> para el cuerpo. También puede crear una jerarquía de sus excepciones.</p>
+<pre><code class="language-python">class AuthenticationError(NetworkError):
     pass
 
 class ProtocolError(NetworkError):
@@ -316,10 +312,11 @@ class ProtocolError(NetworkError):
 <pre><code class="language-python">&gt;&gt;&gt; from tableformat import create_formatter
 &gt;&gt;&gt; formatter = create_formatter('xls')
 Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-  File &quot;tableformat.py&quot;, line 71, in create_formatter
-    raise FormatError('Unknown table format %s' % name)
-FormatError: Unknown table format xls
+  File &quot;&lt;python-input-1&gt;&quot;, line 1, in &lt;module&gt;
+    formatter = create_formatter('xls')
+  File &quot;C:\Users\Mario\practical-python\Work\tableformat.py&quot;, line 30, in create_formatter
+    raise FormatError(f'Unknown table format {name}')
+tableformat.FormatError: Unknown table format xls
 &gt;&gt;&gt;
 </code></pre>
 <p><a href="../../Contents/">Contenido</a> | <a href="../03_Special_methods/">Anterior (4.3 Métodos especiales)</a> | <a href="../../05_Object_model/00_Overview/">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p>

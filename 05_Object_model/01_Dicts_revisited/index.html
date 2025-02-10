@@ -567,9 +567,9 @@ t = Stock('AAPL', 50, 123.45) # {'name' : 'AAPL','shares' : 50, 'price': 123.45 
 <p>El diccionario de instancias contiene datos exclusivos de cada instancia, mientras que el diccionario de clases contiene datos compartidos colectivamente por <em>todas</em> las instancias.</p>
 <h2 id="acceso-a-atributos">Acceso a atributos</h2>
 <p>Cuando trabaja con objetos, accede a los datos y métodos utilizando el operador <code>.</code>.</p>
-<pre><code class="language-python">x = obj.name # Obtención
-obj.name = value # Configuración
-del obj.name # Eliminación
+<pre><code class="language-python">x = obj.name            # Obtención
+obj.name = value        # Configuración
+del obj.name            # Eliminación
 </code></pre>
 <p>Estas operaciones están directamente vinculadas a los diccionarios que se encuentran debajo de las sábanas.</p>
 <h2 id="modificacion-de-instancias">Modificación de instancias</h2>
@@ -669,8 +669,8 @@ e.attr
     def noise(self): # ruido
         return 'Bark'   # Ladrar
 
-    def chase(self):
-        return 'Chasing!'   # Persiguiendo
+    def chase(self): # caza
+        return 'Chasing!'   # Cazando
 
 class LoudDog(Dog): # Perro ruidoso
     def noise(self):
@@ -712,7 +712,7 @@ class LoudBike(Loud, Bike):
         return super().noise().upper()
 </code></pre>
 <p><code>super()</code> delega a la <em>próxima clase</em> en el MRO.</p>
-<p>La parte complicada es que no sabe qué es. En particular, no sabe qué es si se utiliza la herencia múltiple.</p>
+<p>La parte complicada es que no sabe cual es. En particular, no sabe cual es si se utiliza la herencia múltiple.</p>
 <h2 id="algunas-precauciones">Algunas precauciones</h2>
 <p>La herencia múltiple es una herramienta poderosa. Recuerde que el poder conlleva responsabilidad. Los marcos de trabajo y las bibliotecas a veces la utilizan para funciones avanzadas que implican la composición de componentes. Ahora, olvídese de que vio eso.</p>
 <h2 id="ejercicios">Ejercicios</h2>
@@ -747,7 +747,7 @@ class LoudBike(Loud, Bike):
 '9:45am'
 &gt;&gt;&gt;
 </code></pre>
-<p>Aquí, realmente se nota el hecho de que una instancia es solo la parte superior de un diccionario. Nota: se debe enfatizar que la manipulación directa del diccionario es poco común; siempre debe escribir su código para usar la sintaxis (.).</p>
+<p>Aquí, realmente se nota el hecho de que una instancia es solo la parte superior de un diccionario. Nota: se debe enfatizar que la manipulación directa del diccionario es poco común; siempre debe escribir su código para usar la sintaxis (<code>.</code>).</p>
 <h3 id="ejercicio-53-el-rol-de-las-clases">Ejercicio 5.3: El rol de las clases</h3>
 <p>Las definiciones que componen una definición de clase son compartidas por todas las instancias de esa clase. Tenga en cuenta que todas las instancias tienen un enlace a su clase asociada:</p>
 <pre><code class="language-python">&gt;&gt;&gt; goog.__class__
@@ -763,7 +763,7 @@ class LoudBike(Loud, Bike):
 4561.5
 &gt;&gt;&gt;
 </code></pre>
-<p>Observe que el nombre 'cost' no está definido ni en <code>goog.__dict__</code> ni en <code>ibm.__dict__</code>. En cambio, lo proporciona el diccionario de clases. Pruebe esto:</p>
+<p>Observe que el nombre <code>cost</code> no está definido ni en <code>goog.__dict__</code> ni en <code>ibm.__dict__</code>. En cambio, lo proporciona el diccionario de clases. Pruebe esto:</p>
 <pre><code class="language-python">&gt;&gt;&gt; Stock.__dict__['cost']
 ... observe la salida...
 &gt;&gt;&gt;
