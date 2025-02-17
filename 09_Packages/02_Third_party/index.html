@@ -400,8 +400,10 @@
 bash %
 </code></pre>
 <p>Después de unos minutos de espera, tendrás un nuevo directorio <code>mypython</code> que es tu propia pequeña instalación de Python. Dentro de ese directorio encontrarás un directorio <code>bin/</code> (Unix) o un directorio <code>Scripts/</code> (Windows). Si ejecuta el script <code>activate</code> que se encuentra allí, "activará" esta versión de Python, convirtiéndolo en el comando <code>python</code> predeterminado para el shell. Por ejemplo:</p>
-<pre><code class="language-bash">bash % source mypython/bin/activate
-(mypython) bash %
+<pre><code class="language-bash">bash % source mypython/bin/activate 
+(mypython) bash % # UNIX
+C:\Users\Tu_Usuario\practical-python\Work\porty-app&gt;mypython\Scripts\activate
+(mypython) C:\Users\Tu_Usuario\practical-python\Work\porty-app&gt;  # windows
 </code></pre>
 <p>Desde aquí, ahora puede comenzar a instalar paquetes de Python por su cuenta. Por ejemplo:</p>
 <pre><code>(mypython) bash % python -m pip install pandas
@@ -410,7 +412,7 @@ bash %
 <p>Para experimentar y probar diferentes paquetes, un entorno virtual generalmente funcionará bien. Si, por otro lado, está creando una aplicación y tiene dependencias de paquetes específicas, ese es un problema ligeramente diferente.</p>
 <h2 id="manejo-de-dependencias-de-terceros-en-su-aplicacion">Manejo de dependencias de terceros en su aplicación</h2>
 <p>Si ha escrito una aplicación y tiene dependencias de terceros específicas, un desafío se relaciona con la creación y preservación del entorno que incluye su código y las dependencias. Lamentablemente, esta ha sido un área de gran confusión y cambios frecuentes durante la existencia de Python. Sigue evolucionando incluso ahora.</p>
-<p>En lugar de proporcionar información que seguramente quedará desactualizada pronto, le recomiendo que consulte la [Guía del usuario de empaquetado de Python] <a href="https://packaging.python.org">https://packaging.python.org</a>).</p>
+<p>En lugar de proporcionar información que seguramente quedará desactualizada pronto, le recomiendo que consulte la <a href="https://packaging.python.org">Guía del usuario de empaquetado de Python</a>.</p>
 <h2 id="ejercicios">Ejercicios</h2>
 <h3 id="ejercicio-94-creacion-de-un-entorno-virtual">Ejercicio 9.4: Creación de un entorno virtual</h3>
 <p>Vea si puede recrear los pasos para crear un entorno virtual e instalar pandas en él como se muestra arriba.</p>

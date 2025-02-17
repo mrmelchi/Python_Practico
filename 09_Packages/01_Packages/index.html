@@ -571,17 +571,17 @@ porty.report.main(sys.argv)
 </code></pre>
 <h2 id="ejercicios">Ejercicios</h2>
 <p>En este punto, tienes un directorio con varios programas:</p>
-<pre><code>pcost.py # calcula el costo de la cartera
-report.py # crea un informe
-ticker.py # produce un ticker de acciones en tiempo real
+<pre><code>pcost.py            # calcula el costo de la cartera
+report.py           # crea un informe
+ticker.py           # produce un ticker de acciones en tiempo real
 </code></pre>
 <p>Hay una variedad de módulos de soporte con otras funciones:</p>
-<pre><code>stock.py # Clase Stock
-portfolio.py # Clase Portfolio
-fileparse.py # Análisis CSV
-tableformat.py # Tablas formateadas
-follow.py # Seguimiento de un archivo de registro
-typedproperty.py # Propiedades de clase tipificadas
+<pre><code>stock.py            # Clase Stock
+portfolio.py        # Clase Portfolio
+fileparse.py        # Análisis CSV
+tableformat.py      # Tablas formateadas
+follow.py           # Seguimiento de un archivo de registro
+typedproperty.py    # Propiedades de clase tipificadas
 </code></pre>
 <p>En este ejercicio, vamos a limpiar el código y ponerlo en un paquete
 común.</p>
@@ -689,15 +689,15 @@ main(sys.argv)
 Asegúrate de que puedes ejecutarlo en esa ubicación:</p>
 <pre><code class="language-bash">bash % cd porty-app
 bash % python print-report.py portfolio.csv prices.csv txt
-Nombre Acciones Precio Cambio
+     Name     Shares      Price     Change
 ---------- ---------- ---------- ----------
-AA 100 9,22 -22,98
-IBM 50 106,28 15,18
-CAT 150 35,46 -47,98
-MSFT 200 20,89 -30,34
-GE 95 13,48 -26,89
-MSFT 50 20,89 -44,21
-IBM 100 106,28 35,84
+        AA        100       9.22     -22.98
+       IBM         50     106.28      15.18
+       CAT        150      35.46     -47.98
+      MSFT        200      20.89     -30.34
+        GE         95      13.48     -26.89
+      MSFT         50      20.89     -44.21
+       IBM        100     106.28      35.84
 
 bash %
 </code></pre>
