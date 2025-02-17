@@ -497,7 +497,7 @@ def read_portfolio(filename):
 <p>Esto facilita cambiar el nombre del paquete.</p>
 <h2 id="problema-scripts-principales">Problema: Scripts principales</h2>
 <p>Ejecutar un submódulo de paquete como un script principal falla.</p>
-<pre><code class="language-bash">bash $ python porty/pcost.py # FALLA
+<pre><code class="language-bash">bash % python3 porty/pcost.py # FALLA
 ...
 </code></pre>
 <p><em>Razón: estás ejecutando Python en un solo archivo y Python no ve el
@@ -505,7 +505,7 @@ resto de la estructura del paquete correctamente (<code>sys.path</code> es
 incorrecto).</em></p>
 <p>Todas las importaciones fallan. Para solucionar esto, debes ejecutar tu
 programa de una manera diferente, usando la opción <code>-m</code>.</p>
-<pre><code class="language-bash">bash $ python -m porty.pcost # FUNCIONA
+<pre><code class="language-bash">bash % python3 -m porty.pcost # FUNCIONA
 ...
 </code></pre>
 <h2 id="archivos-__init__py">Archivos <code>__init__.py</code></h2>
@@ -654,7 +654,7 @@ usted. Ahora, su código debería estar organizado de la siguiente manera:</p>
 directorio de nivel superior <code>porty-app/</code>. Por ejemplo, desde la
 terminal:</p>
 <pre><code class="language-python">bash % cd porty-app
-bash % python
+bash % python3
 &gt;&gt;&gt; import porty.report
 &gt;&gt;&gt;
 </code></pre>
@@ -688,7 +688,7 @@ main(sys.argv)
 <p>Coloque este script en el directorio de nivel superior <code>porty-app/</code>.
 Asegúrate de que puedes ejecutarlo en esa ubicación:</p>
 <pre><code class="language-bash">bash % cd porty-app
-bash % python print-report.py portfolio.csv prices.csv txt
+bash % python3 print-report.py portfolio.csv prices.csv txt
      Name     Shares      Price     Change
 ---------- ---------- ---------- ----------
         AA        100       9.22     -22.98

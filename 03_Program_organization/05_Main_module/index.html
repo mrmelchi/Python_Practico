@@ -426,7 +426,7 @@ public static void main(String args[]) {
 <p>Esta es la primera función que se ejecuta cuando se inicia una aplicación.</p>
 <h2 id="modulo-principal-de-python">Módulo principal de Python</h2>
 <p>Python no tiene una función o método <em>principal</em>. En cambio, hay un módulo <em>principal</em>. El <em>módulo principal</em> es el archivo fuente que se ejecuta primero.</p>
-<pre><code class="language-bash">bash % python prog.py
+<pre><code class="language-bash">bash % python3 prog.py
 ...
 </code></pre>
 <p>Cualquier archivo que le dé al intérprete al inicio se convierte en <em>principal</em>. No importa el nombre.</p>
@@ -442,7 +442,7 @@ if __name__ == '__main__':
 <p>Las declaraciones incluidas dentro de la declaración <code>if</code> se convierten en el programa <em>principal</em>.</p>
 <h2 id="programas-principales-vs-importaciones-de-bibliotecas">Programas principales vs. importaciones de bibliotecas</h2>
 <p>Cualquier archivo Python puede ejecutarse como principal o como una importación de biblioteca:</p>
-<pre><code class="language-bash">bash % python prog.py # Ejecutando como principal
+<pre><code class="language-bash">bash % python3 prog.py # Ejecutando como principal
 </code></pre>
 <pre><code class="language-python">import prog # Ejecutando como importación de biblioteca
 </code></pre>
@@ -473,12 +473,12 @@ if __name__ == '__main__':
 </code></pre>
 <h2 id="herramientas-de-linea-de-comandos">Herramientas de línea de comandos</h2>
 <p>Python se utiliza a menudo para herramientas de línea de comandos</p>
-<pre><code class="language-bash">bash % python report.py portfolio.csv prices.csv
+<pre><code class="language-bash">bash % python3 report.py portfolio.csv prices.csv
 </code></pre>
 <p>Significa que los scripts se ejecutan desde el shell/terminal. Los casos de uso más comunes son la automatización, las tareas en segundo plano, etc.</p>
 <h2 id="argumentos-de-la-linea-de-comandos">Argumentos de la línea de comandos</h2>
 <p>La línea de comandos es una lista de cadenas de texto.</p>
-<pre><code class="language-bash">bash % python -i report.py portfolio.csv prices.csv
+<pre><code class="language-bash">bash % python3 -i report.py portfolio.csv prices.csv
 </code></pre>
 <p>Esta lista de cadenas de texto se encuentra en <code>sys.argv</code>.</p>
 <pre><code class="language-python"># En el comando bash anterior
@@ -502,7 +502,7 @@ sys.stdin
 </code></pre>
 <p>De manera predeterminada, la impresión se dirige a <code>sys.stdout</code>. La entrada se lee desde <code>sys.stdin</code>. Los seguimientos y errores se dirigen a <code>sys.stderr</code>.</p>
 <p>Tenga en cuenta que <em>stdio</em> podría estar conectado a terminales, archivos, tuberías, etc.</p>
-<pre><code class="language-bash">bash % python prog.py &gt; results.txt
+<pre><code class="language-bash">bash % python3 prog.py &gt; results.txt
 # o
 bash % cmd1 | python prog.py | cmd2
 </code></pre>
@@ -593,7 +593,7 @@ Total cost: 44671.15
 </code></pre>
 <h3 id="ejercicio-316-creacion-de-scripts">Ejercicio 3.16: Creación de scripts</h3>
 <p>Modifique los programas <code>report.py</code> y <code>pcost.py</code> para que puedan ejecutarse como un script en la línea de comandos:</p>
-<pre><code class="language-bash">bash $ python report.py Data/portfolio.csv Data/prices.csv
+<pre><code class="language-bash">bash % python3 report.py Data/portfolio.csv Data/prices.csv
       Name     Shares      Price     Change
 ---------- ---------- ---------- ----------
         AA        100       9.22     -22.98

@@ -427,7 +427,7 @@ ValueError: invalid literal for int() with base 10: 'N/A'
 <pre><code class="language-python">raise RuntimeError('Que alboroto')
 </code></pre>
 <p>Esto provocará que el programa se cancele con un seguimiento de excepción. A menos que sea detectado por un bloque <code>try-except</code>.</p>
-<pre><code class="language-bash">% python3 foo.py
+<pre><code class="language-bash">bash % python3 foo.py
 Traceback (most recent call last):
   File &quot;foo.py&quot;, line 21, in &lt;module&gt;
     raise RuntimeError(&quot;Que alboroto&quot;)
@@ -459,7 +459,7 @@ cost = portfolio_cost('Data/portfolio.csv')
 print('Costo Total:', cost)
 </code></pre>
 <p>Cuando ejecute su programa, debería ver el mismo resultado que antes. Después de ejecutar su programa, también puede llamar a su función de forma interactiva escribiendo lo siguiente:</p>
-<pre><code class="language-bash">bash % python -i pcost.py
+<pre><code class="language-bash">bash % python3 -i pcost.py
 </code></pre>
 <p>Esto le permitirá llamar a su función desde el modo interactivo.</p>
 <pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/portfolio.csv')
@@ -535,7 +535,7 @@ print('Costo total:', cost)
 <p><code>sys.argv</code> es una lista que contiene los argumentos pasados en la línea de comando (si los hay).</p>
 <p>Para ejecutar su programa, necesitará ejecutar Python desde la terminal.</p>
 <p>Por ejemplo, desde bash en Unix:</p>
-<pre><code class="language-bash">bash % python pcost.py Data/portfolio.csv
+<pre><code class="language-bash">bash % python3 pcost.py Data/portfolio.csv
 Costo Total: 44671.15
 bash %
 </code></pre>

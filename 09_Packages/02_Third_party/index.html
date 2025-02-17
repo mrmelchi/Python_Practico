@@ -383,7 +383,7 @@
 <p>Nuevamente, mirar un módulo es un buen consejo de depuración si estás tratando de averiguar por qué algo relacionado con <code>import</code> no está funcionando como se esperaba.</p>
 <h2 id="instalacion-de-modulos">Instalación de módulos</h2>
 <p>La técnica más común para instalar un módulo de terceros es usar <code>pip</code>. Por ejemplo:</p>
-<pre><code class="language-bash">bash % python -m pip install packagename
+<pre><code class="language-bash">bash % python3 -m pip install packagename
 </code></pre>
 <p>Este comando descargará el paquete y lo instalará en el directorio <code>site-packages</code>.</p>
 <h2 id="problemas">Problemas</h2>
@@ -396,17 +396,21 @@
 </ul>
 <h2 id="entornos-virtuales">Entornos virtuales</h2>
 <p>Una solución común para los problemas de instalación de paquetes es crear un denominado "entorno virtual" para ti mismo. Naturalmente, no existe una "única forma" de hacerlo; de hecho, existen varias herramientas y técnicas que compiten entre sí. Sin embargo, si estás usando una instalación estándar de Python, puedes intentar escribir lo siguiente:</p>
-<pre><code class="language-bash">bash % python -m venv mypython
+<pre><code class="language-bash">bash % python3 -m venv mypython
 bash %
 </code></pre>
 <p>Después de unos minutos de espera, tendrás un nuevo directorio <code>mypython</code> que es tu propia pequeña instalación de Python. Dentro de ese directorio encontrarás un directorio <code>bin/</code> (Unix) o un directorio <code>Scripts/</code> (Windows). Si ejecuta el script <code>activate</code> que se encuentra allí, "activará" esta versión de Python, convirtiéndolo en el comando <code>python</code> predeterminado para el shell. Por ejemplo:</p>
-<pre><code class="language-bash">bash % source mypython/bin/activate 
+<pre><code class="language-bash"># UNIX
+bash % source mypython/bin/activate 
 (mypython) bash % # UNIX
-C:\Users\Tu_Usuario\practical-python\Work\porty-app&gt;mypython\Scripts\activate
-(mypython) C:\Users\Tu_Usuario\practical-python\Work\porty-app&gt;  # windows
+
+# Windows
+C:\Users\tu_nombre\practical-python\Work&gt;cd porty-app
+C:\Users\tu_nombre\practical-python\Work\porty-app&gt; mypython\Scripts\activate
+(mypython) C:\Users\tu_nombre\practical-python\Work\porty-app&gt;  
 </code></pre>
 <p>Desde aquí, ahora puede comenzar a instalar paquetes de Python por su cuenta. Por ejemplo:</p>
-<pre><code>(mypython) bash % python -m pip install pandas
+<pre><code>(mypython) bash % python3 -m pip install pandas
 ...
 </code></pre>
 <p>Para experimentar y probar diferentes paquetes, un entorno virtual generalmente funcionará bien. Si, por otro lado, está creando una aplicación y tiene dependencias de paquetes específicas, ese es un problema ligeramente diferente.</p>

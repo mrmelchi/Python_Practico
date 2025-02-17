@@ -480,12 +480,12 @@ iniciar una cadena para terminarla</em>.</p>
 <p>Los códigos de escape se utilizan para representar caracteres de control
 y caracteres que no se pueden escribir fácilmente directamente en el
 teclado. A continuación se muestran algunos códigos de escape comunes:</p>
-<pre><code>'\n' Salto de línea
-'\r' Retorno de carro
-'\t' Tabulador
-'\'' Comilla simple literal
-'\&quot;' Comillas dobles literal
-'\\' Barra invertida literal
+<pre><code>'\n'    Salto de línea
+'\r'    Retorno de carro
+'\t'    Tabulador
+'\''    Comilla simple literal
+'\&quot;'    Comillas dobles literal
+'\\'    Barra invertida literal
 </code></pre>
 <h2 id="representacion-de-cadena">Representación de cadena</h2>
 <p>Cada carácter de una cadena se almacena internamente como un denominado
@@ -504,72 +504,72 @@ una referencia para todos los códigos de caracteres disponibles.</p>
 individuales. Se utiliza un índice entero, que comienza en 0. Los
 índices negativos especifican una posición relativa al final del string.</p>
 <pre><code>a = 'Hola mundo'
-b = a[0] # 'H'
-c = a[4] # ''
-d = a[-1] # 'o' (fin de la cadena)
+b = a[0]      # 'H'
+c = a[4]      # ''
+d = a[-1]     # 'o' (fin de la cadena)
 </code></pre>
 <p>También puedes cortar o seleccionar substrings especificando un rango de
 índices con <code>:</code>.</p>
-<pre><code>d = a[:5] # 'Hola'
-e = a[6:] # 'undo'
-f = a[3:8] # 'a mun'
-g = a[-5:] # 'mundo'
+<pre><code>d = a[:5]       # 'Hola'
+e = a[6:]       # 'undo'
+f = a[3:8]      # 'a mun'
+g = a[-5:]      # 'mundo'
 </code></pre>
 <p>El carácter del índice final no está incluido. Los índices faltantes
 suponen el principio o el final de la cadena.</p>
 <h2 id="operaciones-con-cadenas">Operaciones con cadenas</h2>
 <p>Concatenación, longitud, membresía y replicación.</p>
 <pre><code># Concatenación (+)
-a = 'Hola' + 'Mundo' # 'HolaMundo'
-b = 'Decir ' + a # 'Decir HolaMundo'
+a = 'Hola' + 'Mundo'    # 'HolaMundo'
+b = 'Decir ' + a        # 'Decir HolaMundo'
 
 # Longitud (len)
 s = 'Hola'
 len(s) # 4
 
 # Prueba de membresía (`in`, `not in`)
-t = 'o' in s # True
-f = 'x' in s # False
-g = 'hola' not in s # True
+t = 'o' in s          # True
+f = 'x' in s          # False
+g = 'hola' not in s   # True
 
 # Replicación (s * n)
-rep = s * 5 # 'HolaHolaHolaHolaHola'
+rep = s * 5           # 'HolaHolaHolaHolaHola'
 </code></pre>
 <h2 id="metodos-de-cadena">Métodos de cadena</h2>
 <p>Los strings tienen métodos que realizan varias operaciones con los datos
 de los mismos.</p>
 <p>Ejemplo: eliminar cualquier espacio en blanco inicial o final.</p>
 <pre><code>s = ' Hola '
-t = s.strip() # 'Hola'
+t = s.strip()       # 'Hola'
 </code></pre>
 <p>Ejemplo: Conversión de mayúsculas y minúsculas.</p>
 <pre><code>s = 'Hola'
-l = s.lower() # 'hola'
-u = s.upper() # 'HOLA'
+l = s.lower()       # 'hola'
+u = s.upper()       # 'HOLA'
 </code></pre>
 <p>Ejemplo: Reemplazar texto.</p>
 <pre><code>s = 'Hola mundo'
-t = s.replace('Hola' , 'Hello') # 'Hello mundo'
+t = s.replace('Hola' , 'Hello')     # 'Hello mundo'
 </code></pre>
 <p><strong>Más métodos de String:</strong></p>
 <p>Las cadenas tienen una amplia variedad de otros métodos para probar y
 manipular los datos de texto. Esta es una pequeña muestra de métodos:</p>
-<pre><code>s.endswith(suffix) # Verifica si la cadena termina con suffix
-s.find(t) # Primera aparición de t en s
-s.index(t) # Primera aparición de t en s
-s.isalpha() # Comprueba si los caracteres son alfabéticos
-s.isdigit() # Comprueba si los caracteres son numéricos
-s.islower() # Verifica si los caracteres están en minúsculas
-s.isupper() # Verifica si los caracteres están en mayúsculas
-s.join(slist) # Une una lista de cadenas usando s como delimitador
-s.lower() # Convierte a minúsculas
-s.replace(old,new) # Reemplaza texto
-s.rfind(t) # Busca t desde el final de la cadena
-s.rindex(t) # Busca t desde el final de la cadena
-s.split([delim]) # Divide la cadena en una lista de subcadenas
-s.startswith(prefix) # Verifica si la cadena comienza con prefijo
-s.strip() # Elimina los espacios iniciales y finales
-s.upper() # Convierte a mayúsculas
+<pre><code>s.endswith(suffix)            # Verifica si la cadena termina con suffix
+s.find(t)                     # Primera aparición de t en s
+s.index(t)                    # Primera aparición de t en s
+s.isalpha()                   # Comprueba si los caracteres son alfabéticos
+s.isdigit()                   # Comprueba si los caracteres son numéricos
+s.islower()                   # Verifica si los caracteres están en minúsculas
+s.isupper()                   # Verifica si los caracteres están en mayúsculas
+s.join(slist)                 # Une una lista de cadenas usando s como delimitador
+s.lower()                     # Convierte a minúsculas
+s.replace(old,new)            # Reemplaza texto
+s.rfind(t)                    # Busca t desde el final de la cadena
+s.rindex(t)                   # Busca t desde el final de la cadena
+s.split([delim])              # Divide la cadena en una lista de subcadenas
+s.startswith(prefix)          # Verifica si la cadena comienza con prefijo
+s.strip()                     # Elimina los espacios iniciales y finales
+s.upper()                     # Convierte a mayúsculas
 </code></pre>
 <h2 id="mutabilidad-de-los-strings">Mutabilidad de los strings</h2>
 <p>Los strings son "inmutables" o de sólo lectura. Una vez creado, el valor
@@ -602,17 +602,17 @@ bajo nivel, se escribe de la siguiente manera:</p>
 <p>Al colocar una b minúscula antes de la primera comilla, especifica que
 se trata de una cadena de bytes y no de una cadena de texto.</p>
 <p>La mayoría de las operaciones de cadena habituales funcionan.</p>
-<pre><code>len(datos) # 12
-datos[0:4] # b'Hola'
-datos.replace(b'Hola', b'Cruel') # b'Cruel mundo\r\n'
+<pre><code>len(datos)                        # 12
+datos[0:4]                        # b'Hola'
+datos.replace(b'Hola', b'Cruel')  # b'Cruel mundo\r\n'
 </code></pre>
 <p>La indexación es un poco diferente porque devuelve valores de bytes como
 números enteros.</p>
 <pre><code>datos[0] # 72 (código ASCII para 'H')
 </code></pre>
 <p>Conversión a/desde cadenas de texto.</p>
-<pre><code>texto = datos.decode('utf-8') # bytes -&gt; texto
-datos = texto.encode('utf-8') # texto -&gt; bytes
+<pre><code>texto = datos.decode('utf-8')       # bytes -&gt; texto
+datos = texto.encode('utf-8')       # texto -&gt; bytes
 </code></pre>
 <p>El argumento "utf-8" especifica una codificación de caracteres. Otros
 valores comunes incluyen "ascii" y "latin1".</p>
@@ -620,7 +620,7 @@ valores comunes incluyen "ascii" y "latin1".</p>
 <p>Los strings sin formato son literales de strings con una barra invertida
 no interpretada. Ellos se especifican anteponiendo la comilla inicial
 con una "r" minúscula.</p>
-<pre><code>&gt;&gt;&gt; rs = r'c:\newdata\test' # Sin formato (barra invertida no interpretada)
+<pre><code>&gt;&gt;&gt; rs = r'c:\newdata\test'       # Sin formato (barra invertida no interpretada)
 &gt;&gt;&gt; rs
 'c:\\newdata\\prueba'
 </code></pre>
@@ -753,7 +753,7 @@ resultado de una operación, debe colocarlo en una variable:</p>
 &gt;&gt;&gt; symbols
 ?
 &gt;&gt;&gt; name = '   IBM   \n'
-&gt;&gt;&gt; name = name.strip() # Elimina los espacios en blanco circundantes
+&gt;&gt;&gt; name = name.strip()       # Elimina los espacios en blanco circundantes
 &gt;&gt;&gt; name
 ?
 &gt;&gt;&gt;
@@ -800,7 +800,7 @@ cadena?</p>
 de métodos disponibles mediante la función de completar tabulaciones.
 Por ejemplo, intenta escribir esto:</p>
 <pre><code>&gt;&gt;&gt; s = 'hola mundo'
-&gt;&gt;&gt; s.&lt;tecla de tabulación&gt; # Algunas veces tendrás que colocar &lt;tecla de tabulación&gt; dos veces.
+&gt;&gt;&gt; s.&lt;tecla de tabulación&gt;     # Algunas veces tendrás que colocar &lt;tecla de tabulación&gt; dos veces.
 &gt;&gt;&gt;
 </code></pre>
 <p>Si presionar la tecla <code>tab</code> no hace nada, puedes recurrir a la función

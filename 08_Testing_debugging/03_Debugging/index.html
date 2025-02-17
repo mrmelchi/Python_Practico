@@ -347,7 +347,7 @@
 <h1 id="83-depuracion">8.3 Depuración</h1>
 <h2 id="consejos-de-depuracion">Consejos de depuración</h2>
 <p>Entonces, su programa se ha bloqueado...</p>
-<pre><code class="language-bash">bash % python blah.py
+<pre><code class="language-bash">bash % python3 blah.py
 Traceback (última llamada más reciente):
 Archivo &quot;blah.py&quot;, línea 13, en ?
 foo()
@@ -362,7 +362,7 @@ AttributeError: el objeto 'int' no tiene el atributo 'append'
 <p>¿Y ahora qué?!</p>
 <h2 id="lectura-de-los-tracebacks">Lectura de los tracebacks</h2>
 <p>La última línea es la causa específica del fallo.</p>
-<pre><code class="language-bash">bash % python blah.py
+<pre><code class="language-bash">bash % python3 blah.py
 Traceback (most recent call last):
 Archivo &quot;blah.py&quot;, línea 13, en ?
 foo()
@@ -379,7 +379,7 @@ AttributeError: el objeto 'int' no tiene el atributo 'append'
 <p><em>CONSEJO PROFESIONAL: Pegue el traceback completo en Google.</em></p>
 <h2 id="uso-del-repl">Uso del REPL</h2>
 <p>Use la opción <code>-i</code> para mantener Python activo al ejecutar un script.</p>
-<pre><code class="language-bash">bash % python -i blah.py
+<pre><code class="language-bash">bash % python3 -i blah.py
 Traceback (most recent call last):
 Archivo &quot;blah.py&quot;, línea 13, en ?
 foo()
@@ -427,7 +427,7 @@ pdb.set_trace() # En lugar de `breakpoint()`
 </code></pre>
 <h2 id="ejecutar-bajo-el-depurador">Ejecutar bajo el depurador</h2>
 <p>También puedes ejecutar un programa completo bajo el depurador.</p>
-<pre><code class="language-bash">bash % python -m pdb someprogram.py
+<pre><code class="language-bash">bash % python3 -m pdb someprogram.py
 </code></pre>
 <p>Ingresará automáticamente al depurador antes de la primera declaración, lo que te permitirá establecer puntos de interrupción y cambiar la configuración.</p>
 <p>Comandos comunes del depurador:</p>

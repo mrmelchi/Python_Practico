@@ -359,12 +359,12 @@ include *.csv
 <p>Coloque el archivo <code>MANIFEST.in</code> en el mismo directorio que <code>setup.py</code>.</p>
 <h2 id="creacion-de-una-distribucion-de-codigo-fuente">Creación de una distribución de código fuente</h2>
 <p>Para crear una distribución de su código, utilice el archivo <code>setup.py</code>. Por ejemplo:</p>
-<pre><code>bash % python setup.py sdist
+<pre><code>bash % python3 setup.py sdist
 </code></pre>
 <p>Esto creará un archivo <code>.tar.gz</code> o <code>.zip</code> en el directorio <code>dist/</code>. Ese archivo es algo que ahora puedes regalar a otros.</p>
 <h2 id="instalacion-de-tu-codigo">Instalación de tu código</h2>
 <p>Otros pueden instalar tu código Python usando <code>pip</code> de la misma manera que lo hacen con otros paquetes. Simplemente necesitan proporcionar el archivo creado en el paso anterior. Por ejemplo:</p>
-<pre><code>bash % python -m pip install porty-0.0.1.tar.gz
+<pre><code>bash % python3 -m pip install porty-0.0.1.tar.gz
 </code></pre>
 <h2 id="comentario">Comentario</h2>
 <p>Los pasos anteriores describen los conceptos básicos más mínimos para crear un paquete de código Python que puedes regalar a otra persona. En realidad, puede ser mucho más complicado dependiendo de las dependencias de terceros, si tu aplicación incluye o no código externo (es decir, C/C++), etc. Cubrir eso está fuera del alcance de este curso. Solo hemos dado un pequeño primer paso.</p>

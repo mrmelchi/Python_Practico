@@ -414,8 +414,8 @@ nums = [ 39, 38, 42, 65, 111]
 </code></pre>
 <h2 id="operaciones-de-lista">Operaciones de lista</h2>
 <p>Las listas pueden contener elementos de cualquier tipo. Agregue un nuevo elemento usando <code>append()</code>:</p>
-<pre><code>&gt;&gt;&gt; names.append('Murphy') # Agrega al final
-&gt;&gt;&gt; names.insert(2, 'Aretha') # Inserta en el medio
+<pre><code>&gt;&gt;&gt; names.append('Murphy')        # Agrega al final
+&gt;&gt;&gt; names.insert(2, 'Aretha')     # Inserta en el medio
 &gt;&gt;&gt; names
 ['Elwood', 'Jake', 'Aretha', 'Curtis', 'Murphy']
 </code></pre>
@@ -427,28 +427,28 @@ s + t    # [1, 2, 3, 'a', 'b']
 <p>Las listas se indexan mediante números enteros. Empezando desde 0.</p>
 <pre><code>names = [ 'Elwood', 'Jake', 'Curtis' ]
 
-names[0]  # 'Elwood'
-names[1]  # 'Jake'
-names[2]  # 'Curtis'
+names[0]      # 'Elwood'
+names[1]      # 'Jake'
+names[2]      # 'Curtis'
 </code></pre>
 <p>Los índices negativos cuentan desde el final.</p>
-<pre><code>names[-1] # 'Curtis'
+<pre><code>names[-1]     # 'Curtis'
 </code></pre>
 <p>Puede cambiar cualquier elemento de una lista.</p>
 <pre><code class="language-python">names[1] = 'Joliet Jake'
-names                     # [ 'Elwood', 'Joliet Jake', 'Curtis' ]
+names         # [ 'Elwood', 'Joliet Jake', 'Curtis' ]
 </code></pre>
 <p>Longitud de la lista.</p>
 <pre><code class="language-python">names = ['Elwood','Jake','Curtis']
-len(names)  # 3
+len(names)    # 3
 </code></pre>
 <p>Prueba de membresía (<code>in</code>, <code>not in</code>).</p>
-<pre><code class="language-python">'Elwood' in names       # True
-'Britney' not in names  # True
+<pre><code class="language-python">'Elwood' in names           # True
+'Britney' not in names      # True
 </code></pre>
 <p>Replicación (<code>s * n</code>).</p>
 <pre><code class="language-python">s = [1, 2, 3]
-s * 3   # [1, 2, 3, 1, 2, 3, 1, 2, 3]
+s * 3         # [1, 2, 3, 1, 2, 3, 1, 2, 3]
 </code></pre>
 <h2 id="iteracion-y-busqueda-en-listas">Iteración y búsqueda en listas</h2>
 <p>Utilice <code>for</code> para iterar sobre el contenido de la lista.</p>
@@ -460,7 +460,7 @@ s * 3   # [1, 2, 3, 1, 2, 3, 1, 2, 3]
 <p>Esto es similar a una declaración <code>foreach</code> de otros lenguajes de programación.</p>
 <p>Para encontrar la posición de algo rápidamente, utilice <code>index()</code>.</p>
 <pre><code class="language-python">names = ['Elwood','Jake','Curtis']
-names.index('Curtis')   # 2
+names.index('Curtis')       # 2
 </code></pre>
 <p>Si el elemento está presente más de una vez, <code>index()</code> devolverá el índice de la primera aparición.</p>
 <p>Si no se encuentra el elemento, se generará una excepción 'ValueError'.</p>
@@ -476,15 +476,15 @@ del names[1]
 <h2 id="ordenacion-de-listas">Ordenación de listas</h2>
 <p>Las listas se pueden ordenar "en el lugar" ("in-place").</p>
 <pre><code class="language-python">s = [10, 1, 7, 3]
-s.sort() # [1, 3, 7, 10]
+s.sort()               # [1, 3, 7, 10]
 
 # Orden inverso
 s = [10, 1, 7, 3]
-s.sort(reverse=True) # [10, 7, 3, 1]
+s.sort(reverse=True)   # [10, 7, 3, 1]
 
 # Funciona con cualquier dato ordenado
 s = ['foo', 'bar', 'spam']
-s.sort() # ['bar', 'foo', 'spam']
+s.sort()               # ['bar', 'foo', 'spam']
 </code></pre>
 <p>Utilice <code>sorted()</code> si desea crear una nueva lista:</p>
 <pre><code class="language-python">t = sorted(s)            # s sin cambios, t contiene valores ordenados
