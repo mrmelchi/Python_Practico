@@ -384,7 +384,7 @@ Sumando 3 4
 <p>Observe cómo la función interna hace referencia a las variables definidas por la función externa.</p>
 <pre><code class="language-python">def add(x, y):
     def do_add():
-        # `x` e `y` se definen arriba de `add(x, y)`
+        # `x` e `y` se definen arriba, en `add(x, y)`
         print('Sumando ', x, y)
         return x + y
     return do_add
