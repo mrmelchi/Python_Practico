@@ -444,14 +444,14 @@ importante).</p>
 <p>Un paquete sirve como un espacio de nombres para las importaciones.</p>
 <p>Esto significa que ahora hay importaciones de varios niveles.</p>
 <pre><code class="language-python">import porty.report
-port = porty.report.read_portfolio('port.csv')
+port = porty.report.read_portfolio('Data/portfolio.csv')
 </code></pre>
 <p>Existen otras variaciones de las declaraciones de importación.</p>
 <pre><code class="language-python">from porty import report
-port = report.read_portfolio('portfolio.csv')
+port = report.read_portfolio('Data/portfolio.csv')
 
 from porty.report import read_portfolio
-port = read_portfolio('portfolio.csv')
+port = read_portfolio('Data/portfolio.csv')
 </code></pre>
 <h2 id="dos-problemas">Dos problemas</h2>
 <p>Hay dos problemas principales con este enfoque.</p>
@@ -634,9 +634,22 @@ que creó anteriormente.</p>
 archivos de prueba <code>Data/portfolio.csv</code> y <code>Data/prices.csv</code> en este
 directorio. Además, cree un archivo <code>README.txt</code> con información sobre
 usted. Ahora, su código debería estar organizado de la siguiente manera:</p>
-<p>porty-app/ portfolio.csv prices.csv README.txt porty/ <strong>init</strong>.py
-fileparse.py follow.py pcost.py portfolio.py report.py stock.py
-tableformat.py ticker.py typedproperty.py</p>
+<pre><code class="language-bash">porty-app/
+    portfolio.csv
+    prices.csv
+    README.txt
+    porty/
+        __init__.py
+        fileparse.py
+        follow.py
+        pcost.py
+        portfolio.py
+        report.py
+        stock.py
+        tableformat.py
+        ticker.py
+        typedproperty.py
+</code></pre>
 <p>Para ejecutar su código, debe asegurarse de estar trabajando en el
 directorio de nivel superior <code>porty-app/</code>. Por ejemplo, desde la
 terminal:</p>
