@@ -287,15 +287,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#un-programa-de-muestra" class="md-nav__link">
-    <span class="md-ellipsis">
-      Un programa de muestra
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#declaraciones" class="md-nav__link">
     <span class="md-ellipsis">
       Declaraciones
@@ -460,7 +451,7 @@ ejecución, intérprete y algo de depuración básica.</p>
 <p>Los programas de Python siempre se ejecutan dentro de un intérprete.</p>
 <p>El intérprete es una aplicación "basada en consola" que normalmente se
 ejecuta desde un shell de comandos.</p>
-<pre><code>bash % python
+<pre><code>bash % python3
 Python 3.11.7 | packaged by Anaconda, Inc. | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)] on win32
 Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
 &gt;&gt;&gt;
@@ -526,31 +517,42 @@ print('Hola Mundo')
 <h2 id="programas-en-ejecucion">Programas en ejecución</h2>
 <p>Para ejecutar un programa, ejecútelo en la terminal con el comando
 <code>python</code>. Por ejemplo, en la línea de comandos de Unix:</p>
-<pre><code class="language-bash">bash % python hola.py
+<pre><code class="language-bash">bash % python3 hola.py
 Hola Mundo
 bash %
 </code></pre>
 <p>O desde el shell de Windows:</p>
-<pre><code>C:\AlgunaCarpeta&gt;hola.py
+<pre><code>C:\Users\tu_nombre\practical-python\Work&gt; hola.py
 Hola Mundo
 
-C:\AlgunaCarpeta&gt;c:\python36\python hola.py
+C:\Users\tu_nombre\practical-python\Work&gt; c:\python313\python hola.py
 Hola Mundo
 </code></pre>
 <p>Nota: En Windows, es posible que deba especificar una ruta completa al
 intérprete de Python, como <code>c:\python36\python</code>. Sin embargo, si Python
 está instalado de su forma habitual, es posible que puedas simplemente
-escribir el nombre del programa. como por ejemplo <code>hola.py</code>.</p>
-<h2 id="un-programa-de-muestra">Un programa de muestra</h2>
-<p>Resolvamos el siguiente problema:</p>
-<blockquote>
-<p>Una mañana, sales y colocas un billete de un dólar en la acera junto a
-la Torre Sears en Chicago. Cada día siguiente, colocas el doble de
-billetes. ¿Cuánto tiempo tarda la pila de billetes en superar la
-altura de la torre?</p>
-</blockquote>
-<p>Aquí hay una solución:</p>
-<pre><code class="language-python">#sears.py
+escribir el nombre del programa. como por ejemplo <code>hola.py</code>. Para conocer
+el directorio de instalación de python, ejecute:</p>
+<pre><code class="language-python">C:\Users\tu_nombre\practical-python\Work&gt; python
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+'C:\\Users\\Mario\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
+&gt;&gt;&gt;
+
+
+## Un programa de muestra
+
+Resolvamos el siguiente problema:
+
+&gt; Una mañana, sales y colocas un billete de un dólar en la acera junto a
+&gt; la Torre Sears en Chicago. Cada día siguiente, colocas el doble de
+&gt; billetes. ¿Cuánto tiempo tarda la pila de billetes en superar la
+&gt; altura de la torre?
+
+Aquí hay una solución:
+
+``` python
+#sears.py
 espesor_de_billete = 0.11 * 0.001 # Metros (0,11 mm)
 altura_torre = 442 # Altura (metros)
 num_billetes = 1
@@ -719,7 +721,6 @@ Mi nombre es Jake
 <p>El carácter de nueva línea adicional se puede suprimir:</p>
 <pre><code>print('Hola', end=' ')
 print('mi nombre es', 'Jake')
-
 </code></pre>
 <p>Este código ahora imprimirá:</p>
 <pre><code>Hola mi nombre es Jake
