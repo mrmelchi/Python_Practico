@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        
-        <link rel="shortcut icon" href="/Python_Practico/img/favicon.ico">
-        <title>Python Practico</title>
-        <link href="/Python_Practico/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/Python_Practico/css/fontawesome.min.css" rel="stylesheet">
-        <link href="/Python_Practico/css/brands.min.css" rel="stylesheet">
-        <link href="/Python_Practico/css/solid.min.css" rel="stylesheet">
-        <link href="/Python_Practico/css/v4-font-face.min.css" rel="stylesheet">
-        <link href="/Python_Practico/css/base.css" rel="stylesheet">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/04_Classes_objects/04_Defining_exceptions/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04_Defining_exceptions - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
         <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
@@ -24,7 +24,7 @@
     <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="/Python_Practico/.">Python Practico</a>
+                <a class="navbar-brand" href="../..">Python Practico</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,10 +35,10 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="nav-item">
-                                <a href="/Python_Practico/." class="nav-link">Home</a>
+                                <a href="../.." class="nav-link">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="/Python_Practico/about/" class="nav-link">About</a>
+                                <a href="../../about/" class="nav-link">About</a>
                             </li>
                         </ul>
 
@@ -55,15 +55,61 @@
 
         <div class="container">
             <div class="row">
-
-    <div class="row-fluid">
-      <div id="main-content" class="span12">
-        <h1 id="404-page-not-found" style="text-align: center">404</h1>
-        <p style="text-align: center"><strong>Page not found</strong></p>
-      </div>
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
     </div>
 
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#44-definicion-de-excepciones" class="nav-link">4.4 Definición de excepciones</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#ejercicios" class="nav-link">Ejercicios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
 
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Special_methods/">Anterior (4.3 Métodos especiales)</a> | <a href="../../05_Object_model/00_Overview/">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p>
+<h1 id="44-definicion-de-excepciones">4.4 Definición de excepciones</h1>
+<p>Las excepciones definidas por el usuario se definen por clases.</p>
+<pre><code class="language-python">class NetworkError(Exception):
+    pass
+</code></pre>
+<p><strong>Las excepciones siempre heredan de <code>Exception</code>.</strong></p>
+<p>Normalmente son clases vacías. Utilice <code>pass</code> para el cuerpo. También puede crear una jerarquía de sus excepciones.</p>
+<pre><code class="language-python">class AuthenticationError(NetworkError):
+    pass
+
+class ProtocolError(NetworkError):
+    pass
+</code></pre>
+<h2 id="ejercicios">Ejercicios</h2>
+<h3 id="ejercicio-411-definicion-de-una-excepcion-personalizada">Ejercicio 4.11: Definición de una excepción personalizada</h3>
+<p>A menudo, es una buena práctica que las bibliotecas definan sus propias excepciones.</p>
+<p>Esto facilita la distinción entre las excepciones de Python generadas en respuesta a errores de programación comunes y las excepciones generadas intencionalmente por una biblioteca para señalar un problema de uso específico.</p>
+<p>Modifique la función <code>create_formatter()</code> del último ejercicio para que genere una excepción <code>FormatError</code> personalizada cuando el usuario proporcione un nombre de formato incorrecto.</p>
+<p>Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from tableformat import create_formatter
+&gt;&gt;&gt; formatter = create_formatter('xls')
+Traceback (most recent call last):
+  File &quot;&lt;python-input-1&gt;&quot;, line 1, in &lt;module&gt;
+    formatter = create_formatter('xls')
+  File &quot;C:\Users\Mario\practical-python\Work\tableformat.py&quot;, line 30, in create_formatter
+    raise FormatError(f'Unknown table format {name}')
+tableformat.FormatError: Unknown table format xls
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../../Contents/">Contenido</a> | <a href="../03_Special_methods/">Anterior (4.3 Métodos especiales)</a> | <a href="../../05_Object_model/00_Overview/">Próximo (5. Funcionamiento interno de los objetos de Python)</a></p></div>
             </div>
         </div>
 
@@ -71,13 +117,13 @@
             <hr>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="/Python_Practico/js/bootstrap.bundle.min.js"></script>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
         <script>
-            var base_url = "/Python_Practico/",
+            var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="/Python_Practico/js/base.js"></script>
-        <script src="/Python_Practico/search/main.js"></script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
