@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex4_3/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex4 3 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-43" class="nav-link">Ejercicio 4.3</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-descriptores-en-accion" class="nav-link">(a) Descriptores en acción</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-crea-tu-propio-descriptor" class="nav-link">(b) Crea tu propio descriptor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-de-validadores-a-descriptores" class="nav-link">(c) De validadores a descriptores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-correccion-de-los-nombres" class="nav-link">(d) Corrección de los nombres</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex4_2/">Ejercicio 4.2</a> | <a href="../ex4_4/">Ejercicio 4.4</a></p>
+<h1 id="ejercicio-43">Ejercicio 4.3</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender sobre descriptores</li>
+</ul>
+<p><em>Archivos creados:</em> <code>descrip.py</code></p>
+<p><em>Archivos modificados:</em> <code>validate.py</code></p>
+<h2 id="a-descriptores-en-accion">(a) Descriptores en acción</h2>
+<p>Anteriormente, creaste una clase <code>Stock</code> que hacía uso de ranuras, propiedades y otras características. Todas estas características se implementan utilizando el protocolo de descriptor. Míralo en acción probando este simple experimento.</p>
+<p>Primero, crea un objeto de stock e intenta buscar algunos atributos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, observa que estos atributos están en el diccionario de clases.</p>
+<pre><code class="language-python">&gt;&gt;&gt; Stock.__dict__.keys()
+['sell', '__module__', '__weakref__', 'price', '_price', 'shares', '_shares',
+'__slots__', 'cost', '__repr__', '__doc__', '__init__']
+&gt;&gt;&gt;
+</code></pre>
+<p>Pruebe estos pasos que ilustran cómo los descriptores obtienen y establecen valores en una instancia:</p>
+<pre><code class="language-python">&gt;&gt;&gt; q = Stock.__dict__['shares']
+&gt;&gt;&gt; q.__get__(s)
+100
+&gt;&gt;&gt; q.__set__(s,75)
+&gt;&gt;&gt; s.shares
+75
+&gt;&gt;&gt; q.__set__(s, '75')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;stock.py&quot;, line 23, in shares
+    raise TypeError('Expected an integer')
+TypeError: Expected an integer
+&gt;&gt;&gt;
+</code></pre>
+<p>La ejecución de <code>__get__()</code> y <code>__set__()</code> se produce automáticamente siempre que se accede a las instancias.</p>
+<h2 id="b-crea-tu-propio-descriptor">(b) Crea tu propio descriptor</h2>
+<p>Define la clase del descriptor a partir de las notas:</p>
+<pre><code class="language-python"># descrip.py
+
+class Descriptor:
+    def __init__(self, name):
+        self.name = name
+    def __get__(self, instance, cls):
+        print('%s:__get__' % self.name)
+    def __set__(self, instance, value):
+        print('%s:__set__ %s' % (self.name, value))
+    def __delete__(self, instance):
+        print('%s:__delete__' % self.name)
+</code></pre>
+<p>Ahora, intenta definir una clase simple que use este descriptor:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Foo:
+        a = Descriptor('a')
+        b = Descriptor('b')
+        c = Descriptor('c')
+
+&gt;&gt;&gt; f = Foo()
+&gt;&gt;&gt; f
+&lt;__main__.Foo object at 0x38e130&gt; &lt;class __main__.Foo&gt;
+&gt;&gt;&gt; f.a
+a:__get__
+&gt;&gt;&gt; f.b
+b:__get__
+&gt;&gt;&gt; f.a = 23
+a:__set__ 23
+&gt;&gt;&gt; del f.a
+a:__delete__
+&gt;&gt;&gt;
+</code></pre>
+<p>Considere el hecho de que ha capturado el operador de punto para un atributo específico.</p>
+<h2 id="c-de-validadores-a-descriptores">(c) De validadores a descriptores</h2>
+<p>En el ejercicio anterior, escribió una serie de clases que podían realizar comprobaciones. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; PositiveInteger.check(10)
+10
+&gt;&gt;&gt; PositiveInteger.check('10')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    raise TypeError('Expected %s' % cls.expected_type)
+TypeError: expected &lt;class 'int'&gt;
+&gt;&gt;&gt; PositiveInteger.check(-10)
+</code></pre>
+<p>Puedes extender esto a los descriptores haciendo un cambio simple en la clase base <code>Validator</code>. Cámbielo por lo siguiente:</p>
+<pre><code class="language-python"># validate.py
+
+class Validator:
+    def __init__(self, name):
+        self.name = name
+
+    @classmethod
+    def check(cls, value):
+        return value
+
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = self.check(value)
+</code></pre>
+<p>Nota: La falta del método <code>__get__()</code> en el descriptor significa que Python usará su implementación predeterminada de búsqueda de atributos. Esto requiere que el nombre suministrado coincida con el nombre usado en el diccionario de instancias.</p>
+<p>No deberían ser necesarios otros cambios. Ahora, intenta modificar la clase <code>Stock</code> para usar los validadores como descriptores de esta manera:</p>
+<pre><code class="language-python">class Stock:
+    name   = String('name')
+    shares = PositiveInteger('shares')
+    price  = PositiveFloat('price')
+
+    def __init__(self,name,shares,price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+</code></pre>
+<p>Verás que tu clase funciona de la misma manera que antes, implica mucho menos código y te brinda toda la verificación deseada:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.shares = 75
+&gt;&gt;&gt; s.shares = '75'
+... TypeError ...
+&gt;&gt;&gt; s.shares = -50
+... ValueError ...
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto es genial. Los descriptores le han permitido simplificar enormemente la implementación de la clase <code>Stock</code>. Este es el verdadero poder de los descriptores: obtiene un control de bajo nivel sobre el punto y puede usarlo para hacer cosas asombrosas.</p>
+<h2 id="d-correccion-de-los-nombres">(d) Corrección de los nombres</h2>
+<p>Una cosa molesta sobre los descriptores es la especificación redundante de nombres. Por ejemplo:</p>
+<pre><code class="language-python">class Stock:
+    ...
+    shares = PositiveInteger('shares')
+    ...
+</code></pre>
+<p>Podemos solucionar eso. Cambie la clase <code>Validator</code> de nivel superior para incluir un método <code>__set_name__()</code> como este:</p>
+<pre><code class="language-python"># validate.py
+
+class Validator:
+    def __init__(self, name=None):
+        self.name = name
+
+    def __set_name__(self, cls, name):
+        self.name = name
+
+    @classmethod
+    def check(cls, value):
+        return value
+
+    def __set__(self, instance, value):
+        instance.__dict__[self.name] = self.check(value)
+</code></pre>
+<p>Ahora, intente reescribir su clase <code>Stock</code> para que se vea así:</p>
+<pre><code class="language-python">class Stock:
+    name   = String()
+    shares = PositiveInteger()
+    price  = PositiveFloat()
+
+    def __init__(self,name,shares,price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+</code></pre>
+<p>Ah, mucho mejor. Sin embargo, tenga en cuenta que esta capacidad para establecer el nombre es una característica de Python 3.6. No funcionará en versiones anteriores.</p>
+<p><a href="soln4_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex4_2/">Ejercicio 4.2</a> | <a href="../ex4_4/">Ejercicio 4.4</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

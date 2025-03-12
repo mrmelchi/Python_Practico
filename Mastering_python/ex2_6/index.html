@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex2_6/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex2 6 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-26" class="nav-link">Ejercicio 2.6</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-datos-de-primera-clase" class="nav-link">(a) Datos de primera clase</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-creacion-de-una-funcion-de-utilidad-de-analisis" class="nav-link">(b) Creación de una función de utilidad de análisis</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-memoria-revision" class="nav-link">(c) Memoria: Revisión</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-proyecto-de-desafio-especial" class="nav-link">(d) Proyecto de desafío especial</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#e-pensamiento-profundo" class="nav-link">(e) Pensamiento profundo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex2_5/">Ejercicio 2.5</a> | <a href="../ex3_1/">Ejercicio 3.1</a></p>
+<h1 id="ejercicio-26">Ejercicio 2.6</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Explorar el poder de tener objetos de primera clase.</li>
+<li>Comprender mejor el modelo de memoria de Python</li>
+</ul>
+<p><em>Archivos creados:</em> <code>reader.py</code></p>
+<p>En ejercicios anteriores, escribiste varias funciones para leer datos CSV en diferentes archivos. Seguramente este es un problema que podría generalizarse de alguna manera. En este ejercicio, exploramos esa idea.</p>
+<h2 id="a-datos-de-primera-clase">(a) Datos de primera clase</h2>
+<p>En el archivo <code>Data/portfolio.csv</code>, se leen los datos organizados en columnas que se ven así:</p>
+<pre><code class="language-python">&quot;AA&quot;,100,32.20
+&quot;IBM&quot;,50,91.10
+...
+</code></pre>
+<p>En el código anterior, estos datos se procesaban codificando de forma rígida todas las conversiones de tipos. Por ejemplo:</p>
+<pre><code class="language-python">rows = csv.reader(f)
+for row in rows:
+    name   = row[0]
+    shares = int(row[1])
+    price  = float(row[2])
+</code></pre>
+<p>Este tipo de conversión también se puede realizar de una manera más inteligente utilizando algunas operaciones de lista. Crea una lista de Python que contenga las conversiones que quieres realizar en cada columna:</p>
+<pre><code class="language-python">&gt;&gt;&gt; coltypes = [str, int, float]
+&gt;&gt;&gt;
+</code></pre>
+<p>La razón por la que puedes crear esta lista es que todo en Python es de "primera clase". Por lo tanto, si quieres tener una lista de funciones, está bien.</p>
+<p>Ahora, lee una fila de datos del archivo anterior:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/portfolio.csv')
+&gt;&gt;&gt; rows = csv.reader(f)
+&gt;&gt;&gt; headers = next(rows)
+&gt;&gt;&gt; row = next(rows)
+&gt;&gt;&gt; row
+['AA', '100', '32.20']
+&gt;&gt;&gt;
+</code></pre>
+<p>Comprime los tipos de columna con la fila y observa el resultado:</p>
+<pre><code class="language-python">&gt;&gt;&gt; r = list(zip(coltypes, row))
+&gt;&gt;&gt; r
+[(&lt;class 'str'&gt;, 'AA'), (&lt;class 'int'&gt;, '100'), (&lt;class 'float'&gt;,'32.20')]
+&gt;&gt;&gt;
+</code></pre>
+<p>Notarás que esto ha emparejado una conversión de tipo con un valor. Por ejemplo, <code>int</code> se empareja con el valor <code>'100'</code>. Ahora, prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; record = [func(val) for func, val in zip(coltypes, row)]
+&gt;&gt;&gt; record
+['AA', 100, 32.2]
+&gt;&gt;&gt;
+</code></pre>
+<p>Asegúrate de entender lo que está sucediendo en el código anterior. En el bucle, la variable <code>func</code> es una de las funciones de conversión de tipo (por ejemplo, <code>str</code>, <code>int</code>, etc.) y la variable <code>val</code> es uno de los valores como <code>'AA'</code>, <code>'100'</code>. La expresión <code>func(val)</code> convierte un valor (algo así como una conversión de tipo).</p>
+<p>Puedes llevarlo un paso más allá y crear diccionarios utilizando los encabezados de columna. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; dict(zip(headers, record))
+{'name': 'AA', 'shares': 100, 'price': 32.2}
+&gt;&gt;&gt;
+</code></pre>
+<p>Si lo prefiere, puede realizar todos estos pasos a la vez utilizando una comprensión de diccionario:</p>
+<pre><code class="language-python">&gt;&gt;&gt; { name:func(val) for name, func, val in zip(headers, coltypes, row) }
+{'name': 'AA', 'shares': 100, 'price': 32.2}
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-creacion-de-una-funcion-de-utilidad-de-analisis">(b) Creación de una función de utilidad de análisis</h2>
+<p>Cree un nuevo archivo <code>reader.py</code>. En ese archivo, defina una función de utilidad <code>read_csv_as_dicts()</code> que lea un archivo de datos CSV en una lista de diccionarios donde el usuario especifica las conversiones de tipo para cada columna.</p>
+<p>Así es como debería funcionar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import reader
+&gt;&gt;&gt; portfolio = reader.read_csv_as_dicts('Data/portfolio.csv', [str,int,float])
+&gt;&gt;&gt; for s in portfolio:
+        print(s)
+
+{'name': 'AA', 'shares': 100, 'price': 32.2}
+{'name': 'IBM', 'shares': 50, 'price': 91.1}
+{'name': 'CAT', 'shares': 150, 'price': 83.44}
+{'name': 'MSFT', 'shares': 200, 'price': 51.23}
+{'name': 'GE', 'shares': 95, 'price': 40.37}
+{'name': 'MSFT', 'shares': 50, 'price': 65.1}
+{'name': 'IBM', 'shares': 100, 'price': 70.44}
+&gt;&gt;&gt;
+</code></pre>
+<p>O, si desea leer los datos de CTA:</p>
+<pre><code class="language-python">&gt;&gt;&gt; rows = reader.read_csv_as_dicts('Data/ctabus.csv', [str,str,str,int])
+&gt;&gt;&gt; len(rows)
+577563
+&gt;&gt;&gt; rows[0]
+{'route': '3', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354}
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-memoria-revision">(c) Memoria: Revisión</h2>
+<p>En el <a href="../ex2_1/">Ejercicio 2.1</a> exploramos el uso de la memoria y en <a href="../ex2_2/">Ejercicio 2.2</a>, determinamos que había 181 rutas de autobús únicas en Chicago.</p>
+<pre><code class="language-python">&gt;&gt;&gt; routes = { row['route'] for row in rows }
+&gt;&gt;&gt; len(routes)
+181
+&gt;&gt;&gt;
+</code></pre>
+<p>Pregunta: ¿Cuántos objetos de cadena de ruta únicos están contenidos en los datos del recorrido? En lugar de crear un conjunto de rutas, cree un conjunto de identificadores de objetos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; routeids = { id(row['route']) for row in rows }
+&gt;&gt;&gt; len(routeids)
+542305
+</code></pre>
+<p>Piense en esto por un momento: solo hay 181 nombres de ruta distintos, pero la lista de diccionarios resultante contiene 542305 cadenas de ruta diferentes. Tal vez esto sea algo que se pueda solucionar con un poco de almacenamiento en caché o reutilización de objetos. Resulta que Python tiene una función que se puede usar para almacenar en caché cadenas: <code>sys.intern()</code>. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = 'hello world'
+&gt;&gt;&gt; b = 'hello world'
+&gt;&gt;&gt; a is b
+False
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; a = sys.intern(a)
+&gt;&gt;&gt; b = sys.intern(b)
+&gt;&gt;&gt; a is b
+True
+&gt;&gt;&gt;
+</code></pre>
+<p>Reinicie Python y pruebe esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; # ------------------ RESTART ---------```
+&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; from sys import intern
+&gt;&gt;&gt; import reader
+&gt;&gt;&gt; rows = reader.read_csv_as_dicts('Data/ctabus.csv', [intern, str, str, int])
+&gt;&gt;&gt; routeids = { id(row['route']) for row in rows }
+&gt;&gt;&gt; len(routeids)
+181
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe el uso de la memoria.</p>
+<pre><code class="language-python">&gt;&gt;&gt; tracemalloc.get_traced_memory()
+... observe el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>La memoria debería disminuir bastante. Observación: también hay mucha repetición en las fechas. ¿Qué sucede si también almacena en caché las cadenas de fecha?</p>
+<pre><code class="language-python">&gt;&gt;&gt; # ------------------ RESTART ---------```
+&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; from sys import intern
+&gt;&gt;&gt; import reader
+&gt;&gt;&gt; rows = reader.read_csv_as_dicts('Data/ctabus.csv', [intern, intern, str, int])
+&gt;&gt;&gt; tracemalloc.get_traced_memory()
+... mira el resultado ...
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="d-proyecto-de-desafio-especial">(d) Proyecto de desafío especial</h2>
+<p>En el <a href="../ex2_5/">Ejercicio 2.5</a>, creamos una clase <code>RideData</code> que almacenaba todos los datos del autobús en columnas, pero en realidad presentaba los datos a un usuario como una secuencia de diccionarios. Ahorró mucha memoria a través de varias formas de magia.</p>
+<p>¿Puedes generalizar esa idea? En concreto, ¿puede crear una función de propósito general <code>read_csv_as_columns()</code> que funcione de esta manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; data = read_csv_as_columns('Data/ctabus.csv', types=[str, str, str, int])
+&gt;&gt;&gt; data
+&lt;__main__.DataCollection object at 0x102b45048&gt;
+&gt;&gt;&gt; len(data)
+577563
+&gt;&gt;&gt; data[0]
+{'route': '3', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354}
+&gt;&gt;&gt; data[1]
+{'route': '4', 'date': '01/01/2001', 'daytype': 'U', 'rides': 9288}
+&gt;&gt;&gt; data[2]
+{'route': '6', 'date': '01/01/2001', 'daytype': 'U', 'rides': 6048}
+&gt;&gt;&gt; 
+</code></pre>
+<p>Se supone que esta función es de propósito general: puede proporcionarle cualquier archivo y una lista de los tipos de columnas y leerá los datos. Los datos se leen en una clase <code>DataCollection</code> que almacena los datos como columnas internamente. Sin embargo, los datos se presentan como una secuencia de diccionarios cuando se accede a ellos.</p>
+<p>Intente usar esta función con el truco de internación de cadenas de la última parte. ¿Cuánta memoria se necesita para almacenar todos los datos de los viajes ahora? ¿Puede seguir usando esta función con su código de análisis de CTA anterior?</p>
+<h2 id="e-pensamiento-profundo">(e) Pensamiento profundo</h2>
+<p>En este ejercicio, ha escrito dos funciones, <code>read_csv_as_dicts()</code> y <code>read_csv_as_columns()</code>. Estas funciones presentan datos al usuario de la misma manera. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; data1 = read_csv_as_dicts('Data/ctabus.csv', [str, str, str, int])
+&gt;&gt;&gt; len(data1)
+577563
+&gt;&gt;&gt; data1[0]
+{'route': '3', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354}
+&gt;&gt;&gt; data1[1]
+{'route': '4', 'date': '01/01/2001', 'daytype': 'U', 'rides': 9288}
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; data2 = read_csv_as_columns('Data/ctabus.csv', [str, str, str, int])
+&gt;&gt;&gt; len(data2)
+577563
+&gt;&gt;&gt; data2[0]
+{'route': '3', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354}
+&gt;&gt;&gt; data2[1]
+{'route': '4', 'date': '01/01/2001', 'daytype': 'U', 'rides': 9288}
+&gt;&gt;&gt;
+</code></pre>
+<p>De hecho, puedes usar cualquiera de las dos funciones en el código de análisis de datos de CTA que escribiste. Sin embargo, en segundo plano están sucediendo cosas completamente diferentes. La función <code>read_csv_as_columns()</code> almacena los datos en una representación diferente. Se basa en protocolos de secuencia de Python (métodos mágicos) para presentarte la información de una manera más útil.</p>
+<p>Esto es realmente parte de un concepto de programación mucho más grande de "Abstracción de datos". Al escribir programas, la forma en que se presentan los datos suele ser más importante que la forma en que se organizan en realidad. Aunque presentamos los datos como una secuencia de diccionarios, existe una gran flexibilidad en la forma en que esto sucede en segundo plano. Es una idea poderosa y algo en lo que pensar al escribir sus propios programas.</p>
+<p><a href="soln2_6.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex2_5/">Ejercicio 2.5</a> | <a href="../ex3_1/">Ejercicio 3.1</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

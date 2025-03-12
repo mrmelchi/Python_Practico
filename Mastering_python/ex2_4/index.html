@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex2_4/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex2 4 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-24" class="nav-link">Ejercicio 2.4</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-numeros-enteros-mutables" class="nav-link">(a) Números enteros mutables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-correccion-de-la-salida" class="nav-link">(b) Corrección de la salida</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-operadores-matematicos" class="nav-link">(c) Operadores matemáticos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-comparaciones" class="nav-link">(d) Comparaciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#e-conversiones" class="nav-link">(e) Conversiones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex2_3/">Ejercicio 2.3</a> | <a href="../ex2_5/">Ejercicio
+2.5</a></p>
+<h1 id="ejercicio-24">Ejercicio 2.4</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Crear un nuevo tipo primitivo</li>
+</ul>
+<p>En la mayoría de los programas, se utilizan los tipos primitivos como
+<code>int</code>, <code>float</code> y <code>str</code> para representar datos. Sin embargo, no está
+limitado solo a esos tipos. La biblioteca estándar tiene módulos como el
+módulo <code>decimal</code> y <code>fractions</code> que implementan nuevos tipos primitivos.
+También puede crear sus propios tipos siempre que comprenda los
+protocolos subyacentes que hacen que los objetos de Python funcionen. En
+este ejercicio, crearemos un nuevo tipo primitivo. Hay muchos pequeños
+detalles de los que preocuparse, pero esto le dará una idea general de
+lo que se requiere.</p>
+<h2 id="a-numeros-enteros-mutables">(a) Números enteros mutables</h2>
+<p>Los números enteros de Python normalmente son inmutables. Sin embargo,
+supongamos que desea crear un objeto entero mutable. Comience creando
+una clase como esta:</p>
+<pre><code class="language-python"># mutint.py
+
+class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+</code></pre>
+<p>Pruébelo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; a
+&lt;__main__.MutInt object at 0x10e79d408&gt;
+&gt;&gt;&gt; a.value
+3
+&gt;&gt;&gt; a.value = 42
+&gt;&gt;&gt; a.value
+42
+&gt;&gt;&gt; a + 10
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: unsupported operand type(s) for +: 'MutInt' and 'int'
+&gt;&gt;&gt;
+</code></pre>
+<p>Todo esto es muy emocionante excepto que nada funciona realmente con
+este nuevo Objeto <code>MutInt</code>. La impresión es horrible, ninguno de los
+operadores matemáticos funciona y es básicamente inútil. Bueno, excepto
+por el hecho de que su valor es mutable, que sí lo tiene.</p>
+<h2 id="b-correccion-de-la-salida">(b) Corrección de la salida</h2>
+<p>Puede corregir la salida proporcionando al objeto métodos como
+<code>__str__()</code>, <code>__repr__()</code> y <code>__format__()</code>. Por ejemplo:</p>
+<pre><code class="language-python"># mint.py
+
+class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
+    def __repr__(self):
+        return f'MutInt({self.value!r})'
+
+    def __format__(self, fmt):
+        return format(self.value, fmt)
+</code></pre>
+<p>Pruébelo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; print(a)
+3
+&gt;&gt;&gt; a
+MutInt(3)
+&gt;&gt;&gt; f'El valor es {a:*^10d}'
+El valor es ****3*****
+&gt;&gt;&gt; a.value = 42
+&gt;&gt;&gt; a
+MutInt(42)
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-operadores-matematicos">(c) Operadores matemáticos</h2>
+<p>Puede hacer que un objeto funcione con varios operadores matemáticos si
+implementa los métodos apropiados para él. Sin embargo, es su
+responsabilidad reconocer otros tipos de datos e implementar el código
+de conversión apropiado. Modifique la clase <code>MutInt</code> dándole un método
+<code>__add__()</code> de la siguiente manera:</p>
+<pre><code class="language-python">class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    ...
+
+    def __add__(self, other):
+        if isinstance(other, MutInt):
+            return MutInt(self.value + other.value)
+        elif isinstance(other, int):
+            return MutInt(self.value + other)
+        else:
+            return NotImplemented
+</code></pre>
+<p>Con este cambio, debería descubrir que puede sumar tanto números enteros
+como números enteros mutables. El resultado es una instancia de
+<code>MutInt</code>. Agregar otros tipos de números genera un error:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; b = a + 10
+&gt;&gt;&gt; b
+MutInt(13)
+&gt;&gt;&gt; b.value = 23
+&gt;&gt;&gt; c = a + b
+&gt;&gt;&gt; c
+MutInt(26)
+&gt;&gt;&gt; a + 3.5
+Traceback (most recent call last):
+File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: unsupported operand type(s) for +: 'MutInt' and 'float'
+&gt;&gt;&gt;
+</code></pre>
+<p>Un problema con el código es que no funciona cuando se invierte el orden
+de los operandos. Considere lo siguiente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a + 10
+MutInt(13)
+&gt;&gt;&gt; 10 + a
+Traceback (most recent call last):
+Archivo &quot;&lt;stdin&gt;&quot;, línea 1, en &lt;module&gt;
+TypeError: unsupported operand type(s) for +: 'int' and 'MutInt'
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto ocurre porque el tipo <code>int</code> no tiene conocimiento de <code>MutInt</code> y
+está confundido. Esto se puede solucionar agregando un método
+<code>__radd__()</code>. Este método se llama si el primer intento de llamar a
+<code>__add__()</code> no funcionó con el objeto proporcionado.</p>
+<pre><code class="language-python">class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    ...
+
+    def __add__(self, other):
+        if isinstance(other, MutInt):
+            return MutInt(self.value + other.value)
+        elif isinstance(other, int):
+            return MutInt(self.value + other)
+        else:
+            return NotImplemented
+
+__radd__ = __add__ # Operandos invertidos
+</code></pre>
+<p>Con este cambio, verá que la suma funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; a + 10
+MutInt(13)
+&gt;&gt;&gt; 10 + a
+MutInt(13)
+&gt;&gt;&gt;
+</code></pre>
+<p>Dado que nuestro entero es mutable, también puede hacer que reconozca el
+in situ operador add-update <code>+=</code> implementando el método <code>__iadd__()</code>:</p>
+<pre><code class="language-python">class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    ...
+
+    def __iadd__(self, other):
+        if isinstance(other, MutInt):
+            self.value += other.value
+            return self
+        elif isinstance(other, int):
+            self.value += other
+            return self
+        else:
+            return NotImplemented
+</code></pre>
+<p>Esto permite usos interesantes como este:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; a += 10
+&gt;&gt;&gt; a
+MutInt(13)
+&gt;&gt;&gt; b # Observe que b también cambia
+MutInt(13)
+&gt;&gt;&gt;
+</code></pre>
+<p>Puede parecer extraño que <code>b</code> también cambie, pero hay características
+sutiles como esta con los objetos Python integrados. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; a += [4,5]
+&gt;&gt;&gt; a
+[1, 2, 3, 4, 5]
+&gt;&gt;&gt; b
+[1, 2, 3, 4, 5]
+
+&gt;&gt;&gt; c = (1,2,3)
+&gt;&gt;&gt; d = c
+&gt;&gt;&gt; c += (4,5)
+&gt;&gt;&gt; c
+(1, 2, 3, 4, 5)
+&gt;&gt;&gt; d # Explicar la diferencia con las listas
+(1, 2, 3)
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="d-comparaciones">(d) Comparaciones</h2>
+<p>Un problema es que las comparaciones todavía no funcionan. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; b = MutInt(3)
+&gt;&gt;&gt; a == b
+False
+&gt;&gt;&gt; a == 3
+False
+&gt;&gt;&gt;
+</code></pre>
+<p>Puedes solucionar esto agregando un método <code>__eq__()</code>. Se pueden usar
+otros métodos como <code>__lt__()</code>, <code>__le__()</code>, <code>__gt__()</code>, <code>__ge__()</code> para
+implementar otras comparaciones. Por ejemplo:</p>
+<pre><code class="language-python">class MutInt:
+    __slots__ = ['valor']
+
+    def __init__(self, valor):
+        self.valor = valor
+
+    ...
+    def __eq__(self, otro):
+        if isinstance(other, MutInt):
+            return self.valor == otro.valor
+        elif isinstance(other, int):
+            return self.valor == otro
+        else:
+            return NotImplemented
+
+    def __lt__(self, otro):
+        if isinstance(other, MutInt):
+            return self.valor &lt; otro.valor
+        elif isinstance(other, int):
+            return self.valor &lt; otro
+        else:
+            return NotImplemented
+</code></pre>
+<p>Pruébelo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; b = MutInt(3)
+&gt;&gt;&gt; a == b
+True
+&gt;&gt;&gt; c = MutInt(4)
+&gt;&gt;&gt; a &lt; c
+True
+&gt;&gt;&gt; a &lt;= c
+Traceback (most recent call last):
+Archivo &quot;&lt;stdin&gt;&quot;, línea 1, en &lt;module&gt;
+TypeError: '&lt;=' no es compatible entre instancias de 'MutInt' y 'MutInt'
+&gt;&gt;&gt;
+</code></pre>
+<p>El motivo por el que el operador <code>&lt;=</code> falla es que no se proporcionó
+ningún método <code>__le__()</code>. Podrías codificarlo por separado, pero una
+forma más fácil de obtenerlo es usar el decorador <code>@total_ordering</code>:</p>
+<pre><code class="language-python">from functools import total_ordering
+
+@total_ordering
+class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    ...
+
+    def __eq__(self, other):
+        if isinstance(other, MutInt):
+            return self.value == other.value
+        elif isinstance(other, int):
+            return self.value == other
+        else:
+            return NotImplemented
+
+    def __lt__(self, other):
+        if isinstance(other, MutInt):
+            return self.value &lt; other.value
+        elif isinstance(other, int):
+            return self.value &lt; other
+        else:
+            return NotImplemented
+</code></pre>
+<p><code>@total_ordering</code> completa los métodos de comparación que faltan siempre
+que proporciones como mínimo un operador de igualdad y una de las otras
+relaciones.</p>
+<h2 id="e-conversiones">(e) Conversiones</h2>
+<p>Tu nuevo tipo primitivo está casi completo. Quizás quieras darle la
+capacidad de trabajar con algunas conversiones comunes. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; int(a)
+Traceback (most recent call last):
+Archivo &quot;&lt;stdin&gt;&quot;, línea 1, en &lt;módulo&gt;
+TypeError: el argumento int() debe ser una cadena, un objeto similar a bytes o un número, no 'MutInt'
+&gt;&gt;&gt; float(a)
+Traceback (most recent call last):
+Archivo &quot;&lt;stdin&gt;&quot;, línea 1, en &lt;módulo&gt;
+TypeError: el argumento float() debe ser una cadena, un objeto similar a bytes o un número, no 'MutInt'
+&gt;&gt;&gt;
+</code></pre>
+<p>Puede darle a su clase un método <code>__int__()</code> y <code>__float__()</code> para
+solucionar esto:</p>
+<pre><code class="language-python">from functools import total_ordering
+
+@total_ordering
+class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    ...
+
+    def __int__(self):
+        return self.value
+
+    def __float__(self):
+        return float(self.value)
+</code></pre>
+<p>Ahora, puedes convertir correctamente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = MutInt(3)
+&gt;&gt;&gt; int(a)
+3
+&gt;&gt;&gt; float(a)
+3.0
+&gt;&gt;&gt;
+</code></pre>
+<p>Como regla general, Python nunca convierte datos automáticamente. Por lo
+tanto, incluso aunque le hayas dado a la clase un método <code>__int__()</code>,
+<code>MutInt</code> no va a funcionar en todas las situaciones en las que se podría
+esperar un entero. Por ejemplo, indexación:</p>
+<pre><code class="language-python">&gt;&gt;&gt; names = ['Dave', 'Guido', 'Paula', 'Thomas', 'Lewis']
+&gt;&gt;&gt; a = MutInt(1)
+&gt;&gt;&gt; names[a]
+Traceback (most recent call last):
+Archivo &quot;&lt;stdin&gt;&quot;, línea 1, en &lt;module&gt;
+TypeError: los índices de lista deben ser enteros o porciones, no MutInt
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto se puede solucionar dándole a <code>MutInt</code> un método <code>__index__()</code> que
+produzca un entero. Modifique la clase de esta manera:</p>
+<pre><code class="language-python">from functools import total_ordering
+
+@total_ordering
+class MutInt:
+    __slots__ = ['value']
+
+    def __init__(self, value):
+        self.value = value
+
+    ...
+
+    def __int__(self):
+        return self.value
+
+__index__ = __int__ # Hacer que la indexación funcione
+</code></pre>
+<p><strong>Discusión</strong> Crear un nuevo tipo de datos primitivo es en realidad una
+de las tareas de programación más complicadas en Python. Hay muchos
+casos extremos y problemas de bajo nivel de los que preocuparse,
+especialmente en lo que respecta a cómo interactúa su tipo con otros
+tipos de Python. Probablemente, lo más importante que debe tener en
+cuenta es que puede personalizar casi todos los aspectos de cómo un
+objeto interactúa con el resto de Python si conoce los protocolos
+subyacentes. Si va a hacer esto, es recomendable que observe el código
+existente para ver si hay algo similar a lo que está tratando de hacer.</p>
+<p><a href="soln2_4.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex2_3/">Ejercicio
+2.3</a> | <a href="../ex2_5/">Ejercicio 2.5</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
+licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
+4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

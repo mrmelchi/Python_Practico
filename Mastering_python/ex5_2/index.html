@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex5_2/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex5 2 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-52" class="nav-link">Ejercicio 5.2</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-devolver-multiples-valores" class="nav-link">(a) Devolver múltiples valores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-devolucion-de-valores-opcionales" class="nav-link">(b) Devolución de valores opcionales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-futuros" class="nav-link">(c) Futuros</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,41 +87,93 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="índice.md">Índice</a> | <a href="../ex5_1/">Ejercicio 5.1</a> | <a href="ex5_3.md">Ejercicio 5.3</a></p>
+<h1 id="ejercicio-52">Ejercicio 5.2</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Devolver valores desde funciones</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p>En este ejercicio, veremos brevemente los problemas relacionados con la devolución de valores desde funciones. A primera vista, parece que esto debería ser sencillo, pero surgen algunos problemas sutiles.</p>
+<h2 id="a-devolver-multiples-valores">(a) Devolver múltiples valores</h2>
+<p>Suponga que está escribiendo código para analizar archivos de configuración que constan de líneas como esta:</p>
+<pre><code class="language-python">
+name=value
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>Escriba una función <code>parse_line(line)</code> que tome dicha línea y devuelva tanto el nombre como el valor asociados. La convención común para devolver múltiples valores es devolverlos en una tupla. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; parse_line('email=guido@python.org')
+('email', 'guido@python.org')
+&gt;&gt;&gt; name, val = parse_line('email=guido@python.org')
+&gt;&gt;&gt; name
+'email'
+&gt;&gt;&gt; val
+'guido@python.org'
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-devolucion-de-valores-opcionales">(b) Devolución de valores opcionales</h2>
+<p>A veces, una función puede devolver un valor opcional, posiblemente como un mecanismo para indicar éxito o fracaso. La convención más común es utilizar <code>None</code> como representación de un valor faltante. Modifique la función <code>parse_line()</code> anterior para que devuelva una tupla en caso de éxito o <code>None</code> en caso de datos incorrectos. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; parse_line('email=guido@python.org')
+('email', 'guido@python.org')
+&gt;&gt;&gt; parse_line('spam')       # Devuelve None
+&gt;&gt;&gt;
+</code></pre>
+<p>Discusión sobre el diseño: ¿sería mejor que la función <code>parse_line()</code> genere una excepción en los datos mal formados?</p>
+<h2 id="c-futuros">(c) Futuros</h2>
+<p>A veces, el código Python se ejecuta simultáneamente a través de subprocesos o procesos. Para ilustrarlo, prueba este ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import time
+&gt;&gt;&gt; def worker(x, y):
+        print('A punto de trabajar')
+        time.sleep(20)
+        print('Hecho')
+        return x + y
+
+&gt;&gt;&gt; worker(2, 3)     # Llamada de función normal
+A punto de trabajar  
+Hecho
+5
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, ejecuta <code>worker()</code> en un hilo separado:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import threading
+&gt;&gt;&gt; t = threading.Thread(target=worker, args=(2, 3))
+&gt;&gt;&gt; t.start()
+A punto de trabajar
+&gt;&gt;&gt;
+Hecho
+</code></pre>
+<p>Observa con atención que el resultado del cálculo no aparece en ninguna parte. No solo eso, ni siquiera sabes cuándo se completará. Aquí hay un cierto problema de coordinación. La convención para manejar este caso es envolver el resultado de una función en un <code>Futuro</code>. Un <code>Futuro</code> representa un resultado futuro. Así es como funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from concurrent.futures import Future
+&gt;&gt;&gt; # Envoltorio alrededor de la función para usar un futuro
+&gt;&gt;&gt; def do_work(x, y, fut):
+        fut.set_result(worker(x,y))
+
+&gt;&gt;&gt; fut = Future()
+&gt;&gt;&gt; t = threading.Thread(target=do_work, args=(2, 3, fut))
+&gt;&gt;&gt; t.start()
+A punto de trabajar
+&gt;&gt;&gt; result = fut.result()
+Hecho
+&gt;&gt;&gt; result
+5
+&gt;&gt;&gt;
+</code></pre>
+<p>Verás este tipo de patrón mucho si trabajas con grupos de subprocesos, procesos y otras construcciones. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from concurrent.futures import ThreadPoolExecutor
+&gt;&gt;&gt; pool = ThreadPoolExecutor()
+&gt;&gt;&gt; fut = pool.submit(worker, 2, 3)
+A punto de trabajar
+&gt;&gt;&gt; fut
+&lt;Futuro en 0x102157080 estado=en ejecución&gt;
+&gt;&gt;&gt; fut.result()
+Hecho
+5
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="soln5_2.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex5_1/">Ejercicio 5.1</a> | <a href="ex5_3.md">Ejercicio 5.3</a></p>
 <hr />
-<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
-<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
-<p><code>...</code> Copyright 2007-2023</p>
-<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
-licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
-4.0 Internacional</a></p></div>
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python 
+<code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a> 
+<code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

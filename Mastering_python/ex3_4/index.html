@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex3_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex3 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,25 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-34" class="nav-link">Ejercicio 3.4</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-atributos-privados" class="nav-link">(a) Atributos privados</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-propiedades-para-atributos-calculados" class="nav-link">(b) Propiedades para atributos calculados</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-aplicacion-de-reglas-de-validacion" class="nav-link">(c) Aplicación de reglas de validación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-adicion-__slots__" class="nav-link">(d) Adición __slots__</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#e-reconciliacion-de-tipos" class="nav-link">(e) Reconciliación de tipos</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,41 +95,90 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex3_3/">Ejercicio 3.3</a> | <a href="../ex3_5/">Ejercicio 3.5</a></p>
+<h1 id="ejercicio-34">Ejercicio 3.4</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Aprender a encapsular elementos internos de objetos mediante atributos privados, propiedades y ranuras</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p><em>Archivos modificados:</em> <code>stock.py</code></p>
+<h2 id="a-atributos-privados">(a) Atributos privados</h2>
+<p>Como regla general, los atributos que son internos a una clase deben tener un guión bajo inicial. En el ejercicio anterior, la clase <code>Stock</code> tenía una variable de clase <code>types</code> que se usaba para convertir filas de datos. Cambie el código para que esta variable tenga un guión bajo inicial.</p>
+<h2 id="b-propiedades-para-atributos-calculados">(b) Propiedades para atributos calculados</h2>
+<p>Anteriormente, definió una clase <code>Stock</code>. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.price
+490.1
+&gt;&gt;&gt; s.cost()
+49010.0
+&gt;&gt;&gt;
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>Usando una propiedad, convierta <code>cost()</code> en un atributo que ya no requiere los paréntesis. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.cost      # Propiedad. Calcula el costo
+49010.0
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-aplicacion-de-reglas-de-validacion">(c) Aplicación de reglas de validación</h2>
+<p>Mediante el uso de propiedades y atributos privados, modifique el atributo <code>shares</code> de la clase <code>Stock</code> para que solo se le pueda asignar un valor entero no negativo. Además, modifique el atributo <code>price</code> para que solo se le pueda asignar un valor de punto flotante no negativo.</p>
+<p>El nuevo objeto debería funcionar casi exactamente igual que el anterior, excepto por la verificación adicional de tipo y valor.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; s.shares = 50          # OK
+&gt;&gt;&gt; s.shares = '50'
+Traceback (most recent call last):
+...
+TypeError: Expected integer
+&gt;&gt;&gt; s.shares = -10
+Traceback (most recent call last):
+...
+ValueError: shares must be &gt;= 0
+
+&gt;&gt;&gt; s.price = 123.45       # OK
+&gt;&gt;&gt; s.price = '123.45'
+Traceback (most recent call last):
+...
+TypeError: Expected float
+&gt;&gt;&gt; s.price = -10.0
+Traceback (most recent call last):
+...
+ValueError: price must be &gt;= 0
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="d-adicion-__slots__">(d) Adición <code>__slots__</code></h2>
+<p>Modifique su nueva clase <code>Stock</code> para utilizar <code>__slots__</code>. Descubrirá que debe utilizar un conjunto de nombres de atributos diferente al anterior; específicamente, deberá incluir los nombres de atributos privados (por ejemplo, si una propiedad almacena un valor en un atributo <code>_shares</code>, ese es el nombre que incluye en <code>__slots__</code>). Verifique que la clase aún funcione y que ya no pueda agregar nuevos atributos.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.10)
+&gt;&gt;&gt; s.spam = 42
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'Stock' object has no attribute 'spam'
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="e-reconciliacion-de-tipos">(e) Reconciliación de tipos</h2>
+<p>En la clase <code>Stock</code> actual, hay una variable de clase <code>_types</code> que proporciona conversiones al leer desde un archivo, pero también hay propiedades que imponen tipos. ¿Quién está a cargo de este programa? Corrija las definiciones de propiedades para que utilicen los tipos especificados en la variable de clase <code>_types</code>. Asegúrese de que las propiedades funcionen cuando se cambien los tipos mediante subclasificación. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from decimal import Decimal
+&gt;&gt;&gt; class DStock(Stock):
+        _types = (str, int, Decimal)
+
+&gt;&gt;&gt; s = DStock('AA', 50, Decimal('91.1'))
+&gt;&gt;&gt; s.price = 92.3
+Traceback (most recent call last):
+...
+TypeError: Expected a Decimal
+&gt;&gt;&gt; 
+</code></pre>
+<p><strong>Discusión</strong></p>
+<p>La clase <code>Stock</code> resultante al final de este ejercicio es un lío confuso de propiedades, verificación de tipos, constructores y otros detalles. Imagine lo desagradable que sería mantener un código que incluyera docenas o cientos de definiciones de clases de este tipo.</p>
+<p>Vamos a descubrir cómo simplificar las cosas considerablemente, pero llevará algo de tiempo y algunas técnicas más avanzadas. Estén atentos.</p>
+<p><a href="soln3_4.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex3_3/">Ejercicio 3.3</a> | <a href="../ex3_5/">Ejercicio 3.5</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
 <p><code>...</code> Copyright 2007-2023</p>
-<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
-licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
-4.0 Internacional</a></p></div>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex4_2/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex4 2 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-42" class="nav-link">Ejercicio 4.2</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-las-direcciones-de-la-herencia" class="nav-link">(a) Las direcciones de la herencia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-construya-un-verificador-de-valores" class="nav-link">(b) Construya un verificador de valores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-uso-de-sus-validadores" class="nav-link">(c) Uso de sus validadores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex4_1/">Ejercicio 4.1</a> | <a href="../ex4_3/">Ejercicio 4.3</a></p>
+<h1 id="ejercicio-42">Ejercicio 4.2</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender más sobre el comportamiento de la herencia</li>
+<li>Entender el comportamiento de super().</li>
+<li>Herencia más cooperativa.</li>
+</ul>
+<p><em>Archivos creados:</em> <code>validate.py</code></p>
+<h2 id="a-las-direcciones-de-la-herencia">(a) Las direcciones de la herencia</h2>
+<p>Python tiene dos "direcciones" diferentes de herencia. La primera se encuentra en el concepto de "herencia simple", donde una serie de clases heredan de un solo padre. Por ejemplo, prueba este ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class A:
+        def spam(self):
+            print('A.spam')
+
+&gt;&gt;&gt; class B(A):
+        def spam(self):
+            print('B.spam')
+            super().spam()
+
+&gt;&gt;&gt; class C(B):
+        def spam(self):
+            print('C.spam')
+            super().spam()
+
+
+&gt;&gt;&gt; C.__mro__
+(&lt;class '__main__.C'&gt;, &lt;class '__main__.B'&gt;, &lt;class '__main__.A'&gt;, &lt;class 'object'&gt;)
+&gt;&gt;&gt; c = C()
+&gt;&gt;&gt; c.spam()
+C.spam
+B.spam
+A.spam
+&gt;&gt;&gt; 
+</code></pre>
+<p>Observa que el atributo <code>__mro__</code> de la clase <code>C</code> codifica todos sus ancestros en orden. Cuando invoca el método <code>spam()</code>, este recorre la jerarquía clase por clase del MRO.</p>
+<p>Con la herencia múltiple, obtiene un tipo diferente de herencia que permite que se compongan diferentes clases juntas. Pruebe este ejemplo:</p>
+<pre><code>&gt;&gt;&gt; class Base:
+        def spam(self):
+            print('Base.spam')
+
+&gt;&gt;&gt; class X(Base):
+        def spam(self):
+            print('X.spam')
+            super().spam()
+
+&gt;&gt;&gt; class Y(Base):
+        def spam(self):
+            print('Y.spam')
+            super().spam()
+
+&gt;&gt;&gt; class Z(Base):
+        def spam(self):
+            print('Z.spam')
+            super().spam()
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe que todas las clases anteriores heredan de una clase principal común <code>Base</code>. Sin embargo, las clases <code>X</code>, <code>Y</code> y <code>Z</code> no están directamente relacionadas entre sí (no hay una cadena de herencia que vincule esas clases).</p>
+<p>Sin embargo, observe lo que sucede en la herencia múltiple:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class M(X,Y,Z):
+        pass
+
+&gt;&gt;&gt; M.__mro__
+(&lt;class '__main__.M'&gt;, &lt;class '__main__.X'&gt;, &lt;class '__main__.Y'&gt;, &lt;class '__main__.Z'&gt;, &lt;class '__main__.Base'&gt;, &lt;class 'object'&gt;)
+&gt;&gt;&gt; m = M()
+&gt;&gt;&gt; m.spam()
+X.spam
+Y.spam
+Z.spam
+Base.spam
+</code></pre>
+<p>Aquí, puede ver que todas las clases se apilan juntas en el orden proporcionado por la subclase. Supongamos que la subclase reorganiza el orden de las clases:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class N(Z,Y,X):
+        pass
+
+&gt;&gt;&gt; N.__mro__
+(&lt;class '__main__.N'&gt;, &lt;class '__main__.Z'&gt;, &lt;class '__main__.Y'&gt;, &lt;class '__main__.X'&gt;, &lt;class '__main__.Base'&gt;, &lt;class 'object'&gt;)
+&gt;&gt;&gt; n = N()
+&gt;&gt;&gt; n.spam()
+Z.spam
+Y.spam
+X.spam
+Base.spam
+&gt;&gt;&gt;
+</code></pre>
+<p>Aquí, puede ver que el orden de los padres cambia. Preste atención cuidadosamente a lo que <code>super()</code> está haciendo en ambos casos. No delega al padre inmediato de cada clase; en cambio, pasa a la siguiente clase en el MRO. No solo eso, el orden exacto lo controla el hijo. Esto es bastante extraño.</p>
+<p>Observe también que el padre común <code>Base</code> sirve para terminar la cadena de operaciones <code>super()</code>. Específicamente, el método <code>Base.spam()</code> no llama a ningún otro método. También aparece al final del MRO, ya que es el padre de todas las clases que se componen juntas.</p>
+<h2 id="b-construya-un-verificador-de-valores">(b) Construya un verificador de valores</h2>
+<p>En el <a href="../ex3_4/">Ejercicio 3.4</a>, agregó algunas propiedades a la clase <code>Stock</code> que verificaban los atributos para diferentes tipos y valores (por ejemplo, las acciones tenían que ser un entero positivo). Juguemos un poco con esa idea. Comience creando un archivo <code>validate.py</code> y defina la siguiente clase base:</p>
+<pre><code class="language-python"># validate.py
+class Validator:
+    @classmethod
+    def check(cls, value):
+        return value
+</code></pre>
+<p>Ahora, hagamos algunas clases para la verificación de tipos:</p>
+<pre><code class="language-python">class Typed(Validator):
+    expected_type = object
+    @classmethod
+    def check(cls, value):
+        if not isinstance(value, cls.expected_type):
+            raise TypeError(f'Expected {cls.expected_type}')
+        return super().check(value)
+
+class Integer(Typed):
+    expected_type = int
+
+class Float(Typed):
+    expected_type = float
+
+class String(Typed):
+    expected_type = str
+</code></pre>
+<p>A continuación, se muestra cómo usar estas clases (Nota: el uso de <code>@classmethod</code> nos permite evitar el paso adicional de creando instancias que realmente no necesitamos):</p>
+<pre><code class="language-python">&gt;&gt;&gt; Integer.check(10)
+10
+&gt;&gt;&gt; Integer.check('10')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in check
+    raise TypeError(f'Expected {cls.expected_type}')
+TypeError: Expected &lt;class 'int'&gt;
+&gt;&gt;&gt; String.check('10')
+'10'
+&gt;&gt;&gt;
+</code></pre>
+<p>Podrías usar los validadores en una función. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def add(x, y):
+        Integer.check(x)
+        Integer.check(y)
+        return x + y
+
+&gt;&gt;&gt; add(2, 2)
+4
+&gt;&gt;&gt; add('2', '3')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;&lt;stdin&gt;&quot;, line 2, in add
+  File &quot;validate.py&quot;, line 11, in check
+    raise TypeError(f'Expected {cls.expected_type}')
+TypeError: Expected &lt;class 'int'&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, cree más clases para diferentes tipos de verificación de dominio:</p>
+<pre><code class="language-python">class Positive(Validator):
+    @classmethod
+    def check(cls, value):
+        if value &lt; 0:
+            raise ValueError('Expected &gt;= 0')
+        return super().check(value)
+
+class NonEmpty(Validator):
+    @classmethod
+    def check(cls, value):
+        if len(value) == 0:
+            raise ValueError('Must be non-empty')
+        return super().check(value)
+</code></pre>
+<p>¿Adónde va todo esto? Comencemos a componer clases juntas con herencia múltiple como bloques de juguete:</p>
+<pre><code class="language-python">class PositiveInteger(Integer, Positive):
+    pass
+
+class PositiveFloat(Float, Positive):
+    pass
+
+class NonEmptyString(String, NonEmpty):
+    pass
+</code></pre>
+<p>Básicamente, estás tomando validadores existentes y componiéndolos juntos para formar otros nuevos. ¡Qué locura! Sin embargo, usémoslos para validar algunas cosas ahora:</p>
+<pre><code class="language-python">&gt;&gt;&gt; PositiveInteger.check(10)
+10
+&gt;&gt;&gt; PositiveInteger.check('10')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    raise TypeError(f'Expected {cls.expected_type}')
+TypeError: Expected &lt;class 'int'&gt;
+&gt;&gt;&gt; PositiveInteger.check(-10)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    raise ValueError('Expected &gt;= 0')
+ValueError: Must be &gt;= 0
+
+
+&gt;&gt;&gt; NonEmptyString.check('hello')
+'hello'
+&gt;&gt;&gt; NonEmptyString.check('')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+    raise ValueError('Must be non-empty')
+ValueError: Must be non-empty
+&gt;&gt;&gt;
+</code></pre>
+<p>En este punto, probablemente tu cabeza esté completamente aturdida. Sin embargo, el problema de componer diferentes fragmentos de código juntos es uno que surge en los programas del mundo real. La herencia múltiple cooperativa es una de las herramientas que se pueden utilizar para organizarlo.</p>
+<h2 id="c-uso-de-sus-validadores">(c) Uso de sus validadores</h2>
+<p>Sus validadores se pueden utilizar para agregar verificación de valores a funciones y clases. Por ejemplo, tal vez los validadores se podrían usar en las propiedades de <code>Stock</code>:</p>
+<pre><code class="language-python">class Stock:
+    ...
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        self._shares = PositiveInteger.check(value)
+    ...
+</code></pre>
+<p>Copia la clase <code>Stock</code> de <code>stock.py</code> cámbiala para usar los validadores en el código de propiedad para <code>shares</code> y <code>price</code>.</p>
+<p><a href="soln4_2.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex4_1/">Ejercicio 4.1</a> | <a href="../ex4_3/">Ejercicio 4.3</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p>
+<p>,</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex3_2/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex3 2 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,21 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-32" class="nav-link">Ejercicio 3.2</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-las-tres-operaciones" class="nav-link">(a) Las tres operaciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-uso-de-getattr" class="nav-link">(b) Uso de getattr()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-salida-de-tabla" class="nav-link">(c) Salida de tabla</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-metodos-enlazados" class="nav-link">(d) Métodos enlazados</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,41 +91,123 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex3_1/">Ejercicio 3.1</a> | <a href="../ex3_3/">Ejercicio 3.3</a></p>
+<h1 id="ejercicio-32">Ejercicio 3.2</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Aprender sobre el acceso a atributos</li>
+<li>Aprender a usar getattr(), setattr() y funciones relacionadas.</li>
+<li>Experimentar con métodos enlazados.</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p><em>Archivos creados:</em> <code>tableformat.py</code></p>
+<h2 id="a-las-tres-operaciones">(a) Las tres operaciones</h2>
+<p>El sistema de objetos de Python completo consta de solo tres operaciones básicas: obtener, configurar y eliminar atributos. Normalmente, se accede a ellos a través del punto (.) de la siguiente manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.name              # obtener
+'GOOG'
+&gt;&gt;&gt; s.shares = 50       # configurar
+&gt;&gt;&gt; del s.shares        # eliminar
+&gt;&gt;&gt;
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>Las tres operaciones también están disponibles como funciones. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; getattr(s, 'name')        # Igual que s.name
+'GOOG'
+&gt;&gt;&gt; setattr(s, 'shares', 50)  # Igual que s.shares = 50
+&gt;&gt;&gt; delattr(s, 'shares')      # Igual que del s.shares
+&gt;&gt;&gt;
+</code></pre>
+<p>Se puede utilizar una función adicional <code>hasattr()</code> para sondear un objeto en busca de la existencia de un atributo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; hasattr(s, 'name')
+True
+&gt;&gt;&gt; hasattr(s, 'blah')
+False
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-uso-de-getattr">(b) Uso de getattr()</h2>
+<p>La función <code>getattr()</code> es extremadamente útil para escribir código que procesa objetos de una manera extremadamente genérica. Para ilustrarlo, considere este ejemplo que imprime un conjunto de atributos definidos por el usuario:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s= Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; fields = ['name','shares','price']
+&gt;&gt;&gt; for name in fields:
+print(name, getattr(s, name))
+
+name GOOG
+shares 100
+price 490.1
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-salida-de-tabla">(c) Salida de tabla</h2>
+<p>En el <a href="../ex3_1/">Ejercicio 3.1</a>, escribió una función <code>print_portfolio()</code> que generó una tabla con un formato agradable. Esa función se adaptó a una lista de objetos <code>Stock</code>. Sin embargo, se puede generalizar por completo para que funcione con cualquier lista de objetos utilizando la técnica de la parte (b).</p>
+<p>Cree un nuevo módulo llamado <code>tableformat.py</code>. En ese programa, escriba una función <code>print_table()</code> que tome una secuencia (lista) de objetos, una lista de nombres de atributos e imprima una tabla bien formateada. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import stock
+&gt;&gt;&gt; import tableformat
+&gt;&gt;&gt; portfolio = stock.read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; tableformat.print_table(portfolio, ['name','shares','price'])
+      name     shares      price
+---------- ---------- ---------- 
+        AA        100       32.2
+       IBM         50       91.1
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50       65.1
+       IBM        100      70.44
+
+&gt;&gt;&gt; tableformat.print_table(portfolio,['shares','name'])
+    shares       name
+---------- ---------- 
+       100         AA
+        50        IBM
+       150        CAT
+       200       MSFT
+        95         GE
+        50       MSFT
+       100        IBM
+&gt;&gt;&gt; 
+</code></pre>
+<p>Para simplificar, simplemente haga que la función <code>print_table()</code> imprima cada campo en una columna de 10 caracteres de ancho.</p>
+<h2 id="d-metodos-enlazados">(d) Métodos enlazados</h2>
+<p>Puede resultar sorprendente, pero las llamadas a métodos se superponen a la maquinaria utilizada para atributos simples. Básicamente, un método es un atributo que se ejecuta cuando se agregan los paréntesis necesarios () para llamarlo como una función. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; s.cost           # Looks up the method
+&lt;bound method Stock.cost of &lt;__main__.Stock object at 0x409530&gt;&gt;
+&gt;&gt;&gt; s.cost()         # Looks up and calls the method
+49010.0
+
+&gt;&gt;&gt; # Misma operación usando getattr()
+&gt;&gt;&gt; getattr(s, 'cost')
+&lt;bound method Stock.cost of &lt;__main__.Stock object at 0x409530&gt;&gt;
+&gt;&gt;&gt; getattr(s, 'cost')()
+49010.0
+&gt;&gt;&gt; 
+</code></pre>
+<p>Un método enlazado se adjunta al objeto del que proviene. Si se modifica ese objeto, el método verá las modificaciones. Puede ver el objeto original inspeccionando el atributo <code>__self__</code> del método.</p>
+<pre><code class="language-python">&gt;&gt;&gt; c = s.cost
+&gt;&gt;&gt; c()
+49010.0
+&gt;&gt;&gt; s.shares = 75
+&gt;&gt;&gt; c()
+36757.5
+&gt;&gt;&gt; c.__self__
+&lt;__main__.Stock object at 0x409530&gt;
+&gt;&gt;&gt; c.__func__
+&lt;function cost at 0x37cc30&gt;
+&gt;&gt;&gt; c.__func__(c.__self__)# Esto es lo que sucede detrás de escena al llamar a c()
+36757.5
+&gt;&gt;&gt;
+</code></pre>
+<p>Pruébelo con el método <code>sell()</code> solo para asegurarse de que comprende la mecánica:</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = s.sell
+&gt;&gt;&gt; f.__func__(f.__self__, 25) # Igual que s.sell(25)
+&gt;&gt;&gt; s.shares
+50
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="soln3_2.md">Solución</a> | <a href="índice.md">Índice</a> | <a href="../ex3_1/">Ejercicio 3.1</a> | <a href="../ex3_3/">Ejercicio 3.3</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
 <p><code>...</code> Copyright 2007-2023</p>
-<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
-licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
-4.0 Internacional</a></p></div>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

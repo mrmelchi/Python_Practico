@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex2_2/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex2 2 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-22" class="nav-link">Ejercicio 2.2</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-preliminares" class="nav-link">(a) Preliminares</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-comprensiones" class="nav-link">(b) Comprensiones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-colecciones" class="nav-link">(c) Colecciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-desafio-de-analisis-de-datos" class="nav-link">(d) Desafío de análisis de datos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex2_1/">Ejercicio 2.1</a> | <a href="../ex2_3/">Ejercicio 2.3</a></p>
+<h1 id="ejercicio-22">Ejercicio 2.2</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Trabajar con varios contenedores</li>
+<li>Comprensiones de listas/conjuntos/diccionarios</li>
+<li>Módulo de colecciones</li>
+<li>Desafío de análisis de datos</li>
+</ul>
+<p>La mayoría de los programadores de Python están familiarizados con listas, diccionarios, tuplas y otros tipos de datos básicos. En este ejercicio, pondremos ese conocimiento en práctica para resolver varios problemas de análisis de datos.</p>
+<h2 id="a-preliminares">(a) Preliminares</h2>
+<p>Para comenzar, revisemos algunos conceptos básicos con un conjunto de datos un poco más simple: una cartera de tenencias de acciones. Cree un archivo <code>readport.py</code> y coloque este código en él:</p>
+<pre><code class="language-python"># readport.py
+
+import csv
+
+# Una función que lee un archivo en una lista de diccionarios
+def read_portfolio(filename):
+    portfolio = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+        for row in rows:
+            record = {
+                'name' : row[0],
+                'shares' : int(row[1]),
+                'price' : float(row[2])
+            }
+            portfolio.append(record)
+    return portfolio
+</code></pre>
+<p>Este archivo lee algunos datos simples del mercado de valores en el archivo <code>Data/portfolio.csv</code>. Utilice la función para leer el archivo y ver los resultados:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; pprint(portfolio)
+[{'name': 'AA', 'price': 32.2, 'shares': 100},
+ {'name': 'IBM', 'price': 91.1, 'shares': 50},
+ {'name': 'CAT', 'price': 83.44, 'shares': 150},
+ {'name': 'MSFT', 'price': 51.23, 'shares': 200},
+ {'name': 'GE', 'price': 40.37, 'shares': 95},
+ {'name': 'MSFT', 'price': 65.1, 'shares': 50},
+ {'name': 'IBM', 'price': 70.44, 'shares': 100}]
+&gt;&gt;&gt;
+</code></pre>
+<p>En estos datos, cada fila consta de un nombre de acción, una cantidad de acciones en posesión y un precio de compra. Hay varias entradas para ciertos nombres de acciones, como MSFT e IBM.</p>
+<h2 id="b-comprensiones">(b) Comprensiones</h2>
+<p>Las comprensiones de listas, conjuntos y diccionarios pueden ser una herramienta útil para manipular datos. Por ejemplo, prueba estas operaciones:</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Encuentra todas las tenencias de más de 100 acciones
+&gt;&gt;&gt; [s for s in portfolio if s['shares'] &gt; 100]
+[{'name': 'CAT', 'shares': 150, 'price': 83.44}, 
+ {'name': 'MSFT', 'shares': 200, 'price': 51.23}]
+
+&gt;&gt;&gt; # Calcula el costo total (acciones * precio)
+&gt;&gt;&gt; sum([s['shares']*s['price'] for s in portfolio])
+44671.15
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; # Encuentra todos los nombres de acciones únicos (`set`)
+&gt;&gt;&gt; { s['name'] for s in portfolio }
+{'MSFT', 'IBM', 'AA', 'GE', 'CAT'}
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; # Cuenta el total de acciones de cada una de las acciones
+&gt;&gt;&gt; totals = { s['name']: 0 for s in portfolio }
+&gt;&gt;&gt; for s in portfolio:
+        totals[s['name']] += s['shares']
+
+&gt;&gt;&gt; totals
+{'AA': 100, 'IBM': 150, 'CAT': 150, 'MSFT': 250, 'GE': 95}
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-colecciones">(c) Colecciones</h2>
+<p>El módulo <code>collections</code> tiene una variedad de clases para una manipulación de datos más especializada. Por ejemplo, el último ejemplo se podría resolver con un <code>Counter</code> como este:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from collections import Counter
+&gt;&gt;&gt; totals = Counter()
+&gt;&gt;&gt; for s in portfolio:
+        totals[s['name']] += s['shares']
+
+&gt;&gt;&gt; totals
+Counter({'MSFT': 250, 'IBM': 150, 'CAT': 150, 'AA': 100, 'GE': 95})
+&gt;&gt;&gt;
+</code></pre>
+<p>Los contadores son interesantes porque admiten otros tipos de operaciones, como la clasificación y las matemáticas. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Obtener las dos tenencias más comunes
+&gt;&gt;&gt; totals.most_common(2)
+[('MSFT', 250), ('IBM', 150)]
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; # Sumando contadores
+&gt;&gt;&gt; more = Counter()
+&gt;&gt;&gt; more['IBM'] = 75
+&gt;&gt;&gt; more['AA'] = 200
+&gt;&gt;&gt; more['ACME'] = 30
+&gt;&gt;&gt; more
+Counter({'AA': 200, 'IBM': 75, 'ACME': 30})
+&gt;&gt;&gt; totals
+Counter({'MSFT': 250, 'IBM': 150, 'CAT': 150, 'AA': 100, 'GE': 95})
+&gt;&gt;&gt; totals + more
+Counter({'AA': 300, 'MSFT': 250, 'IBM': 225, 'CAT': 150, 'GE': 95, 'ACME': 30})
+&gt;&gt;&gt; 
+</code></pre>
+<p>El objeto <code>defaultdict</code> se puede utilizar para agrupar datos. Por ejemplo, supongamos que desea facilitar la búsqueda de todas las entradas coincidentes para un nombre determinado, como IBM. Pruebe esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from collections import defaultdict
+&gt;&gt;&gt; byname = defaultdict(list)
+&gt;&gt;&gt; for s in portfolio:
+        byname[s['name']].append(s)
+
+&gt;&gt;&gt; byname['IBM']
+[{'name': 'IBM', 'shares': 50, 'price': 91.1}, {'name': 'IBM', 'shares': 100, 'price': 70.44}]
+&gt;&gt;&gt; byname['AA']
+[{'name': 'AA', 'shares': 100, 'price': 32.2}]
+&gt;&gt;&gt;
+</code></pre>
+<p>La característica clave que hace que esto funcione es que un defaultdict inicializa automáticamente los elementos por usted, lo que permite que se combinen la inserción de un nuevo elemento y una operación <code>append()</code>.</p>
+<h2 id="d-desafio-de-analisis-de-datos">(d) Desafío de análisis de datos</h2>
+<p>En el último ejercicio, acabas de escribir un código para leer datos CSV relacionados con la Autoridad de Tránsito de Chicago. Por ejemplo, puedes obtener los datos como diccionarios de esta manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import readrides
+&gt;&gt;&gt; rows = readrides.read_rides_as_dicts('Data/ctabus.csv')
+&gt;&gt;&gt;
+</code></pre>
+<p>Sería una pena hacer todo ese trabajo y luego no hacer nada con los datos.</p>
+<p>En este ejercicio, tu tarea es la siguiente: escribe un programa para responder las siguientes tres preguntas:</p>
+<ol>
+<li>
+<p>¿Cuántas rutas de autobús existen en Chicago?</p>
+</li>
+<li>
+<p>¿Cuántas personas viajaron en el autobús número 22 el 2 de febrero de 2011? ¿Qué hay de cualquier ruta en cualquier fecha que elijas?</p>
+</li>
+<li>
+<p>¿Cuál es el número total de viajes en cada ruta de autobús?</p>
+</li>
+<li>
+<p>¿Cuáles son las cinco rutas de autobús que tuvieron el mayor aumento de pasajeros en diez años, desde 2001 hasta 2011?</p>
+</li>
+</ol>
+<p>Puede utilizar cualquier técnica para responder las preguntas anteriores, siempre que sea parte de la biblioteca estándar de Python (es decir, tipos de datos integrados, módulos de la biblioteca estándar, etc.).</p>
+<p><a href="soln2_2.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex2_1/">Ejercicio 2.1</a> | <a href="../ex2_3/">Ejercicio 2.3</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

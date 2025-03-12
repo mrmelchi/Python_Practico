@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex2_3/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex2 3 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-23" class="nav-link">Ejercicio 2.3</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-iteracion-basica-y-desempaquetado" class="nav-link">(a) Iteración básica y desempaquetado</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-conteo-con-enumerate" class="nav-link">(b) Conteo con enumerate()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-uso-de-la-funcion-zip" class="nav-link">(c) Uso de la función zip()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-expresiones-de-generador" class="nav-link">(d) Expresiones de generador</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#e-expresiones-generadoras-y-funciones-de-reduccion" class="nav-link">(e) Expresiones generadoras y funciones de reducción</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#f-ahorro-de-mucha-memoria" class="nav-link">(f) Ahorro de mucha memoria</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex2_2/">Ejercicio 2.2</a> | <a href="../ex2_4/">Ejercicio 2.4</a></p>
+<h1 id="ejercicio-23">Ejercicio 2.3</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Iterar como un profesional</li>
+</ul>
+<p><em>Archivos modificados:</em> Ninguno.</p>
+<p>La iteración es una habilidad esencial de Python. En este ejercicio, veremos una serie de expresiones idiomáticas de iteración comunes.</p>
+<p>Comience el ejercicio tomando algunas filas de datos de un archivo CSV.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/portfolio.csv')
+&gt;&gt;&gt; f_csv = csv.reader(f)
+&gt;&gt;&gt; headers = next(f_csv)
+&gt;&gt;&gt; headers
+['name', 'shares', 'price']
+&gt;&gt;&gt; rows = list(f_csv)
+&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; pprint(rows)
+[['AA', '100', '32.20'],
+ ['IBM', '50', '91.10'],
+ ['CAT', '150', '83.44'],
+ ['MSFT', '200', '51.23'],
+ ['GE', '95', '40.37'],
+ ['MSFT', '50', '65.10'],
+ ['IBM', '100', '70.44']]
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="a-iteracion-basica-y-desempaquetado">(a) Iteración básica y desempaquetado</h2>
+<p>La instrucción <code>for</code> itera sobre cualquier secuencia de datos. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for row in rows:
+        print(row)
+
+['AA', '100', '32.20']
+['IBM', '50', '91.10']
+['CAT', '150', '83.44']
+['MSFT', '200', '51.23']
+['GE', '95', '40.37']
+['MSFT', '50', '65.10']
+['IBM', '100', '70.44']
+&gt;&gt;&gt;
+</code></pre>
+<p>Descomprima los valores en variables separadas si lo necesita:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for name, shares, price in rows:
+        print(name, shares, price)
+
+AA 100 32.20
+IBM 50 91.10
+CAT 150 83.44
+MSFT 200 51.23
+GE 95 40.37
+MSFT 50 65.10
+IBM 100 70.44
+&gt;&gt;&gt;
+</code></pre>
+<p>Es bastante común usar <code>_</code> o <code>__</code> como una variable descartable si no le interesa uno o más de los valores. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for name, _, price in rows:
+        print(name, price)
+
+AA 32.20
+IBM 91.10
+CAT 83.44
+MSFT 51.23
+GE 40.37
+MSFT 65.10
+IBM 70.44
+&gt;&gt;&gt;
+</code></pre>
+<p>Si no sabe cuántos valores se están descomprimiendo, puede usar <code>*</code> como comodín. Pruebe este experimento para agrupar los datos por nombre:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from collections import defaultdict
+&gt;&gt;&gt; byname = defaultdict(list)
+&gt;&gt;&gt; for name, *data in rows:
+        byname[name].append(data)
+
+&gt;&gt;&gt; byname['IBM']
+[['50', '91.10'], ['100', '70.44']]
+&gt;&gt;&gt; byname['CAT']
+[['150', '83.44']]
+&gt;&gt;&gt; for shares, price in byname['IBM']:
+        print(shares, price)
+
+50 91.10
+100 70.44
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-conteo-con-enumerate">(b) Conteo con enumerate()</h2>
+<p><code>enumerate()</code> es una función útil si alguna vez necesita mantener un contador o índice mientras itera. Por ejemplo, supongamos que desea un número de fila adicional:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for rowno, row in enumerate(rows):
+        print(rowno, row)
+
+0 ['AA', '100', '32.20']
+1 ['IBM', '50', '91.10']
+2 ['CAT', '150', '83.44']
+3 ['MSFT', '200', '51.23']
+4 ['GE', '95', '40.37']
+5 ['MSFT', '50', '65.10']
+6 ['IBM', '100', '70.44']
+&gt;&gt;&gt;
+</code></pre>
+<p>Puede combinar esto con el desempaquetado si tiene cuidado con la forma en que lo estructura:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for rowno, (name, shares, price) in enumerate(rows):
+        print(rowno, name, shares, price)
+
+0 AA 100 32.20
+1 IBM 50 91.10
+2 CAT 150 83.44
+3 MSFT 200 51.23
+4 GE 95 40.37
+5 MSFT 50 65.10
+6 IBM 100 70.44
+&gt;&gt;&gt; 
+</code></pre>
+<h2 id="c-uso-de-la-funcion-zip">(c) Uso de la función zip()</h2>
+<p>La función <code>zip()</code> se utiliza con mayor frecuencia para emparejar datos. Por ejemplo, recuerda que creaste una variable <code>headers</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; headers
+['name', 'shares', 'price']
+&gt;&gt;&gt;
+</code></pre>
+<p>Esto podría ser útil para combinar con los otros datos de fila:</p>
+<pre><code class="language-python">&gt;&gt;&gt; row = rows[0]
+&gt;&gt;&gt; row
+['AA', '100', '32.20']
+&gt;&gt;&gt; for col, val in zip(headers, row):
+        print(col, val)
+
+name AA
+shares 100
+price 32.20
+&gt;&gt;&gt;
+</code></pre>
+<p>O tal vez puedas usarlo para hacer un diccionario:</p>
+<pre><code class="language-python">&gt;&gt;&gt; dict(zip(headers, row))
+{'name': 'AA', 'shares': '100', 'price': '32.20'}
+&gt;&gt;&gt;
+</code></pre>
+<p>O tal vez una secuencia de diccionarios:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for row in rows:
+        record = dict(zip(headers, row))
+        print(record)
+
+{'name': 'AA', 'shares': '100', 'price': '32.20'}
+{'name': 'IBM', 'shares': '50', 'price': '91.10'}
+{'name': 'CAT', 'shares': '150', 'price': '83.44'}
+{'name': 'MSFT', 'shares': '200', 'price': '51.23'}
+{'name': 'GE', 'shares': '95', 'price': '40.37'}
+{'name': 'MSFT', 'shares': '50', 'price': '65.10'}
+{'name': 'IBM', 'shares': '100', 'price': '70.44'}
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="d-expresiones-de-generador">(d) Expresiones de generador</h2>
+<p>Una expresión de generador es casi exactamente lo mismo que una comprensión de lista, excepto que no crea una lista. En cambio, crea un objeto que produce los resultados de forma incremental, generalmente para su consumo por iteración. Pruebe un ejemplo simple:</p>
+<pre><code class="language-python">&gt;&gt;&gt; nums = [1,2,3,4,5]
+&gt;&gt;&gt; squares = (x*x for x in nums)
+&gt;&gt;&gt; squares
+&lt;generator object &lt;genexpr&gt; at 0x37caa8&gt;
+&gt;&gt;&gt; for n in squares:
+        print(n)
+
+1
+4
+9
+16
+25
+&gt;&gt;&gt;
+</code></pre>
+<p>Notará que una expresión de generador solo se puede usar una vez. Observa lo que sucede si realizas el bucle for nuevamente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for n in squares:
+        print(n)
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Puedes obtener manualmente los resultados uno a la vez si usas la función <code>next()</code>. Prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; squares = (x*x for x in nums)
+&gt;&gt;&gt; next(squares)
+1
+&gt;&gt;&gt; next(squares)
+4
+&gt;&gt;&gt; next(squares)
+9
+&gt;&gt;&gt;
+</code></pre>
+<p>Sigue escribiendo <code>next()</code> para ver qué sucede cuando no hay más datos.</p>
+<p>Si la tarea que estás realizando es más complicada, aún puedes aprovechar los generadores escribiendo una función de generador y usando la declaración <code>yield</code> en su lugar. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def squares(nums):
+        for x in nums:
+            yield x*x
+
+&gt;&gt;&gt; for n in squares(nums):
+        print(n)
+
+1
+4
+9
+16
+25
+&gt;&gt;&gt;
+</code></pre>
+<p>Volveremos a las funciones generadoras un poco más adelante en el curso. Por ahora, solo considere estas funciones como si tuvieran la interesante propiedad de introducir valores en la instrucción <code>for</code>.</p>
+<h2 id="e-expresiones-generadoras-y-funciones-de-reduccion">(e) Expresiones generadoras y funciones de reducción</h2>
+<p>Las expresiones generadoras son especialmente útiles para introducir datos en funciones como <code>sum()</code>, <code>min()</code>, <code>max()</code>, <code>any()</code>, etc. Pruebe algunos ejemplos utilizando los datos de cartera de antes. Observe con atención que a estos ejemplos les faltan algunos corchetes adicionales ([]) que aparecieron al utilizar listas por comprensión.</p>
+<pre><code class="language-python">&gt;&gt;&gt; from readport import read_portfolio
+&gt;&gt;&gt; portfolio = read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; suma(s['shares']*s['price'] para s en la cartera)
+44671.15
+&gt;&gt;&gt; min(s['shares'] para s en la cartera)
+50
+&gt;&gt;&gt; any(s['name'] == 'IBM' para s en la cartera)
+True
+&gt;&gt;&gt; all(s['name'] == 'IBM' para s en la cartera)
+False
+&gt;&gt;&gt; suma(s['shares'] para s en la cartera si s['name'] == 'IBM')
+150
+&gt;&gt;&gt;
+</code></pre>
+<p>A continuación se muestra un uso sutil de una expresión de generador para generar valores separados por comas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = ('GOOG',100,490.10)
+&gt;&gt;&gt; ','.join(s)
+... observe que falla...
+&gt;&gt;&gt; ','.join(str(x) for x in s) # Esto funciona
+'GOOG,100,490.1'
+&gt;&gt;&gt;
+</code></pre>
+<p>La sintaxis de los ejemplos anteriores requiere algo de práctica, pero el punto crítico es que ninguna de las operaciones crea una lista completa de resultados. Esto le permite ahorrar mucha memoria. Sin embargo, debe asegurarse de no excederse con la sintaxis.</p>
+<h2 id="f-ahorro-de-mucha-memoria">(f) Ahorro de mucha memoria</h2>
+<p>En el <a href="../ex2_1/">Ejercicio 2.1</a> escribió una función <code>read_rides_as_dicts()</code> que lee los datos del bus CTA en una lista de diccionarios. Su uso requiere mucha memoria. Por ejemplo, busquemos el día en el que el autobús de la ruta 22 tuvo el mayor número de pasajeros:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; import readrides
+&gt;&gt;&gt; rows = readrides.read_rides_as_dicts('Data/ctabus.csv')
+&gt;&gt;&gt; rt22 = [row for row in rows if row['route'] == '22']
+&gt;&gt;&gt; max(rt22, key=lambda row: row['rides'])
+{'date': '06/11/2008', 'route': '22', 'daytype': 'W', 'rides': 26896}
+&gt;&gt;&gt; tracemalloc.get_traced_memory()
+... mira el resultado. Debería rondar los 220 MB
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, probemos un ejemplo que involucre generadores. Reinicia Python y prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; # REINICIAR
+&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/ctabus.csv')
+&gt;&gt;&gt; f_csv = csv.reader(f)
+&gt;&gt;&gt; headers = next(f_csv)
+&gt;&gt;&gt; rows = (dict(zip(headers,row)) for row in f_csv)
+&gt;&gt;&gt; rt22 = (row for row in rows if row['route'] == '22')
+&gt;&gt;&gt; max(rt22, key=lambda row: int(row['rides']))
+{'date': '06/11/2008', 'route': '22', 'daytype': 'W', 'rides': 26896}
+&gt;&gt;&gt; tracemalloc.get_traced_memory()
+... observe el resultado. Debería ser MUCHO más pequeño que antes
+&gt;&gt;&gt;
+</code></pre>
+<p>Tenga en cuenta que acaba de procesar todo el conjunto de datos como si estuviera almacenado como una secuencia de diccionarios. Sin embargo, en ningún lugar creó ni almacenó una lista de diccionarios. No todos los problemas se pueden estructurar de esta manera, pero si puede trabajar con datos de manera iterativa, las expresiones generadoras pueden ahorrar una gran cantidad de memoria.</p>
+<p><a href="soln2_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex2_2/">Ejercicio 2.2</a> | <a href="../ex2_4/">Ejercicio 2.4</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

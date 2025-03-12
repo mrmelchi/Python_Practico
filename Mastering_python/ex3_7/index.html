@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex3_7/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex3 7 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-37" class="nav-link">Ejercicio 3.7</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-interfaces-y-comprobacion-de-tipos" class="nav-link">(a) Interfaces y comprobación de tipos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-clases-base-abstractas" class="nav-link">(b) Clases base abstractas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-clases-de-plantilla-de-algoritmo" class="nav-link">(c) Clases de plantilla de algoritmo</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,41 +87,103 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex3_6/">Ejercicio 3.6</a> | <a href="../ex3_8/">Ejercicio 3.8</a></p>
+<h1 id="ejercicio-37">Ejercicio 3.7</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Comprobación de tipos e interfaces</li>
+<li>Clases base abstractas</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p><em>Archivos modificados:</em> <code>tableformat.py</code></p>
+<p>En el <a href="../ex3_5/">Ejercicio 3.5</a>, modificamos el archivo <code>tableformat.py</code> para que tenga una clase <code>TableFormatter</code> y use varias subclases para diferentes formatos de salida. En este ejercicio, ampliamos ese código un poco más.</p>
+<h2 id="a-interfaces-y-comprobacion-de-tipos">(a) Interfaces y comprobación de tipos</h2>
+<p>Modifique la función <code>print_table()</code> para que compruebe si la instancia del formateador proporcionada hereda de <code>TableFormatter</code>. Si no es así, genere un <code>TypeError</code>.</p>
+<p>Tu nuevo código debería detectar situaciones como esta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import stock, reader, tableformat
+&gt;&gt;&gt; portfolio = reader.read_csv_as_instances('Data/portfolio.csv', stock.Stock)
+&gt;&gt;&gt; class MyFormatter:
+def headers(self,headers): pass
+def row(self,rowdata): pass
+
+&gt;&gt;&gt; tableformat.print_table(portfolio, ['name','shares','price'], MyFormatter())
+Traceback (most recent call last):
+...
+TypeError: Expected a TableFormatter
+&gt;&gt;&gt;
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>Agregar una verificación como esta podría agregar cierto grado de seguridad al programa. Sin embargo, debes tener en cuenta que la verificación de tipos es bastante débil en Python. No hay garantía de que el objeto pasado como formateador funcione correctamente incluso si hereda de la clase base adecuada. La siguiente parte aborda ese problema.</p>
+<h2 id="b-clases-base-abstractas">(b) Clases base abstractas</h2>
+<p>Modifique la clase base <code>TableFormatter</code> para que se defina como una clase base abstracta adecuada utilizando el módulo <code>abc</code>. Una vez que haya hecho eso, intente este experimento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class NewFormatter(TableFormatter):
+        def headers(self, headings):
+            pass
+        def row(self, rowdata):
+            pass
+
+&gt;&gt;&gt; f = NewFormatter()
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: Can't instantiate abstract class NewFormatter with abstract methods headings
+&gt;&gt;&gt; 
+</code></pre>
+<p>Aquí, la clase base abstracta detectó un error ortográfico en la clase: el hecho de que el método <code>headings()</code> se proporcionó incorrectamente como <code>headers()</code>.</p>
+<h2 id="c-clases-de-plantilla-de-algoritmo">(c) Clases de plantilla de algoritmo</h2>
+<p>El archivo <code>reader.py</code> contiene dos funciones, <code>read_csv_as_dicts()</code> y <code>read_csv_as_instances()</code>. Ambas funciones son casi idénticas, solo hay un pequeño fragmento de código que es diferente. Tal vez ese código se pueda consolidar en una definición de clase de algún tipo. Agregue la siguiente clase al archivo <code>reader.py</code>:</p>
+<pre><code class="language-python"># reader.py
+
+
+import csv
+from abc import ABC, abstractmethod
+
+class CSVParser(ABC):
+
+    def parse(self, filename):
+        records = []
+        with open(filename) as f:
+            rows = csv.reader(f)
+            headers = next(rows)
+            for row in rows:
+                record = self.make_record(headers, row)
+                records.append(record)
+        return records
+
+    @abstractmethod
+    def make_record(self, headers, row):
+        pass
+</code></pre>
+<p>Este código proporciona un shell (o plantilla) de la funcionalidad de análisis de CSV. Para usarlo, debe subclasificarlo, agregar cualquier atributo adicional que pueda necesitar y redefinir el método <code>make_record()</code>. Por ejemplo:</p>
+<pre><code class="language-python">class DictCSVParser(CSVParser):
+    def __init__(self, types):
+        self.types = types
+
+    def make_record(self, headers, row):
+        return { name: func(val) for name, func, val in zip(headers, self.types, row) }
+
+class InstanceCSVParser(CSVParser):
+    def __init__(self, cls):
+        self.cls = cls
+
+    def make_record(self, headers, row):
+        return self.cls.from_row(row)
+</code></pre>
+<p>Agregue las clases anteriores al archivo <code>reader.py</code>. Así es como usarías uno de ellos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from reader import DictCSVParser
+&gt;&gt;&gt; parser = DictCSVParser([str, int, float])
+&gt;&gt;&gt; port = parser.parse('Data/portfolio.csv')
+&gt;&gt;&gt;
+</code></pre>
+<p>Funciona, pero es un poco molesto. Para solucionarlo, vuelve a implementar las funciones <code>read_csv_as_dicts()</code> y <code>read_csv_as_instances()</code> para usar estas clases. Tu código refactorizado debería funcionar exactamente de la misma manera que antes. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import reader
+&gt;&gt;&gt; import stock
+&gt;&gt;&gt; port = reader.read_csv_as_instances('Data/portfolio.csv', stock.Stock)
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="soln3_7.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex3_6/">Ejercicio 3.6</a> | <a href="../ex3_8/">Ejercicio 3.8</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
 <p><code>...</code> Copyright 2007-2023</p>
-<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
-licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
-4.0 Internacional</a></p></div>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

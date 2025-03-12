@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex1 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-14" class="nav-link">Ejercicio 1.4</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-definicion-de-una-funcion" class="nav-link">(a) Definición de una función</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-agregar-manejo-de-errores" class="nav-link">(b) Agregar manejo de errores</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-experimentacion-interactiva" class="nav-link">(c) Experimentación interactiva</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,34 +87,63 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex1_3/">Ejercicio 1.3</a> | <a href="../ex1_5/">Ejercicio
+1.5</a></p>
+<h1 id="ejercicio-14">Ejercicio 1.4</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Repasar cómo definir funciones simples</li>
+<li>Manejo de excepciones</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p><em>Archivos creados:</em> Ninguno</p>
+<p><em>Archivos modificados:</em> <code>pcost.py</code></p>
+<h2 id="a-definicion-de-una-funcion">(a) Definición de una función</h2>
+<p>Tome el programa <code>pcost.py</code> que escribió en el último ejercicio y
+conviértalo en una función <code>portfolio_cost(filename)</code> que toma un nombre
+de archivo como entrada, lee los datos de la cartera en ese archivo y
+devuelve el costo total de la cartera como un número de punto flotante.
+Una vez que haya escrito la función, haga que su programa la llame
+simplemente agregando esta declaración al final:</p>
+<pre><code class="language-python">print(portfolio_cost('Data/portfolio.dat'))
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>Ejecute su programa y asegúrese de que produzca el mismo resultado que
+antes.</p>
+<h2 id="b-agregar-manejo-de-errores">(b) Agregar manejo de errores</h2>
+<p>Al escribir programas que procesan datos, es común encontrar errores
+relacionados con datos incorrectos (malformados, campos faltantes,
+etc.). Modifique su programa <code>pcost.py</code> para leer el archivo de datos
+<code>Data/portfolio3.dat</code> y ejecutarlo (pista: debería bloquearse).</p>
+<p>Modifique su función levemente para que pueda recuperarse de líneas con
+datos incorrectos. Por ejemplo, las funciones de conversión <code>int()</code> y
+<code>float()</code> lanzan una excepción <code>ValueError</code> si no pueden convertir la
+entrada. Use <code>try</code> y <code>except</code> para capturar e imprimir un mensaje de
+advertencia sobre las líneas que no se pueden analizar. Por ejemplo:</p>
+<pre><code>No se pudo analizar: 'C - 53.08\n'
+Motivo: literal inválido para int() con base 10: '-'
+No se pudo analizar: 'DIS - 34.20\n'
+Motivo: literal inválido para int() con base 10: '-'
+...
+</code></pre>
+<p>Intente ejecutar su programa en el archivo <code>Data/portfolio3.dat</code>
+nuevamente. Debería ejecutarse correctamente a pesar de los mensajes de
+advertencia impresos.</p>
+<h2 id="c-experimentacion-interactiva">(c) Experimentación interactiva</h2>
+<p>Ejecute su programa <code>pcost.py</code> y llame a la función <code>portfolio_cost()</code>
+directamente desde el intérprete interactivo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio_cost('Data/portfolio.dat')
+44671.15
+&gt;&gt;&gt; portfolio_cost('Data/portfolio2.dat')
+19908.75
+&gt;&gt;&gt;
+</code></pre>
+<p>Nota: Para hacer esto, es posible que tengas que ejecutar Python usando
+la opción <code>-i</code>. Por ejemplo:</p>
+<pre><code>bash % python3 -i pcost.py
+</code></pre>
+<p>Vamos a escribir muchos programas en los que definirás funciones y
+experimentarás de forma interactiva. Asegúrate de saber cómo hacer esto.</p>
+<p><a href="soln1_4.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_3/">Ejercicio
+1.3</a> | <a href="../ex1_5/">Ejercicio 1.5</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>

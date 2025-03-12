@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex2_1/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex2 1 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-21" class="nav-link">Ejercicio 2.1</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-atascado-en-el-autobus" class="nav-link">(a) Atascado en el autobús</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-uso-basico-de-la-memoria-del-texto" class="nav-link">(b) Uso básico de la memoria del texto</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-una-lista-de-tuplas" class="nav-link">(c) Una lista de tuplas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-uso-de-la-memoria-de-otras-estructuras-de-datos" class="nav-link">(d) Uso de la memoria de otras estructuras de datos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex1_6/">Ejercicio 1.6</a> | <a href="../ex2_2/">Ejercicio 2.2</a></p>
+<h1 id="ejercicio-21">Ejercicio 2.1</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Descubrir la forma más eficiente en términos de memoria para almacenar una gran cantidad de datos.</li>
+<li>Aprender sobre las diferentes formas de representar registros, incluidas tuplas, diccionarios, clases y tuplas con nombre.</li>
+</ul>
+<p>En este ejercicio, analizamos diferentes opciones para representar estructuras de datos teniendo en cuenta el uso y la eficiencia de la memoria. Muchas personas usan Python para realizar varios tipos de análisis de datos, por lo que conocer las diferentes opciones y sus ventajas y desventajas es una información útil.</p>
+<h2 id="a-atascado-en-el-autobus">(a) Atascado en el autobús</h2>
+<p>El archivo <code>Data/ctabus.csv</code> es un archivo CSV que contiene datos diarios de pasajeros del sistema de autobuses de la Autoridad de Tránsito de Chicago (CTA) desde el 1 de enero de 2001 hasta el 31 de agosto de 2013. Contiene aproximadamente 577000 filas de datos. Utilice Python para ver algunas líneas de datos y ver cómo se ve:</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = open('Data/ctabus.csv')
+&gt;&gt;&gt; next(f)
+'route,date,daytype,rides\n'
+&gt;&gt;&gt; next(f)
+'3,01/01/2001,U,7354\n'
+&gt;&gt;&gt; next(f)
+'4,01/01/2001,U,9288\n'
+&gt;&gt;&gt;
+</code></pre>
+<p>Hay 4 columnas de datos.</p>
+<ul>
+<li>route: Columna 0. El nombre de la ruta del autobús.</li>
+<li>date: Columna 1. Una cadena de fecha con el formato MM/DD/AAAA.</li>
+<li>daytype: Columna 2. Un código de tipo de día (U=domingo/feriado, A=sábado, W=día laborable)</li>
+<li>rides: Columna 3. Número total de pasajeros (entero)</li>
+</ul>
+<p>La columna <code>rides</code> registra el número total de personas que subieron a un autobús en esa ruta en un día determinado. Por lo tanto, según el ejemplo, 7354 personas subieron al autobús número 3 el 1 de enero de 2001.</p>
+<h2 id="b-uso-basico-de-la-memoria-del-texto">(b) Uso básico de la memoria del texto</h2>
+<p>Obtengamos una línea base de la memoria necesaria para trabajar con este archivo de datos. Primero, reinicia Python e intenta un experimento muy simple: simplemente toma el archivo y almacena sus datos en una sola cadena:</p>
+<pre><code class="language-python">&gt;&gt;&gt;&gt; # --- RESTART 
+&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; f = open('Data/ctabus.csv')
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; data = f.read()
+&gt;&gt;&gt; len(data)
+12361039
+&gt;&gt;&gt; current, peak = tracemalloc.get_traced_memory()
+&gt;&gt;&gt; current
+12369664
+&gt;&gt;&gt; peak
+24730766
+&gt;&gt;&gt;
+</code></pre>
+<p>Los resultados pueden variar un poco, pero deberías ver el uso actual de la memoria en el rango de 12 MB con un pico de 24 MB.</p>
+<p>¿Qué sucede si lees el archivo completo en una lista de cadenas? Reinicie Python y pruebe esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; # --- RESTART
+&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; f = open('Data/ctabus.csv')
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; lines = f.readlines()
+&gt;&gt;&gt; len(lines)
+577564
+&gt;&gt;&gt; current, peak = tracemalloc.get_traced_memory()
+&gt;&gt;&gt; current
+45828030
+&gt;&gt;&gt; peak
+45867371
+&gt;&gt;&gt;
+</code></pre>
+<p>Debería ver que el uso de memoria aumenta significativamente hasta el rango de 40-50 MB. Punto para reflexionar: ¿cuál podría ser la fuente de esa sobrecarga adicional?</p>
+<h2 id="c-una-lista-de-tuplas">(c) Una lista de tuplas</h2>
+<p>En la práctica, puede leer los datos en una lista y convertir cada línea en alguna otra estructura de datos. Aquí hay un programa <code>readrides.py</code> que lee el archivo completo en una lista de tuplas usando el módulo <code>csv</code>:</p>
+<pre><code class="language-python"># readrides.py
+
+import csv
+
+def read_rides_as_tuples(filename):
+    '''
+    Lee los datos del recorrido en autobús como una lista de tuplas
+    '''
+    records = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headings = next(rows)     # Salta encabezados
+        for row in rows:
+            route = row[0]
+            date = row[1]
+            daytype = row[2]
+            rides = int(row[3])
+            record = (route, date, daytype, rides)
+            records.append(record)
+    return records
+
+if __name__ == '__main__':
+    import tracemalloc
+    tracemalloc.start()
+    rows = read_rides_as_tuples('Data/ctabus.csv')
+    print('Memory Use: Current %d, Peak %d' % tracemalloc.get_traced_memory())
+</code></pre>
+<p>Ejecute este programa usando <code>python3 -i readrides.py</code> y observe el contenido resultante de <code>rows</code>. Debería obtener una lista de tuplas como esta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; len(rows)
+577563
+&gt;&gt;&gt; rows[0]
+('3', '01/01/2001', 'U', 7354)
+&gt;&gt;&gt; rows[1]
+('4', '01/01/2001', 'U', 9288)
+</code></pre>
+<p>Observe el uso de memoria resultante. Debería ser sustancialmente mayor que en la parte (b).</p>
+<h2 id="d-uso-de-la-memoria-de-otras-estructuras-de-datos">(d) Uso de la memoria de otras estructuras de datos</h2>
+<p>Python ofrece muchas opciones diferentes para representar estructuras de datos. Por ejemplo:</p>
+<pre><code class="language-python"># Una tupla
+row = (route, date, daytype, rides)
+
+# Un diccionario
+row = {
+    'route': route,
+    'date': date,
+    'daytype': daytype,
+    'rides': rides,
+}
+
+# Una clase
+class Row:
+    def __init__(self, route, date, daytype, rides):
+        self.route = route
+        self.date = date
+        self.daytype = daytype
+        self.rides = rides
+
+# Una tupla con nombre
+from collections import namedtuple
+Row = namedtuple('Row', ['route', 'date', 'daytype', 'rides'])
+
+# Una clase con __slots__
+class Row:
+    __slots__ = ['route', 'date', 'daytype', 'rides']
+    def __init__(self, route, date, daytype, rides):
+        self.route = route
+        self.date = date
+        self.daytype = daytype
+        self.rides = rides
+</code></pre>
+<p>Su tarea es la siguiente: crear diferentes versiones de la función <code>read_rides()</code> que utilicen cada una de estas estructuras de datos para representar una sola fila de datos. Descubra qué enfoque ofrece el almacenamiento más eficiente si estuviera trabajando con una gran cantidad de datos a la vez.</p>
+<p><a href="soln2_1.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_6/">Ejercicio 1.6</a> | <a href="../ex2_2/">Ejercicio 2.2</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

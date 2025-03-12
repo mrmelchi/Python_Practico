@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex3_8/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex3 8 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-38" class="nav-link">Ejercicio 3.8</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-el-problema-con-el-formato-de-columnas" class="nav-link">(a) El problema con el formato de columnas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-ir-de-lado" class="nav-link">(b) Ir de lado</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-como-hacerlo-sensato" class="nav-link">(c) Cómo hacerlo sensato</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex3_7/">Ejercicio 3.7</a> | <a href="../ex4_1/">Ejercicio
+4.1</a></p>
+<h1 id="ejercicio-38">Ejercicio 3.8</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender sobre clases mixin y herencia cooperativa</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>tableformat.py</code></p>
+<h2 id="a-el-problema-con-el-formato-de-columnas">(a) El problema con el formato de columnas</h2>
+<p>Si regresa al <a href="../ex3_1/">Ejercicio 3.1</a>, escribió una función
+<code>print_portfolio()</code> que produjo una tabla como esta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; print_portfolio(portfolio)
+      name     shares      price
+---------- ---------- ---------- 
+        AA        100      32.20
+       IBM         50      91.10
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50      65.10
+       IBM        100      70.44
+&gt;&gt;&gt;
+</code></pre>
+<p>La función <code>print_table()</code> desarrollada en los últimos ejercicios
+prácticamente reemplaza esta funcionalidad. El único problema que tiene
+es que no puede formatear con precisión el contenido de cada columna.
+Por ejemplo, observe cómo los valores de la columna <code>price</code> están
+formateados con precisión con 2 puntos decimales. La clase
+<code>TableFormatter</code> y las subclases relacionadas no pueden hacer eso.</p>
+<p>Una forma de solucionarlo sería modificar la función <code>print_table()</code>
+para que acepte un argumento de formatos adicional. Por ejemplo, algo
+como esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def print_table(records, fields, formats, formatter):
+        formatter.headings(fields)
+        for r in records:
+            rowdata = [(fmt % getattr(r, fieldname))
+                   for fieldname,fmt in zip(fields,formats)]
+            formatter.row(rowdata)
+
+&gt;&gt;&gt; import stock, reader
+&gt;&gt;&gt; portfolio = reader.read_csv_as_instances('Data/portfolio.csv', stock.Stock)
+&gt;&gt;&gt; from tableformat import TextTableFormatter
+&gt;&gt;&gt; formatter = TextTableFormatter()
+&gt;&gt;&gt; print_table(portfolio, 
+                ['name','shares','price'],
+                ['%s','%d','%0.2f'],
+                formatter)
+
+      name     shares      price
+---------- ---------- ---------- 
+        AA        100      32.20
+       IBM         50      91.10
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50      65.10
+       IBM        100      70.44
+&gt;&gt;&gt;
+</code></pre>
+<p>Sí, podría modificar <code>print_table()</code> de esta manera, pero ¿es ese el
+lugar adecuado para hacerlo? La idea general de todas las clases
+<code>TableFormatter</code> es que se puedan usar en diferentes tipos de
+aplicaciones. El formato de columnas es algo que podría ser útil en
+otras partes, no solo en la función <code>print_table()</code>.</p>
+<p>Otro enfoque posible podría ser cambiar la interfaz de la clase
+<code>TableFormatter</code> de alguna manera. Por ejemplo, tal vez agregando un
+tercer método para aplicar el formato.</p>
+<pre><code class="language-python">class TableFormatter:
+    def headings(self, headers):
+        ...
+    def format(self, rowdata):
+        ...
+    def row(self, rowdata):
+        ...
+</code></pre>
+<p>El problema aquí es que cada vez que cambias la interfaz de una clase,
+tendrás que refactorizar todo el código existente para que funcione con
+ella. En concreto, tendrías que modificar todas las subclases
+<code>TableFormatter</code> ya escritas y todo el código escrito para utilizarlas.
+No hagamos eso.</p>
+<p>Como alternativa, un usuario podría utilizar la herencia para
+personalizar un formateador específico con el fin de inyectarle algún
+formato. Por ejemplo, prueba este experimento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from tableformat import TextTableFormatter, print_table
+&gt;&gt;&gt; class PortfolioFormatter(TextTableFormatter):
+        def row(self, rowdata):
+            formats = ['%s','%d','%0.2f']
+            rowdata = [(fmt % d) for fmt, d in zip(formats, rowdata)]
+            super().row(rowdata)
+
+&gt;&gt;&gt; formatter = PortfolioFormatter()
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+      name     shares      price
+---------- ---------- ---------- 
+        AA        100      32.20
+       IBM         50      91.10
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50      65.10
+       IBM        100      70.44
+&gt;&gt;&gt;
+</code></pre>
+<p>Sí, funciona, pero también es un poco complicado y extraño. El usuario
+tiene que elegir un formateador específico para personalizar. Además de
+eso, tiene que implementar el código de formato de columna real por sí
+mismo. Seguramente hay una forma diferente de hacer esto.</p>
+<h2 id="b-ir-de-lado">(b) Ir de lado</h2>
+<p>En el archivo <code>tableformat.py</code>, agregue la siguiente definición de
+clase:</p>
+<pre><code class="language-python">class ColumnFormatMixin:
+    formats = []
+    def row(self, rowdata):
+        rowdata = [(fmt % d) for fmt, d in zip(self.formats, rowdata)]
+        super().row(rowdata)
+</code></pre>
+<p>Esta clase contiene un solo método <code>row()</code> que aplica formato al
+contenido de la fila. Se utiliza una variable de clase <code>formats</code> para
+almacenar los códigos de formato. Esta clase se utiliza a través de
+herencia múltiple. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import stock, reader
+&gt;&gt;&gt; portfolio = reader.read_csv_as_instances('Data/portfolio.csv', stock.Stock)
+&gt;&gt;&gt; from tableformat import TextTableFormatter, ColumnFormatMixin, print_table
+&gt;&gt;&gt; class PortfolioFormatter(ColumnFormatMixin, TextTableFormatter):
+        formats = ['%s', '%d', '%0.2f']
+
+&gt;&gt;&gt; formatter = PortfolioFormatter()
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+      name     shares      price
+---------- ---------- ---------- 
+        AA        100      32.20
+       IBM         50      91.10
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50      65.10
+       IBM        100      70.44
+</code></pre>
+<p>Todo este enfoque funciona porque la clase <code>ColumnFormatMixin</code> está
+pensada para combinarse con otra clase que proporciona el método <code>row()</code>
+requerido.</p>
+<p>Crea otra clase que haga que un formateador imprima los encabezados de
+la tabla en mayúsculas:</p>
+<pre><code class="language-python">class UpperHeadersMixin:
+    def headings(self, headers):
+        super().headings([h.upper() for h in headers])
+</code></pre>
+<p>Pruébalo y observa que los encabezados ahora están en mayúsculas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from tableformat import TextTableFormatter, UpperHeadersMixin
+&gt;&gt;&gt; class PortfolioFormatter(UpperHeadersMixin, TextTableFormatter):
+        pass
+
+&gt;&gt;&gt; formatter = PortfolioFormatter()
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+      NAME     SHARES      PRICE 
+---------- ---------- ---------- 
+        AA        100       32.2 
+       IBM         50       91.1 
+       CAT        150      83.44 
+      MSFT        200      51.23 
+        GE         95      40.37 
+      MSFT         50       65.1 
+       IBM        100      70.44 
+&gt;&gt;&gt;
+</code></pre>
+<p>Esta es realmente la idea central de los "mixins". El creador de una
+biblioteca puede proporcionar un conjunto básico de clases como
+<code>TextTableFormatter</code>, <code>CSVTableFormatter</code>, etc. para comenzar. Luego, se
+puede proporcionar una colección de clases complementarias para que esas
+clases se comporten de diferentes maneras.</p>
+<h2 id="c-como-hacerlo-sensato">(c) Cómo hacerlo sensato</h2>
+<p>El uso de mixins puede ser una herramienta útil para los desarrolladores
+de marcos para reducir la cantidad de código que se debe escribir. Sin
+embargo, obligar a los usuarios a recordar cómo componer clases
+correctamente y usar herencia múltiple puede freírles el cerebro. En el
+<a href="../ex3_5/">Ejercicio 3.5</a>, escribió una función <code>create_formatter()</code> que
+facilitó la creación de un formateador personalizado. Tome esa función y
+extiéndala para comprender algunos argumentos opcionales relacionados
+con las clases mixin. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from tableformat import create_formatter
+&gt;&gt;&gt; formatter = create_formatter('csv', column_formats=['&quot;%s&quot;','%d','%0.2f'])
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+name,shares,price
+&quot;AA&quot;,100,32.20
+&quot;IBM&quot;,50,91.10
+&quot;CAT&quot;,150,83.44
+&quot;MSFT&quot;,200,51.23
+&quot;GE&quot;,95,40.37
+&quot;MSFT&quot;,50,65.10
+&quot;IBM&quot;,100,70.44
+
+&gt;&gt;&gt; formatter = create_formatter('text', upper_headers=True)
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+      NAME     SHARES      PRICE 
+---------- ---------- ---------- 
+        AA        100       32.2 
+       IBM         50       91.1 
+       CAT        150      83.44 
+      MSFT        200      51.23 
+        GE         95      40.37 
+      MSFT         50       65.1 
+       IBM        100      70.44 
+&gt;&gt;&gt;
+</code></pre>
+<p>En segundo plano, la función <code>create_formatter()</code> compondrá
+correctamente las clases y devolverá una instancia <code>TableFormatter</code>
+adecuada.</p>
+<p><a href="soln3_8.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex3_7/">Ejercicio
+3.7</a> | <a href="../ex4_1/">Ejercicio 4.1</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
+licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
+4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

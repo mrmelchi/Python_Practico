@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex3_1/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex3 1 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-31" class="nav-link">Ejercicio 3.1</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-agregar-un-nuevo-metodo" class="nav-link">(a) Agregar un nuevo método</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-lectura-de-una-cartera" class="nav-link">(b) Lectura de una cartera</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-impresion-de-una-tabla" class="nav-link">(c) Impresión de una tabla</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,34 +87,87 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex2_6/">Ejercicio 2.6</a> | <a href="../ex3_2/">Ejercicio
+3.2</a></p>
+<h1 id="ejercicio-31">Ejercicio 3.1</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Definir una clase simple</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p><em>Archivos modificados:</em> <code>stock.py</code></p>
+<p>En el <a href="../ex1_5/">Ejercicio 1.5</a>, definió una clase simple <code>Stock</code> para
+representar una tenencia de acciones. En este ejercicio, simplemente
+vamos a agregar algunas características a esa clase y también escribir
+algunas funciones de utilidad.</p>
+<h2 id="a-agregar-un-nuevo-metodo">(a) Agregar un nuevo método</h2>
+<p>Agregue un nuevo método <code>sell(nshares)</code> a Stock que venda una cierta
+cantidad de acciones al disminuir el recuento de acciones. Haga que
+funcione de esta manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.sell(25)
+&gt;&gt;&gt; s.shares
+75
+&gt;&gt;&gt;
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<h2 id="b-lectura-de-una-cartera">(b) Lectura de una cartera</h2>
+<p>Agregue una función <code>read_portfolio()</code> a su programa <code>stock.py</code> que lea
+un archivo de datos de cartera en una lista de objetos <code>Stock</code>. Así es
+como debería funcionar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import stock
+&gt;&gt;&gt; portfolio = stock.read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; for s in portfolio:
+...     print(s)
+... 
+&lt;stock.Stock object at 0x000001F3ED0BCD70&gt;
+&lt;stock.Stock object at 0x000001F3ED04A710&gt;
+&lt;stock.Stock object at 0x000001F3ED04A850&gt;
+&lt;stock.Stock object at 0x000001F3ED0C8510&gt;
+&lt;stock.Stock object at 0x000001F3ED0C8640&gt;
+&lt;stock.Stock object at 0x000001F3ED033650&gt;
+&lt;stock.Stock object at 0x000001F3ED04D150&gt;
+&gt;&gt;&gt; 
+</code></pre>
+<p>Ya escribiste una función similar como parte del <a href="../ex2_3/">Ejercicio
+2.3</a>. Discusión sobre el diseño: ¿debería ser
+<code>read_portfolio()</code> una función independiente o parte de la definición de
+la clase?</p>
+<h2 id="c-impresion-de-una-tabla">(c) Impresión de una tabla</h2>
+<p>Tome los datos leídos en la parte (b) y utilícelos para crear una tabla
+con un formato adecuado. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = stock.read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; for s in portfolio:
+           print('%10s %10d %10.2f' % (s.name, s.shares, s.price))
+
+        AA        100      32.20
+       IBM         50      91.10
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50      65.10
+       IBM        100      70.44
+&gt;&gt;&gt;
+</code></pre>
+<p>Tome este código y colóquelo en una función <code>print_portfolio()</code> que
+produce la misma salida, pero además agrega algunos encabezados de
+tabla. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; portfolio = stock.read_portfolio('Data/portfolio.csv')
+&gt;&gt;&gt; stock.print_portfolio(portfolio)
+      name     shares      price
+---------- ---------- ---------- 
+        AA        100      32.20
+       IBM         50      91.10
+       CAT        150      83.44
+      MSFT        200      51.23
+        GE         95      40.37
+      MSFT         50      65.10
+       IBM        100      70.44
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="soln3_1.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex2_6/">Ejercicio
+2.6</a> | <a href="../ex3_2/">Ejercicio 3.2</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>

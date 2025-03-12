@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex5_1/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex5 1 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-51" class="nav-link">Ejercicio 5.1</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-volver-a-lo-basico" class="nav-link">(a) Volver a lo básico</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-pensando-en-la-flexibilidad" class="nav-link">(b) Pensando en la flexibilidad</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-desafio-de-diseno-encabezados-csv" class="nav-link">(c) Desafío de diseño: encabezados CSV</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-desafio-de-api-sugerencias-de-tipo" class="nav-link">(d) Desafío de API: sugerencias de tipo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex4_4/">Ejercicio 4.4</a> | <a href="../ex5_2/">Ejercicio 5.2</a></p>
+<h1 id="ejercicio-51">Ejercicio 5.1</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Explorar algunos aspectos definitorios de funciones/métodos</li>
+<li>Hacer que las funciones sean más flexibles</li>
+<li>Sugerencias de tipo</li>
+</ul>
+<p>En el <a href="../ex2_6/">Ejercicio 2.6</a> escribió un módulo <code>reader.py</code> que tenía una función para leer un CSV en una lista de diccionarios. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import reader
+&gt;&gt;&gt; port = reader.read_csv_as_dicts('Data/portfolio.csv', [str,int,float])
+&gt;&gt;&gt;
+</code></pre>
+<p>Más tarde ampliamos ese código para trabajar con instancias en <a href="../ex3_3/">Ejercicio 3.3</a>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import reader
+&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; port = reader.read_csv_as_instances('Data/portfolio.csv', Stock)
+&gt;&gt;&gt;
+</code></pre>
+<p>Finalmente, el código se refactorizó en una colección de clases que involucran herencia en <a href="../ex3_7/">Ejercicio 3.7</a>. Sin embargo, el código se ha vuelto bastante complejo y enrevesado.</p>
+<h2 id="a-volver-a-lo-basico">(a) Volver a lo básico</h2>
+<p>Comience por revertir los cambios relacionados con las definiciones de clase. Reescribe el archivo <code>reader.py</code> para que contenga las dos funciones básicas que tenías antes de arruinarlo con clases:</p>
+<pre><code class="language-python"># reader.py
+
+import csv
+
+def read_csv_as_dicts(filename, types):
+    '''
+    Lee datos CSV en una lista de diccionarios con conversión de tipo opcional
+    '''
+    records = []
+    with open(filename) as file:
+        rows = csv.reader(file)
+        headers = next(rows)
+        for row in rows:
+            record = { name: func(val) 
+                       for name, func, val in zip(headers, types, row) }
+            records.append(record)
+    return records
+
+def read_csv_as_instances(filename, cls):
+    '''
+    Lee datos CSV en una lista de instancias
+    '''
+    records = []
+    with open(filename) as file:
+        rows = csv.reader(file)
+        headers = next(rows)
+        for row in rows:
+            record = cls.from_row(row)
+            records.append(record)
+    return records
+</code></pre>
+<p>Asegúrese de que el código todavía funciona como lo hacía antes:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import reader
+&gt;&gt;&gt; port = reader.read_csv_as_dicts('Data/portfolio.csv', [str, int, float])
+&gt;&gt;&gt; port
+[{'name': 'AA', 'shares': 100, 'price': 32.2}, {'name': 'IBM', 'shares': 50, 'price': 91.1}, 
+ {'name': 'CAT', 'shares': 150, 'price': 83.44}, {'name': 'MSFT', 'shares': 200, 'price': 51.23}, 
+ {'name': 'GE', 'shares': 95, 'price': 40.37}, {'name': 'MSFT', 'shares': 50, 'price': 65.1}, 
+ {'name': 'IBM', 'shares': 100, 'price': 70.44}]
+&gt;&gt;&gt; import stock
+&gt;&gt;&gt; port = reader.read_csv_as_instances('Data/portfolio.csv', stock.Stock)
+&gt;&gt;&gt; port
+[Stock('AA', 100, 32.2), Stock('IBM', 50, 91.1), Stock('CAT', 150, 83.44), 
+ Stock('MSFT', 200, 51.23), Stock('GE', 95, 40.37), Stock('MSFT', 50, 65.1), 
+ Stock('IBM', 100, 70.44)]
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-pensando-en-la-flexibilidad">(b) Pensando en la flexibilidad</h2>
+<p>En este momento, las dos funciones en <code>reader.py</code> están programadas para funcionar con nombres de archivos que se pasan directamente a <code>open()</code>. Refactorice el código para que funcione con cualquier objeto iterable que produzca líneas. Para ello, cree dos nuevas funciones <code>csv_as_dicts(lines, types)</code> y <code>csv_as_instances(lines, cls)</code> que conviertan cualquier secuencia iterable de líneas. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; file = open('Data/portfolio.csv')
+&gt;&gt;&gt; port = reader.csv_as_dicts(file, [str, int, float])
+&gt;&gt;&gt; port
+[{'name': 'AA', 'shares': 100, 'price': 32.2}, {'name': 'IBM', 'shares': 50, 'price': 91.1}, 
+ {'name': 'CAT', 'shares': 150, 'price': 83.44}, {'name': 'MSFT', 'shares': 200, 'price': 51.23}, 
+ {'name': 'GE', 'shares': 95, 'price': 40.37}, {'name': 'MSFT', 'shares': 50, 'price': 65.1}, 
+ {'name': 'IBM', 'shares': 100, 'price': 70.44}]
+&gt;&gt;&gt;
+</code></pre>
+<p>El objetivo de hacer esto es permitir trabajar con diferentes tipos de fuentes de entrada. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import gzip
+&gt;&gt;&gt; import stock
+&gt;&gt;&gt; file = gzip.open('Data/portfolio.csv.gz', 'rt')
+&gt;&gt;&gt; port = reader.csv_as_instances(file, stock.Stock)
+&gt;&gt;&gt; port
+[Stock('AA', 100, 32.2), Stock('IBM', 50, 91.1), Stock('CAT', 150, 83.44), 
+ Stock('MSFT', 200, 51.23), Stock('GE', 95, 40.37), Stock('MSFT', 50, 65.1), 
+ Stock('IBM', 100, 70.44)]
+&gt;&gt;&gt;
+</code></pre>
+<p>Para mantener la compatibilidad con versiones anteriores de código, escriba funciones <code>read_csv_as_dicts()</code> y <code>read_csv_as_instances()</code> que toman un nombre de archivo como antes. Estas funciones deben llamar a <code>open()</code> en el nombre de archivo proporcionado y usar las nuevas funciones <code>csv_as_dicts()</code> o <code>csv_as_instances()</code> en el archivo resultante.</p>
+<h2 id="c-desafio-de-diseno-encabezados-csv">(c) Desafío de diseño: encabezados CSV</h2>
+<p>El código supone que la primera línea de datos CSV siempre contiene encabezados de columna. Sin embargo, este no siempre es el caso. Por ejemplo, el archivo <code>Data/portfolio_noheader.csv</code> contiene datos, pero no encabezados de columna.</p>
+<p>¿Cómo refactorizarías el código para acomodar los encabezados de columna faltantes, haciendo que el llamador los proporcione manualmente?</p>
+<h2 id="d-desafio-de-api-sugerencias-de-tipo">(d) Desafío de API: sugerencias de tipo</h2>
+<p>Las funciones pueden tener sugerencias de tipo opcionales adjuntas a los argumentos y valores de retorno. Por ejemplo:</p>
+<pre><code class="language-python">def add(x:int, y:int) -&gt; int:
+    return x + y
+</code></pre>
+<p>El módulo <code>typing</code> tiene clases adicionales para expresar tipos más complejos, incluidos los contenedores. Por ejemplo:</p>
+<pre><code class="language-python">from typing import List
+
+def sum_squares(nums: List[int]) -&gt; int:
+    total = 0
+    for n in nums:
+        total += n*n
+    return total
+</code></pre>
+<p>Tu desafío: modifica el código en <code>reader.py</code> para que todas las funciones tengan sugerencias de tipo. Intenta que las sugerencias de tipo sean lo más precisas posible. Para ello, es posible que tengas que consultar la documentación del <a href="https://docs.python.org/3/library/typing.html">módulo typing</a>.</p>
+<p><a href="soln5_1.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex4_4/">Ejercicio 4.4</a> | <a href="../ex5_2/">Ejercicio 5.2</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

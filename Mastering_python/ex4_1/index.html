@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex4_1/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex4 1 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-41" class="nav-link">Ejercicio 4.1</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-representacion-de-instancias" class="nav-link">(a) Representación de instancias</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-modificacion-de-datos-de-instancia" class="nav-link">(b) Modificación de datos de instancia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-el-rol-de-las-clases" class="nav-link">(c) El rol de las clases</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,41 +87,110 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex3_8/">Ejercicio 3.8</a> | <a href="../ex4_2/">Ejercicio 4.2</a></p>
+<h1 id="ejercicio-41">Ejercicio 4.1</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Aprender más sobre cómo se representan los objetos.</li>
+<li>Aprender cómo funciona la asignación y búsqueda de atributos.</li>
+<li>Comprender mejor el rol de una definición de clase</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<p><em>Archivos creados:</em> Ninguno</p>
+<p><em>Archivos modificados:</em> Ninguno</p>
+<p>Comience este ejercicio volviendo a una versión simple de la clase <code>Stock</code> que creó. En el mensaje interactivo, defina una nueva clase llamada <code>SimpleStock</code> que se vea así:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class SimpleStock:
+        def __init__(self, name, shares, price):
+            self.name = name
+            self.shares = shares
+            self.price = price
+        def cost(self):
+            return self.shares * self.price
+
+&gt;&gt;&gt;
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>Una vez que haya definido esta clase, cree algunas instancias.</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog = SimpleStock('GOOG',100,490.10)
+&gt;&gt;&gt; ibm = SimpleStock('IBM',50, 91.23)
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="a-representacion-de-instancias">(a) Representación de instancias</h2>
+<p>En el shell interactivo, inspeccione los diccionarios subyacentes de las dos instancias que creó:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__dict__
+... observe el resultado ...
+&gt;&gt;&gt; ibm.__dict__
+... observe el resultado ...
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-modificacion-de-datos-de-instancia">(b) Modificación de datos de instancia</h2>
+<p>Intente configurar un nuevo atributo en una de las instancias anteriores:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.date = &quot;6/11/2007&quot;
+&gt;&gt;&gt; goog.__dict__
+... observe el resultado ...
+&gt;&gt;&gt; ibm.__dict__
+... observe el resultado ...
+&gt;&gt;&gt;
+</code></pre>
+<p>En el resultado anterior, notarás que la instancia <code>goog</code> tiene un atributo <code>date</code> mientras que la instancia <code>ibm</code> no lo tiene. Es importante notar que Python realmente no impone ninguna restricción a los atributos. Por ejemplo, los atributos de una instancia no están limitados a los configurados en el método <code>__init__()</code>.</p>
+<p>En lugar de configurar un atributo, intenta colocar un nuevo valor directamente en el objeto <code>__dict__</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__dict__['time'] = '9:45am'
+&gt;&gt;&gt; goog.time
+'9:45am'
+&gt;&gt;&gt;
+</code></pre>
+<p>Aquí, realmente notas el hecho de que una instancia es una capa sobre un diccionario.</p>
+<h2 id="c-el-rol-de-las-clases">(c) El rol de las clases</h2>
+<p>Las definiciones que conforman una definición de clase son compartidas por todas las instancias de esa clase. Tenga en cuenta que todas las instancias tienen un enlace a su clase asociada:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.__class__
+... observe la salida ...
+&gt;&gt;&gt; ibm.__class__
+... observe la salida ...
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente llamar a un método en las instancias:</p>
+<pre><code class="language-python">&gt;&gt;&gt; goog.cost()
+49010.0
+&gt;&gt;&gt; ibm.cost()
+4561.5
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe que el nombre 'cost' no está definido ni en <code>goog.__dict__</code> ni en <code>ibm.__dict__</code>. En cambio, lo proporciona el diccionario de clases. Pruebe esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; SimpleStock.__dict__['cost']
+... observe la salida...
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente llamar al método <code>cost()</code> directamente a través del diccionario:</p>
+<pre><code class="language-python">&gt;&gt;&gt; SimpleStock.__dict__['cost'](goog)
+49010.00
+&gt;&gt;&gt; SimpleStock.__dict__['cost'](ibm)
+4561.5
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe cómo está llamando a la función definida en la definición de clase y cómo el argumento <code>self</code> obtiene la instancia.</p>
+<p>Si agrega un nuevo valor a la clase, se convierte en una variable de clase que es visible para todas las instancias. Pruébelo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; SimpleStock.spam = 42
+&gt;&gt;&gt; ibm.spam
+42
+&gt;&gt;&gt; goog.spam
+42
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe que <code>spam</code> no es parte del diccionario de instancias.</p>
+<pre><code class="language-python">&gt;&gt;&gt; ibm.__dict__
+... observe la salida...
+&gt;&gt;&gt;
+</code></pre>
+<p>En cambio, es parte del diccionario de clases:</p>
+<pre><code class="language-python">&gt;&gt;&gt; SimpleStock.__dict__['spam']
+42
+&gt;&gt;&gt;
+</code></pre>
+<p>Básicamente, esto es todo lo que una clase es realmente: es una colección de valores compartidos por instancias.</p>
+<p><a href="soln4_1.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex3_8/">Ejercicio 3.8</a> | <a href="../ex4_2/">Ejercicio 4.2</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
 <p><code>...</code> Copyright 2007-2023</p>
-<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
-licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
-4.0 Internacional</a></p></div>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

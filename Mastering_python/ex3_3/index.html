@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex3_3/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex3 3 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-33" class="nav-link">Ejercicio 3.3</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-constructores-alternativos" class="nav-link">(a) Constructores alternativos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-variables-de-clase-y-herencia" class="nav-link">(b) Variables de clase y herencia</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-lectura-de-objetos" class="nav-link">(c) Lectura de objetos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-generalizacion" class="nav-link">(d) Generalización</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex3_2/">Ejercicio 3.2</a> | <a href="../ex3_4/">Ejercicio 3.4</a></p>
+<h1 id="ejercicio-33">Ejercicio 3.3</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender sobre las variables y métodos de clase</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>stock.py</code>, <code>reader.py</code></p>
+<p>Las instancias de la clase <code>Stock</code> definida en el ejercicio anterior normalmente se crean de la siguiente manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt;
+</code></pre>
+<p>Sin embargo, la función <code>read_portfolio()</code> también crea instancias a partir de filas de datos leídas de archivos. Por ejemplo, se utiliza un código como el siguiente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import csv
+&gt;&gt;&gt; f = open('Data/portfolio.csv')
+&gt;&gt;&gt; rows = csv.reader(f)
+&gt;&gt;&gt; headers = next(rows)
+&gt;&gt;&gt; row = next(rows)
+&gt;&gt;&gt; row
+['AA', '100', '32.20']
+&gt;&gt;&gt; s = Stock(row[0], int(row[1]), float(row[2]))
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="a-constructores-alternativos">(a) Constructores alternativos</h2>
+<p>Quizás la creación de un <code>Stock</code> a partir de una fila de datos sin procesar se gestione mejor con un constructor alternativo. Modifique la clase <code>Stock</code> para que tenga una variable de clase <code>types</code> y un método de clase <code>from_row()</code> de la siguiente manera:</p>
+<pre><code class="language-python">class Stock:
+    types = (str, int, float)
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+    @classmethod
+    def from_row(cls, row):
+        values = [func(val) for func, val in zip(cls.types, row)]
+        return cls(*values)
+    ...
+</code></pre>
+<p>A continuación, se muestra cómo probarlo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; row = ['AA', '100', '32.20']
+&gt;&gt;&gt; s = Stock.from_row(row)
+&gt;&gt;&gt; s.name
+'AA'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.price
+32.2
+&gt;&gt;&gt; s.cost()
+3220.0000000000005
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe atentamente cómo los valores de cadena en la fila se han convertido a un tipo adecuado.</p>
+<h2 id="b-variables-de-clase-y-herencia">(b) Variables de clase y herencia</h2>
+<p>Las variables de clase como <code>types</code> se utilizan a veces como un mecanismo de personalización cuando se utiliza la herencia. Por ejemplo, en la clase <code>Stock</code>, los tipos se pueden cambiar fácilmente en una subclase. Pruebe este ejemplo que cambia el atributo <code>price</code> a una instancia <code>Decimal</code> (que suele ser más adecuada para cálculos financieros):</p>
+<pre><code class="language-python">&gt;&gt;&gt; from decimal import Decimal
+&gt;&gt;&gt; class DStock(Stock):
+        types = (str, int, Decimal)
+
+&gt;&gt;&gt; row = ['AA', '100', '32.20']
+&gt;&gt;&gt; s = DStock.from_row(row)
+&gt;&gt;&gt; s.price
+Decimal('32.20')
+&gt;&gt;&gt; s.cost()
+Decimal('3220.0')
+&gt;&gt;&gt;
+</code></pre>
+<p><strong>Discusión sobre el diseño</strong></p>
+<p>El problema que se aborda en este ejercicio se refiere a la conversión de datos leídos desde un archivo. ¿Tendría sentido realizar estas conversiones en el método <code>__init__()</code> de la clase <code>Stock</code>? Por ejemplo:</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = str(name)
+        self.shares = int(shares)
+        self.price = float(price)
+</code></pre>
+<p>Al hacer esto, convertirías una fila de datos de la siguiente manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; row = ['AA', '100', '32.20']
+&gt;&gt;&gt; s = Stock(*row)
+&gt;&gt;&gt; s.name
+'AA'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.price
+32.2
+&gt;&gt;&gt;
+</code></pre>
+<p>¿Esto es bueno o malo? ¿Qué piensas? En general, creo que es un diseño cuestionable ya que mezcla dos cosas diferentes: la creación de una instancia y la conversión de datos. Además, las conversiones implícitas en <code>__init__()</code> limitan la flexibilidad y pueden introducir errores extraños si un usuario no presta mucha atención.</p>
+<h2 id="c-lectura-de-objetos">(c) Lectura de objetos</h2>
+<p>Cambie la función <code>read_portfolio()</code> para utilizar el nuevo método <code>Stock.from_row()</code> que escribió.</p>
+<p>Punto de reflexión: ¿Qué versión de código le gusta más? ¿La versión de <code>read_portfolio()</code> que realizó las conversiones de tipo o la que realiza las conversiones en el método <code>Stock.from_row()</code>? Piense en la abstracción de datos.</p>
+<p>¿Puede modificar <code>read_portfolio()</code> para crear objetos utilizando una clase distinta de <code>Stock</code>? Por ejemplo, ¿puede el usuario seleccionar la clase que desea?</p>
+<h2 id="d-generalizacion">(d) Generalización</h2>
+<p>Una característica útil de los métodos de clase es que puede usarlos para poner una interfaz de creación de instancias altamente uniforme en una amplia variedad de clases y escribir funciones de utilidad de propósito general que las utilicen.</p>
+<p>Anteriormente, creó un archivo <code>reader.py</code> que tenía algunas funciones para leer datos CSV. Agregue la siguiente función <code>read_csv_as_instances()</code> al archivo que acepta una clase como entrada y usa el método de clase <code>from_row()</code> para crear una lista de instancias:</p>
+<pre><code class="language-python"># reader.py
+...
+
+def read_csv_as_instances(filename, cls):
+    '''
+    Read a CSV file into a list of instances
+    '''
+    records = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+        for row in rows:
+            records.append(cls.from_row(row))
+    return records
+</code></pre>
+<p>Deshágase de la función <code>read_portfolio()</code>; ya no la necesita. Si desea leer una lista de objetos <code>Stock</code>, haga lo siguiente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; # Leer una cartera de instancias de Stock
+&gt;&gt;&gt; from reader import read_csv_as_instances
+&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; portfolio = read_csv_as_instances('Data/portfolio.csv', Stock)
+&gt;&gt;&gt; portfolio
+[&lt;__main__.Stock object at 0x100674748&gt;, 
+&lt;__main__.Stock object at 0x1006746d8&gt;, 
+&lt;__main__.Stock object at 0x1006747b8&gt;, 
+&lt;__main__.Stock object at 0x100674828&gt;, 
+&lt;__main__.Stock object at 0x100674898&gt;, 
+&lt;__main__.Stock object at 0x100674908&gt;, 
+&lt;__main__.Stock object at 0x100674978&gt;]
+&gt;&gt;&gt;
+</code></pre>
+<p>A continuación, se muestra otro ejemplo de cómo puede usar <code>read_csv_as_instances()</code> con una clase completamente diferente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Row:
+         def __init__(self, route, date, daytype, numrides):
+             self.route = route
+             self.date = date
+             self.daytype = daytype
+             self.numrides = numrides
+         @classmethod
+         def from_row(cls, row):
+             return cls(row[0], row[1], row[2], int(row[3]))
+
+&gt;&gt;&gt; rides = read_csv_as_instances('Data/ctabus.csv', Row)
+&gt;&gt;&gt; len(rides)
+577563
+&gt;&gt;&gt;
+</code></pre>
+<p><strong>Discusión</strong></p>
+<p>Este ejercicio ilustra los dos usos más comunes de las Variables de clase y métodos de clase. Las variables de clase se utilizan a menudo para contener un parámetro global (por ejemplo, una configuración) que se comparte entre todas las instancias. A veces, las subclases heredan de la clase base y anulan la configuración para cambiar el comportamiento.</p>
+<p>Los métodos de clase se utilizan con mayor frecuencia para implementar constructores alternativos, como se muestra. Una forma común de detectar dichos métodos de clase es buscar la palabra "from" en el nombre. Por ejemplo, aquí hay un ejemplo sobre diccionarios integrados:</p>
+<pre><code class="language-python">&gt;&gt;&gt; d = dict.fromkeys(['a','b','c'], 0) # método de clase
+&gt;&gt;&gt; d
+{'a': 0, 'c': 0, 'b': 0}
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="soln3_3.md">Solución</a> | <a href="índice.md">Índice</a> | <a href="../ex3_2/">Ejercicio 3.2</a> | <a href="../ex3_4/">Ejercicio 3.4</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a> Deshágase de la función <code>read_portfolio()</code></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

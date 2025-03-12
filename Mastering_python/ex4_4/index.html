@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex1_3/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex4_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex1 3 - Python Practico</title>
+        <title>Ex4 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,9 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-13" class="nav-link">Ejercicio 1.3</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-44" class="nav-link">Ejercicio 4.4</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-trabajar-con-archivos" class="nav-link">(a) Trabajar con archivos</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-slots-vs-setattr" class="nav-link">(a) Slots vs. setattr</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-proxies" class="nav-link">(b) Proxies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-delegacion-como-alternativa-a-la-herencia" class="nav-link">(c) Delegación como alternativa a la herencia</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -79,41 +87,109 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio 1.2</a> | <a href="../ex1_4/">Ejercicio
-1.4</a></p>
-<h1 id="ejercicio-13">Ejercicio 1.3</h1>
+<p><a href="../">Índice</a> | <a href="../ex4_3/">Ejercicio 4.3</a> | <a href="../ex5_1/">Ejercicio 5.1</a></p>
+<h1 id="ejercicio-44">Ejercicio 4.4</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Revisar la entrada y salida de archivos básicos</li>
+<li>Aprender a personalizar el acceso a atributos</li>
+<li>Delegación vs. herencia</li>
 </ul>
-<p><em>Archivos creados:</em> <code>pcost.py</code></p>
-<h2 id="a-trabajar-con-archivos">(a) Trabajar con archivos</h2>
-<p>El archivo <code>Data/portfolio.dat</code> contiene una lista de líneas con
-información sobre una cartera de acciones. El archivo se ve así:</p>
-<pre><code>AA 100 32,20
-IBM 50 91,10
-CAT 150 83,44
-MSFT 200 51,23
-GE 95 40,37
-MSFT 50 65,10
-IBM 100 70,44
+<h2 id="a-slots-vs-setattr">(a) Slots vs. setattr</h2>
+<p>En ejercicios anteriores, se utilizó <code>__slots__</code> para enumerar los atributos de instancia en una clase. El propósito principal de slots es optimizar el uso de memoria. Un efecto secundario es que limita estrictamente los atributos permitidos a aquellos enumerados. Una desventaja de slots es que a menudo interactúa de manera extraña con otras partes de Python (por ejemplo, las clases que usan slots no se pueden usar con herencia múltiple). Por esa razón, realmente no debería usar slots excepto en casos especiales.</p>
+<p>Si realmente quisieras limitar el conjunto de atributos permitidos, una forma alternativa de hacerlo sería definir un método <code>__setattr__()</code>. Pruebe este experimento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Stock:
+        def __init__(self, name, shares, price):
+            self.name = name
+            self.shares = shares
+            self.price = price
+        def __setattr__(self, name, value):
+            if name not in { 'name', 'shares', 'price' }:
+                raise AttributeError('No attribute %s' % name)
+            super().__setattr__(name, value)
+
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares = 75
+&gt;&gt;&gt; s.share = 50
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;&lt;stdin&gt;&quot;, line 8, in __setattr__
+AttributeError: No attribute share
+&gt;&gt;&gt; 
 </code></pre>
-<p>La primera columna es el nombre de la acción, la segunda columna es el
-número de acciones y la tercera columna es el precio de compra de una
-sola acción.</p>
-<p>Escriba un programa llamado <code>pcost.py</code> que abra este archivo, lea todas
-las líneas y calcule cuánto costó comprar todas las acciones en la
-cartera. Para hacer esto, calcule la suma de la segunda columna
-multiplicada por la tercera columna.</p>
-<p><a href="soln1_3.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex1_2/">Ejercicio
-1.2</a> | <a href="../ex1_4/">Ejercicio 1.4</a></p>
+<p>En este ejemplo, no hay ranuras, pero el método <code>__setattr__()</code> aún restringe los atributos a aquellos en un conjunto predefinido. Probablemente deba pensar en cómo este enfoque podría interactuar con la herencia (por ejemplo, si las subclases quisieran agregar nuevos atributos, probablemente necesitarían redefinir <code>__setattr__()</code> para que funcione).</p>
+<h2 id="b-proxies">(b) Proxies</h2>
+<p>Una clase proxy es una clase que envuelve a una clase existente y proporciona una interfaz similar. Defina la siguiente clase que crea una capa de solo lectura alrededor de un objeto existente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Readonly:
+def __init__(self, obj):
+self.__dict__['_obj'] = obj
+def __setattr__(self, name, value):
+raise AttributeError(&quot;Can't set attribute&quot;)
+def __getattr__(self, name):
+return getattr(self._obj, name)
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Para usar la clase, simplemente la envuelve alrededor de una instancia existente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; p = Readonly(s)
+&gt;&gt;&gt; p.name
+'GOOG'
+&gt;&gt;&gt; p.shares
+100
+&gt;&gt;&gt; p.cost
+49010.0
+&gt;&gt;&gt; p.shares = 50
+Traceback (última llamada más reciente):
+Archivo &quot;&lt;stdin&gt;&quot;, línea 1, en &lt;module&gt;
+Archivo &quot;&lt;stdin&gt;&quot;, línea 8, en __setattr__
+AttributeError: Can't set attribute
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-delegacion-como-alternativa-a-la-herencia">(c) Delegación como alternativa a la herencia</h2>
+<p>La delegación se utiliza a veces como una alternativa a la herencia. La idea es casi la misma que la de la clase proxy que definió en la parte (b). Intente definir la siguiente clase:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Spam:
+def a(self):
+print('Spam.a')
+def b(self):
+print('Spam.b')
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, cree una clase que la envuelva y redefina algunos de los métodos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class MySpam:
+def __init__(self):
+self._spam = Spam()
+def a(self):
+print('MySpam.a')
+self._spam.a()
+def c(self):
+print('MySpam.c')
+def __getattr__(self, name):
+return getattr(self._spam, name)
+
+&gt;&gt;&gt; s = MySpam()
+&gt;&gt;&gt; s.a()
+MySpam.a
+Spam.a
+&gt;&gt;&gt; s.b()
+Spam.b
+&gt;&gt;&gt; s.c()
+MySpam.c
+&gt;&gt;&gt;
+</code></pre>
+<p>Observe con atención que la clase resultante se parece mucho a la herencia. Por ejemplo, el método <code>a()</code> está haciendo algo similar a la llamada <code>super()</code>. El método <code>b()</code> se toma a través del método <code>__getattr__()</code> que delega a la instancia <code>Spam</code> internamente almacenada.</p>
+<p><strong>Discusión</strong></p>
+<p>El método <code>__getattr__()</code> se define comúnmente en clases que actúan como envoltorios alrededor de otros objetos. Sin embargo, debe tener en cuenta que el proceso de envolver otro objeto de esta manera a menudo introduce otras complejidades. Por ejemplo, el objeto envoltorio puede interrumpir la verificación de tipos si cualquier otra parte de la aplicación está usando la función <code>isinstance()</code>.</p>
+<p>La delegación de métodos a través de <code>__getattr__()</code> tampoco funciona con métodos especiales como <code>__getitem__()</code>, <code>__enter__()</code>, etc. Si una clase hace un uso extensivo de dichos métodos, deberá proporcionar funciones similares en su clase contenedora.</p>
+<p><a href="soln4_4.md">Solución</a> | <a href="../">Índice</a> | <a href="../ex4_3/">Ejercicio 4.3</a> | <a href="../ex5_1/">Ejercicio 5.1</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
 <p><code>...</code> Copyright 2007-2023</p>
-<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está
-licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual
-4.0 Internacional</a></p></div>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Este trabajo está licenciado bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

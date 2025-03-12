@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex2_5/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex2 5 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-25" class="nav-link">Ejercicio 2.5</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-crecimiento-de-la-lista" class="nav-link">(a) Crecimiento de la lista</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-crecimiento-de-diccionariosclases" class="nav-link">(b) Crecimiento de diccionarios/clases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-cambiar-la-orientacion-a-columnas" class="nav-link">(c) Cambiar la orientación (a columnas)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-creacion-de-un-contenedor-personalizado-la-gran-falsificacion" class="nav-link">(d) Creación de un contenedor personalizado: la gran falsificación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#e-desafio" class="nav-link">(e) Desafío</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex2_4/">Ejercicio 2.4</a> | <a href="../ex2_6/">Ejercicio 2.6</a></p>
+<h1 id="ejercicio-25">Ejercicio 2.5</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Observar el comportamiento de asignación de memoria de listas y diccionarios - Crear un contenedor personalizado</li>
+</ul>
+<p><em>Archivos creados:</em> Ninguno</p>
+<h2 id="a-crecimiento-de-la-lista">(a) Crecimiento de la lista</h2>
+<p>Las listas de Python están altamente optimizadas para realizar operaciones <code>append()</code>. Cada vez que una lista crece, toma una porción más grande de memoria de la que realmente necesita con la expectativa de que se agregarán más datos a la lista más adelante. Si se agregan nuevos elementos y hay espacio disponible, la operación <code>append()</code> almacena el elemento sin asignar más memoria.</p>
+<p>Experimente con esta característica de las listas usando la función <code>sys.getsizeof()</code> en una lista y agregando algunos elementos más.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; items = []
+&gt;&gt;&gt; sys.getsizeof(items)
+64
+&gt;&gt;&gt; items.append(1)
+&gt;&gt;&gt; sys.getsizeof(items)
+96
+&gt;&gt;&gt; items.append(2)
+&gt;&gt;&gt; sys.getsizeof(items) # Observa cómo el tamaño no aumenta
+96
+&gt;&gt;&gt; items.append(3)
+&gt;&gt;&gt; sys.getsizeof(items) # Aquí todavía no aumenta
+96
+&gt;&gt;&gt; items.append(4)
+&gt;&gt;&gt; sys.getsizeof(items) # Todavía no.
+96
+&gt;&gt;&gt; items.append(5)
+&gt;&gt;&gt; sys.getsizeof(items) # Observa que el tamaño ha aumentado
+128
+&gt;&gt;&gt;
+</code></pre>
+<p>Una lista almacena sus elementos por referencia. Por lo tanto, la memoria necesaria para cada elemento es una única dirección de memoria. En una máquina de 64 bits, una dirección suele tener 8 bytes. Sin embargo, si Python se ha compilado para 32 bits, puede tener 4 bytes y los números del ejemplo anterior serán la mitad de lo que se muestra.</p>
+<h2 id="b-crecimiento-de-diccionariosclases">(b) Crecimiento de diccionarios/clases</h2>
+<p>Los diccionarios (y clases) de Python permiten almacenar hasta 5 valores antes de que se duplique su memoria reservada. Investigue creando un diccionario y agregándole algunos valores más:</p>
+<pre><code class="language-python">&gt;&gt;&gt; row = { 'route': '22', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354 }
+&gt;&gt;&gt; sys.getsizeof(row)
+240
+&gt;&gt;&gt; row['a'] = 1
+&gt;&gt;&gt; sys.getsizeof(row)
+240
+&gt;&gt;&gt; row['b'] = 2
+&gt;&gt;&gt; sys.getsizeof(row)
+368
+&gt;&gt;&gt;
+</code></pre>
+<p>¿Se agota la memoria si elimina el elemento que acaba de agregar?</p>
+<p>Para reflexionar: si está creando una gran cantidad de registros, representar cada registro como un diccionario podría no ser el enfoque más eficiente; podría estar pagando un alto precio por la conveniencia de tener un diccionario. Tal vez sea mejor considerar el uso de tuplas, tuplas con nombre o clases que definan <code>__slots__</code>.</p>
+<h2 id="c-cambiar-la-orientacion-a-columnas">(c) Cambiar la orientación (a columnas)</h2>
+<p>A menudo, puede ahorrar mucha memoria si cambia la vista de los datos. Por ejemplo, ¿qué sucede si lee todos los datos del bus en columnas usando esta función?</p>
+<pre><code class="language-python"># readrides.py
+
+...
+
+def read_rides_as_columns(filename):
+    '''
+    Read the bus ride data into 4 lists, representing columns
+    '''
+    routes = []
+    dates = []
+    daytypes = []
+    numrides = []
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headings = next(rows)     # Omitir encabezados
+        for row in rows:
+            routes.append(row[0])
+            dates.append(row[1])
+            daytypes.append(row[2])
+            numrides.append(int(row[3]))
+    return dict(routes=routes, dates=dates, daytypes=daytypes, numrides=numrides)
+</code></pre>
+<p>En teoría, esta función debería ahorrar mucha memoria. Analicémosla antes de probarla.</p>
+<p>En primer lugar, el archivo de datos contenía 577563 filas de datos, donde cada fila contenía cuatro valores. Si cada fila se almacena como un diccionario, entonces esos diccionarios tienen un tamaño mínimo de 240 bytes.</p>
+<pre><code class="language-python">&gt;&gt;&gt; nrows = 577563 # Número de filas en el archivo original
+&gt;&gt;&gt; nrows * 240
+138615120
+&gt;&gt;&gt;
+</code></pre>
+<p>Por lo tanto, son 138 MB solo para los diccionarios en sí. Esto no incluye ninguno de los valores almacenados realmente en los diccionarios.</p>
+<p>Al cambiar a columnas, los datos se almacenan en 4 listas separadas. Cada lista requiere 8 bytes por elemento para almacenar un puntero. Entonces, aquí hay una estimación aproximada de los requisitos de la lista:</p>
+<pre><code class="language-python">&gt;&gt;&gt; nrows * 4 * 8
+18482016
+&gt;&gt;&gt;
+</code></pre>
+<p>Eso es aproximadamente 18 MB de sobrecarga de lista. Por lo tanto, cambiar a una orientación de columna debería ahorrar aproximadamente 120 MB de memoria únicamente al eliminar toda la información adicional que se debe almacenar en los diccionarios.</p>
+<p>Intente usar esta función para leer los datos del bus y observar el uso de memoria.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import tracemalloc
+&gt;&gt;&gt; tracemalloc.start()
+&gt;&gt;&gt; columnas = read_rides_as_columns('Data/ctabus.csv')
+&gt;&gt;&gt; tracemalloc.get_traced_memory()
+... observe el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>¿El resultado refleja los ahorros esperados en memoria a partir de nuestros cálculos aproximados anteriores?</p>
+<h2 id="d-creacion-de-un-contenedor-personalizado-la-gran-falsificacion">(d) Creación de un contenedor personalizado: la gran falsificación</h2>
+<p>Almacenar los datos en columnas permite ahorrar mucha más memoria, pero ahora resulta bastante extraño trabajar con los datos. De hecho, ninguno de nuestros códigos de análisis anteriores del <a href="../ex2_2/">Ejercicio 2.2</a> puede funcionar con columnas. La razón por la que todo está roto es que has roto la abstracción de datos que se utilizó en ejercicios anteriores, es decir, la suposición de que los datos se almacenan como una lista de diccionarios.</p>
+<p>Esto se puede solucionar si estás dispuesto a crear un objeto contenedor personalizado que lo "falsifique". Hagámoslo.</p>
+<p>El código de análisis anterior asume que los datos se almacenan en una secuencia de registros. Cada registro se representa como un diccionario. Comencemos creando una nueva clase "Sequence". En esta clase, almacenamos las cuatro columnas de datos que se estaban utilizando en la función <code>read_rides_as_columns()</code>.</p>
+<pre><code class="language-python"># readrides.py
+
+import collections
+...
+class RideData(collections.abc.Sequence):
+    def __init__(self):
+        self.routes = [] # Columnas
+        self.dates = []
+        self.daytypes = []
+        self.numrides = []
+</code></pre>
+<p>Intente crear una instancia de <code>RideData</code>. Verás que falla con un mensaje de error como este:</p>
+<pre><code class="language-python">&gt;&gt;&gt; records = RideData()
+Traceback (most recent call last):
+...
+TypeError: Can't instantiate abstract class RideData with abstract methods __getitem__, __len__
+&gt;&gt;&gt;
+</code></pre>
+<p>Lee atentamente el mensaje de error. Nos dice lo que necesitamos implementar. Agreguemos un método <code>__len__()</code> y <code>__getitem__()</code>. En el método <code>__getitem__()</code>, crearemos un diccionario. Además, crearemos un método <code>append()</code> que toma un diccionario y lo descomprime en 4 operaciones <code>append()</code> independientes.</p>
+<pre><code class="language-python"># readrides.py
+...
+
+class RideData(collections.abc.Sequence):
+    def __init__(self):
+        # Cada valor es una lista con todos los valores (una columna)
+        self.routes = []
+        self.dates = []
+        self.daytypes = []
+        self.numrides = []
+
+    def __len__(self):
+        # Se supone que todas las listas tienen la misma longitud
+            return len(self.routes)
+
+    def __getitem__(self, index):
+        return { 'route': self.routes[index],
+                 'date': self.dates[index],
+                 'daytype': self.daytypes[index],
+                 'rides': self.numrides[index] }
+
+    def append(self, d):
+        self.routes.append(d['route'])
+        self.dates.append(d['date'])
+        self.daytypes.append(d['daytype'])
+        self.numrides.append(d['rides'])
+</code></pre>
+<p>Si lo has hecho correctamente, deberías poder colocar este objeto en la función <code>read_rides_as_dicts()</code> escrita anteriormente. Esto implica cambiar solo una línea de código:</p>
+<pre><code class="language-python"># readrides.py
+...
+
+def read_rides_as_dicts(filename):
+    '''
+    Lee los datos del recorrido en autobús como una lista de diccionarios
+    '''
+    records = RideData()      # &lt;---  CAMBIE ESTO
+    with open(filename) as f:
+        rows = csv.reader(f)
+        headings = next(rows)     # Omite encabezados
+        for row in rows:
+            route = row[0]
+            date = row[1]
+            daytype = row[2]
+            rides = int(row[3])
+            record = {
+                'route': route, 
+                'date': date, 
+                'daytype': daytype, 
+                'rides' : rides
+                }
+            records.append(record)
+    return records
+</code></pre>
+<p>Si lo has hecho bien, el código antiguo debería funcionar exactamente como antes. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; rows = readrides.read_rides_as_dicts('Data/ctabus.csv')
+&gt;&gt;&gt; rows
+&lt;readrides.RideData object at 0x10f5054a8&gt;
+&gt;&gt;&gt; len(rows)
+577563
+&gt;&gt;&gt; rows[0]
+{'route': '3', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354}
+&gt;&gt;&gt; rows[1]
+{'route': '4', 'date': '01/01/2001', 'daytype': 'U', 'rides': 9288}
+&gt;&gt;&gt; rows[2]
+{'route': '6', 'date': '01/01/2001', 'daytype': 'U', 'rides': 6048}
+&gt;&gt;&gt; 
+</code></pre>
+<p>Ejecuta el código CTA anterior de <a href="../ex2_2/">Ejercicio 2.2</a>. Debería funcionar sin modificaciones, pero utilizaría sustancialmente menos memoria.</p>
+<h2 id="e-desafio">(e) Desafío</h2>
+<p>¿Qué sucede cuando tomas una porción de los datos de un recorrido?</p>
+<pre><code class="language-python">&gt;&gt;&gt; r = rows[0:10]
+&gt;&gt;&gt; r
+... mira el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>Probablemente se verá un poco loco. ¿Puedes modificar la clase <code>RideData</code> para que produzca una porción adecuada que parezca una lista de diccionarios? Por ejemplo, de esta manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; rows = readrides.read_rides_as_dicts('Data/ctabus.csv')
+&gt;&gt;&gt; rows
+&lt;readrides.RideData object at 0x10f5054a8&gt;
+&gt;&gt;&gt; len(rows)
+577563
+&gt;&gt;&gt; r = rows[0:10]
+&gt;&gt;&gt; r
+&lt;readrides.RideData object at 0x10f5068c8&gt;
+&gt;&gt;&gt; len(r)
+10
+&gt;&gt;&gt; r[0]
+{'route': '3', 'date': '01/01/2001', 'daytype': 'U', 'rides': 7354}
+&gt;&gt;&gt; r[1]
+{'route': '4', 'date': '01/01/2001', 'daytype': 'U', 'rides': 9288}
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="soln2_5.md">Solución</a> | <a href="índice.md">Índice</a> | <a href="../ex2_4/">Ejercicio 2.4</a> | <a href="../ex2_6/">Ejercicio 2.6</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está bajo una licencia <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
