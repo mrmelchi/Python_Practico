@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln6_5/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex6_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 6.5 - Solution - Python Practico</title>
+        <title>Ex6 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-65-solution" class="nav-link">Exercise 6.5 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-64" class="nav-link">Ejercicio 6.4</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-experimentar-con-exec" class="nav-link">(a) Experimentar con exec()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-creacion-de-una-funcion-__init__" class="nav-link">(b) Creación de una función __init__()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-tuplas-con-nombre" class="nav-link">(c) Tuplas con nombre</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,40 +87,106 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-65-solution">Exercise 6.5 - Solution</h1>
-<pre><code class="language-python"># validate.py
-...
+<p><a href="../">Índice</a> | <a href="../ex6_3/">Ejercicio 6.3</a> | <a href="../ex6_5/">Ejercicio 6.5</a></p>
+<h1 id="ejercicio-64">Ejercicio 6.4</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender a crear código con <code>exec()</code></li>
+</ul>
+<h2 id="a-experimentar-con-exec">(a) Experimentar con <code>exec()</code></h2>
+<p>Defina un fragmento de código Python en una cadena e intente ejecutarlo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; code = '''
+for i in range(n):
+    print(i, end=' ')
+'''
 
-from inspect import signature
-
-class ValidatedFunction:
-    def __init__(self, func):
-        self.func = func
-        self.signature = signature(func)
-        self.annotations = dict(func.__annotations__)
-        self.retcheck = self.annotations.pop('return', None)
-
-    def __call__(self, *args, **kwargs):
-        bound = self.signature.bind(*args, **kwargs)
-
-        for name, val in self.annotations.items():
-            val.check(bound.arguments[name])
-
-        result = self.func(*args, **kwargs)
-
-        if self.retcheck:
-            self.retcheck.check(result)
-
-        return result
-
-# Examples
-if __name__ == '__main__':
-    def add(x:Integer, y:Integer) -&gt; Integer:
-        return x + y
-
-    add = ValidatedFunction(add)
+&gt;&gt;&gt; n = 10
+&gt;&gt;&gt; exec(code)
+0 1 2 3 4 5 6 7 8 9
+&gt;&gt;&gt;
 </code></pre>
-<p><a href="../ex6_5/">Back</a></p></div>
+<p>Es interesante, pero ejecutar fragmentos de código aleatorios no es especialmente útil. Un uso más interesante de <code>exec()</code> es la creación de código como funciones, métodos o clases. Pruebe este ejemplo en el que creamos una función <code>__init__()</code> para una clase.</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Stock:
+        _fields = ('name', 'shares', 'price')
+
+&gt;&gt;&gt; argstr = ','.join(Stock._fields)
+&gt;&gt;&gt; code = f'def __init__(self, {argstr}):\n'
+&gt;&gt;&gt; for name in Stock._fields:
+        code += f'    self.{name} = {name}\n'
+&gt;&gt;&gt; print(code)
+def __init__(self, name,shares,price):
+    self.name = name
+    self.shares = shares
+    self.price = price
+
+&gt;&gt;&gt; locs = { }
+&gt;&gt;&gt; exec(code, locs)
+&gt;&gt;&gt; Stock.__init__ = locs['__init__']
+
+&gt;&gt;&gt; # Ahora prueba la clase
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.price
+490.1
+&gt;&gt;&gt; 
+</code></pre>
+<p>En este ejemplo, se crea una función <code>__init__()</code> directamente desde la variable <code>_fields</code>. No hay trucos extraños que involucren un método <code>_init()</code> especial ni marcos de pila.</p>
+<h2 id="b-creacion-de-una-funcion-__init__">(b) Creación de una función <code>__init__()</code></h2>
+<p>En el <a href="../ex6_3/">Ejercicio 6.3</a>, escribió código que inspeccionaba la firma del método <code>__init__()</code> para establecer los nombres de los atributos en una variable de clase <code>_fields</code>. Por ejemplo:</p>
+<pre><code class="language-python">class Stock(Structure):
+    def __init__(self, name, shares, price):
+        self._init()
+
+Stock.set_fields()
+</code></pre>
+<p>En lugar de inspeccionar el método <code>__init__()</code>, escriba un método de clase <code>create_init(cls)</code> que cree un método <code>__init__()</code> a partir del valor de <code>_fields</code>. Utilice la función <code>exec()</code> para hacerlo, como se muestra arriba. Así es como lo usará un usuario:</p>
+<pre><code class="language-python">class Stock(Structure):
+    _fields = ('name', 'shares', 'price')
+
+Stock.create_init()
+</code></pre>
+<p>La clase resultante debería funcionar exactamente igual que antes:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock(name='GOOG', shares=100, price=490.1)
+&gt;&gt;&gt; s
+Stock('GOOG',100,490.1)
+&gt;&gt;&gt; s.shares = 50
+&gt;&gt;&gt; s.share = 50
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;structure.py&quot;, line 12, in __setattr__
+    raise AttributeError('No attribute %s' % name)
+AttributeError: No attribute share
+&gt;&gt;&gt; 
+</code></pre>
+<p>Modifique la clase <code>Stock</code> en curso para usar la función <code>create_init()</code> como se muestra. Verifique con sus pruebas unitarias como antes. De paso, elimine los métodos <code>_init()</code> y <code>set_fields()</code> en la clase <code>Structure</code>; ese enfoque era un poco extraño.</p>
+<h2 id="c-tuplas-con-nombre">(c) Tuplas con nombre</h2>
+<p>En el <a href="../ex2_1/">Ejercicio 2.1</a>, experimentó con objetos <code>namedtuple</code> en el módulo <code>collections</code>. Para refrescar la memoria, así es como funcionaban:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from collections import namedtuple
+&gt;&gt;&gt; Stock = namedtuple('Stock', ['name', 'shares', 'price'])
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s[1]
+100
+&gt;&gt;&gt;
+</code></pre>
+<p>En segundo plano, la función <code>namedtuple()</code> crea código como una cadena y lo ejecuta usando <code>exec()</code>. Observa el código y maravíllate:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import inspect
+&gt;&gt;&gt; print(inspect.getsource(namedtuple))
+... observa el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p><a href="../soln6_4/">Solución</a> | <a href="../">Índice</a> | <a href="../ex6_3/">Ejercicio 6.3</a> | <a href="../ex6_5/">Ejercicio 6.5</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

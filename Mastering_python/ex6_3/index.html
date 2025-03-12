@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln6_5/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex6_3/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 6.5 - Solution - Python Practico</title>
+        <title>Ex6 3 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-65-solution" class="nav-link">Exercise 6.5 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-63" class="nav-link">Ejercicio 6.3</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-inspeccion-de-funciones" class="nav-link">(a) Inspección de funciones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-uso-del-modulo-inspect" class="nav-link">(b) Uso del módulo inspect</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-ensamblando-todo" class="nav-link">(c) Ensamblando todo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,40 +87,98 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-65-solution">Exercise 6.5 - Solution</h1>
-<pre><code class="language-python"># validate.py
-...
+<p><a href="../">Índice</a> | <a href="../ex6_2/">Ejercicio 6.2</a> | <a href="../ex6_4/">Ejercicio 6.4</a></p>
+<h1 id="ejercicio-63">Ejercicio 6.3</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender a inspeccionar el funcionamiento interno de las funciones</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>structure.py</code></p>
+<h2 id="a-inspeccion-de-funciones">(a) Inspección de funciones</h2>
+<p>Defina una función simple:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def add(x,y):
+       'Suma dos elementos'
+       return x+y
 
-from inspect import signature
-
-class ValidatedFunction:
-    def __init__(self, func):
-        self.func = func
-        self.signature = signature(func)
-        self.annotations = dict(func.__annotations__)
-        self.retcheck = self.annotations.pop('return', None)
-
-    def __call__(self, *args, **kwargs):
-        bound = self.signature.bind(*args, **kwargs)
-
-        for name, val in self.annotations.items():
-            val.check(bound.arguments[name])
-
-        result = self.func(*args, **kwargs)
-
-        if self.retcheck:
-            self.retcheck.check(result)
-
-        return result
-
-# Examples
-if __name__ == '__main__':
-    def add(x:Integer, y:Integer) -&gt; Integer:
-        return x + y
-
-    add = ValidatedFunction(add)
+&gt;&gt;&gt;
 </code></pre>
-<p><a href="../ex6_5/">Back</a></p></div>
+<p>Ejecute <code>dir()</code> en la función para ver sus atributos.</p>
+<pre><code class="language-python">&gt;&gt;&gt; dir(add)
+... observe el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>Obtenga información básica como el nombre de la función, el nombre del módulo que la define y la cadena de documentación.</p>
+<pre><code class="language-python">&gt;&gt;&gt; add.__name__
+'add'
+&gt;&gt;&gt; add.__module__
+'__main__'
+&gt;&gt;&gt; add.__doc__
+'Suma dos elementos'
+&gt;&gt;&gt;
+</code></pre>
+<p>El atributo <code>__code__</code> de una función contiene información de bajo nivel sobre la implementación de la función. Intente analizarlo y determinar el número de argumentos necesarios y los nombres de las variables locales.</p>
+<h2 id="b-uso-del-modulo-inspect">(b) Uso del módulo inspect</h2>
+<p>Utilice el módulo inspect para obtener información de llamada a la función:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import inspect
+&gt;&gt;&gt; sig = inspect.signature(add)
+&gt;&gt;&gt; sig
+&lt;Signature (x, y)&gt;
+&gt;&gt;&gt; sig.parameters
+mappingproxy(OrderedDict([('x', &lt;Parameter &quot;x&quot;&gt;), ('y', &lt;Parameter &quot;y&quot;&gt;)]))
+&gt;&gt;&gt; tuple(sig.parameters)
+('x', 'y')
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-ensamblando-todo">(c) Ensamblando todo</h2>
+<p>En el <a href="../ex6_1/">Ejercicio 6.1</a>, creó una clase <code>Structure</code> que definía los métodos <code>__init__()</code>, <code>__setattr__()</code> y <code>__repr__()</code> generalizados. Esa clase requería que el usuario definiera una variable de clase <code>_fields</code> como esta:</p>
+<pre><code class="language-python">class Stock(Structure):
+    _fields = ('name','shares','price')
+</code></pre>
+<p>El problema con esta clase es que la función <code>__init__()</code> no tenía una firma de argumento útil para la ayuda y el paso de argumentos de palabras clave. En el <a href="../ex6_2/">Ejercicio 6.2</a>, se utilizó un truco astuto con una función especial <code>self._init()</code>. Por ejemplo:</p>
+<pre><code class="language-python">class Stock(Structure):
+    _fields = ('name', 'shares', 'price')
+    def __init__(self, name, shares, price):
+        self._init()
+    ...
+</code></pre>
+<p>Esto proporcionó una firma útil, pero ahora la clase es simplemente extraña porque el usuario debe proporcionar tanto la variable <code>_fields</code> como el método <code>__init__()</code>.</p>
+<p>Su tarea consiste en eliminar la variable <code>_fields</code> mediante técnicas de inspección de funciones. Primero, observe que puede obtener la firma del argumento <code>Stock</code> de la siguiente manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import inspect
+&gt;&gt;&gt; sig = inspect.signature(Stock)
+&gt;&gt;&gt; tuple(sig.parameters)
+('name', 'shares', 'price')
+&gt;&gt;&gt;
+</code></pre>
+<p>Quizás podría establecer la variable <code>_fields</code> a partir de la firma del argumento de <code>__init__()</code>. Agregue un método de clase <code>set_fields(cls)</code> a <code>Structure</code> que inspeccione la función <code>__init__()</code> y establezca la variable <code>_fields</code> según corresponda. Deberías usar tu nueva función así:</p>
+<pre><code class="language-python">class Stock(Structure):
+    def __init__(self, name, shares, price):
+        self._init()
+
+    ...
+
+Stock.set_fields()
+</code></pre>
+<p>La clase resultante debería funcionar igual que antes:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock(name='GOOG', shares=100, price=490.1)
+&gt;&gt;&gt; s
+Stock('GOOG',100,490.1)
+&gt;&gt;&gt; s.shares = 50
+&gt;&gt;&gt; s.share = 50
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;structure.py&quot;, line 12, in __setattr__
+    raise AttributeError('No attribute %s' % name)
+AttributeError: No attribute share
+&gt;&gt;&gt;
+</code></pre>
+<p>Verifica de nuevo la clase <code>Stock</code> ligeramente modificada con tus pruebas unitarias. Seguirá habiendo fallos, pero no debería haber cambios con respecto al ejercicio anterior.</p>
+<p>En este punto, todo sigue siendo un poco complicado, pero estás progresando. Tienes una clase de estructura <code>Stock</code> con una función <code>__init__()</code> útil, una cadena de representación útil y el método <code>__setattr__()</code> restringe el conjunto de nombres de atributos. El paso adicional de tener que invocar <code>set_fields()</code> es un poco extraño, pero volveremos a ello.</p>
+<p><a href="../soln6_3/">Solución</a> | <a href="../">Índice</a> | <a href="../ex6_2/">Ejercicio 6.2</a> | <a href="../ex6_4/">Ejercicio 6.4</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

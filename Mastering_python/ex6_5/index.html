@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln6_5/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex6_5/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 6.5 - Solution - Python Practico</title>
+        <title>Ex6 5 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-65-solution" class="nav-link">Exercise 6.5 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-65" class="nav-link">Ejercicio 6.5</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#b-aplicacion" class="nav-link">(b) Aplicación</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-usar-como-metodo-desafio" class="nav-link">(c) Usar como método (Desafío)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,40 +83,111 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-65-solution">Exercise 6.5 - Solution</h1>
+<p><a href="../">Índice</a> | <a href="../ex6_4/">Ejercicio 6.4</a> | <a href="ex7_1.md">Ejercicio 7.1</a></p>
+<h1 id="ejercicio-65">Ejercicio 6.5</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender a definir un objeto invocable adecuado</li>
+</ul>
+<p>Archivos modificados: <code>validate.py</code></p>
+<p>En el <a href="../ex4_3/">Ejercicio 4.3</a>, creaste una serie de clases <code>Validator</code> para realizar diferentes tipos de comprobaciones de tipo y valor. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from validate import Integer
+&gt;&gt;&gt; Integer.check(1)
+&gt;&gt;&gt; Integer.check('hello')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;validate.py&quot;, line 21, in check
+    raise TypeError(f'Expected {cls.expected_type}')
+TypeError: Expected &lt;class 'int'&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Puedes usar los validadores en funciones como esta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def add(x, y):
+        Integer.check(x)
+        Integer.check(y)
+        return x + y
+
+&gt;&gt;&gt;
+</code></pre>
+<p>En este ejercicio, vamos a ir un paso más allá. ## (a) Creación de un objeto invocable</p>
+<p>En el archivo <code>validate.py</code>, comience creando una clase como esta:</p>
 <pre><code class="language-python"># validate.py
 ...
-
-from inspect import signature
 
 class ValidatedFunction:
     def __init__(self, func):
         self.func = func
-        self.signature = signature(func)
-        self.annotations = dict(func.__annotations__)
-        self.retcheck = self.annotations.pop('return', None)
 
     def __call__(self, *args, **kwargs):
-        bound = self.signature.bind(*args, **kwargs)
-
-        for name, val in self.annotations.items():
-            val.check(bound.arguments[name])
-
+        print('LLamando', self.func)
         result = self.func(*args, **kwargs)
-
-        if self.retcheck:
-            self.retcheck.check(result)
-
         return result
-
-# Examples
-if __name__ == '__main__':
-    def add(x:Integer, y:Integer) -&gt; Integer:
+</code></pre>
+<p>Pruebe la clase aplicándola a una función:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def add(x, y):
         return x + y
 
-    add = ValidatedFunction(add)
+&gt;&gt;&gt; add = ValidatedFunction(add)
+&gt;&gt;&gt; add(2, 3)
+LLamando &lt;function add at 0x1014df598&gt;
+5
+&gt;&gt;&gt;
 </code></pre>
-<p><a href="../ex6_5/">Back</a></p></div>
+<h2 id="b-aplicacion">(b) Aplicación</h2>
+<p>Modifique la La clase <code>ValidatedFunction</code> para que aplique las comprobaciones de valores adjuntas mediante anotaciones de función. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def add(x: Integer, y:Integer):
+        return x + y
+&gt;&gt;&gt; add = ValidatedFunction(add)
+&gt;&gt;&gt; add(2,3)
+5
+&gt;&gt;&gt; add('two','three')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;validate.py&quot;, line 67, in __call__
+    self.func.__annotations__[name].check(val)
+  File &quot;validate.py&quot;, line 21, in check
+    raise TypeError(f'Expected {cls.expected_type}')
+TypeError: expected &lt;class 'int'&gt;
+&gt;&gt;&gt;&gt;
+</code></pre>
+<p>Sugerencia: Para ello, experimente con la vinculación de firmas. Usa el método <code>bind()</code> de los objetos <code>Signature</code> para enlazar los argumentos de función con sus nombres. Luego, cruza esta información con el atributo <code>__annotations__</code> para obtener las diferentes clases de validación. Recuerda que estás creando un objeto que parece una función, pero en realidad no lo es. Hay algo mágico detrás de escena.</p>
+<h2 id="c-usar-como-metodo-desafio">(c) Usar como método (Desafío)</h2>
+<p>Un objeto invocable personalizado suele presentar problemas si se usa como método personalizado. Por ejemplo, prueba esto:</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares:Integer):
+        self.shares -= nshares
+    sell = ValidatedFunction(sell)     # Falla
+</code></pre>
+<p>Verás que la función <code>sell()</code> encapsulada falla estrepitosamente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.sell(10)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;validate.py&quot;, line 64, in __call__
+    bound = self.signature.bind(*args, **kwargs)
+  File &quot;/usr/local/lib/python3.6/inspect.py&quot;, line 2933, in bind
+    return args[0]._bind(args[1:], kwargs)
+  File &quot;/usr/local/lib/python3.6/inspect.py&quot;, line 2848, in _bind
+    raise TypeError(msg) from None
+TypeError: missing a required argument: 'nshares'
+&gt;&gt;&gt; 
+</code></pre>
+<p>Extra: Averigua por qué falla, pero no pierdas mucho tiempo probándolo.</p>
+<p><a href="../soln6_5/">Solución</a> | <a href="../">Índice</a> | <a href="../ex6_4/">Ejercicio 6.4</a> | <a href="ex7_1.md">Ejercicio 7.1</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 
