@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex6_1/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex6 1 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-61" class="nav-link">Ejercicio 6.1</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-estructuras-de-datos-simplificadas" class="nav-link">(a) Estructuras de datos simplificadas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-crear-una-representacion-util" class="nav-link">(b) Crear una representación útil</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-restriccion-de-nombres-de-atributos" class="nav-link">(c) Restricción de nombres de atributos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-volver-a-empezar" class="nav-link">(d) Volver a empezar</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex5_6/">Ejercicio 5.6</a> | <a href="../ex6_2/">Ejercicio 6.2</a></p>
+<h1 id="ejercicio-61">Ejercicio 6.1</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender más sobre las convenciones de paso de argumentos de funciones</li>
+</ul>
+<p><em>Archivos creados:</em> <code>structure.py</code>, <code>stock.py</code></p>
+<p><strong>NOTA IMPORTANTE</strong></p>
+<p>Este ejercicio iniciará un largo camino para reescribir el archivo <code>stock.py</code> de una manera más sensata. Antes de nada, copie su trabajo en <code>stock.py</code> a un nuevo archivo <code>orig_stock.py</code>.</p>
+<p>Vamos a recrear la clase <code>Stock</code> desde cero utilizando algunas técnicas nuevas. Asegúrese de tener a mano las pruebas unitarias del <a href="../ex5_4/">Ejercicio 5.4</a>. Las necesitará.</p>
+<p>Si define una función, probablemente ya sepa que se puede llamar usando una combinación de argumentos posicionales o de palabras clave. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def foo(x, y, z):
+        return x + y + z
+
+&gt;&gt;&gt; foo(1, 2, 3)
+6
+&gt;&gt;&gt; foo(1, z=3, y=2)
+6
+&gt;&gt;&gt;
+</code></pre>
+<p>También sabrá que puede pasar secuencias y diccionarios como argumentos de función usando la sintaxis * y **. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; args = (1, 2, 3)
+&gt;&gt;&gt; foo(*args)
+6
+&gt;&gt;&gt; kwargs = {'y':2, 'z':3 }
+&gt;&gt;&gt; foo(1,**kwargs)
+6
+&gt;&gt;&gt;
+</code></pre>
+<p>Además, puedes escribir funciones que acepten cualquier número de argumentos posicionales o de palabras clave usando la sintaxis * y **. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def foo(*args):
+        print(args)
+
+&gt;&gt;&gt; foo(1,2)
+(1, 2)
+&gt;&gt;&gt; foo(1,2,3,4,5)
+(1, 2, 3, 4, 5)
+&gt;&gt;&gt; foo()
+()
+&gt;&gt;&gt;
+&gt;&gt;&gt; def bar(**kwargs):
+        print(kwargs)
+
+&gt;&gt;&gt; bar(x=1,y=2)
+{'y': 2, 'x': 1}
+&gt;&gt;&gt; bar(x=1,y=2,z=3)
+{'y': 2, 'x': 1, 'z': 3}
+&gt;&gt;&gt; bar()
+{}
+&gt;&gt;&gt; 
+</code></pre>
+<p>Las funciones con argumentos variables a veces son útiles como técnica para reducir o simplificar la cantidad de código que se debe escribir. En este ejercicio, exploraremos esta idea para estructuras de datos simples.</p>
+<h2 id="a-estructuras-de-datos-simplificadas">(a) Estructuras de datos simplificadas</h2>
+<p>En ejercicios anteriores, definiste una clase que representa una acción como esta:</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self,name,shares,price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+</code></pre>
+<p>Concéntrate en el método <code>__init__()</code>: ¿no es mucho código para escribir cada vez que quieres rellenar una estructura? ¿Qué pasaría si tuvieras que definir docenas de estructuras de este tipo en tu programa?</p>
+<p>En el archivo <code>structure.py</code>, defina la clase base <code>Structure</code> que permite al usuario definir estructuras de datos simples como la siguiente:</p>
+<pre><code class="language-python">class Stock(Structure):
+    _fields = ('name','shares','price')
+
+class Date(Structure):
+    _fields = ('year', 'month', 'day')
+</code></pre>
+<p>La clase <code>Structure</code> debe definir un método <code>__init__()</code> que acepte cualquier número de argumentos y que busque la presencia de una variable de clase <code>_fields</code>. Haga que el método rellene la instancia con los nombres de los atributos en <code>_fields</code> y los valores pasados ​​a <code>__init__()</code>.</p>
+<p>Aquí tienes un ejemplo de código para probar tu implementación:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG',100,490.1)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt; s.price
+490.1
+&gt;&gt;&gt; s = Stock('AA',50)
+Traceback (most recent call last):
+...
+TypeError: Expected 3 arguments
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-crear-una-representacion-util">(b) Crear una representación útil</h2>
+<p>Modifica la clase <code>Structure</code> para que genere una representación precisa al usar <code>repr()</code>. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s
+Stock('GOOG',100,490.1)
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-restriccion-de-nombres-de-atributos">(c) Restricción de nombres de atributos</h2>
+<p>Asignar a la clase <code>Structure</code> un método <code>__setattr__()</code> que restrinja el conjunto permitido de atributos a los enumerados en la variable <code>_fields</code>. Sin embargo, debería permitir que se configure cualquier atributo "privado" (por ejemplo, un nombre que empiece por <code>_</code>).</p>
+<p>Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG',100,490.1)
+&gt;&gt;&gt; s.shares = 50
+&gt;&gt;&gt; s.share = 50
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;structure.py&quot;, line 13, in __setattr__
+    raise AttributeError('No attribute %s' % name)
+AttributeError: No attribute share
+&gt;&gt;&gt; s._shares = 100 # Atributo privado. OK
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="d-volver-a-empezar">(d) Volver a empezar</h2>
+<p>Crea un nuevo archivo <code>stock.py</code> (o elimina todo el código anterior). Comienza de nuevo definiendo <code>Stock</code> de la siguiente manera:</p>
+<pre><code class="language-python"># stock.py
+
+from structure import Structure
+
+class Stock(Structure):
+    _fields = ('name', 'shares', 'price')
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares):
+        self.shares -= nshares
+</code></pre>
+<p>Una vez hecho esto, ejecuta las pruebas unitarias de <code>teststock.py</code>. Deberías obtener muchos fallos, pero al menos algunas pruebas deberían pasar.</p>
+<p><a href="../soln6_1/">Solution</a> | <a href="../">Index</a> | <a href="../ex5_6/">Exercise 5.6</a> | <a href="../ex6_2/">Ejercicio 6.2</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

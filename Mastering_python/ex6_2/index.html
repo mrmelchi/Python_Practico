@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex6_2/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex6 2 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-62" class="nav-link">Ejercicio 6.2</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-muestrame-tus-variables-locales" class="nav-link">(a) Muéstrame tus variables locales</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-hackeo-de-marcos-de-pila" class="nav-link">(b) Hackeo de marcos de pila</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-en-resumen" class="nav-link">(c) En resumen</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex6_1/">Ejercicio 6.1</a> | <a href="ex6_3.md">Ejercicio 6.3</a></p>
+<h1 id="ejercicio-62">Ejercicio 6.2</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender más sobre las reglas de alcance</li>
+<li>Aprender algunos trucos de alcance</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>structure.py</code>, <code>stock.py</code></p>
+<p>En el último ejercicio, creaste la clase <code>Structure</code> que facilitó la definición de estructuras de datos. Por ejemplo:</p>
+<pre><code class="language-python">class Stock(Structure):
+    _fields = ('name','shares','price')
+</code></pre>
+<p>Esto funciona bien, excepto que hay muchos aspectos extraños en la función <code>__init__()</code>. Por ejemplo, si solicitas ayuda usando <code>help(Stock)</code>, no obtienes ninguna firma útil. Además, el paso de argumentos por palabra clave no funciona. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; help(Stock)
+... observe la salida....
+
+&gt;&gt;&gt; s = Stock(name='GOOG', shares=100, price=490.1)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: __init__() got an unexpected keyword argument 'price'
+&gt;&gt;&gt;
+</code></pre>
+<p>En este ejercicio, analizaremos un enfoque diferente para el problema.</p>
+<h2 id="a-muestrame-tus-variables-locales">(a) Muéstrame tus variables locales</h2>
+<p>Primero, prueba un experimento definiendo la siguiente clase:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Stock:
+        def __init__(self, name, shares, price):
+            print(locals())
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora, intenta ejecutar esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+{'self': &lt;__main__.Stock object at 0x100699b00&gt;, 'price': 490.1, 'name': 'GOOG', 'shares': 100}
+&gt;&gt;&gt;
+</code></pre>
+<p>Observa cómo el diccionario de variables locales contiene todos los argumentos pasados ​​a <code>__init__()</code>. Es interesante. Ahora, defina las siguientes definiciones de función y clase:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def _init(locs):
+        self = locs.pop('self')
+        for name, val in locs.items():
+            setattr(self, name, val)
+
+&gt;&gt;&gt; class Stock:
+        def __init__(self, name, shares, price):
+            _init(locals())
+</code></pre>
+<p>En este código, la función <code>_init()</code> se usa para inicializar automáticamente un objeto a partir de un diccionario de variables locales pasadas. Verá que <code>help(Stock)</code> y los argumentos de palabras clave funcionan perfectamente.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock(name='GOOG', price=490.1, shares=50)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+50
+&gt;&gt;&gt; s.price
+490.1
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-hackeo-de-marcos-de-pila">(b) Hackeo de marcos de pila</h2>
+<p>Una queja sobre la última parte es que la función <code>__init__()</code> ahora se ve bastante extraña con esa llamada a <code>locals()</code> insertada. Sin embargo, puedes solucionar esto si estás dispuesto a hackear un poco los marcos de pila. Prueba esta variante de la función <code>_init()</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; def _init():
+        locs = sys._getframe(1).f_locals   # Obtener las variables locales del                                                # invocador
+        self = locs.pop('self')
+        for name, val in locs.items():
+            setattr(self, name, val)
+&gt;&gt;&gt;
+</code></pre>
+<p>En este código, las variables locales se extraen del marco de pila del invocador. Aquí tienes una definición de clase modificada:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class Stock:
+        def __init__(self, name, shares, price):
+            _init()
+
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+100
+&gt;&gt;&gt;
+</code></pre>
+<p>En este punto, probablemente te sientas un poco perturbado. Sí, acabas de escribir una función que accedió al marco de pila de otra función y examinó sus variables locales.</p>
+<h2 id="c-en-resumen">(c) En resumen</h2>
+<p>Tomando las ideas de las dos primeras partes, elimina el método <code>__init__()</code> que originalmente formaba parte de la clase <code>Structure</code>. A continuación, agregue un método <code>_init()</code> como este:</p>
+<pre><code class="language-python"># structure.py
+import sys
+
+class Structure:
+    ...
+    @staticmethod
+    def _init():
+        locs = sys._getframe(1).f_locals
+        self = locs.pop('self')
+        for name, val in locs.items():
+            setattr(self, name, val)
+    ...
+</code></pre>
+<p>Nota: La razón por la que esto se define como un <code>@staticmethod</code> es que el argumento <code>self</code> se obtiene de las variables locales; no es necesario pasarlo adicionalmente como argumento al propio método (aunque esto es un poco sutil).</p>
+<p>Ahora, modifica tu clase <code>Stock</code> para que se vea como la siguiente:</p>
+<pre><code class="language-python"># stock.py
+from structure import Structure
+
+class Stock(Structure):
+    _fields = ('name','shares','price')
+    def __init__(self, name, shares, price):
+        self._init()
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, shares):
+        self.shares -= shares
+</code></pre>
+<p>Verifica que la clase funcione correctamente, admita argumentos de palabras clave y tenga una firma de ayuda adecuada.</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock(name='GOOG', price=490.1, shares=50)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.shares
+50
+&gt;&gt;&gt; s.price
+490.1
+&gt;&gt;&gt; help(Stock)
+... observa el resultado...
+&gt;&gt;&gt;
+</code></pre>
+<p>Ejecuta tus pruebas unitarias en <code>teststock.py</code> de nuevo. Deberías ver al menos una prueba más completa. ¡Genial! En ​​este punto, parecerá que hemos dado un gran paso atrás. Las clases no solo necesitan el método <code>__init__()</code>, sino también la variable <code>_fields</code> para que funcionen algunos de los otros métodos (<code>__repr__()</code> y <code>__setattr__()</code>). Además, el uso de <code>self._init()</code> parece bastante complicado. Trabajaremos en esto, pero ten paciencia.</p>
+<p><a href="../soln6_2/">Solución</a> | <a href="../">Índice</a> | <a href="../ex6_1/">Ejercicio 6.1</a> | <a href="ex6_3.md">Ejercicio 6.3</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

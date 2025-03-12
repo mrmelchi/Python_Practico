@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex5_3/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex5 3 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-53" class="nav-link">Ejercicio 5.3</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-uso-de-funciones-de-orden-superior" class="nav-link">(a) Uso de funciones de orden superior</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-mapeo" class="nav-link">(b) Mapeo</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex5_2/">Ejercicio 5.2</a> | <a href="../ex5_4/">Ejercicio 5.4</a></p>
+<h1 id="ejercicio-53">Ejercicio 5.3</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Funciones de orden superior</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>reader.py</code></p>
+<h2 id="a-uso-de-funciones-de-orden-superior">(a) Uso de funciones de orden superior</h2>
+<p>Actualmente, el programa <code>reader.py</code> consta de dos funciones principales: <code>csv_as_dicts()</code> y <code>csv_as_instances()</code>. El código de estas dos funciones es prácticamente idéntico. Por ejemplo:</p>
+<pre><code class="language-python">def csv_as_dicts(lines, types, *, headers=None):
+    '''
+    Convierte líneas de datos CSV en una lista de diccionarios
+
+    '''
+    records = []
+    rows = csv.reader(lines)
+    if headers is None:
+        headers = next(rows)
+    for row in rows:
+        record = { name: func(val)
+                   for name, func, val in zip(headers, types, row) }
+        records.append(record)
+    return records
+
+def csv_as_instances(lines, cls, *, headers=None):
+    '''
+    Convierte líneas de datos CSV en una lista de instancias
+    '''
+    records = []
+    rows = csv.reader(lines)
+    if headers is None:
+        headers = next(rows)
+    for row in rows:
+        record = cls.from_row(row)
+        records.append(record)
+    return records
+</code></pre>
+<p>Unifica el núcleo de estas funciones en una sola función <code>convert_csv()</code> que acepta una función de conversión definida por el usuario como argumento. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; def make_dict(headers, row):
+        return dict(zip(headers, row))
+
+&gt;&gt;&gt; lines = open('Data/portfolio.csv')
+&gt;&gt;&gt; convert_csv(lines, make_dict)
+[{'name': 'AA', 'shares': '100', 'price': '32.20'}, {'name': 'IBM', 'shares': '50', 'price': '91.10'}, 
+ {'name': 'CAT', 'shares': '150', 'price': '83.44'}, {'name': 'MSFT', 'shares': '200', 'price': '51.23'}, 
+ {'name': 'GE', 'shares': '95', 'price': '40.37'}, {'name': 'MSFT', 'shares': '50', 'price': '65.10'}, 
+ {'name': 'IBM', 'shares': '100', 'price': '70.44'}]
+&gt;&gt;&gt;
+</code></pre>
+<p>Reescriba las funciones <code>csv_as_dicts()</code> y <code>csv_as_instances()</code> en función de la nueva función <code>convert_csv()</code>.</p>
+<h2 id="b-mapeo">(b) Mapeo</h2>
+<p>Una de las operaciones más comunes en programación funcional es <code>map()</code>, que mapea una función a los valores de una secuencia. Python tiene una función <code>map()</code> integrada que realiza esta función. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; nums = [1,2,3,4]
+&gt;&gt;&gt; squares = map(lambda x: x*x, nums)
+&gt;&gt;&gt; for n in squares:
+        print(n)
+
+1
+4
+9
+16
+&gt;&gt;&gt;
+</code></pre>
+<p><code>map()</code> produce un iterador, así que si quieres una lista, tendrás que crearla explícitamente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; squares = list(map(lambda x: x*x, nums))
+&gt;&gt;&gt; squares
+[1, 4, 9, 16]
+&gt;&gt;&gt;
+</code></pre>
+<p>Intenta usar <code>map()</code> en tu función <code>convert_csv()</code>.</p>
+<p><a href="../soln5_3/">Solución</a> | <a href="../">Índice</a> | <a href="../ex5_2/">Ejercicio 5.2</a> | <a href="../ex5_4/">Ejercicio 5.4</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
