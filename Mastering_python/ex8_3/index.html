@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln8_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_3/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 8.6 - Solution - Python Practico</title>
+        <title>Ex8 3 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,17 +66,13 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-86-solution" class="nav-link">Exercise 8.6 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-83" class="nav-link">Ejercicio 8.3</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-receiving-messages" class="nav-link">(a) Receiving Messages</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#b-wrapping-a-socket" class="nav-link">(b) Wrapping a Socket</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-un-ejemplo-de-corrutina" class="nav-link">(a) Un ejemplo de corrutina</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#c-asyncawait" class="nav-link">(c) Async/Await</a>
+            <li class="nav-item" data-bs-level="2"><a href="#b-construye-algunos-componentes-de-la-canalizacion" class="nav-link">(b) Construye algunos componentes de la canalización</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -87,15 +83,64 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-86-solution">Exercise 8.6 - Solution</h1>
-<h2 id="a-receiving-messages">(a) Receiving Messages</h2>
+<p><a href="../">Índice</a> | <a href="../ex8_2/">Ejercicio 8.2</a> | <a href="../ex8_4/">Ejercicio 8.4</a></p>
+<h1 id="ejercicio-83">Ejercicio 8.3</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Uso de corrutinas para configurar canales de procesamiento</li>
+</ul>
+<p><em>Archivos creados:</em> <code>cofollow.py</code>, <code>coticker.py</code></p>
+<p><strong>Nota</strong></p>
+<p>Para este ejercicio, el programa <code>stocksim.py</code> debe seguir ejecutándose en segundo plano.</p>
+<p>En el <a href="../ex8_2/">Ejercicio 8.2</a> escribiste código que usaba generadores para configurar un canal de procesamiento. Un aspecto clave de ese programa era la idea del flujo de datos entre las funciones del generador. Se puede configurar un flujo de datos muy similar usando corrutinas. La única diferencia es que con una corrutina, se envían datos a diferentes elementos de procesamiento, en lugar de extraerlos con un bucle for.</p>
+<h2 id="a-un-ejemplo-de-corrutina">(a) Un ejemplo de corrutina</h2>
+<p>Comenzar a usar corrutinas puede ser un poco complicado. Aquí hay un programa de ejemplo que realiza la misma tarea que el <a href="../ex8_2/">Ejercicio 8.2</a>, pero con corrutinas. Copia este programa en un archivo llamado <code>cofollow.py</code>.</p>
+<pre><code class="language-python"># cofollow.py
+import os
+import time
+
+# Origen de datos
+def follow(filename,target):
+    with open(filename,'r') as f:
+        f.seek(0,os.SEEK_END)
+        while True:
+            line = f.readline()
+            if line != '':
+                target.send(line)
+            else:
+                time.sleep(0.1)
+
+# Decorador para funciones de corrutina
+from functools import wraps
+
+def consumer(func):
+    @wraps(func)
+    def start(*args,**kwargs):
+        f = func(*args,**kwargs)
+        f.send(None)
+        return f
+    return start
+
+# Corrutina de ejemplo
+@consumer
+def printer():
+    while True:
+        item = yield     # Recibir un artículo enviado
+        print(item)
+
+# Ejemplo de uso
+if __name__ == '__main__':
+    follow('Data/stocklog.csv',printer())
+</code></pre>
+<p>Ejecuta este programa y asegúrate de que genere resultados. Asegúrate de comprender cómo se conectan las diferentes partes.</p>
+<h2 id="b-construye-algunos-componentes-de-la-canalizacion">(b) Construye algunos componentes de la canalización</h2>
+<p>En el archivo <code>coticker.py</code>, construye una serie de componentes de la canalización que realicen las mismas tareas que el programa <code>ticker.py</code> del <a href="../ex8_2/">Ejercicio 8.2</a>. Aquí está la implementación de las diferentes partes.</p>
 <pre><code class="language-python"># coticker.py
 from structure import Structure
-from validate import String, Integer, Float
 
 class Ticker(Structure):
     name = String()
-    price = Float()
+    price =Float()
     date = String()
     time = String()
     change = Float()
@@ -104,10 +149,12 @@ class Ticker(Structure):
     low = Float()
     volume = Integer()
 
-from cofollow import consumer, follow, receive
+from cofollow import consumer, follow
 from tableformat import create_formatter
 import csv
 
+
+# Este es un poco complicado. Ver la solución para obtener notas al respecto.
 @consumer
 def to_csv(target):
     def producer():
@@ -116,162 +163,38 @@ def to_csv(target):
 
     reader = csv.reader(producer())
     while True:
-        line = yield from receive(str)
+        line = yield
         target.send(next(reader))
 
 @consumer
 def create_ticker(target):
     while True:
-        row = yield from receive(list)
+        row = yield
         target.send(Ticker.from_row(row))
 
 @consumer
 def negchange(target):
     while True:
-        record = yield from receive(Ticker)
+        record = yield
         if record.change &lt; 0:
             target.send(record)
 
 @consumer
 def ticker(fmt, fields):
-    formatter = create_formatter('text')
+    formatter = create_formatter(fmt)
     formatter.headings(fields)
     while True:
-        rec = yield from receive(Ticker)
+        rec = yield
         row = [getattr(rec, name) for name in fields]
         formatter.row(row)
-
-if __name__ == '__main__':
-    follow('Data/stocklog.csv',
-           to_csv(
-           create_ticker(
-           negchange(
-           ticker('text', ['name','price','change'])))))
 </code></pre>
-<h2 id="b-wrapping-a-socket">(b) Wrapping a Socket</h2>
-<pre><code class="language-python"># server.py
-...
-
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = yield from sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = yield from client.recv(1000)
-        if not data:
-            break
-        yield from client.send(b'GOT:' + data)
-    print('Connection closed')
-
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
-</code></pre>
-<h2 id="c-asyncawait">(c) Async/Await</h2>
-<pre><code class="language-python"># server.py
-
-from socket import *
-from select import select
-from collections import deque
-from types import coroutine
-
-tasks = deque()
-recv_wait = {}   #  sock -&gt; task
-send_wait = {}   #  sock -&gt; task
-
-def run():
-    while any([tasks, recv_wait, send_wait]):
-        while not tasks:
-            can_recv, can_send, _ = select(recv_wait, send_wait, [])
-            for s in can_recv:
-                tasks.append(recv_wait.pop(s))
-            for s in can_send:
-                tasks.append(send_wait.pop(s))
-        task = tasks.popleft()
-        try:
-            reason, resource = task.send(None)
-            if reason == 'recv':
-                recv_wait[resource] = task
-            elif reason == 'send':
-                send_wait[resource] = task
-            else:
-                raise RuntimeError('Unknown reason %r' % reason)
-        except StopIteration:
-            print('Task done')
-
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    @coroutine
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    @coroutine
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    @coroutine
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-async def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = await sock.accept()
-        tasks.append(handler(client, addr))
-
-async def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = await client.recv(1000)
-        if not data:
-            break
-        await client.send(b'GOT:' + data)
-    print('Connection closed')
-
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
-</code></pre>
-<p><a href="../ex8_6/">Back</a></p></div>
+<p>Tu reto: Escribe el principal Programa que conecta todos estos componentes para generar el mismo ticker bursátil que en el ejercicio anterior.</p>
+<p><a href="../soln8_3/">Solución</a> | <a href="../">Índice</a> | <a href="../ex8_2/">Ejercicio 8.2</a> | <a href="../ex8_4/">Ejercicio 8.4</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

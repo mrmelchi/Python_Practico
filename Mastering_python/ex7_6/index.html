@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln7_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex7_6/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 7.6 - Solution - Python Practico</title>
+        <title>Ex7 6 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-76-solution" class="nav-link">Exercise 7.6 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-76" class="nav-link">Ejercicio 7.6</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-la-ultima-frontera" class="nav-link">(a) La última frontera</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-mirada-asombrada" class="nav-link">(b) Mirada Asombrada</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,10 +83,63 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-76-solution">Exercise 7.6 - Solution</h1>
-<pre><code class="language-python"># structure.py
+<p><a href="../">Índice</a> | <a href="../ex7_5/">Ejercicio 7.5</a> | <a href="../ex8_1/">Ejercicio 8.1</a></p>
+<h1 id="ejercicio-76">Ejercicio 7.6</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Metaclases en acción</li>
+<li>Explota tu cerebro</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>structure.py</code>, <code>validate.py</code></p>
+<h2 id="a-la-ultima-frontera">(a) La última frontera</h2>
+<p>En el <a href="../ex7_3/">Ejercicio 7.3</a>, permitimos definir estructuras con verificación de tipos de la siguiente manera:</p>
+<pre><code class="language-python">from validate import String, PositiveInteger, PositiveFloat
+from structure import Structure
 
-from validate import Validator, validated
+class Stock(Structure):
+    name = String()
+    shares = PositiveInteger()
+    price = PositiveFloat()
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares: PositiveInteger):
+        self.shares -= nshares
+</code></pre>
+<p>Hay muchas Hay cosas que suceden en segundo plano. Sin embargo, una molestia se refiere a todas esas importaciones de nombres de tipo en la parte superior (p. ej., <code>String</code>, <code>PositiveInteger</code>, etc.). Este tipo de cosas podrían llevar a una sentencia <code>from validate import *</code>. Un aspecto interesante de una metaclase es que puede usarse para controlar el proceso de definición de una clase. Esto incluye la gestión del entorno de la propia definición de clase. Abordemos estas importaciones.</p>
+<p>El primer paso para gestionar todos los nombres de validadores es recopilarlos. Vaya al archivo <code>validate.py</code> y modifique la clase base <code>Validator</code> con este fragmento de código adicional que incluye <code>__init_subclass__()</code> de nuevo:</p>
+<pre><code class="language-python"># validate.py
+
+class Validator:
+    ...
+
+    # Collect all derived classes into a dict
+    validators = { }
+    @classmethod
+    def __init_subclass__(cls):
+        cls.validators[cls.__name__] = cls
+</code></pre>
+<p>No es mucho, pero está creando un pequeño espacio de nombres para todas las subclases de <code>Validator</code>. Échale un vistazo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from validate import Validator
+&gt;&gt;&gt; Validator.validators
+{'Float': &lt;class 'validate.Float'&gt;,
+ 'Integer': &lt;class 'validate.Integer'&gt;,
+ 'NonEmpty': &lt;class 'validate.NonEmpty'&gt;,
+ 'NonEmptyString': &lt;class 'validate.NonEmptyString'&gt;,
+ 'Positive': &lt;class 'validate.Positive'&gt;,
+ 'PositiveFloat': &lt;class 'validate.PositiveFloat'&gt;,
+ 'PositiveInteger': &lt;class 'validate.PositiveInteger'&gt;,
+ 'String': &lt;class 'validate.String'&gt;,
+ 'Typed': &lt;class 'validate.Typed'&gt;}
+&gt;&gt;&gt;
+</code></pre>
+<p>Ahora que Una vez hecho esto, inyectemos este espacio de nombres en el espacio de nombres de las clases definidas desde <code>Structure</code>. Defina la siguiente metaclase:</p>
+<pre><code class="language-python"># structure.py
+...
+
+from validate import Validator
 from collections import ChainMap
 
 class StructureMeta(type):
@@ -92,77 +153,54 @@ class StructureMeta(type):
         return super().__new__(meta, name, bases, methods)
 
 class Structure(metaclass=StructureMeta):
-    _fields = ()
-    _types = ()
-
-    def __setattr__(self, name, value):
-        if name.startswith('_') or name in self._fields:
-            super().__setattr__(name, value)
-        else:
-            raise AttributeError('No attribute %s' % name)
-
-    def __repr__(self):
-        return '%s(%s)' % (type(self).__name__,
-                           ', '.join(repr(getattr(self, name)) for name in self._fields))
-
-    @classmethod
-    def from_row(cls, row):
-        rowdata = [ func(val) for func, val in zip(cls._types, row) ]
-        return cls(*rowdata)
-
-
-    @classmethod
-    def create_init(cls):
-        '''
-        Create an __init__ method from _fields
-        '''
-        args = ','.join(cls._fields)
-        code = f'def __init__(self, {args}):\n'
-        for name in cls._fields:
-            code += f'    self.{name} = {name}\n'
-        locs = { }
-        exec(code, locs)
-        cls.__init__ = locs['__init__']
-
-    @classmethod
-    def __init_subclass__(cls):
-        # Apply the validated decorator to subclasses
-        validate_attributes(cls)
-
-def validate_attributes(cls):
-    '''
-    Class decorator that scans a class definition for Validators
-    and builds a _fields variable that captures their definition order.
-    '''
-    validators = []
-    for name, val in vars(cls).items():
-        if isinstance(val, Validator):
-            validators.append(val)
-
-        # Apply validated decorator to any callable with annotations
-        elif callable(val) and val.__annotations__:
-            setattr(cls, name, validated(val))
-
-    # Collect all of the field names
-    cls._fields = tuple([v.name for v in validators])
-
-    # Collect type conversions. The lambda x:x is an identity
-    # function that's used in case no expected_type is found.
-    cls._types = tuple([ getattr(v, 'expected_type', lambda x: x)
-                   for v in validators ])
-
-    # Create the __init__ method
-    if cls._fields:
-        cls.create_init()
-
-
-    return cls
-
-def typed_structure(clsname, **validators):
-    cls = type(clsname, (Structure,), validators)
-    return cls
+    ...
 </code></pre>
-<p><a href="../ex7_6/">Back</a></p></div>
+<p>En este código, el método <code>__prepare__()</code> crea una asignación especial de <code>ChainMap</code> que consta de un diccionario vacío y un diccionario con todos los validadores definidos. El diccionario vacío que aparece primero recopilará todas las definiciones realizadas dentro del cuerpo de la clase. El diccionario <code>Validator.validators</code> pondrá a disposición todas las definiciones de tipo para usarlas como descriptores o anotaciones de tipo de argumento.</p>
+<p>El método <code>__new__()</code> descarta el resto del diccionario de validadores y pasa las definiciones restantes al constructor de tipos. Es ingenioso, pero permite eliminar las molestas importaciones:</p>
+<pre><code class="language-python"># stock.py
+
+from structure import Structure
+
+class Stock(Structure):
+    name = String()
+    shares = PositiveInteger()
+    price = PositiveFloat()
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares: PositiveInteger):
+        self.shares -= nshares
+</code></pre>
+<h2 id="b-mirada-asombrada">(b) Mirada Asombrada</h2>
+<p>Intenta ejecutar tus pruebas unitarias <code>teststock.py</code> en este nuevo archivo. La mayoría deberían funcionar correctamente. Para empezar, prueba tu clase «Stock» con parte del código anterior para formatear tablas y leer datos. Debería funcionar</p>
+<pre><code class="language-python">&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; from reader import read_csv_as_instances
+&gt;&gt;&gt; portfolio = read_csv_as_instances('Data/portfolio.csv', Stock)
+&gt;&gt;&gt; portfolio
+[Stock('AA',100,32.2), Stock('IBM',50,91.1), Stock('CAT',150,83.44), Stock('MSFT',200,51.23), Stock('GE',95,40.37), Stock('MSFT',50,65.1), Stock('IBM',100,70.44)]
+&gt;&gt;&gt; from tableformat import create_formatter, print_table
+&gt;&gt;&gt; formatter = create_formatter('text')
+&gt;&gt;&gt; print_table(portfolio, ['name','shares','price'], formatter)
+      name     shares      price 
+---------- ---------- ---------- 
+        AA        100       32.2 
+       IBM         50       91.1 
+       CAT        150      83.44 
+      MSFT        200      51.23 
+        GE         95      40.37 
+      MSFT         50       65.1 
+       IBM        100      70.44 
+&gt;&gt;&gt; 
+</code></pre>
+<p>De nuevo, maravíllese con el archivo final <code>stock.py</code> y observe lo limpio que se ve el código. Simplemente intente no pensar en todo lo que sucede en segundo plano con la clase base <code>Structure</code>.</p>
+<p><a href="../soln7_6/">Solución</a> | <a href="../">Índice</a> | <a href="../ex7_5/">Ejercicio 7.5</a> | <a href="../ex8_1/">Ejercicio 8.1</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

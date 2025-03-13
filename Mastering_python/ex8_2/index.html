@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln8_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_2/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 8.6 - Solution - Python Practico</title>
+        <title>Ex8 2 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,17 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-86-solution" class="nav-link">Exercise 8.6 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-82" class="nav-link">Ejercicio 8.2</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-receiving-messages" class="nav-link">(a) Receiving Messages</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#b-wrapping-a-socket" class="nav-link">(b) Wrapping a Socket</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-configurando-procesamiento-de-tuberia" class="nav-link">(a) Configurando procesamiento de tubería</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#c-asyncawait" class="nav-link">(c) Async/Await</a>
+            <li class="nav-item" data-bs-level="2"><a href="#b-creacion-de-mas-componentes-de-la-tuberia" class="nav-link">(b) Creación de más componentes de la tubería</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-continua" class="nav-link">(c) Continúa</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -87,11 +87,36 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-86-solution">Exercise 8.6 - Solution</h1>
-<h2 id="a-receiving-messages">(a) Receiving Messages</h2>
-<pre><code class="language-python"># coticker.py
+<p><a href="../">Índice</a> | <a href="../ex8_1/">Ejercicio 8.1</a> | <a href="../ex8_3/">Ejercicio 8.3</a></p>
+<h1 id="ejercicio-82">Ejercicio 8.2</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Usar generadores para configurar pipelines de procesamiento</li>
+</ul>
+<p><em>Archivos creados:</em> <code>ticker.py</code></p>
+<p><strong>Nota</strong></p>
+<p>Para este ejercicio, el programa <code>stocksim.py</code> debe seguir ejecutándose en segundo plano. Usarás la función <code>follow()</code> que escribiste en el ejercicio anterior.</p>
+<h2 id="a-configurando-procesamiento-de-tuberia">(a) Configurando procesamiento de tubería</h2>
+<p>Una gran ventaja de los generadores es que permiten crear programas que configuran pipelines de procesamiento, de forma similar a las tuberías en sistemas Unix. Experimente con este concepto siguiendo estos pasos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from follow import follow
+&gt;&gt;&gt; import csv
+&gt;&gt;&gt; lines = follow('Data/stocklog.csv')
+&gt;&gt;&gt; rows = csv.reader(lines)
+&gt;&gt;&gt; for row in rows:
+        print(row)
+
+['BA', '98.35', '6/11/2007', '09:41.07', '0.16', '98.25', '98.35', '98.31', '158148']
+['AA', '39.63', '6/11/2007', '09:41.07', '-0.03', '39.67', '39.63', '39.31', '270224']
+['XOM', '82.45', '6/11/2007', '09:41.07', '-0.23', '82.68', '82.64', '82.41', '748062']
+['PG', '62.95', '6/11/2007', '09:41.08', '-0.12', '62.80', '62.97', '62.61', '454327']
+...
+</code></pre>
+<p>Bueno, eso es interesante. Lo que ven aquí es que la salida de la función <code>follow()</code> se ha canalizado a la función <code>csv.reader()</code> y ahora obtenemos una secuencia de filas divididas.</p>
+<h2 id="b-creacion-de-mas-componentes-de-la-tuberia">(b) Creación de más componentes de la tubería</h2>
+<p>En el archivo <code>ticker.py</code>, define la siguiente clase (usando el código de estructura anterior) y configura una tubería:</p>
+<pre><code class="language-python"># ticker.py
+
 from structure import Structure
-from validate import String, Integer, Float
 
 class Ticker(Structure):
     name = String()
@@ -104,174 +129,64 @@ class Ticker(Structure):
     low = Float()
     volume = Integer()
 
-from cofollow import consumer, follow, receive
-from tableformat import create_formatter
-import csv
-
-@consumer
-def to_csv(target):
-    def producer():
-        while True:
-            yield line
-
-    reader = csv.reader(producer())
-    while True:
-        line = yield from receive(str)
-        target.send(next(reader))
-
-@consumer
-def create_ticker(target):
-    while True:
-        row = yield from receive(list)
-        target.send(Ticker.from_row(row))
-
-@consumer
-def negchange(target):
-    while True:
-        record = yield from receive(Ticker)
-        if record.change &lt; 0:
-            target.send(record)
-
-@consumer
-def ticker(fmt, fields):
-    formatter = create_formatter('text')
-    formatter.headings(fields)
-    while True:
-        rec = yield from receive(Ticker)
-        row = [getattr(rec, name) for name in fields]
-        formatter.row(row)
-
 if __name__ == '__main__':
-    follow('Data/stocklog.csv',
-           to_csv(
-           create_ticker(
-           negchange(
-           ticker('text', ['name','price','change'])))))
+    from follow import follow
+    import csv
+    lines = follow('Data/stocklog.csv')
+    rows = csv.reader(lines)
+    records = (Ticker.from_row(row) for row in rows)
+    for record in records:
+        print(record)
 </code></pre>
-<h2 id="b-wrapping-a-socket">(b) Wrapping a Socket</h2>
-<pre><code class="language-python"># server.py
+<p>Al ejecutar esto, deberías ver un resultado como este:</p>
+<pre><code class="language-python">Ticker('IBM',103.53,'6/11/2007','09:53.59',0.46,102.87,103.53,102.77,541633)
+Ticker('MSFT',30.21,'6/11/2007','09:54.01',0.16,30.05,30.21,29.95,7562516)
+Ticker('AA',40.01,'6/11/2007','09:54.01',0.35,39.67,40.15,39.31,576619)
+Ticker('T',40.1,'6/11/2007','09:54.08',-0.16,40.2,40.19,39.87,1312959)
+</code></pre>
+<h2 id="c-continua">(c) Continúa</h2>
+<p>¡Ah, puedes hacerlo mejor! Incorporémoslo a tu código de generación de tablas. Cambia el programa a lo siguiente:</p>
+<pre><code class="language-python"># ticker.py
 ...
 
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = yield from sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = yield from client.recv(1000)
-        if not data:
-            break
-        yield from client.send(b'GOT:' + data)
-    print('Connection closed')
-
 if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
+    from follow import follow
+    import csv
+    from tableformat import create_formatter, print_table
+
+    formatter = create_formatter('text')
+
+    lines = follow('Data/stocklog.csv')
+    rows = csv.reader(lines)
+    records = (Ticker.from_row(row) for row in rows)
+    negative = (rec for rec in records if rec.change &lt; 0)
+    print_table(negative, ['name','price','change'], formatter)
 </code></pre>
-<h2 id="c-asyncawait">(c) Async/Await</h2>
-<pre><code class="language-python"># server.py
-
-from socket import *
-from select import select
-from collections import deque
-from types import coroutine
-
-tasks = deque()
-recv_wait = {}   #  sock -&gt; task
-send_wait = {}   #  sock -&gt; task
-
-def run():
-    while any([tasks, recv_wait, send_wait]):
-        while not tasks:
-            can_recv, can_send, _ = select(recv_wait, send_wait, [])
-            for s in can_recv:
-                tasks.append(recv_wait.pop(s))
-            for s in can_send:
-                tasks.append(send_wait.pop(s))
-        task = tasks.popleft()
-        try:
-            reason, resource = task.send(None)
-            if reason == 'recv':
-                recv_wait[resource] = task
-            elif reason == 'send':
-                send_wait[resource] = task
-            else:
-                raise RuntimeError('Unknown reason %r' % reason)
-        except StopIteration:
-            print('Task done')
-
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    @coroutine
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    @coroutine
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    @coroutine
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-async def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = await sock.accept()
-        tasks.append(handler(client, addr))
-
-async def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = await client.recv(1000)
-        if not data:
-            break
-        await client.send(b'GOT:' + data)
-    print('Connection closed')
-
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
+<p>Esto debería generar una salida similar a esta:</p>
+<pre><code class="language-python">
+      name      price     change 
+    ---------- ---------- ---------- 
+             C      53.12      -0.21 
+           UTX      70.04      -0.19 
+           AXP      62.86      -0.18 
+           MMM      85.72      -0.22 
+           MCD      51.38      -0.03 
+           WMT      49.85      -0.23 
+            KO       51.6      -0.07 
+           AIG      71.39      -0.14 
+            PG      63.05      -0.02 
+            HD      37.76      -0.19 
 </code></pre>
-<p><a href="../ex8_6/">Back</a></p></div>
+<p>¡Eso sí que es una locura! Y bastante impresionante.</p>
+<p><strong>Discusión</strong></p>
+<p>Algunas lecciones aprendidas: Se pueden crear varias funciones generadoras y encadenarlas para realizar procesamientos que involucren tuberías de flujo de datos.</p>
+<p>Un buen modelo mental para las funciones generadoras podrían ser los bloques de Lego. Se puede crear una colección de pequeños patrones iteradores y empezar a apilarlos de diversas maneras. Puede ser una forma extremadamente potente de programar.</p>
+<p><a href="../soln8_2/">Solución</a> | <a href="../">Índice</a> | <a href="../ex8_1/">Ejercicio 8.1</a> | <a href="../ex8_3/">Ejercicio 8.3</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

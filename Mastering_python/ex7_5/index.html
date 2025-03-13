@@ -65,12 +65,66 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-75" class="nav-link">Ejercicio 7.5</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-crear-tu-primera-metaclase" class="nav-link">(a) Crear tu primera metaclase</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-</div>
+<p><a href="../">Índice</a> | <a href="../ex7_4/">Ejercicio 7.4</a> | <a href="../ex7_6/">Ejercicio 7.6</a></p>
+<h1 id="ejercicio-75">Ejercicio 7.5</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Crear tu primera metaclase</li>
+</ul>
+<p><em>Archivos creados:</em> <code>mymeta.py</code></p>
+<h2 id="a-crear-tu-primera-metaclase">(a) Crear tu primera metaclase</h2>
+<p>Crea un archivo llamado <code>mymeta.py</code> e introduce el siguiente código (de las diapositivas):</p>
+<pre><code class="language-python"># mymeta.py
+
+class mytype(type):
+    @staticmethod
+    def __new__(meta, name, bases, __dict__):
+        print(&quot;Creating class :&quot;, name)
+        print(&quot;Base classes   :&quot;, bases)
+        print(&quot;Attributes     :&quot;, list(__dict__))
+        return super().__new__(meta, name, bases, __dict__)
+
+class myobject(metaclass=mytype):
+    pass
+</code></pre>
+<p>Una vez hecho esto, define una clase que Hereda de <code>myobject</code> en lugar de <code>object</code>. Por ejemplo:</p>
+<pre><code class="language-python">class Stock(myobject):
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+    def cost(self):
+        return self.shares * self.price
+    def sell(self, nshares):
+        self.shares -= nshares
+</code></pre>
+<p>Intenta ejecutar tu código y crear instancias de <code>Stock</code>. Observa qué sucede. Deberías ver las sentencias de impresión de tu <code>mytype</code> ejecutándose una vez cuando se define la clase <code>Stock</code>. ¿Qué sucede si heredas de <code>Stock</code>?</p>
+<pre><code class="language-python">class MyStock(Stock):
+    pass
+</code></pre>
+<p>Deberías seguir viendo tu metaclase en funcionamiento. Las metaclases son persistentes, ya que se aplican a lo largo de toda la jerarquía de herencia.</p>
+<p><strong>Discusión</strong></p>
+<p>¿Por qué querrías hacer algo así? La principal ventaja de una metaclase es que permite al programador capturar detalles sobre las clases justo antes de su creación. Por ejemplo, en el método <code>__new__()</code>, se proporcionan todos los detalles básicos, incluyendo el nombre de la clase, las clases base y los datos de los métodos. Si se inspeccionan estos datos, se pueden realizar diversos tipos de comprobaciones de diagnóstico. Si se es más audaz, se pueden modificar los datos y cambiar lo que se incluye en la definición de la clase al crearla. Huelga decir que existen muchas posibilidades de que se produzcan terribles maldades diabólicas.</p>
+<p><a href="../soln7_5/">Solución</a> | <a href="../">Índice</a> | <a href="../ex7_4/">Ejercicio 7.4</a> | <a href="../ex7_6/">Ejercicio 7.6</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

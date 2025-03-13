@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln8_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 8.6 - Solution - Python Practico</title>
+        <title>Ex8 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,17 +66,13 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-86-solution" class="nav-link">Exercise 8.6 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-84" class="nav-link">Ejercicio 8.4</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-receiving-messages" class="nav-link">(a) Receiving Messages</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#b-wrapping-a-socket" class="nav-link">(b) Wrapping a Socket</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-cierre-de-un-generador" class="nav-link">(a) Cierre de un generador</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#c-asyncawait" class="nav-link">(c) Async/Await</a>
+            <li class="nav-item" data-bs-level="2"><a href="#b-generacion-de-excepciones" class="nav-link">(b) Generación de excepciones</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -87,191 +83,119 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-86-solution">Exercise 8.6 - Solution</h1>
-<h2 id="a-receiving-messages">(a) Receiving Messages</h2>
-<pre><code class="language-python"># coticker.py
-from structure import Structure
-from validate import String, Integer, Float
-
-class Ticker(Structure):
-    name = String()
-    price = Float()
-    date = String()
-    time = String()
-    change = Float()
-    open = Float()
-    high = Float()
-    low = Float()
-    volume = Integer()
-
-from cofollow import consumer, follow, receive
-from tableformat import create_formatter
-import csv
-
-@consumer
-def to_csv(target):
-    def producer():
-        while True:
-            yield line
-
-    reader = csv.reader(producer())
-    while True:
-        line = yield from receive(str)
-        target.send(next(reader))
-
-@consumer
-def create_ticker(target):
-    while True:
-        row = yield from receive(list)
-        target.send(Ticker.from_row(row))
-
-@consumer
-def negchange(target):
-    while True:
-        record = yield from receive(Ticker)
-        if record.change &lt; 0:
-            target.send(record)
-
-@consumer
-def ticker(fmt, fields):
-    formatter = create_formatter('text')
-    formatter.headings(fields)
-    while True:
-        rec = yield from receive(Ticker)
-        row = [getattr(rec, name) for name in fields]
-        formatter.row(row)
-
-if __name__ == '__main__':
-    follow('Data/stocklog.csv',
-           to_csv(
-           create_ticker(
-           negchange(
-           ticker('text', ['name','price','change'])))))
+<p><a href="../">Índice</a> | <a href="../ex8_3/">Ejercicio 8.3</a> | <a href="../ex8_5/">Ejercicio 8.5</a></p>
+<h1 id="ejercicio-84">Ejercicio 8.4</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Gestionar lo que sucede en las sentencias <code>yield</code></li>
+</ul>
+<p><em>Archivos modificados:</em> <code>follow.py</code>, <code>cofollow.py</code></p>
+<h2 id="a-cierre-de-un-generador">(a) Cierre de un generador</h2>
+<p>Una pregunta frecuente sobre los generadores es su tiempo de vida y la recolección de basura. Por ejemplo, el generador <code>follow()</code> se ejecuta indefinidamente en un bucle <code>while</code> infinito. ¿Qué ocurre si el bucle de iteración que lo impulsa se detiene? Además, ¿hay alguna forma de finalizar el generador prematuramente?</p>
+<p>Modifique la función <code>follow()</code> para que todo el código esté encerrado en un bloque <code>try-except</code> como este:</p>
+<pre><code class="language-python">def follow(filename):
+    try:
+        with open(filename,'r') as f:
+            f.seek(0,os.SEEK_END)
+            while True:
+                 line = f.readline()
+                 if line == '':
+                     time.sleep(0.1)    # Dormir brevemente para evitar esperas intensas
+                     continue
+                 yield line
+    except GeneratorExit:
+        print('Siguiente')
 </code></pre>
-<h2 id="b-wrapping-a-socket">(b) Wrapping a Socket</h2>
-<pre><code class="language-python"># server.py
+<p>Ahora, pruebe algunos experimentos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from follow import follow
+&gt;&gt;&gt; # Experimento: Recolección de basura de un generador en ejecución
+&gt;&gt;&gt; f = follow('Data/stocklog.csv')
+&gt;&gt;&gt; next(f)
+'&quot;MO&quot;,70.29,&quot;6/11/2007&quot;,&quot;09:30.09&quot;,-0.01,70.25,70.30,70.29,365314\n'
+&gt;&gt;&gt; del f
+Siguiente
+&gt;&gt;&gt; # Experimento: Cerrar un generador
+&gt;&gt;&gt; f = follow('Data/stocklog.csv')
+&gt;&gt;&gt; for line in f:
+        print(line,end='')
+        if 'IBM' in line:
+            f.close()
+
+&quot;VZ&quot;,42.91,&quot;6/11/2007&quot;,&quot;09:34.28&quot;,-0.16,42.95,42.91,42.78,210151
+&quot;HPQ&quot;,45.76,&quot;6/11/2007&quot;,&quot;09:34.29&quot;,0.06,45.80,45.76,45.59,257169
+&quot;GM&quot;,31.45,&quot;6/11/2007&quot;,&quot;09:34.31&quot;,0.45,31.00,31.50,31.45,582429
 ...
+&quot;IBM&quot;,102.86,&quot;6/11/2007&quot;,&quot;09:34.44&quot;,-0.21,102.87,102.86,102.77,147550
+Siguiente
+&gt;&gt;&gt; for line in f:
+        print(line, end='')    # Sin salida: el generador ha terminado
 
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = yield from sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = yield from client.recv(1000)
-        if not data:
-            break
-        yield from client.send(b'GOT:' + data)
-    print('Connection closed')
-
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
+&gt;&gt;&gt; 
 </code></pre>
-<h2 id="c-asyncawait">(c) Async/Await</h2>
-<pre><code class="language-python"># server.py
+<p>En estos experimentos, se puede observar que se genera una excepción <code>GeneratorExit</code> cuando un generador se somete a la recolección de elementos no utilizados o se cierra explícitamente mediante su método <code>close()</code>.</p>
+<p>Otro aspecto a explorar es si se puede reanudar la iteración en un generador al salir de un bucle for. Por ejemplo, prueba esto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = follow('Data/stocklog.csv')
+&gt;&gt;&gt; for line in f:
+        print(line,end='')
+        if 'IBM' in line:
+            break
 
-from socket import *
-from select import select
-from collections import deque
-from types import coroutine
+&quot;CAT&quot;,78.36,&quot;6/11/2007&quot;,&quot;09:37.19&quot;,-0.16,78.32,78.36,77.99,237714
+&quot;VZ&quot;,42.99,&quot;6/11/2007&quot;,&quot;09:37.20&quot;,-0.08,42.95,42.99,42.78,268459
+...
+&quot;IBM&quot;,102.91,&quot;6/11/2007&quot;,&quot;09:37.31&quot;,-0.16,102.87,102.91,102.77,190859
+&gt;&gt;&gt; # Reanudar iteración
+&gt;&gt;&gt; for line in f:
+        print(line,end='')
+        if 'IBM' in line:
+            break
 
-tasks = deque()
-recv_wait = {}   #  sock -&gt; task
-send_wait = {}   #  sock -&gt; task
-
-def run():
-    while any([tasks, recv_wait, send_wait]):
-        while not tasks:
-            can_recv, can_send, _ = select(recv_wait, send_wait, [])
-            for s in can_recv:
-                tasks.append(recv_wait.pop(s))
-            for s in can_send:
-                tasks.append(send_wait.pop(s))
-        task = tasks.popleft()
+&quot;AA&quot;,39.58,&quot;6/11/2007&quot;,&quot;09:39.28&quot;,-0.08,39.67,39.58,39.31,243159
+&quot;HPQ&quot;,45.94,&quot;6/11/2007&quot;,&quot;09:39.29&quot;,0.24,45.80,45.94,45.59,408919
+...
+&quot;IBM&quot;,102.95,&quot;6/11/2007&quot;,&quot;09:39.44&quot;,-0.12,102.87,102.95,102.77,225350
+&gt;&gt;&gt; del f
+Siguiente
+&gt;&gt;&gt;
+</code></pre>
+<p>En general, puede interrumpir una iteración en ejecución y reanudarla más tarde si es necesario. Solo necesitas asegurarte de que el objeto generador no se cierre forzosamente ni se recolecte basura de alguna manera.</p>
+<h2 id="b-generacion-de-excepciones">(b) Generación de excepciones</h2>
+<p>En el archivo <code>cofollow.py</code>, creaste una corrutina <code>printer()</code>. Modifique el código para detectar y reportar excepciones como esta:</p>
+<pre><code class="language-python"># cofollow.py
+...
+@consumer
+def printer():
+    while True:
         try:
-            reason, resource = task.send(None)
-            if reason == 'recv':
-                recv_wait[resource] = task
-            elif reason == 'send':
-                send_wait[resource] = task
-            else:
-                raise RuntimeError('Unknown reason %r' % reason)
-        except StopIteration:
-            print('Task done')
-
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    @coroutine
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    @coroutine
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    @coroutine
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-async def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = await sock.accept()
-        tasks.append(handler(client, addr))
-
-async def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = await client.recv(1000)
-        if not data:
-            break
-        await client.send(b'GOT:' + data)
-    print('Connection closed')
-
-if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
-    run()
+            item = yield
+            print(item)
+        except Exception as e:
+            print('ERROR: %r' % e)
 </code></pre>
-<p><a href="../ex8_6/">Back</a></p></div>
+<p>Ahora, haga un experimento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from cofollow import printer
+&gt;&gt;&gt; p = printer()
+&gt;&gt;&gt; p.send('hello')
+hello
+&gt;&gt;&gt; p.send(42)
+42
+&gt;&gt;&gt; p.throw(ValueError('It failed'))
+ERROR: ValueError('It failed',)
+&gt;&gt;&gt; try:
+        int('n/a')
+    except ValueError as e:
+        p.throw(e)
+
+ERROR: ValueError(&quot;invalid literal for int() with base 10: 'n/a'&quot;,)
+&gt;&gt;&gt; 
+</code></pre>
+<p>Observe que el generador en ejecución no finaliza debido a la excepción. Esto simplemente permite que la instrucción <code>yield</code> indique un error en lugar de recibir un valor.</p>
+<p><a href="../soln8_4/">Solución</a> | <a href="../">Índice</a> | <a href="../ex8_3/">Ejercicio 8.3</a> | <a href="../ex8_5/">Ejercicio 8.5</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

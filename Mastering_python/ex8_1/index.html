@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Mario R. Melchiori">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_1/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ex8 1 - Python Practico</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-forest-light.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Python Practico</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-81" class="nav-link">Ejercicio 8.1</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-un-generador-simple" class="nav-link">(a) Un generador simple</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-anadiendo-iteracion-a-objetos" class="nav-link">(b) Añadiendo iteración a objetos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-el-sorprendente-poder-de-la-iteracion" class="nav-link">(c) El sorprendente poder de la iteración</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-monitoreo-de-una-fuente-de-datos-en-streaming" class="nav-link">(d) Monitoreo de una fuente de datos en streaming</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="../">Índice</a> | <a href="../ex7_6/">Ejercicio 7.6</a> | <a href="../ex8_2/">Ejercicio 8.2</a></p>
+<h1 id="ejercicio-81">Ejercicio 8.1</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender a personalizar la iteración usando generadores</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>structure.py</code></p>
+<p><em>Archivos creados:</em> <code>follow.py</code></p>
+<h2 id="a-un-generador-simple">(a) Un generador simple</h2>
+<p>Si alguna vez desea personalizar la iteración, siempre debería considerar las funciones generadoras. Son fáciles de escribir: simplemente cree una función que ejecute la lógica de iteración deseada y use <code>yield</code> para emitir valores.</p>
+<p>Por ejemplo, prueba este generador que te permite iterar sobre un rango de números con pasos fraccionarios (algo que no es compatible con la función <code>range()</code> integrada):</p>
+<pre><code class="language-python">&gt;&gt;&gt; def frange(start,stop,step):
+        while start &lt; stop:
+            yield start
+            start += step
+
+&gt;&gt;&gt; for x in frange(0, 2, 0.25):
+        print(x, end=' ')
+
+0 0.25 0.5 0.75 1.0 1.25 1.5 1.75
+&gt;&gt;&gt;
+</code></pre>
+<p>Iterar en un generador es una operación que se realiza una sola vez. Por ejemplo, esto es lo que sucede si intentas iterar dos veces:</p>
+<pre><code class="language-python">&gt;&gt;&gt; f = frange(0, 2, 0.25)
+&gt;&gt;&gt; for x in f:
+        print(x, end=' ')
+
+0 0.25 0.5 0.75 1.0 1.25 1.5 1.75
+&gt;&gt;&gt; for x in f:
+        print(x, end=' ')
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Si quieres iterar sobre la misma secuencia, debes recrear el generador llamando de nuevo a <code>frange()</code>. Alternativamente, podrías empaquetar todo en una clase:</p>
+<pre><code class="language-python">&gt;&gt;&gt; class FRange:
+        def __init__(self, start, stop, step):
+            self.start = start
+            self.stop = stop
+            self.step = step
+        def __iter__(self):
+            n = self.start
+            while n &lt; self.stop:
+                yield n
+                n += self.step
+
+&gt;&gt;&gt; f = FRange(0, 2, 0.25)
+&gt;&gt;&gt; for x in f:
+        print(x, end=' ')
+
+0 0.25 0.5 0.75 1.0 1.25 1.5 1.75
+&gt;&gt;&gt; for x in f:
+        print(x, end=' ')
+
+0 0.25 0.5 0.75 1.0 1.25 1.5 1.75
+</code></pre>
+<h2 id="b-anadiendo-iteracion-a-objetos">(b) Añadiendo iteración a objetos</h2>
+<p>Si ha creado una clase personalizada, puede configurarla para que admita iteraciones definiendo un método especial <code>__iter__()</code>. <code>__iter__()</code> devuelve un iterador como resultado. Como se muestra en el ejemplo anterior, una forma sencilla de hacerlo es definir <code>__iter__()</code> como generador.</p>
+<p>En ejercicios anteriores, definió una clase base <code>Structure</code>. Añada un método <code>__iter__()</code> a esta clase que genere los valores de los atributos en orden. Por ejemplo:</p>
+<pre><code class="language-python">class Structure(metaclass=StructureMeta):
+    ...
+    def __iter__(self):
+        for name in self._fields:
+            yield getattr(self, name)
+    ...
+</code></pre>
+<p>Una vez hecho esto, debería poder iterar sobre los atributos de instancia de la siguiente manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from stock import Stock
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; for val in s:
+        print(val)
+GOOG
+100
+490.1
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-el-sorprendente-poder-de-la-iteracion">(c) El sorprendente poder de la iteración</h2>
+<p>Python utiliza la iteración de maneras inesperadas. Una vez que haya añadido <code>__iter__()</code> a la clase <code>Structure</code>, descubrirá que es fácil realizar todo tipo de operaciones nuevas. Por ejemplo, conversiones a secuencias y desempaquetado:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; list(s)
+['GOOG', 100, 490.1]
+&gt;&gt;&gt; tuple(s)
+('GOOG', 100, 490.1)
+&gt;&gt;&gt; name, shares, price = s
+&gt;&gt;&gt; name
+'GOOG'
+&gt;&gt;&gt; shares
+100
+&gt;&gt;&gt; price
+490.1
+&gt;&gt;&gt; 
+</code></pre>
+<p>Ya que estamos, podemos agregar un operador de comparación a nuestra clase <code>Structure</code>:</p>
+<pre><code class="language-python"># structure.py
+class Structure(metaclass=StructureMeta):
+    ...
+    def __eq__(self, other):
+        return isinstance(other, type(self)) and tuple(self) == tuple(other)
+    ...
+</code></pre>
+<p>Ahora debería poder comparar objetos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; b = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; a == b
+True
+&gt;&gt;&gt;
+</code></pre>
+<p>Intente ejecutar las pruebas unitarias <code>teststock.py</code> de nuevo. Todo debería funcionar correctamente. Excelente.</p>
+<h2 id="d-monitoreo-de-una-fuente-de-datos-en-streaming">(d) Monitoreo de una fuente de datos en streaming</h2>
+<p>Los generadores también pueden ser una forma útil de producir un flujo de datos. En esta parte, exploraremos esta idea escribiendo un generador para monitorear un archivo de registro. Para comenzar, siga atentamente las siguientes instrucciones.</p>
+<p>El programa <code>Data/stocksim.py</code> simula datos del mercado de valores. Como salida, el programa escribe constantemente datos en tiempo real en un archivo <code>stocklog.csv</code>. En una ventana de comandos (no en modo inactivo), acceda al directorio <code>Data/</code> y ejecute este programa:</p>
+<pre><code>% python3 stocksim.py
+</code></pre>
+<p>Si usa Windows, simplemente localice el programa <code>stocksim.py</code> y haga doble clic en él para ejecutarlo. Ahora, olvídese de este programa (simplemente déjelo ejecutar). De nuevo, deje que este programa se ejecute en segundo plano; se ejecutará durante varias horas (no debería tener que preocuparse por ello).</p>
+<p>Una vez que el programa anterior se esté ejecutando, escribamos un pequeño programa para abrir el archivo, buscar hasta el final y observar la nueva salida. Cree un archivo <code>follow.py</code> y escriba este código en él:</p>
+<pre><code class="language-python"># follow.py
+import os
+import time
+f = open('Data/stocklog.csv')
+f.seek(0, os.SEEK_END)   # Move file pointer 0 bytes from end of file
+
+while True:
+    line = f.readline()
+    if line == '':
+        time.sleep(0.1)   # Sleep briefly and retry
+        continue
+    fields = line.split(',')
+    name = fields[0].strip('&quot;')
+    price = float(fields[1])
+    change = float(fields[4])
+    if change &lt; 0:
+        print('%10s %10.2f %10.2f' % (name, price, change))
+</code></pre>
+<p>Si ejecuta el programa, verá un teletipo de acciones en tiempo real. En realidad, este código es similar al comando <code>tail -f</code> de Unix que se usa para ver un registro. Archivo.</p>
+<p><strong>Nota:</strong> El uso del método <code>readline()</code> en este ejemplo es algo inusual, ya que no es la forma habitual de leer líneas de un archivo (normalmente se usaría un bucle <code>for</code>). Sin embargo, en este caso, lo usamos para sondear repetidamente el final del archivo y comprobar si se han añadido más datos (<code>readline()</code> devolverá datos nuevos o una cadena vacía).</p>
+<p>Si observa el código con atención, la primera parte produce líneas de datos, mientras que las sentencias al final del bucle <code>while</code> consumen los datos. Una característica importante de las funciones generadoras es que se puede trasladar todo el código de producción de datos a una función reutilizable.</p>
+<p>Modifique el código para que la lectura del archivo la realice la función generadora <code>follow(filename)</code>. Haz que el siguiente código funcione:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for line in follow('Data/stocklog.csv'):
+          print(line, end='')
+
+... Deberías ver las líneas de salida generadas aquí...
+</code></pre>
+<p>Modifica el código del ticker de acciones para que se vea así:</p>
+<pre><code class="language-python">for line in follow('Data/stocklog.csv'):
+    fields = line.split(',')
+    name = fields[0].strip('&quot;')
+    price = float(fields[1])
+    change = float(fields[4])
+    if change &lt; 0:
+        print('%10s %10.2f %10.2f' % (name, price, change))
+</code></pre>
+<p><strong>Discusión</strong></p>
+<p>Acaba de ocurrir algo muy potente. Has movido un patrón de iteración interesante (leer líneas al final de un archivo) a su propia función. La función <code>follow()</code> ahora es así Una utilidad de propósito general que puedes usar en cualquier programa. Por ejemplo, puedes usarla para ver registros de servidores, registros de depuración y otras fuentes de datos similares. ¡Genial!</p>
+<p><a href="../soln8_1/">Solución</a> | <a href="../">Índice</a> | <a href="../ex7_6/">Ejercicio 7.6</a> | <a href="../ex8_2/">Ejercicio 8.2</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

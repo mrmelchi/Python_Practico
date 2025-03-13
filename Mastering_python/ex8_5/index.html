@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln8_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_5/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 8.6 - Solution - Python Practico</title>
+        <title>Ex8 5 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,17 +66,13 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-86-solution" class="nav-link">Exercise 8.6 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-85" class="nav-link">Ejercicio 8.5</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-receiving-messages" class="nav-link">(a) Receiving Messages</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#b-wrapping-a-socket" class="nav-link">(b) Wrapping a Socket</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-generadores-como-tareas" class="nav-link">(a) Generadores como tareas</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#c-asyncawait" class="nav-link">(c) Async/Await</a>
+            <li class="nav-item" data-bs-level="2"><a href="#b-generadores-como-tareas-que-sirven-conexiones-de-red" class="nav-link">(b) Generadores como tareas que sirven conexiones de red</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -87,120 +83,105 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-86-solution">Exercise 8.6 - Solution</h1>
-<h2 id="a-receiving-messages">(a) Receiving Messages</h2>
-<pre><code class="language-python"># coticker.py
-from structure import Structure
-from validate import String, Integer, Float
+<p><a href="../">Índice</a> | <a href="../ex8_4/">Ejercicio 8.4</a> | <a href="../ex8_6/">Ejercicio 8.6</a></p>
+<h1 id="ejercicio-85">Ejercicio 8.5</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender sobre generadores administrados</li>
+</ul>
+<p><em>Archivos creados:</em> <code>multitask.py</code>, <code>server.py</code></p>
+<p>Una función de generador o corrutina nunca puede ejecutarse sin ser controlada por otro código. Por ejemplo, un generador utilizado para iterar no realiza ninguna acción a menos que la iteración se realice mediante un bucle for. De igual manera, una colección de corrutinas no se ejecutará a menos que se invoque su método <code>send()</code> de alguna manera.</p>
+<p>En aplicaciones avanzadas de generadores, es posible controlarlos de diversas maneras inusuales. En este ejercicio, veremos algunos ejemplos.</p>
+<h2 id="a-generadores-como-tareas">(a) Generadores como tareas</h2>
+<p>Si se trata de un archivo <code>multitask.py</code>, defina el siguiente código:</p>
+<pre><code class="language-python"># multitask.py
 
-class Ticker(Structure):
-    name = String()
-    price = Float()
-    date = String()
-    time = String()
-    change = Float()
-    open = Float()
-    high = Float()
-    low = Float()
-    volume = Integer()
+from collections import deque
+# multitask.py
 
-from cofollow import consumer, follow, receive
-from tableformat import create_formatter
-import csv
+from collections import deque
 
-@consumer
-def to_csv(target):
-    def producer():
-        while True:
-            yield line
-
-    reader = csv.reader(producer())
-    while True:
-        line = yield from receive(str)
-        target.send(next(reader))
-
-@consumer
-def create_ticker(target):
-    while True:
-        row = yield from receive(list)
-        target.send(Ticker.from_row(row))
-
-@consumer
-def negchange(target):
-    while True:
-        record = yield from receive(Ticker)
-        if record.change &lt; 0:
-            target.send(record)
-
-@consumer
-def ticker(fmt, fields):
-    formatter = create_formatter('text')
-    formatter.headings(fields)
-    while True:
-        rec = yield from receive(Ticker)
-        row = [getattr(rec, name) for name in fields]
-        formatter.row(row)
-
-if __name__ == '__main__':
-    follow('Data/stocklog.csv',
-           to_csv(
-           create_ticker(
-           negchange(
-           ticker('text', ['name','price','change'])))))
+tasks = deque()
+def run():
+    while tasks:
+        task = tasks.popleft()
+        try:
+            task.send(None)
+            tasks.append(task)
+        except StopIteration:
+            print('Tarea completada')
 </code></pre>
-<h2 id="b-wrapping-a-socket">(b) Wrapping a Socket</h2>
-<pre><code class="language-python"># server.py
+<p>Este código implementa un pequeño programador de tareas que ejecuta funciones de generador. Pruébelo ejecutándolo en las siguientes funciones.</p>
+<pre><code class="language-python"># multitask.py
 ...
 
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
+def countdown(n):
+    while n &gt; 0:
+        print('T-menos', n)
+        yield
+        n -= 1
 
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = yield from sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = yield from client.recv(1000)
-        if not data:
-            break
-        yield from client.send(b'GOT:' + data)
-    print('Connection closed')
+def countup(n):
+    x = 0
+    while x &lt; n:
+        print('Arriba', x)
+        yield
+        x += 1
 
 if __name__ == '__main__':
-    tasks.append(tcp_server(('',25000), echo_handler))
+    tasks.append(countdown(10))
+    tasks.append(countdown(5))
+    tasks.append(countup(20))
     run()
 </code></pre>
-<h2 id="c-asyncawait">(c) Async/Await</h2>
+<p>Al ejecutar esto, debería ver la salida de todos los generadores intercalada. Por ejemplo:</p>
+<pre><code class="language-python">T-menos 10
+T-menos 5
+Arriba 0
+T-menos 9
+T-menos 4
+Arriba 1
+T-menos 8
+T-menos 3
+Arriba 2
+T-menos 7
+T-menos 2
+Arriba 3
+T-menos 6
+T-menos 1
+Arriba 4
+T-menos 5
+Tarea completada
+Arriba 5
+T-menos 4
+Arriba 6
+T-menos 3
+Arriba 7
+T-menos 2
+Arriba 8
+T-menos 1
+Arriba 9
+Tarea completada
+Arriba 10
+Arriba 11
+Arriba 12
+Arriba 13
+Arriba 14
+Arriba 15
+Arriba 16
+Arriba 17
+Arriba Vamos 18
+Arriba 19
+Tarea completada
+</code></pre>
+<p>Eso es interesante, pero no especialmente convincente. Pasemos al siguiente ejemplo.</p>
+<h2 id="b-generadores-como-tareas-que-sirven-conexiones-de-red">(b) Generadores como tareas que sirven conexiones de red</h2>
+<p>Cree un archivo <code>server.py</code> e introduzca el siguiente código:</p>
 <pre><code class="language-python"># server.py
 
 from socket import *
 from select import select
 from collections import deque
-from types import coroutine
 
 tasks = deque()
 recv_wait = {}   #  sock -&gt; task
@@ -222,56 +203,63 @@ def run():
             elif reason == 'send':
                 send_wait[resource] = task
             else:
-                raise RuntimeError('Unknown reason %r' % reason)
+                raise RuntimeError('Razón desconocida %r' % reason)
         except StopIteration:
-            print('Task done')
+            print('Tarea completada')
 
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
+</code></pre>
+<p>Este código es una versión un poco más compleja del programador de tareas de la parte (a). Requerirá un poco de estudio, pero la idea es que cada tarea no solo ceda, sino que también indique una razón para hacerlo (recibir o enviar). Dependiendo de la razón, la tarea se moverá a una zona de espera. El programador entonces ejecuta cualquier tarea disponible o espera a que se produzcan eventos de E/S cuando no queda nada por hacer.</p>
+<p>Quizás sea un poco complicado, pero añade el siguiente código que implementa un servidor de eco simple:</p>
+<pre><code class="language-python"># server.py
+...
 
-    @coroutine
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    @coroutine
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    @coroutine
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
-
-async def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
+def tcp_server(address, handler):
+    sock = socket(AF_INET, SOCK_STREAM)
     sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     sock.bind(address)
     sock.listen(5)
     while True:
-        client, addr = await sock.accept()
+        yield 'recv', sock
+        client, addr = sock.accept()
         tasks.append(handler(client, addr))
 
-async def echo_handler(client, address):
-    print('Connection from', address)
+def echo_handler(client, address):
+    print('Conexión desde', address)
     while True:
-        data = await client.recv(1000)
+        yield 'recv', client
+        data = client.recv(1000)
         if not data:
             break
-        await client.send(b'GOT:' + data)
-    print('Connection closed')
+        yield 'send', client
+        client.send(b'GOT:' + data)
+    print('Conexión cerrada')
 
 if __name__ == '__main__':
     tasks.append(tcp_server(('',25000), echo_handler))
     run()
+
 </code></pre>
-<p><a href="../ex8_6/">Back</a></p></div>
+<p>Ejecute este servidor en su propia ventana de terminal. En otra terminal, conéctese a él usando un comando como <code>telnet</code> o <code>nc</code>. Por ejemplo:</p>
+<pre><code>bash % nc localhost 25000
+Hola
+Got: Hola
+Mundo
+Got: Mundo
+</code></pre>
+<p>Si no tiene acceso a <code>nc</code> o <code>telnet</code>, también puede usar Python:</p>
+<pre><code>bash % python3 -m telnetlib localhost 25000
+Hola
+Got: Hola
+Mundo
+Got: Mundo
+</code></pre>
+<p>Si funciona, debería ver la salida en eco. Además, si conecta varios clientes, todos funcionarán simultáneamente. Este uso complejo de los generadores no es algo que probablemente tengas que codificar directamente. Sin embargo, se utilizan en ciertos paquetes avanzados como <code>asyncio</code>, que se añadió a la biblioteca estándar en Python 3.4.</p>
+<p><a href="../soln8_5/">Solución</a> | <a href="../">Índice</a> | <a href="../ex8_4/">Ejercicio 8.4</a> | <a href="../ex8_6/">Ejercicio 8.6</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo una <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 
