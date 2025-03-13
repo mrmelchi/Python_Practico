@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln9_4/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex9_2/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 9.4 - Solution - Python Practico</title>
+        <title>Ex9 2 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,12 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-94-solution" class="nav-link">Exercise 9.4 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-92" class="nav-link">Ejercicio 9.2</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-creacion-de-un-paquete" class="nav-link">(a) Creación de un paquete</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,64 +79,57 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-94-solution">Exercise 9.4 - Solution</h1>
-<pre><code class="language-python"># tableformat.py
-from abc import ABC, abstractmethod
+<p><a href="../">Index</a> | <a href="../ex9_1/">Exercise 9.1</a> | <a href="../ex9_3/">Exercise 9.3</a></p>
+<h1 id="ejercicio-92">Ejercicio 9.2</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender a crear un paquete de Python</li>
+</ul>
+<p><strong>Nota</strong></p>
+<p>Este ejercicio consiste principalmente en copiar archivos en el sistema de archivos. No debería requerir mucha programación.</p>
+<h2 id="a-creacion-de-un-paquete">(a) Creación de un paquete</h2>
+<p>En ejercicios anteriores, creaste los siguientes archivos relacionados con estructuras con verificación de tipos, lectura de datos y creación de tablas:</p>
+<ul>
+<li><code>structure.py</code></li>
+<li><code>validate.py</code></li>
+<li><code>reader.py</code></li>
+<li><code>tableformat.py</code></li>
+</ul>
+<p>Tu tarea consiste en mover todos estos archivos a un paquete llamado <code>structly</code>. Para ello, siga estos pasos:</p>
+<ul>
+<li>Cree un directorio llamado <code>structly</code></li>
+<li>Cree un archivo vacío <code>__init__.py</code> y colóquelo en el directorio <code>structly</code></li>
+<li>Mueva los archivos <code>structure.py</code>, <code>validate.py</code>, <code>reader.py</code> y <code>tableformat.py</code> al directorio <code>structly</code>.</li>
+<li>Corrija cualquier declaración de importación entre módulos (en concreto, el módulo <code>structure</code> depende de <code>validate</code>).</li>
+</ul>
+<p>Una vez hecho esto, modifica el programa <code>stock.py</code> para que se vea exactamente así y funcione:</p>
+<pre><code class="language-python"># stock.py
 
-def print_table(records, fields, formatter):
-    if not isinstance(formatter, TableFormatter):
-        raise RuntimeError('Expected a TableFormatter')
+from structly.structure import Structure
 
-    formatter.headings(fields)
-    for r in records:
-        rowdata = [getattr(r, fieldname) for fieldname in fields]
-        formatter.row(rowdata)
+class Stock(Structure):
+    name = String()
+    shares = PositiveInteger()
+    price = PositiveFloat()
 
-class TableFormatter(ABC):
-    _formats = { }
+    @property
+    def cost(self):
+        return self.shares * self.price
 
-    @classmethod
-    def __init_subclass__(cls):
-        name = cls.__module__.split('.')[-1]
-        TableFormatter._formats[name] = cls
+    def sell(self, nshares: PositiveInteger):
+        self.shares -= nshares
 
-    @abstractmethod
-    def headings(self, headers):
-        pass
-
-    @abstractmethod
-    def row(self, rowdata):
-        pass
-
-class ColumnFormatMixin:
-    formats = []
-    def row(self, rowdata):
-        rowdata = [ (fmt % item) for fmt, item in zip(self.formats, rowdata)]
-        super().row(rowdata)
-
-class UpperHeadersMixin:
-    def headings(self, headers):
-        super().headings([h.upper() for h in headers])
-
-def create_formatter(name, column_formats=None, upper_headers=False):
-    if name not in TableFormatter._formats:
-        __import__(f'{__package__}.formats.{name}')
-
-    formatter_cls = TableFormatter._formats.get(name)
-    if not formatter_cls:
-        raise RuntimeError('Unknown format %s' % name)
-
-    if column_formats:
-        class formatter_cls(ColumnFormatMixin, formatter_cls):
-              formats = column_formats
-
-    if upper_headers:
-        class formatter_cls(UpperHeadersMixin, formatter_cls):
-            pass
-
-    return formatter_cls()
+if __name__ == '__main__':
+    from structly.reader import read_csv_as_instances
+    from structly.tableformat import create_formatter, print_table
+    portfolio = read_csv_as_instances('Data/portfolio.csv', Stock)
+    formatter = create_formatter('text')
+    print_table(portfolio, ['name','shares','price'], formatter)
 </code></pre>
-<p><a href="../ex9_4/">Back</a></p></div>
+<p><a href="../soln9_2/">Solution</a> | <a href="../">Index</a> | <a href="../ex9_1/">Exercise 9.1</a> | <a href="../ex9_3/">Exercise 9.3</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python <code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a> <code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

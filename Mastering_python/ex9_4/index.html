@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln9_4/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex9_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 9.4 - Solution - Python Practico</title>
+        <title>Ex9 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-94-solution" class="nav-link">Exercise 9.4 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-94" class="nav-link">Ejercicio 9.4</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-importaciones-circulares" class="nav-link">(a) Importaciones circulares</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-registro-de-subclases" class="nav-link">(b) Registro de subclases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-importaciones-dinamicas" class="nav-link">(c) Importaciones dinámicas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,20 +87,86 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-94-solution">Exercise 9.4 - Solution</h1>
+<p><a href="../">Índice</a> | <a href="../ex9_3/">Ejercicio 9.3</a> | <a href=""></a></p>
+<h1 id="ejercicio-94">Ejercicio 9.4</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Explorar importaciones circulares</li>
+<li>Importaciones dinámicas de módulos</li>
+</ul>
+<p>En el último ejercicio, dividió el archivo <code>tableformat.py</code> en submódulos.</p>
+<p>La última parte del archivo <code>tableformat/formatter.py</code> resultante se ha convertido en un caos de importaciones.</p>
 <pre><code class="language-python"># tableformat.py
-from abc import ABC, abstractmethod
-
-def print_table(records, fields, formatter):
-    if not isinstance(formatter, TableFormatter):
-        raise RuntimeError('Expected a TableFormatter')
-
-    formatter.headings(fields)
-    for r in records:
-        rowdata = [getattr(r, fieldname) for fieldname in fields]
-        formatter.row(rowdata)
+...
 
 class TableFormatter(ABC):
+    @abstractmethod
+    def headings(self, headers):
+        pass
+
+    @abstractmethod
+    def row(self, rowdata):
+        pass
+
+from .formats.text import TextTableFormatter
+from .formats.csv import CSVTableFormatter
+from .formats.html import HTMLTableFormatter
+
+...
+
+def create_formatter(name, column_formats=None, upper_headers=False):
+    if name == 'text':
+        formatter_cls = TextTableFormatter
+    elif name == 'csv':
+        formatter_cls = CSVTableFormatter
+    elif name == 'html':
+        formatter_cls = HTMLTableFormatter
+    else:
+        raise RuntimeError('Unknown format %s' % name)
+
+    if column_formats:
+        class formatter_cls(ColumnFormatMixin, formatter_cls):
+            formats = column_formats
+
+    if upper_headers:
+        class formatter_cls(UpperHeadersMixin, formatter_cls):
+            pass
+
+    return formatter_cls()
+</code></pre>
+<p>Las importaciones en el medio del archivo son necesarias porque la función <code>create_formatter()</code> las necesita para encontrar las clases adecuadas. En realidad, todo es un desastre.</p>
+<h2 id="a-importaciones-circulares">(a) Importaciones circulares</h2>
+<p>Intenta mover las siguientes sentencias de importación al principio del archivo <code>formatter.py</code>:</p>
+<pre><code class="language-python"># formatter.py
+
+from .formats.text import TextTableFormatter
+from .formats.csv import CSVTableFormatter
+from .formats.html import HTMLTableFormatter
+
+class TableFormatter(ABC):
+    @abstractmethod
+    def headings(self, headers):
+        pass
+
+    @abstractmethod
+    def row(self, rowdata):
+        pass
+
+...
+</code></pre>
+<p>Observa que ya no funciona. Intenta ejecutar el programa <code>stock.py</code> y observa el error sobre que <code>TableFormatter</code> no está definido. El orden de las sentencias de importación es importante y no puedes mover las importaciones a donde quieras.</p>
+<p>Mueve las sentencias de importación a su lugar original. ¡Uf!</p>
+<h2 id="b-registro-de-subclases">(b) Registro de subclases</h2>
+<p>Pruebe el siguiente experimento y observe:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from structly.tableformat.formats.text import TextTableFormatter
+&gt;&gt;&gt; TextTableFormatter.__module__
+'structly.tableformat.formats.text'
+&gt;&gt;&gt; TextTableFormatter.__module__.split('.')[-1]
+'text'
+&gt;&gt;&gt;
+</code></pre>
+<p>Modifique la clase base <code>TableFormatter</code> añadiendo un diccionario y un método <code>__init_subclass__()</code>:</p>
+<pre><code class="language-python">class TableFormatter(ABC):
     _formats = { }
 
     @classmethod
@@ -103,28 +181,24 @@ class TableFormatter(ABC):
     @abstractmethod
     def row(self, rowdata):
         pass
-
-class ColumnFormatMixin:
-    formats = []
-    def row(self, rowdata):
-        rowdata = [ (fmt % item) for fmt, item in zip(self.formats, rowdata)]
-        super().row(rowdata)
-
-class UpperHeadersMixin:
-    def headings(self, headers):
-        super().headings([h.upper() for h in headers])
-
-def create_formatter(name, column_formats=None, upper_headers=False):
-    if name not in TableFormatter._formats:
-        __import__(f'{__package__}.formats.{name}')
-
+</code></pre>
+<p>Esto hace que la clase padre rastree todas sus subclases. Échale un vistazo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from structly.tableformat.formatter import TableFormatter
+&gt;&gt;&gt; TableFormatter._formats
+{'text': &lt;class 'structly.tableformat.formats.text.TextTableFormatter'&gt;, 
+ 'csv': &lt;class 'structly.tableformat.formats.csv.CSVTableFormatter'&gt;, 
+ 'html': &lt;class 'structly.tableformat.formats.html.HTMLTableFormatter'&gt;}
+&gt;&gt;&gt;
+</code></pre>
+<p>Modifica la función <code>create_formatter()</code> para buscar la clase en este diccionario:</p>
+<pre><code class="language-python">def create_formatter(name, column_formats=None, upper_headers=False):
     formatter_cls = TableFormatter._formats.get(name)
     if not formatter_cls:
-        raise RuntimeError('Unknown format %s' % name)
+        raise RuntimeError('Formato desconocido %s' % name)
 
     if column_formats:
         class formatter_cls(ColumnFormatMixin, formatter_cls):
-              formats = column_formats
+            formats = column_formats
 
     if upper_headers:
         class formatter_cls(UpperHeadersMixin, formatter_cls):
@@ -132,7 +206,30 @@ def create_formatter(name, column_formats=None, upper_headers=False):
 
     return formatter_cls()
 </code></pre>
-<p><a href="../ex9_4/">Back</a></p></div>
+<p>Ejecute el programa <code>stock.py</code>. Asegúrese de que siga funcionando después de realizar estos cambios. Cabe destacar que todas las declaraciones de importación siguen ahí. Básicamente, ha limpiado un poco el código y eliminado los nombres de clase predefinidos.</p>
+<h2 id="c-importaciones-dinamicas">(c) Importaciones dinámicas</h2>
+<p>Ya está listo para la frontera final. Elimine las siguientes declaraciones de importación por completo:</p>
+<pre><code class="language-python"># formatter.py
+...
+
+from .formats.text import TextTableFormatter # DELETE
+from .formats.csv import CSVTableFormatter # DELETE
+from .formats.html import HTMLTableFormatter # DELETE
+...
+</code></pre>
+<p>Ejecute el código <code>stock.py</code> de nuevo; debería fallar con un error. No tiene información sobre el formateador de texto. Corríjalo añadiendo este pequeño fragmento de código a <code>create_formatter()</code>:</p>
+<pre><code class="language-python">def create_formatter(name, column_formats=None, upper_headers=False):
+    if name not in TableFormatter._formats:
+        __import__(f'{__package__}.formats.{name}')
+    ...
+</code></pre>
+<p>Este código intenta una importación dinámica de un módulo formateador si no se conoce nada sobre el nombre. La importación sola (si funciona) registrará la clase con el diccionario <code>_formats</code> y todo funcionará. ¡Magia! Intenta ejecutar el código <code>stock.py</code> y asegúrate de que funcione después.</p>
+<p><a href="../soln9_4/">Solución</a> | <a href="../">Índice</a> | <a href="../ex9_3/">Ejercicio 9.3</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

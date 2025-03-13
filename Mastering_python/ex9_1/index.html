@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex9_1/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex8 6 - Python Practico</title>
+        <title>Ex9 1 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,17 +66,21 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-86" class="nav-link">Ejercicio 8.6</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-91" class="nav-link">Ejercicio 9.1</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-ejemplo-recepcion-de-mensajes" class="nav-link">(a) Ejemplo: Recepción de mensajes</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#b-encapsulando-un-socket" class="nav-link">(b) Encapsulando un socket</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-carga-del-modulo-y-ruta-del-sistema" class="nav-link">(a) Carga del módulo y ruta del sistema</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#c-asyncawait" class="nav-link">(c) Async/Await</a>
+            <li class="nav-item" data-bs-level="2"><a href="#b-carga-repetida-de-modulos" class="nav-link">(b) Carga repetida de módulos</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-from-module-import" class="nav-link">(c) from module import</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#d-reload-roto" class="nav-link">(d) Reload() roto</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -87,150 +91,147 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex8_5/">Ejercicio 8.5</a> | <a href="../ex9_1/">Ejercicio 9.1</a></p>
-<h1 id="ejercicio-86">Ejercicio 8.6</h1>
+<p><a href="../">Índice</a> | <a href="../ex8_6/">Ejercicio 8.6</a> | <a href="../ex9_2/">Ejercicio 9.2</a></p>
+<h1 id="ejercicio-91">Ejercicio 9.1</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Aprender a delegar generadores</li>
+<li>Repaso de los fundamentos de los módulos</li>
 </ul>
-<p><em>Archivos modificados:</em> <code>cofollow.py</code>, <code>server.py</code></p>
-<p>Un problema potencial en el código que depende de generadores es la dificultad de ocultar detalles al usuario y escribir bibliotecas. Generalmente, se requieren muchos mecanismos de bajo nivel para controlar todo, y suele ser bastante complicado exponerlos directamente a los usuarios.</p>
-<p>A partir de Python 3.3, se puede usar una nueva sentencia <code>yield from</code> para delegar generadores a otra función. Es una forma útil de limpiar el código que depende de generadores.</p>
-<h2 id="a-ejemplo-recepcion-de-mensajes">(a) Ejemplo: Recepción de mensajes</h2>
-<p>En el <a href="../ex8_3/">Ejercicio 8.3</a>, analizamos las definiciones de corrutinas. Las corrutinas eran funciones a las que se enviaban datos. Por ejemplo:</p>
-<pre><code class="language-python">&gt;&gt;&gt; from cofollow import consumer
-&gt;&gt;&gt; @consumer
-    def printer():
-        while True:
-            item = yield
-            print('Got:', item)
+<p>Este ejercicio trata sobre algunos de los detalles más complejos de los módulos de biblioteca. Comienza este ejercicio creando un módulo de biblioteca muy simple:</p>
+<pre><code class="language-python"># simplemod.py
 
-&gt;&gt;&gt; p = printer()
-&gt;&gt;&gt; p.send('Hola')
-Got: Hola
-&gt;&gt;&gt; p.send('Mundo')
-Got: Mundo
+x = 42 # Una variable global
+
+# Una función simple
+def foo():   
+    print('x is', x)
+
+
+# Una clase simple
+class Spam:
+    def yow(self):
+        print('Yow!')
+
+# Una sentencia de script
+print('simplemod cargado')
+</code></pre>
+<h2 id="a-carga-del-modulo-y-ruta-del-sistema">(a) Carga del módulo y ruta del sistema</h2>
+<p>Intenta importar el módulo que acabas de crear:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import simplemod
+simplemod cargado
+&gt;&gt;&gt; simplemod.foo()
+x is 42
 &gt;&gt;&gt;
 </code></pre>
-<p>En aquel momento, podría haber sido interesante usar <code>yield</code> para recibir un valor. Sin embargo, si se analiza el código, parece bastante extraño: ¿un <code>yield</code> simple como ese? ¿Qué está pasando?</p>
-<p>En el archivo <code>cofollow.py</code>, defina la siguiente función:</p>
-<pre><code class="language-python">def receive(expected_type):
-    msg = yield
-    assert isinstance(msg, expected_type), 'Expected type %s' % (expected_type)
-    return msg
+<p>Si esto falla con un <code>ImportError</code>, la configuración de la ruta es incorrecta. Revisa el valor de <code>sys.path</code> y corrígelo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.path
+... observa el resultado...
+&gt;&gt;&gt;
 </code></pre>
-<p>Esta función recibe un mensaje, pero luego verifica que sea del tipo esperado. Pruébalo:</p>
-<pre><code class="language-python">&gt;&gt;&gt; from cofollow import consumer, receive
-&gt;&gt;&gt; @consumer
-    def print_ints():
-        while True:
-             val = yield from receive(int)
-             print('Got:', val)
-
-&gt;&gt;&gt; p = print_ints()
-&gt;&gt;&gt; p.send(42)
-Got: 42
-&gt;&gt;&gt; p.send(13)
-Got: 13
-&gt;&gt;&gt; p.send('13')
+<h2 id="b-carga-repetida-de-modulos">(b) Carga repetida de módulos</h2>
+<p>Asegúrate de comprender que los módulos solo se cargan una vez. Prueba una importación repetida y observa que no ves el resultado de la función <code>print</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import simplemod
+&gt;&gt;&gt;
+</code></pre>
+<p>Prueba a cambiar el valor de <code>x</code> y observa que una importación repetida no tiene efecto.</p>
+<pre><code class="language-python">&gt;&gt;&gt; simplemod.x
+42
+&gt;&gt;&gt; simplemod.x = 13
+&gt;&gt;&gt; simplemod.x
+13
+&gt;&gt;&gt; import simplemod
+&gt;&gt;&gt; simplemod.x
+13
+&gt;&gt;&gt;
+</code></pre>
+<p>Usa <code>importlib.reload()</code> si quieres forzar la recarga de un módulo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; import importlib
+&gt;&gt;&gt; importlib.reload(simplemod)
+simplemod cargado
+&lt;module 'simplemod' from 'simplemod.py'&gt;
+&gt;&gt;&gt; simplemod.x
+42
+&gt;&gt;&gt;
+</code></pre>
+<p><code>sys.modules</code> es un diccionario de todos los módulos cargados. Revísalo, elimina el módulo e intenta importarlo de nuevo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; sys.modules
+... mira la salida...
+&gt;&gt;&gt; sys.modules['simplemod']
+&lt;module 'simplemod' from 'simplemod.py'&gt;
+&gt;&gt;&gt; del sys.modules['simplemod']
+&gt;&gt;&gt; import simplemod
+simplemod cargado
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="c-from-module-import">(c) from module import</h2>
+<p>Reinicia Python e importa el símbolo seleccionado de un módulo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; ############### [ REINICIAR ] ###############
+&gt;&gt;&gt; from simplemod import foo
+simplemod cargado
+&gt;&gt;&gt; foo()
+x es 42
+&gt;&gt;&gt;
+</code></pre>
+<p>Observa cómo se cargó todo el módulo (observa la salida de la función de impresión y cómo se usa la variable <code>x</code>).</p>
+<p>Al usar <code>from</code>, el objeto del módulo no es visible. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; simplemod.foo()
 Traceback (most recent call last):
   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-  ...
-AssertionError: Expected type &lt;class 'int'&gt;
+NameError: name 'simplemod' is not defined
 &gt;&gt;&gt; 
 </code></pre>
-<p>Desde el punto de vista de la legibilidad, la sentencia <code>yield from receive(int)</code> es un poco más descriptiva: indica que la función cederá hasta que reciba un mensaje de un tipo determinado.</p>
-<p>Ahora, modifica todas las corrutinas en <code>coticker.py</code> para usar la nueva función <code>receive()</code> y asegúrate de que el código del <a href="../ex8_3/">Ejercicio 8.3</a> siga funcionando.</p>
-<h2 id="b-encapsulando-un-socket">(b) Encapsulando un socket</h2>
-<p>En el ejercicio anterior, escribiste un servidor de eco de red simple usando generadores. El código del servidor se veía así:</p>
-<pre><code class="language-python">def tcp_server(address, handler):
-    sock = socket(AF_INET, SOCK_STREAM)
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        yield 'recv', sock
-        client, addr = sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        yield 'recv', client
-        data = client.recv(1000)
-        if not data:
-            break
-        yield 'send', client
-        client.send(b'GOT:', data)
-    print('Coexión cerradad')
+<p>Asegúrate de comprender que, al exportar elementos desde un módulo, estos son simplemente referencias de nombre. Por ejemplo, prueba esto y explícalo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from simplemod import x,foo
+&gt;&gt;&gt; x
+42
+&gt;&gt;&gt; foo()
+x es 42
+&gt;&gt;&gt; x = 13
+&gt;&gt;&gt; foo()
+x es 42 # !! Por favor, explícalo
+&gt;&gt;&gt; x
+13
+&gt;&gt;&gt;
 </code></pre>
-<p>Crear una clase <code>GenSocket</code> que Limpia las sentencias <code>yield</code> y permite reescribir el servidor de forma más sencilla, como se indica a continuación:</p>
-<pre><code class="language-python">def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = yield from sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = yield from client.recv(1000)
-        if not data:
-            break
-        yield from client.send(b'GOT:', data)
-    print('Conexión cerrada')
+<h2 id="d-reload-roto">(d) Reload() roto</h2>
+<p>Crea una instancia:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import simplemod
+&gt;&gt;&gt; s = simplemod.Spam()
+&gt;&gt;&gt; s.yow()
+Yow!
+&gt;&gt;&gt;
 </code></pre>
-<h2 id="c-asyncawait">(c) Async/Await</h2>
-<p>Tome la clase <code>GenSocket</code> que acaba de crear y envuelva todos los métodos que usan <code>yield</code> con el decorador <code>@coroutine</code> del módulo <code>types</code>.</p>
-<pre><code class="language-python">from types import coroutine
+<p>Ahora, ve al archivo <code>simplemod.py</code> y cambia la implementación de <code>Spam.yow()</code> a la siguiente:</p>
+<pre><code class="language-python"># simplemod.py
 ...
 
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    @coroutine
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    @coroutine
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    @coroutine
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
+class Spam:
+    def yow(self):
+        print('More Yow!')
 </code></pre>
-<p>Ahora, reescribe el código de tu servidor para usar funciones <code>async</code> y sentencias <code>await</code> de la siguiente manera:</p>
-<pre><code class="language-python">async def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = await sock.accept()
-        tasks.append(handler(client, addr))
-
-async def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = await client.recv(1000)
-        if not data:
-            break
-        await client.send(b'GOT:', data)
-    print('Conexión cerrada')
+<p>Ahora, observa lo que sucede al recargar. No reinicie Python para esta parte.</p>
+<pre><code class="language-python">&gt;&gt;&gt; importlib.reload(simplemod)
+simplemod cargado
+&lt;module 'simplemod' from 'simplemod.py'&gt;
+&gt;&gt;&gt; s.yow()
+'Yow!'
+&gt;&gt;&gt; t = simplemod.Spam()
+&gt;&gt;&gt; t.yow()
+'More Yow!'
+&gt;&gt;&gt;
 </code></pre>
-<p>Solución](soln8_6.md) | <a href="../">Índice</a> | <a href="../ex8_5/">Ejercicio 8.5</a> | <a href="../ex9_1/">Ejercicio 9.1</a></p>
+<p>Observa que tienes dos instancias de <code>Spam</code>, pero usan diferentes implementaciones del método <code>yow()</code>. Sí, de hecho, ambas versiones del código se cargan al mismo tiempo. También encontrarás otras rarezas. Por ejemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s
+&lt;simplemod.Spam object at 0x1006940b8&gt;
+&gt;&gt;&gt; isinstance(s, simplemod.Spam)
+False
+&gt;&gt;&gt; isinstance(t, simplemod.Spam)
+True
+&gt;&gt;&gt;
+</code></pre>
+<p>En resumen: Probablemente sea mejor no depender de la recarga para nada importante. Podría funcionar bien si solo intentas depurar algunas cosas (siempre que seas consciente de sus limitaciones y peligros).</p>
+<p><a href="../soln9_1/">Solution</a> | <a href="../">Index</a> | <a href="../ex8_6/">Exercise 8.6</a> | <a href="../ex9_2/">Ejercicio 9.2</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>

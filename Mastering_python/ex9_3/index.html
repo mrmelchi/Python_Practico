@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex8_6/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex9_3/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Ex8 6 - Python Practico</title>
+        <title>Ex9 3 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,17 +66,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-86" class="nav-link">Ejercicio 8.6</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-93" class="nav-link">Ejercicio 9.3</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-bs-level="2"><a href="#a-ejemplo-recepcion-de-mensajes" class="nav-link">(a) Ejemplo: Recepción de mensajes</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-bs-level="2"><a href="#b-encapsulando-un-socket" class="nav-link">(b) Encapsulando un socket</a>
+            <li class="nav-item" data-bs-level="2"><a href="#a-control-de-los-simbolos-exportados" class="nav-link">(a) Control de los símbolos exportados</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#c-asyncawait" class="nav-link">(c) Async/Await</a>
+            <li class="nav-item" data-bs-level="2"><a href="#b-exportacion-completa" class="nav-link">(b) Exportación completa</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-division-de-modulos" class="nav-link">(c) División de módulos</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -87,150 +87,146 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="../">Índice</a> | <a href="../ex8_5/">Ejercicio 8.5</a> | <a href="../ex9_1/">Ejercicio 9.1</a></p>
-<h1 id="ejercicio-86">Ejercicio 8.6</h1>
+<p><a href="../">Índice</a> | <a href="../ex9_2/">Ejercicio 9.2</a> | <a href="../ex9_4/">Ejercicio 9.4</a></p>
+<h1 id="ejercicio-93">Ejercicio 9.3</h1>
 <p><em>Objetivos:</em></p>
 <ul>
-<li>Aprender a delegar generadores</li>
+<li>Aprender a controlar símbolos y combinar submódulos</li>
+<li>Aprender a dividir módulos</li>
 </ul>
-<p><em>Archivos modificados:</em> <code>cofollow.py</code>, <code>server.py</code></p>
-<p>Un problema potencial en el código que depende de generadores es la dificultad de ocultar detalles al usuario y escribir bibliotecas. Generalmente, se requieren muchos mecanismos de bajo nivel para controlar todo, y suele ser bastante complicado exponerlos directamente a los usuarios.</p>
-<p>A partir de Python 3.3, se puede usar una nueva sentencia <code>yield from</code> para delegar generadores a otra función. Es una forma útil de limpiar el código que depende de generadores.</p>
-<h2 id="a-ejemplo-recepcion-de-mensajes">(a) Ejemplo: Recepción de mensajes</h2>
-<p>En el <a href="../ex8_3/">Ejercicio 8.3</a>, analizamos las definiciones de corrutinas. Las corrutinas eran funciones a las que se enviaban datos. Por ejemplo:</p>
-<pre><code class="language-python">&gt;&gt;&gt; from cofollow import consumer
-&gt;&gt;&gt; @consumer
-    def printer():
-        while True:
-            item = yield
-            print('Got:', item)
-
-&gt;&gt;&gt; p = printer()
-&gt;&gt;&gt; p.send('Hola')
-Got: Hola
-&gt;&gt;&gt; p.send('Mundo')
-Got: Mundo
-&gt;&gt;&gt;
+<p>Un aspecto potencialmente molesto de los paquetes es que complican las sentencias de importación. Por ejemplo, en el programa <code>stock.py</code>, ahora tiene sentencias de importación como las siguientes:</p>
+<pre><code class="language-python">from structly.structure import Structure
+from structly.reader import read_csv_as_instances
+from structly.tableformat import create_formatter, print_table
 </code></pre>
-<p>En aquel momento, podría haber sido interesante usar <code>yield</code> para recibir un valor. Sin embargo, si se analiza el código, parece bastante extraño: ¿un <code>yield</code> simple como ese? ¿Qué está pasando?</p>
-<p>En el archivo <code>cofollow.py</code>, defina la siguiente función:</p>
-<pre><code class="language-python">def receive(expected_type):
-    msg = yield
-    assert isinstance(msg, expected_type), 'Expected type %s' % (expected_type)
-    return msg
+<p>Si el paquete está pensado para usarse como un todo unificado, podría ser más sensato (y más sencillo) consolidarlo todo en un único paquete de nivel superior. Hagamos esto:</p>
+<h2 id="a-control-de-los-simbolos-exportados">(a) Control de los símbolos exportados</h2>
+<p>Modifique todos los submódulos del paquete <code>structly</code> para que definan explícitamente una variable <code>__all__</code> que exporte los símbolos seleccionados. Específicamente:</p>
+<ul>
+<li><code>structure.py</code> debería exportar <code>Structure</code></li>
+<li><code>reader.py</code> debería exportar todas las funciones <code>read_csv_as_*()</code></li>
+<li><code>tableformat.py</code> exporta <code>create_formatter()</code> y <code>print_table()</code></li>
+</ul>
+<p>Ahora, en el archivo <code>__init__.py</code>, unifique todos los submódulos de la siguiente manera:</p>
+<pre><code class="language-python"># structly/__init__.py
+
+from .structure import *
+from .reader import *
+from .tableformat import *
 </code></pre>
-<p>Esta función recibe un mensaje, pero luego verifica que sea del tipo esperado. Pruébalo:</p>
-<pre><code class="language-python">&gt;&gt;&gt; from cofollow import consumer, receive
-&gt;&gt;&gt; @consumer
-    def print_ints():
-        while True:
-             val = yield from receive(int)
-             print('Got:', val)
+<p>Una vez hecho esto, debería poder importar todo desde un único módulo lógico:</p>
+<pre><code class="language-python"># stock.py
 
-&gt;&gt;&gt; p = print_ints()
-&gt;&gt;&gt; p.send(42)
-Got: 42
-&gt;&gt;&gt; p.send(13)
-Got: 13
-&gt;&gt;&gt; p.send('13')
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-  ...
-AssertionError: Expected type &lt;class 'int'&gt;
-&gt;&gt;&gt; 
+from structly import Structure
+
+class Stock(Structure):
+    name = String()
+    shares = PositiveInteger()
+    price = PositiveFloat()
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares: PositiveInteger):
+        self.shares -= nshares
+
+if __name__ == '__main__':
+    from structly import read_csv_as_instances, create_formatter, print_table
+    portfolio = read_csv_as_instances('Data/portfolio.csv', Stock)
+    formatter = create_formatter('text')
+    print_table(portfolio, ['name','shares','price'], formatter)
 </code></pre>
-<p>Desde el punto de vista de la legibilidad, la sentencia <code>yield from receive(int)</code> es un poco más descriptiva: indica que la función cederá hasta que reciba un mensaje de un tipo determinado.</p>
-<p>Ahora, modifica todas las corrutinas en <code>coticker.py</code> para usar la nueva función <code>receive()</code> y asegúrate de que el código del <a href="../ex8_3/">Ejercicio 8.3</a> siga funcionando.</p>
-<h2 id="b-encapsulando-un-socket">(b) Encapsulando un socket</h2>
-<p>En el ejercicio anterior, escribiste un servidor de eco de red simple usando generadores. El código del servidor se veía así:</p>
-<pre><code class="language-python">def tcp_server(address, handler):
-    sock = socket(AF_INET, SOCK_STREAM)
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        yield 'recv', sock
-        client, addr = sock.accept()
-        tasks.append(handler(client, addr))
+<h2 id="b-exportacion-completa">(b) Exportación completa</h2>
+<p>En <code>structly/__init__.py</code>, defina la variable <code>__all__</code> que contiene todos los símbolos exportados. Una vez hecho esto, deberías poder simplificar aún más el archivo <code>stock.py</code>:</p>
+<pre><code class="language-python"># stock.py
 
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        yield 'recv', client
-        data = client.recv(1000)
-        if not data:
-            break
-        yield 'send', client
-        client.send(b'GOT:', data)
-    print('Coexión cerradad')
+from structly import *
+
+class Stock(Structure):
+    name = String()
+    shares = PositiveInteger()
+    price = PositiveFloat()
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares: PositiveInteger):
+        self.shares -= nshares
+
+if __name__ == '__main__':
+    portfolio = read_csv_as_instances('Data/portfolio.csv', Stock)
+    formatter = create_formatter('text')
+    print_table(portfolio, ['name','shares','price'], formatter)
 </code></pre>
-<p>Crear una clase <code>GenSocket</code> que Limpia las sentencias <code>yield</code> y permite reescribir el servidor de forma más sencilla, como se indica a continuación:</p>
-<pre><code class="language-python">def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = yield from sock.accept()
-        tasks.append(handler(client, addr))
-
-def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = yield from client.recv(1000)
-        if not data:
-            break
-        yield from client.send(b'GOT:', data)
-    print('Conexión cerrada')
+<p>Aparte, el uso de la instrucción <code>from module import *</code> generalmente está mal visto en la comunidad Python, especialmente si No estás seguro de lo que haces. Dicho esto, hay situaciones en las que suele ser útil. Por ejemplo, si un paquete define una gran cantidad de símbolos o constantes de uso común, podría ser útil usarlo.</p>
+<h2 id="c-division-de-modulos">(c) División de módulos</h2>
+<p>El archivo <code>structly/tableformat.py</code> contiene código para crear tablas en diferentes formatos. Específicamente:</p>
+<ul>
+<li>Una clase base <code>TableFormatter</code>.</li>
+<li>Una clase <code>TextTableFormatter</code>.</li>
+<li>Una clase <code>CSVTableFormatter</code>.</li>
+<li>Una clase <code>HTMLTableFormatter</code>.</li>
+</ul>
+<p>En lugar de tener todas estas clases en un solo archivo <code>.py</code>, quizás sería más conveniente mover cada formateador concreto a su propio archivo. Para ello, dividiremos el archivo <code>tableformat.py</code> en partes. Sigue estas instrucciones cuidadosamente:</p>
+<p>Primero, elimina el directorio <code>structly/__pycache__</code>.</p>
+<pre><code>% cd structly
+% rm -rf __pycache__
 </code></pre>
-<h2 id="c-asyncawait">(c) Async/Await</h2>
-<p>Tome la clase <code>GenSocket</code> que acaba de crear y envuelva todos los métodos que usan <code>yield</code> con el decorador <code>@coroutine</code> del módulo <code>types</code>.</p>
-<pre><code class="language-python">from types import coroutine
-...
-
-class GenSocket:
-    def __init__(self, sock):
-        self.sock = sock
-
-    @coroutine
-    def accept(self):
-        yield 'recv', self.sock
-        client, addr = self.sock.accept()
-        return GenSocket(client), addr
-
-    @coroutine
-    def recv(self, maxsize):
-        yield 'recv', self.sock
-        return self.sock.recv(maxsize)
-
-    @coroutine
-    def send(self, data):
-        yield 'send', self.sock
-        return self.sock.send(data)
-
-    def __getattr__(self, name):
-        return getattr(self.sock, name)
+<p>A continuación, cree el directorio <code>structly/tableformat</code>. Este directorio debe tener exactamente el mismo nombre que el módulo que reemplaza (<code>tableformat.py</code>).</p>
+<pre><code>bash % mkdir tableformat
+bash %
 </code></pre>
-<p>Ahora, reescribe el código de tu servidor para usar funciones <code>async</code> y sentencias <code>await</code> de la siguiente manera:</p>
-<pre><code class="language-python">async def tcp_server(address, handler):
-    sock = GenSocket(socket(AF_INET, SOCK_STREAM))
-    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    sock.bind(address)
-    sock.listen(5)
-    while True:
-        client, addr = await sock.accept()
-        tasks.append(handler(client, addr))
-
-async def echo_handler(client, address):
-    print('Connection from', address)
-    while True:
-        data = await client.recv(1000)
-        if not data:
-            break
-        await client.send(b'GOT:', data)
-    print('Conexión cerrada')
+<p>Mueva el archivo <code>tableformat.py</code> original al nuevo directorio <code>tableformat</code> y renómbrelo <code>formatter.py</code>.</p>
+<pre><code>bash % mv tableformat.py tableformat/formatter.py
+bash %
 </code></pre>
-<p>Solución](soln8_6.md) | <a href="../">Índice</a> | <a href="../ex8_5/">Ejercicio 8.5</a> | <a href="../ex9_1/">Ejercicio 9.1</a></p>
+<p>En el directorio <code>tableformat</code>, divida el código de <code>tableformat.py</code> en los siguientes archivos y directorios:</p>
+<ul>
+<li><code>formatter.py</code> - Contiene la clase base <code>TableFormatter</code>, mixins y varias funciones.</li>
+<li><code>formats/text.py</code> - Contiene la clase <code>TextTableFormatter</code>. - <code>formats/csv.py</code> - Contiene la clase <code>CSVTableFormatter</code>.</li>
+<li><code>formats/html.py</code> - Contiene la clase <code>HTMLTableFormatter</code>.</li>
+</ul>
+<p>Agregue un archivo <code>__init__.py</code> a los directorios <code>tableformat/</code> y <code>tableformat/formats</code>. Haga que <code>tableformat/__init__.py</code> exporte los mismos símbolos que el archivo <code>tableformat.py</code> original.</p>
+<p>Después de realizar todos estos cambios, debería tener una estructura de paquete similar a la siguiente:</p>
+<pre><code>structly/
+__init__.py
+validate.py
+reader.py
+structure.py
+tableformat/
+__init__.py
+formatter.py
+forms/
+__init__.py
+text.py
+csv.py
+html.py
+</code></pre>
+<p>Para los usuarios, todo debería funcionar exactamente igual que antes. Por ejemplo, su archivo <code>stock.py</code> anterior debería funcionar:</p>
+<pre><code class="language-python"># stock.py
+
+from structly import *
+
+class Stock(Structure):
+    name = String()
+    shares = PositiveInteger()
+    price = PositiveFloat()
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    def sell(self, nshares):
+        self.shares -= nshares
+
+if __name__ == '__main__':
+    portfolio = read_csv_as_instances('Data/portfolio.csv', Stock)
+    formatter = create_formatter('text')
+    print_table(portfolio, ['name','shares','price'], formatter)
+</code></pre>
+<p><a href="../soln9_3/">Solution</a> | <a href="../">Index</a> | <a href="../ex9_2/">Ejercicio 9.2</a> | <a href="../ex9_4/">Ejercicio 9.4</a></p>
 <hr />
 <p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
 <p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
