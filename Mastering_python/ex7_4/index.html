@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln7_5/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex7_4/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 7.5 - Solution - Python Practico</title>
+        <title>Ex7 4 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-75-solution" class="nav-link">Exercise 7.5 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-74" class="nav-link">Ejercicio 7.4</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-creacion-de-la-clase" class="nav-link">(a) Creación de la clase</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-estructuras-tipificadas" class="nav-link">(b) Estructuras tipificadas</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#c-creacion-de-muchas-clases" class="nav-link">(c) Creación de muchas clases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,9 +87,135 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-75-solution">Exercise 7.5 - Solution</h1>
-<p>Nothing here.  Just follow the exercise.</p>
-<p><a href="../ex7_5/">Back</a></p></div>
+<p><a href="../">Índice</a> | <a href="../ex7_3/">Ejercicio 7.3</a> | <a href="../ex7_5/">Ejercicio 7.5</a></p>
+<h1 id="ejercicio-74">Ejercicio 7.4</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender los pasos básicos para crear una clase.</li>
+</ul>
+<p><em>Archivos modificados:</em> <code>validate.py</code>, <code>structure.py</code></p>
+<p>En este ejercicio, analizamos la mecánica de la creación de clases.</p>
+<h2 id="a-creacion-de-la-clase">(a) Creación de la clase</h2>
+<p>Recuerde que, en ejercicios anteriores, definimos una clase simple, <code>Acciones</code>, con este aspecto:</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self,name,shares,price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+    def cost(self):
+        return self.shares*self.price
+    def sell(self,nshares):
+        self.shares -= nshares
+</code></pre>
+<p>Lo que haremos aquí es crear la clase manualmente. Comience definiendo los métodos como funciones normales de Python.</p>
+<pre><code class="language-python">&gt;&gt;&gt; def __init__(self,name,shares,price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+&gt;&gt;&gt; def cost(self):
+        return self.shares*self.price
+
+&gt;&gt;&gt; def sell(self,nshares):
+        self.shares -= nshares
+
+&gt;&gt;&gt;
+</code></pre>
+<p>A continuación, crea un diccionario de métodos:</p>
+<pre><code class="language-python">```python
+&gt;&gt;&gt; methods = {
+         '__init__' : __init__,
+         'cost' : cost,
+         'sell' : sell } 
+
+&gt;&gt;&gt;
+</code></pre>
+<p>Finalmente, crea el objeto de la clase <code>Stock</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; Stock = type('Stock',(object,),methods)
+&gt;&gt;&gt; s = Stock('GOOG',100,490.10)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s.cost()
+49010.0
+&gt;&gt;&gt; s.sell(25)
+&gt;&gt;&gt; s.shares
+75
+&gt;&gt;&gt;
+</code></pre>
+<p>¡Felicitaciones! Acabas de crear una clase. Una clase no es más que un nombre, una tupla de clases base y un diccionario que contiene todo el contenido de la clase. <code>type()</code> es un constructor que crea una clase automáticamente si proporcionas estas tres partes.</p>
+<h2 id="b-estructuras-tipificadas">(b) Estructuras tipificadas</h2>
+<p>En el archivo <code>structure.py</code>, define la siguiente función:</p>
+<pre><code class="language-python"># structure.py
+
+...
+def typed_structure(clsname, **validators):
+    cls = type(clsname, (Structure,), validators)
+    return cls
+</code></pre>
+<p>Esta función es similar a <code>namedtuple()</code> en que crea una clase. Pruébalo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from validate import String, PositiveInteger, PositiveFloat
+&gt;&gt;&gt; from structure import typed_structure
+&gt;&gt;&gt; Stock = typed_structure('Stock', name=String(), shares=PositiveInteger(), price=PositiveFloat())
+&gt;&gt;&gt; s = Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt; s.name
+'GOOG'
+&gt;&gt;&gt; s
+Stock('GOOG', 100, 490.1)
+&gt;&gt;&gt;
+</code></pre>
+<p>Quizás sientas que se te está rompiendo la cabeza.</p>
+<h2 id="c-creacion-de-muchas-clases">(c) Creación de muchas clases</h2>
+<p>Existen otras situaciones en las que el uso directo del constructor <code>type()</code> podría ser ventajoso. Considera este fragmento de código:</p>
+<pre><code class="language-python"># validate.py
+...
+
+class Typed(Validator):
+    expected_type = object
+    @classmethod
+    def check(cls, value):
+        if not isinstance(value, cls.expected_type):
+            raise TypeError(f'expected {cls.expected_type}')
+        super().check(value)
+
+class Integer(Typed):
+    expected_type = int
+
+class Float(Typed):
+    expected_type = float
+
+class String(Typed):
+    expected_type = str
+...
+</code></pre>
+<p>¡Vaya! ¡Qué fastidiosa y repetitiva es la última parte! Cámbielo para usar una tabla con las clases de tipos deseadas como esta:</p>
+<pre><code class="language-python"># validate.py
+...
+
+_typed_classes = [
+    ('Integer', int),
+    ('Float', float),
+    ('String', str) ]
+
+globals().update((name, type(name, (Typed,), {'expected_type':ty}))
+                 for name, ty in _typed_classes)
+</code></pre>
+<p>Ahora, si desea tener más clases de tipos, simplemente agréguelas a la tabla:</p>
+<pre><code class="language-python">_typed_classes = [
+    ('Integer', int),
+    ('Float', float),
+    ('Complex', complex),
+    ('Decimal', decimal.Decimal),
+    ('List', list),
+    ('Bool', bool),
+    ('String', str) ]
+</code></pre>
+<p>Admítelo, es genial y te ahorra mucho tiempo de escritura.</p>
+<p><a href="../soln7_4/">Solución</a> | <a href="../">Índice</a> | <a href="../ex7_3/">Ejercicio 7.3</a> | <a href="../ex7_5/">Ejercicio 7.5</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 

@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Mario R. Melchiori">
-        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/soln7_5/">
+        <link rel="canonical" href="https://mrmelchi.github.io/Python_Practico/Mastering_python/ex7_1/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Exercise 7.5 - Solution - Python Practico</title>
+        <title>Ex7 1 - Python Practico</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/fontawesome.min.css" rel="stylesheet">
         <link href="../../css/brands.min.css" rel="stylesheet">
@@ -66,8 +66,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#exercise-75-solution" class="nav-link">Exercise 7.5 - Solution</a>
+            <li class="nav-item" data-bs-level="1"><a href="#ejercicio-71" class="nav-link">Ejercicio 7.1</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#a-tu-primer-decorador" class="nav-link">(a) Tu primer decorador</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b-un-decorador-real" class="nav-link">(b) Un decorador real</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -75,9 +83,106 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="exercise-75-solution">Exercise 7.5 - Solution</h1>
-<p>Nothing here.  Just follow the exercise.</p>
-<p><a href="../ex7_5/">Back</a></p></div>
+<p><a href="../">Índice</a> | <a href="../ex6_5/">Ejercicio 6.5</a> | <a href="../ex7_2/">Ejercicio 7.2</a></p>
+<h1 id="ejercicio-71">Ejercicio 7.1</h1>
+<p><em>Objetivos:</em></p>
+<ul>
+<li>Aprender a definir funciones decoradoras simples.</li>
+</ul>
+<p><em>Archivos creados:</em> <code>logcall.py</code></p>
+<p><em>Archivos modificados:</em> <code>validate.py</code></p>
+<h2 id="a-tu-primer-decorador">(a) Tu primer decorador</h2>
+<p>Para empezar con los decoradores, escribe una función decoradora <em>muy</em> simple que simplemente muestre un mensaje cada vez que se llame a una función. Crea un archivo <code>logcall.py</code> y define la siguiente función:</p>
+<pre><code class="language-python"># logcall.py
+
+def logged(func):
+    print('Añadiendo logging a', func.__name__)
+    def wrapper(*args, **kwargs):
+        print('Llamando a', func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+</code></pre>
+<p>Ahora, crea un archivo <code>sample.py</code> aparte y aplícalo a algunas definiciones de funciones:</p>
+<pre><code class="language-python"># sample.py
+
+from logcall import logged
+
+@logged
+def add(x,y):
+    return x+y
+
+@logged
+def sub(x,y):
+    return x-y
+</code></pre>
+<p>Prueba tu código de la siguiente manera:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import sample
+Añadiendo logging a add
+Añadiendo logging a sub
+&gt;&gt;&gt; sample.add(3,4)
+Llamando a add
+7
+&gt;&gt;&gt; sample.sub(2,3)
+Llamando a sub
+-1
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="b-un-decorador-real">(b) Un decorador real</h2>
+<p>En el <a href="../ex6_5/">Ejercicio 6.5</a>, creó una clase invocable <code>ValidatedFunction</code> que aplicaba anotaciones de tipo. Reescriba esta clase como una función decoradora llamada <code>validated</code>. Debería permitirte escribir código como este:</p>
+<pre><code class="language-python">from validate import Integer, validated
+
+@validated
+def add(x: Integer, y:Integer) -&gt; Integer:
+    return x + y
+
+@validated
+def pow(x: Integer, y:Integer) -&gt; Integer:
+    return x ** y
+</code></pre>
+<p>Así es como deberían funcionar las funciones decoradas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; add(2, 3)
+5
+&gt;&gt;&gt; add('2', '3')
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;validate.py&quot;, line 75, in wrapper
+    raise TypeError('Bad Arguments\n' + '\n'.join(errors))
+TypeError: Bad Arguments
+    x: Expected &lt;class 'int'&gt;
+    y: Expected &lt;class 'int'&gt;
+
+&gt;&gt;&gt; pow(2, 3)
+8
+&gt;&gt;&gt; pow(2, -1)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;validate.py&quot;, line 83, in wrapper
+    raise TypeError(f'Bad return: {e}') from None
+TypeError: Bad return: Expected &lt;class 'int'&gt;
+&gt;&gt;&gt;
+</code></pre>
+<p>Tu decorador debería intentar corregir las excepciones para que muestren información más útil, como se muestra. Además, el decorador <code>@validated</code> debería funcionar en las clases (no necesitas hacer nada especial).</p>
+<pre><code class="language-python">class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+    @property
+    def cost(self):
+        return self.shares * self.price
+
+    @validated
+    def sell(self, nshares:PositiveInteger):
+        self.shares -= nshares
+</code></pre>
+<p>Nota: Esta parte no requiere mucho código, pero hay muchos detalles de bajo nivel que requieren más detalle. La solución será prácticamente igual a la del Ejercicio 6.6. No dude en consultar el código de la solución.</p>
+<p><a href="../soln7_1/">Solución</a> | <a href="../">Índice</a> | <a href="../ex6_5/">Ejercicio 6.5</a> | <a href="../ex7_2/">Ejercicio 7.2</a></p>
+<hr />
+<p><code>&gt;&gt;&gt;</code> Dominio avanzado de Python</p>
+<p><code>...</code> Un curso de <a href="https://www.dabeaz.com">dabeaz</a></p>
+<p><code>...</code> Copyright 2007-2023</p>
+<p><img alt="" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />. Esta obra está licenciada bajo la <a href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional</a></p></div>
             </div>
         </div>
 
